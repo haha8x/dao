@@ -440,9 +440,19 @@ h4.modal-title {
 .modal {
     .modal-header {
         padding: 0;
+
         .close {
             padding: 0;
             margin: 18px 20px;
+        }
+    }
+}
+
+.language.dropdown {
+    .dropdown-header-name {
+        img {
+            vertical-align: top;
+            margin-top: 4px;
         }
     }
 }

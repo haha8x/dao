@@ -4,9 +4,7 @@
         {!! Form::open(Arr::except($formOptions, ['template'])) !!}
     @endif
 
-    @if ($form->getModuleName())
-        @php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, $form->getModuleName(), request(), $form->getModel()) @endphp
-    @endif
+    @php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, request(), $form->getModel()) @endphp
     <div class="row">
         <div class="col-md-9">
             <div class="tabbable-custom">
@@ -14,7 +12,7 @@
                     <li class="nav-item">
                         <a href="#tab_detail" class="nav-link active" data-toggle="tab">{{ trans('core/base::tabs.detail') }} </a>
                     </li>
-                    {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, $form->getModuleName(), $form->getModel()) !!}
+                    {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TABS, null, $form->getModel()) !!}
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab_detail">
@@ -35,7 +33,7 @@
                         @endif
                         <div class="clearfix"></div>
                     </div>
-                    {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TAB_INSIDE, null, $form->getModuleName(), $form->getModel()) !!}
+                    {!! apply_filters(BASE_FILTER_REGISTER_CONTENT_TAB_INSIDE, null, $form->getModel()) !!}
                 </div>
             </div>
 
@@ -43,15 +41,11 @@
                 {!! $form->getMetaBox($key) !!}
             @endforeach
 
-            @if ($form->getModuleName())
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'advanced', $form->getModel()) @endphp
-            @endif
+            @php do_action(BASE_ACTION_META_BOXES, 'advanced', $form->getModel()) @endphp
         </div>
         <div class="col-md-3 right-sidebar">
             {!! $form->getActionButtons() !!}
-            @if ($form->getModuleName())
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'top', $form->getModel()) @endphp
-            @endif
+            @php do_action(BASE_ACTION_META_BOXES, 'top', $form->getModel()) @endphp
 
             @foreach ($fields as $field)
                 @if (!in_array($field->getName(), $exclude))
@@ -66,9 +60,7 @@
                 @endif
             @endforeach
 
-            @if ($form->getModuleName())
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'side', $form->getModel()) @endphp
-            @endif
+            @php do_action(BASE_ACTION_META_BOXES, 'side', $form->getModel()) @endphp
         </div>
     </div>
 

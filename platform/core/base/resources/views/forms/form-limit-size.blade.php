@@ -5,14 +5,12 @@
         {!! Form::open(Arr::except($formOptions, ['template'])) !!}
     @endif
 
-    @if ($form->getModuleName())
-        @php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, $form->getModuleName(), request(), $form->getModel()) @endphp
-    @endif
+    @php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, request(), $form->getModel()) @endphp
     <div class="max-width-1200">
         <div class="flexbox-grid no-pd-none">
 
             <div class="flexbox-content">
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'main', null) @endphp
+                @php do_action(BASE_ACTION_META_BOXES, 'main', $form->getModel()) @endphp
                 <div class="widget meta-boxes">
                     <div class="widget-title">
                         <h4>
@@ -41,15 +39,11 @@
                     {!! $form->getMetaBox($key) !!}
                 @endforeach
 
-                @if ($form->getModuleName())
-                    @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'advanced', $form->getModel()) @endphp
-                @endif
+                @php do_action(BASE_ACTION_META_BOXES, 'advanced', $form->getModel()) @endphp
         </div>
         <div class="flexbox-content flexbox-right">
             {!! $form->getActionButtons() !!}
-            @if ($form->getModuleName())
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'top', $form->getModel()) @endphp
-            @endif
+            @php do_action(BASE_ACTION_META_BOXES, 'top', $form->getModel()) @endphp
 
             @foreach ($fields as $field)
                 @if (!in_array($field->getName(), $exclude))
@@ -64,9 +58,7 @@
                 @endif
             @endforeach
 
-            @if ($form->getModuleName())
-                @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'side', $form->getModel()) @endphp
-            @endif
+            @php do_action(BASE_ACTION_META_BOXES, 'side', $form->getModel()) @endphp
         </div>
     </div>
 

@@ -3,6 +3,7 @@
 namespace Botble\Base\Forms;
 
 use Assets;
+use Botble\Base\Forms\Fields\AutocompleteField;
 use Botble\Base\Forms\Fields\ColorField;
 use Botble\Base\Forms\Fields\CustomRadioField;
 use Botble\Base\Forms\Fields\CustomSelectField;
@@ -28,11 +29,6 @@ abstract class FormAbstract extends Form
      * @var string
      */
     protected $title = '';
-
-    /**
-     * @var string
-     */
-    protected $moduleName = '';
 
     /**
      * @var string
@@ -117,19 +113,20 @@ abstract class FormAbstract extends Form
 
     /**
      * @return string
+     * @deprecated
      */
     public function getModuleName(): string
     {
-        return $this->moduleName;
+        return '';
     }
 
     /**
      * @param string $module
      * @return $this
+     * @deprecated
      */
     public function setModuleName($module): self
     {
-        $this->moduleName = $module;
         return $this;
     }
 
@@ -316,27 +313,21 @@ abstract class FormAbstract extends Form
      */
     public function withCustomFields(): self
     {
-        if (!$this->formHelper->hasCustomField('customSelect')) {
-            $this->addCustomField('customSelect', CustomSelectField::class);
-        }
+        $customFields = [
+            'customSelect' => CustomSelectField::class,
+            'editor'       => EditorField::class,
+            'onOff'        => OnOffField::class,
+            'customRadio'  => CustomRadioField::class,
+            'mediaImage'   => MediaImageField::class,
+            'color'        => ColorField::class,
+            'time'         => TimeField::class,
+            'autocomplete' => AutocompleteField::class,
+        ];
 
-        if (!$this->formHelper->hasCustomField('editor')) {
-            $this->addCustomField('editor', EditorField::class);
-        }
-        if (!$this->formHelper->hasCustomField('onOff')) {
-            $this->addCustomField('onOff', OnOffField::class);
-        }
-        if (!$this->formHelper->hasCustomField('customRadio')) {
-            $this->addCustomField('customRadio', CustomRadioField::class);
-        }
-        if (!$this->formHelper->hasCustomField('mediaImage')) {
-            $this->addCustomField('mediaImage', MediaImageField::class);
-        }
-        if (!$this->formHelper->hasCustomField('color')) {
-            $this->addCustomField('color', ColorField::class);
-        }
-        if (!$this->formHelper->hasCustomField('time')) {
-            $this->addCustomField('time', TimeField::class);
+        foreach ($customFields as $key => $field) {
+            if (!$this->formHelper->hasCustomField($key)) {
+                $this->addCustomField($key, $field);
+            }
         }
 
         return apply_filters('form_custom_fields', $this, $this->formHelper);
@@ -360,7 +351,7 @@ abstract class FormAbstract extends Form
             return count($this->fields);
         }
 
-        $main_fields = [];
+        $mainFields = [];
 
         /**
          * @var FormField $field
@@ -370,10 +361,10 @@ abstract class FormAbstract extends Form
                 break;
             }
 
-            $main_fields[] = $field;
+            $mainFields[] = $field;
         }
 
-        return count($main_fields);
+        return count($mainFields);
     }
 
     /**
@@ -396,7 +387,7 @@ abstract class FormAbstract extends Form
     {
         Assets::addScripts(['form-validation', 'are-you-sure']);
 
-        apply_filters(BASE_FILTER_BEFORE_RENDER_FORM, $this, $this->moduleName, $this->getModel());
+        apply_filters(BASE_FILTER_BEFORE_RENDER_FORM, $this, $this->getModel());
 
         return parent::renderForm($options, $showStart, $showFields, $showEnd);
     }
@@ -418,8 +409,8 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @param $name
-     * @param $class
+     * @param string $name
+     * @param string $class
      * @return $this|Form
      */
     public function addCustomField($name, $class)

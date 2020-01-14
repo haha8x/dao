@@ -1,0 +1,9 @@
+{
+    "name": "Dao",
+    "namespace": "Botble\\Dao\\",
+    "provider": "Botble\\Dao\\Providers\\DaoServiceProvider",
+    "author": "Sang Nguyen",
+    "url": "https://sangnguyen.info",
+    "version": "1.0",
+    "description": "The description for module dao"
+}

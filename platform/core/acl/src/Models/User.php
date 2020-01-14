@@ -104,7 +104,7 @@ class User extends Authenticatable
      */
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar->url ? Storage::url($this->avatar->url) : Gravatar::image($this->attributes['email']);
+        return $this->avatar->url ? Storage::url($this->avatar->url) : Gravatar::image($this->email);
     }
 
     /**

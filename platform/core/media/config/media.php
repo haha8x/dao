@@ -5,16 +5,6 @@ return [
     'sizes'                   => [
         'thumb' => '150x150',
     ],
-    'route'                   => [
-        'prefix'     => env('ADMIN_DIR', 'admin') . '/media',
-        'middleware' => ['web', 'auth'],
-        'options'    => [
-            'permission' => 'media.index',
-        ],
-    ],
-    'views'                   => [
-        'index' => 'core/media::index',
-    ],
     'permissions'             => [
         'folders.create',
         'folders.edit',
@@ -26,11 +16,6 @@ return [
         'files.destroy',
         'files.favorite',
         'folders.favorite',
-    ],
-    'cache'                   => [
-        'enable'      => env('RV_MEDIA_ENABLE_CACHE', false), // true or false
-        'cache_time'  => env('RV_MEDIA_CACHE_TIME', 10),
-        'stored_keys' => storage_path('media_cache_keys.json'), // Cache config
     ],
     'allow_external_services' => env('RV_MEDIA_ALLOW_EXTERNAL_SERVICES', false),
     'external_services'       => [

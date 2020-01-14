@@ -54,10 +54,6 @@ class InstallCommand extends Command
             $this->call('migrate:fresh');
         }
 
-        if (config('database.default') === 'mysql' && $this->confirm('Do you want to install sample data? [yes|no]')) {
-            $this->call('cms:theme:install-sample-data');
-        }
-
         if ($this->confirmToProceed('Do you want to add a new admin user?', true)) {
             $this->call($this->userCreateCommand->getName());
         }

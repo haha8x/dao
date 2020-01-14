@@ -70,7 +70,7 @@ class UserCreateCommand extends Command
             $user->last_name = $this->askWithValidate('Enter last name', 'required|min:2|max:60');
             $user->email = $this->askWithValidate('Enter email address', 'required|email|unique:users,email');
             $user->username = $this->askWithValidate('Enter username', 'required|min:4|max:60|unique:users,username');
-            $user->password = bcrypt($this->askWithValidate('Enter password', 'required|min:6|max:60'));
+            $user->password = bcrypt($this->askWithValidate('Enter password', 'required|min:6|max:60', true));
             $user->super_user = 1;
             $user->manage_supers = 1;
 
@@ -89,11 +89,17 @@ class UserCreateCommand extends Command
     /**
      * @param $message
      * @param string $rules
+     * @param bool $secret
+     * @return mixed
      */
-    protected function askWithValidate($message, string $rules)
+    protected function askWithValidate($message, string $rules, $secret = false)
     {
         do {
-            $input = $this->ask($message);
+            if ($secret) {
+                $input = $this->secret($message);
+            } else {
+                $input = $this->ask($message);
+            }
             $validate = $this->validate(compact('input'), ['input' => $rules]);
             if ($validate['error']) {
                 $this->error($validate['message']);

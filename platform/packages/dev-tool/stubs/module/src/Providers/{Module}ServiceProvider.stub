@@ -35,7 +35,6 @@ class {Module}ServiceProvider extends ServiceProvider
         $this->setNamespace('{types}/{-name}')
             ->loadAndPublishConfigurations(['permissions'])
             ->loadMigrations()
-            ->loadAndPublishViews()
             ->loadAndPublishTranslations()
             ->loadRoutes(['web']);
 

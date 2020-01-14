@@ -14,7 +14,7 @@ class PackageCreateCommand extends BaseMakeCommand
      *
      * @var string
      */
-    protected $signature = 'cms:package:create {name : The package name} {--force : Overwrite any existing files.}';
+    protected $signature = 'cms:package:create {name : The package name}';
 
     /**
      * The console command description.

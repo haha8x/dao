@@ -1,1 +1,256 @@
-!function(e){var t={};function n(a){if(t[a])return t[a].exports;var r=t[a]={i:a,l:!1,exports:{}};return e[a].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,a){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:a})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(n.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(a,r,function(t){return e[t]}.bind(null,r));return a},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="/",n(n.s=111)}({111:function(e,t,n){e.exports=n(112)},112:function(e,t){function n(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var a=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}var t,a,r;return t=e,(a=[{key:"init",value:function(){$("input[data-key=email-config-status-btn]").on("change",function(e){var t=$(e.currentTarget),n=t.prop("id"),a=t.data("change-url");$.ajax({type:"POST",url:a,data:{key:n,value:t.prop("checked")?1:0},success:function(e){e.error?Botble.showError(e.message):Botble.showSuccess(e.message)},error:function(e){Botble.handleError(e)}})}),$(document).on("change","#email_driver",function(e){"mailgun"===$(e.currentTarget).val()?($(".setting-mail-password").addClass("hidden"),$(".setting-mail-mail-gun").removeClass("hidden")):($(".setting-mail-password").removeClass("hidden"),$(".setting-mail-mail-gun").addClass("hidden"),"sendmail"===$(e.currentTarget).val()?$(".setting-mail-sendmail").removeClass("hidden"):$(".setting-mail-sendmail").addClass("hidden"))}),$("#send-test-email-btn").on("click",function(e){e.preventDefault();var t=$(e.currentTarget);t.addClass("button-loading"),$.ajax({type:"POST",url:route("setting.email.send.test"),data:{email:t.closest(".modal-content").find("input[name=email]").val()},success:function(e){e.error?Botble.showError(e.message):Botble.showSuccess(e.message),t.removeClass("button-loading"),t.closest(".modal").modal("hide")},error:function(e){Botble.handleError(e),t.removeClass("button-loading"),t.closest(".modal").modal("hide")}})}),"undefined"!=typeof CodeMirror&&Botble.initCodeEditor("mail-template-editor"),$(document).on("click",".btn-trigger-reset-to-default",function(e){e.preventDefault(),$("#reset-template-to-default-button").data("target",$(e.currentTarget).data("target")),$("#reset-template-to-default-modal").modal("show")}),$(document).on("click","#reset-template-to-default-button",function(e){e.preventDefault();var t=$(e.currentTarget);t.addClass("button-loading"),$.ajax({type:"POST",cache:!1,url:t.data("target"),data:{email_subject_key:$("input[name=email_subject_key]").val(),template_path:$("input[name=template_path]").val()},success:function(e){e.error?Botble.showError(e.message):(Botble.showSuccess(e.message),setTimeout(function(){window.location.reload()},1e3)),t.removeClass("button-loading"),$("#reset-template-to-default-modal").modal("hide")},error:function(e){Botble.handleError(e),t.removeClass("button-loading")}})})}}])&&n(t.prototype,a),r&&n(t,r),e}();$(document).ready(function(){(new a).init()})}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./platform/core/setting/resources/assets/js/setting.js":
+/*!**************************************************************!*\
+  !*** ./platform/core/setting/resources/assets/js/setting.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var SettingManagement =
+/*#__PURE__*/
+function () {
+  function SettingManagement() {
+    _classCallCheck(this, SettingManagement);
+  }
+
+  _createClass(SettingManagement, [{
+    key: "init",
+    value: function init() {
+      $('input[data-key=email-config-status-btn]').on('change', function (event) {
+        var _self = $(event.currentTarget);
+
+        var key = _self.prop('id');
+
+        var url = _self.data('change-url');
+
+        $.ajax({
+          type: 'POST',
+          url: url,
+          data: {
+            key: key,
+            value: _self.prop('checked') ? 1 : 0
+          },
+          success: function success(res) {
+            if (!res.error) {
+              Botble.showSuccess(res.message);
+            } else {
+              Botble.showError(res.message);
+            }
+          },
+          error: function error(res) {
+            Botble.handleError(res);
+          }
+        });
+      });
+      $(document).on('change', '#email_driver', function (event) {
+        if ($(event.currentTarget).val() === 'mailgun') {
+          $('.setting-mail-password').addClass('hidden');
+          $('.setting-mail-mail-gun').removeClass('hidden');
+        } else {
+          $('.setting-mail-password').removeClass('hidden');
+          $('.setting-mail-mail-gun').addClass('hidden');
+
+          if ($(event.currentTarget).val() === 'sendmail') {
+            $('.setting-mail-sendmail').removeClass('hidden');
+          } else {
+            $('.setting-mail-sendmail').addClass('hidden');
+          }
+        }
+      });
+      $('#send-test-email-btn').on('click', function (event) {
+        event.preventDefault();
+
+        var _self = $(event.currentTarget);
+
+        _self.addClass('button-loading');
+
+        $.ajax({
+          type: 'POST',
+          url: route('setting.email.send.test'),
+          data: {
+            email: _self.closest('.modal-content').find('input[name=email]').val()
+          },
+          success: function success(res) {
+            if (!res.error) {
+              Botble.showSuccess(res.message);
+            } else {
+              Botble.showError(res.message);
+            }
+
+            _self.removeClass('button-loading');
+
+            _self.closest('.modal').modal('hide');
+          },
+          error: function error(res) {
+            Botble.handleError(res);
+
+            _self.removeClass('button-loading');
+
+            _self.closest('.modal').modal('hide');
+          }
+        });
+      });
+
+      if (typeof CodeMirror !== 'undefined') {
+        Botble.initCodeEditor('mail-template-editor');
+      }
+
+      $(document).on('click', '.btn-trigger-reset-to-default', function (event) {
+        event.preventDefault();
+        $('#reset-template-to-default-button').data('target', $(event.currentTarget).data('target'));
+        $('#reset-template-to-default-modal').modal('show');
+      });
+      $(document).on('click', '#reset-template-to-default-button', function (event) {
+        event.preventDefault();
+
+        var _self = $(event.currentTarget);
+
+        _self.addClass('button-loading');
+
+        $.ajax({
+          type: 'POST',
+          cache: false,
+          url: _self.data('target'),
+          data: {
+            email_subject_key: $('input[name=email_subject_key]').val(),
+            template_path: $('input[name=template_path]').val()
+          },
+          success: function success(res) {
+            if (!res.error) {
+              Botble.showSuccess(res.message);
+              setTimeout(function () {
+                window.location.reload();
+              }, 1000);
+            } else {
+              Botble.showError(res.message);
+            }
+
+            _self.removeClass('button-loading');
+
+            $('#reset-template-to-default-modal').modal('hide');
+          },
+          error: function error(res) {
+            Botble.handleError(res);
+
+            _self.removeClass('button-loading');
+          }
+        });
+      });
+    }
+  }]);
+
+  return SettingManagement;
+}();
+
+$(document).ready(function () {
+  new SettingManagement().init();
+});
+
+/***/ }),
+
+/***/ 6:
+/*!********************************************************************!*\
+  !*** multi ./platform/core/setting/resources/assets/js/setting.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /home/vagrant/code/dao/platform/core/setting/resources/assets/js/setting.js */"./platform/core/setting/resources/assets/js/setting.js");
+
+
+/***/ })
+
+/******/ });

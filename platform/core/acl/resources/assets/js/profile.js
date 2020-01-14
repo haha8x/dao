@@ -221,7 +221,7 @@ class CropAvatar {
     }
 
     syncUpload() {
-        this.$avatarSave.click();
+        this.$avatarSave.trigger('click');
     }
 
     submitStart() {

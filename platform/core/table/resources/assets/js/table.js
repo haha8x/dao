@@ -43,7 +43,7 @@
                             a.href = downloadUrl;
                             a.download = filename;
                             document.body.appendChild(a);
-                            a.click();
+                            a.trigger('click');
                         }
                     } else {
                         window.location = downloadUrl;
@@ -506,7 +506,7 @@
                         a.href = response.file;
                         a.download = response.name;
                         document.body.appendChild(a);
-                        a.click();
+                        a.trigger('click');
                         a.remove();
                     },
                     error: (error) => {

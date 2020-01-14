@@ -10,15 +10,15 @@ export class App {
         this.$body = $('body');
         this.$html = $('html');
 
-        //Core handlers
-        this.handleInit(); // initialize core letiables
+        // Core handlers
+        this.handleInit(); // initialize core
 
         this.handleOnResize(); // set and handle responsive
 
-        //Handle group element heights
+        // Handle group element heights
         App.addResizeHandler(this.handleHeight); // handle auto calculating height on window resize
 
-        //UI Component handlers
+        // UI Component handlers
         this.handleTabs(); // handle tabs
         this.handleTooltips(); // handle bootstrap tooltips
         this.handleModals(); // handle modals
@@ -27,7 +27,7 @@ export class App {
         this.handleFixInputPlaceholderForIE(); //IE8 & IE9 input placeholder issue fix
     }
 
-    // wrApper function to scroll(focus) to an element
+    // Wrapper function to scroll(focus) to an element
     static scrollTo(el, offeset) {
         let pos = (el && el.length > 0) ? el.offset().top : 0;
 
@@ -110,15 +110,15 @@ export class App {
             let tab_id = encodeURI(location.hash.substr(1));
             let $tab = $('a[href="#' + tab_id + '"]');
             $tab.parents('.tab-pane:hidden').each((index, el) => {
-                $('a[href="#' + $(el).attr('id') + '"]').click();
+                $('a[href="#' + $(el).attr('id') + '"]').trigger('click');
             });
-            $tab.click();
+            $tab.trigger('click');
         }
     }
 
     handleModals() {
         let current = this;
-        // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class. 
+        // fix stackable modal issue: when 2 or more modals opened, closing one of modal will remove .modal-open class.
         this.$body.on('hide.bs.modal', () => {
             let $modals = $('.modal:visible');
             if ($modals.length > 1 && current.$html.hasClass('modal-open') === false) {
@@ -140,7 +140,7 @@ export class App {
             current.$body.removeClass('modal-open-noscroll');
         });
 
-        // remove ajax content and remove cache on modal closed 
+        // remove ajax content and remove cache on modal closed
         this.$body.on('hidden.bs.modal', '.modal:not(.modal-cached)', (event) => {
             $(event.currentTarget).removeData('bs.modal');
         });
@@ -277,7 +277,7 @@ export class App {
                 }
                 resize = setTimeout(() => {
                     App._runResizeHandlers();
-                }, 50); // wait 50ms until window resize finishes.                
+                }, 50); // wait 50ms until window resize finishes.
                 currheight = document.documentElement.clientHeight; // store last body client height
             });
         } else {

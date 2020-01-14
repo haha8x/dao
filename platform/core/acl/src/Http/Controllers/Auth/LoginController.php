@@ -139,7 +139,7 @@ class LoginController extends BaseController
      */
     public function logout(Request $request)
     {
-        do_action(AUTH_ACTION_AFTER_LOGOUT_SYSTEM, AUTH_MODULE_SCREEN_NAME, $request, $request->user());
+        do_action(AUTH_ACTION_AFTER_LOGOUT_SYSTEM, $request, $request->user());
 
         $this->guard()->logout();
 

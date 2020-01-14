@@ -2,9 +2,7 @@
     {!! Form::open(Arr::except($formOptions, ['template'])) !!}
 @endif
 
-@if ($form->getModuleName())
-    @php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, $form->getModuleName(), request(), $form->getModel()) @endphp
-@endif
+@php do_action(BASE_ACTION_TOP_FORM_CONTENT_NOTIFICATION, request(), $form->getModel()) @endphp
 
 @if ($showFields)
     @foreach ($fields as $field)
@@ -22,9 +20,7 @@
     {!! $form->getMetaBox($key) !!}
 @endforeach
 
-@if ($form->getModuleName())
-    @php do_action(BASE_ACTION_META_BOXES, $form->getModuleName(), 'advanced', $form->getModel()) @endphp
-@endif
+@php do_action(BASE_ACTION_META_BOXES, 'advanced', $form->getModel()) @endphp
 
 {!! $form->getActionButtons() !!}
 

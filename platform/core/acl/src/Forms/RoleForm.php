@@ -30,7 +30,6 @@ class RoleForm extends FormAbstract
         }
 
         $this
-            ->setModuleName(ROLE_MODULE_SCREEN_NAME)
             ->setupModel(new Role)
             ->setValidatorClass(RoleCreateRequest::class)
             ->withCustomFields()

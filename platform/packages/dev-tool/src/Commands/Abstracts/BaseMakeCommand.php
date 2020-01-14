@@ -77,8 +77,11 @@ abstract class BaseMakeCommand extends Command
             '{-name}'        => strtolower($replaceText),
             '{name}'         => Str::snake(str_replace('-', '_', $replaceText)),
             '{+name}'        => Str::camel($replaceText),
+            '{++name}'       => str_replace('_', ' ', Str::snake(str_replace('-', '_', $replaceText))),
             '{names}'        => Str::plural(Str::snake(str_replace('-', '_', $replaceText))),
             '{Names}'        => ucfirst(Str::plural(Str::snake(str_replace('-', '_', $replaceText)))),
+            '{++Names}'      => str_replace('_', ' ',
+                ucfirst(Str::plural(Str::snake(str_replace('-', '_', $replaceText))))),
             '{-names}'       => Str::plural($replaceText),
             '{NAME}'         => strtoupper(Str::snake(str_replace('-', '_', $replaceText))),
             '{Name}'         => ucfirst(Str::camel($replaceText)),
@@ -188,7 +191,7 @@ abstract class BaseMakeCommand extends Command
         ]);
 
         foreach ($manager->listContents('from://', true) as $file) {
-            if ($file['type'] === 'file' && (!$manager->has('to://' . $file['path']) || $this->option('force'))) {
+            if ($file['type'] === 'file' && (!$manager->has('to://' . $file['path']) || ($this->hasOption('force') && $this->option('force')))) {
                 $manager->put('to://' . $file['path'], $manager->read('from://' . $file['path']));
             }
         }

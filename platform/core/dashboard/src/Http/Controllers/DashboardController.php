@@ -85,9 +85,9 @@ class DashboardController extends BaseController
             return !in_array($item->id, $availableWidgetIds);
         });
 
-        $user_widgets = collect($widgetData)->pluck('view')->all();
+        $userWidgets = collect($widgetData)->pluck('view')->all();
 
-        return view('core/dashboard::list', compact('widgets', 'user_widgets'));
+        return view('core/dashboard::list', compact('widgets', 'userWidgets'));
     }
 
     /**
@@ -182,7 +182,7 @@ class DashboardController extends BaseController
                 'widget_id' => $widget->id,
                 'user_id'   => $request->user()->getKey(),
             ]);
-            if (array_key_exists($widget->name, $request->input('widgets', []))) {
+            if (array_key_exists($widget->name, $request->input('widgets', [])) && $request->input('widgets.' . $widget->name) == 1) {
                 $widgetSetting->status = 1;
                 $this->widgetRepository->createOrUpdate($widgetSetting);
             } else {

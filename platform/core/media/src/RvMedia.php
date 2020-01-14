@@ -2,6 +2,7 @@
 
 namespace Botble\Media;
 
+use Botble\Media\Http\Resources\FileResource;
 use Illuminate\Support\Facades\Auth;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
@@ -75,24 +76,6 @@ class RvMedia
     }
 
     /**
-     * @return string
-     * @throws Throwable
-     */
-    public function renderFooter()
-    {
-        return view('core/media::footer')->render();
-    }
-
-    /**
-     * @return string
-     * @throws Throwable
-     */
-    public function renderContent()
-    {
-        return view('core/media::content')->render();
-    }
-
-    /**
      * Get all urls
      * @return array
      */
@@ -112,6 +95,24 @@ class RvMedia
             'global_actions'           => route('media.global_actions'),
             'media_upload_from_editor' => route('media.files.upload.from.editor'),
         ];
+    }
+
+    /**
+     * @return string
+     * @throws Throwable
+     */
+    public function renderFooter()
+    {
+        return view('core/media::footer')->render();
+    }
+
+    /**
+     * @return string
+     * @throws Throwable
+     */
+    public function renderContent()
+    {
+        return view('core/media::content')->render();
     }
 
     /**
@@ -161,6 +162,14 @@ class RvMedia
     }
 
     /**
+     * @return array
+     */
+    public function getSizes(): array
+    {
+        return config('core.media.media.sizes', []);
+    }
+
+    /**
      * @param $fileUpload
      * @param int $folderId
      * @param string $path
@@ -168,6 +177,13 @@ class RvMedia
      */
     public function handleUpload($fileUpload, $folderId = 0, $path = '')
     {
+        if (!$fileUpload) {
+            return [
+                'error'   => true,
+                'message' => __('File is invalid!'),
+            ];
+        }
+
         /**
          * @var UploadedFile $fileUpload
          */
@@ -177,7 +193,8 @@ class RvMedia
             if ($fileUpload->getSize() / 1024 > (int)config('core.media.media.max_file_size_upload')) {
                 return [
                     'error'   => true,
-                    'message' => trans('core/media::media.file_too_big', ['size' => config('core.media.media.max_file_size_upload')]),
+                    'message' => trans('core/media::media.file_too_big',
+                        ['size' => config('core.media.media.max_file_size_upload')]),
                 ];
             }
 
@@ -243,7 +260,7 @@ class RvMedia
 
             return [
                 'error' => false,
-                'data'  => $file,
+                'data'  => new FileResource($file),
             ];
         } catch (Exception $ex) {
             return [
@@ -254,19 +271,19 @@ class RvMedia
     }
 
     /**
-     * @param array $permissions
-     */
-    public function setPermissions(array $permissions)
-    {
-        $this->permissions = $permissions;
-    }
-
-    /**
      * @return array
      */
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * @param array $permissions
+     */
+    public function setPermissions(array $permissions)
+    {
+        $this->permissions = $permissions;
     }
 
     /**
@@ -357,14 +374,6 @@ class RvMedia
         }
 
         return Storage::url($path);
-    }
-
-    /**
-     * @return array
-     */
-    public function getSizes(): array
-    {
-        return config('core.media.media.sizes', []);
     }
 
     /**

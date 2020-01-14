@@ -34,7 +34,6 @@ class UserForm extends FormAbstract
         $roles = $this->roleRepository->pluck('name', 'id');
 
         $this
-            ->setModuleName(USER_MODULE_SCREEN_NAME)
             ->setupModel(new User)
             ->setValidatorClass(CreateUserRequest::class)
             ->setWrapperClass('form-body row')

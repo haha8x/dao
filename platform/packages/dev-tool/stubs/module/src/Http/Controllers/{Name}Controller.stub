@@ -33,7 +33,6 @@ class {Name}Controller extends BaseController
     }
 
     /**
-     * Display all {names}
      * @param {Name}Table $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable

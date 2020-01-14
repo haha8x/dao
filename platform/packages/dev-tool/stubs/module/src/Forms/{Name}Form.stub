@@ -17,7 +17,6 @@ class {Name}Form extends FormAbstract
     public function buildForm()
     {
         $this
-            ->setModuleName({NAME}_MODULE_SCREEN_NAME)
             ->setupModel(new {Name})
             ->setValidatorClass({Name}Request::class)
             ->withCustomFields()

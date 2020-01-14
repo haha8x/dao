@@ -2,6 +2,8 @@
 
 namespace Botble\Media\Http\Controllers;
 
+use Botble\Media\Http\Resources\FileResource;
+use Botble\Media\Http\Resources\FolderResource;
 use Botble\Media\Supports\Zipper;
 use Eloquent;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -79,7 +81,7 @@ class MediaController extends Controller
             return view('core/media::popup');
         }
 
-        return view(config('core.media.media.views.index'));
+        return view('core/media::index');
     }
 
     /**
@@ -156,13 +158,9 @@ class MediaController extends Controller
                 $queried = $this->fileRepository->getFilesByFolderId($request->input('folder_id'), $paramsFile, true,
                     $paramsFolder);
 
-                $folders = $queried->where('is_folder', 1)->map(function ($item) {
-                    return $this->getResponseFolderData($item);
-                })->toArray();
+                $folders = FolderResource::collection($queried->where('is_folder', 1));
 
-                $files = $queried->where('is_folder', 0)->map(function ($item) {
-                    return $this->getResponseFileData($item);
-                })->toArray();
+                $files = FileResource::collection($queried->where('is_folder', 0));
 
                 break;
 
@@ -178,13 +176,9 @@ class MediaController extends Controller
                 $queried = $this->fileRepository->getTrashed($request->input('folder_id'), $paramsFile, true,
                     $paramsFolder);
 
-                $folders = $queried->where('is_folder', 1)->map(function ($item) {
-                    return $this->getResponseFolderData($item);
-                })->toArray();
+                $folders = FolderResource::collection($queried->where('is_folder', 1));
 
-                $files = $queried->where('is_folder', 0)->map(function ($item) {
-                    return $this->getResponseFileData($item);
-                })->toArray();
+                $files = FileResource::collection($queried->where('is_folder', 0));
 
                 break;
 
@@ -201,9 +195,7 @@ class MediaController extends Controller
                     'recent_items' => $request->input('recent_items', []),
                 ]), false, $paramsFolder);
 
-                $files = $queried->map(function ($item) {
-                    return $this->getResponseFileData($item);
-                })->toArray();
+                $files = FileResource::collection($queried);
 
                 break;
             case 'favorites':
@@ -249,13 +241,9 @@ class MediaController extends Controller
                     $queried = $this->fileRepository->getFilesByFolderId($request->input('folder_id'), $paramsFile,
                         true, $paramsFolder);
 
-                    $folders = $queried->where('is_folder', 1)->map(function ($item) {
-                        return $this->getResponseFolderData($item);
-                    })->toArray();
+                    $folders = FolderResource::collection($queried->where('is_folder', 1));
 
-                    $files = $queried->where('is_folder', 0)->map(function ($item) {
-                        return $this->getResponseFileData($item);
-                    })->toArray();
+                    $files = FileResource::collection($queried->where('is_folder', 0));
                 }
 
                 break;
@@ -279,53 +267,6 @@ class MediaController extends Controller
         }
 
         return $result;
-    }
-
-    /**
-     * @param $folder
-     * @return array
-     */
-    protected function getResponseFolderData($folder)
-    {
-        if (empty($folder)) {
-            return [];
-        }
-
-        return [
-            'id'         => $folder->id,
-            'name'       => $folder->name,
-            'created_at' => date_from_database($folder->created_at, 'Y-m-d H:i:s'),
-            'updated_at' => date_from_database($folder->updated_at, 'Y-m-d H:i:s'),
-        ];
-    }
-
-    /**
-     * @param $file
-     * @return array
-     */
-    protected function getResponseFileData($file)
-    {
-        if (empty($file)) {
-            return [];
-        }
-
-        return [
-            'id'         => $file->id,
-            'name'       => $file->name,
-            'basename'   => File::basename($file->url),
-            'url'        => $file->url,
-            'full_url'   => RvMedia::url($file->url),
-            'type'       => $file->type,
-            'icon'       => $file->icon,
-            'thumb'      => $file->type == 'image' ? get_image_url($file->url, 'thumb') : null,
-            'size'       => $file->human_size,
-            'mime_type'  => $file->mime_type,
-            'created_at' => date_from_database($file->created_at, 'Y-m-d H:i:s'),
-            'updated_at' => date_from_database($file->updated_at, 'Y-m-d H:i:s'),
-            'options'    => $file->options,
-            'folder_id'  => $file->folder_id,
-
-        ];
     }
 
     /**

@@ -134,7 +134,7 @@ class BDashboard {
             BDashboard.loadWidget($(event.currentTarget).closest('.portlet').find('.portlet-body'), $(event.currentTarget).closest('.widget_item').attr('data-url'), {paginate: paginate});
         });
 
-        $('#hide-widget-confirm-bttn').click((event) => {
+        $('#hide-widget-confirm-bttn').on('click', (event) => {
             event.preventDefault();
             let name = $(event.currentTarget).data('id');
             $.ajax({

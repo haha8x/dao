@@ -124,11 +124,13 @@ class BaseServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             do_action(BASE_ACTION_INIT);
-            add_action(BASE_ACTION_META_BOXES, [MetaBox::class, 'doMetaBoxes'], 8, 3);
+            add_action(BASE_ACTION_META_BOXES, [MetaBox::class, 'doMetaBoxes'], 8, 2);
 
             $config = $this->app->make('config');
             $config->set([
                 'app.locale' => $config->get('core.base.general.locale', $config->get('app.locale')),
+                'purifier.settings.default.AutoFormat.AutoParagraph' => false,
+                'purifier.settings.default.AutoFormat.RemoveEmpty' => false,
             ]);
         });
 

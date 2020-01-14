@@ -17,7 +17,6 @@ class PasswordForm extends FormAbstract
     public function buildForm()
     {
         $this
-            ->setModuleName(USER_MODULE_SCREEN_NAME)
             ->setupModel(new User)
             ->setValidatorClass(UpdatePasswordRequest::class)
             ->setFormOption('template', 'core/base::forms.form-no-wrap')

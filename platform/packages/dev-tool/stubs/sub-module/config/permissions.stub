@@ -1,5 +1,5 @@
 [
-    'name' => '{Names}',
+    'name' => '{++Names}',
     'flag' => '{-name}.index',
 ],
 [

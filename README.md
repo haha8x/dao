@@ -36,7 +36,13 @@ php artisan cms:plugin:create <plugin name>
 php artisan cms:plugin:activate <plugin name>
 php artisan cms:plugin:deactivate <plugin name>
 php artisan cms:plugin:remove demo
-php artisan make:migration add_collums_to_table --table=demo --path=platform/plugin/demo/database/migrations
+
+php artisan cms:plugin:make:crud demo demo-item
+
+php artisan make:migration create_users_table
+php artisan make:migration create_users_table --create=users
+php artisan make:migration add_votes_to_users_table --table=users
+php artisan make:migration add_collums_to_table --table=demo --path=platform/plugins/demo/database/migrations
 php artisan migrate
 
 cms:make:controller            Make a controller

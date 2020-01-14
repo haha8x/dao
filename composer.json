@@ -12,8 +12,9 @@
         "botble/platform": "*@dev",
         "botble/plugin-management": "*@dev",
         "fideloper/proxy": "^4.0",
-        "laravel/framework": "^6.0",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "laravel/framework": "^6.2",
+        "wikimedia/composer-merge-plugin": "^1.4",
+        "league/flysystem-aws-s3-v3": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
@@ -21,7 +22,7 @@
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0",
-        "laravel/tinker": "^1.0",
+        "laravel/tinker": "^2.0",
         "botble/dev-tool": "*@dev",
         "botble/plugin-generator": "*@dev"
     },

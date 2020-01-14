@@ -83,6 +83,7 @@
 
 @push('footer')
     <script>
+        "use strict";
         $(document).ready(function () {
             $(document).on('change', '#media_driver', function () {
                if ($(this).val() === 's3') {

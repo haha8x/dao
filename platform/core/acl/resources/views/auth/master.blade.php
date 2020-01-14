@@ -1,29 +1,23 @@
 @extends('core/base::layouts.base')
 
 @section('body-class')
-    login
+login
 @stop
 
 @section ('page')
-    <div class="login-wrapper">
-        <div>
-            <div class="content">
-                @yield('content')
-            </div>
-            <div class="copyright">
-                <p>
-                    {!! trans('core/base::layouts.copyright', ['year' => Carbon\Carbon::now()->format('Y'), 'company' => config('core.base.general.base_name'), 'version' => get_cms_version()]) !!}
-                </p>
-                <p>
-                    @foreach (Assets::getAdminLocales() as $key => $value)
-                        <span @if (app()->getLocale() == $key) class="active" @endif>
-                        <a href="{{ route('admin.language', $key) }}">
-                            {!! language_flag($value['flag'], $value['name']) !!} <span>{{ $value['name'] }}</span>
-                        </a>
-                    </span>
-                    @endforeach
-                </p>
-            </div>
+<div class="login-wrapper">
+    <div>
+        <div class="content">
+            @yield('content')
+        </div>
+        <div class="copyright">
+            <!-- <p>
+                Khuyến cáo: "Báo cáo anh/chị nhận được chứa dữ liệu vốn là tài sản của Vpbank, đặc biệt là các thông tin về khách hàng.
+            </p>
+            <p>
+                Kính đề nghị anh/chị lưu ý và cẩn trọng khi sử dụng, lưu trữ và chia sẻ để đảm bảo không gây thất thoát"
+            </p> -->
         </div>
     </div>
+</div>
 @stop

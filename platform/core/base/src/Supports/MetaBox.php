@@ -32,7 +32,7 @@ class MetaBox
      * @param $id
      * @param $title
      * @param $callback
-     * @param null $screen
+     * @param null $reference
      * @param string $context
      * @param string $priority
      * @param null $callback_args
@@ -41,28 +41,28 @@ class MetaBox
         $id,
         $title,
         $callback,
-        $screen = null,
+        $reference = null,
         $context = 'advanced',
         $priority = 'default',
         $callback_args = null
     ) {
-        if (!isset($this->metaBoxes[$screen])) {
-            $this->metaBoxes[$screen] = [];
+        if (!isset($this->metaBoxes[$reference])) {
+            $this->metaBoxes[$reference] = [];
         }
-        if (!isset($this->metaBoxes[$screen][$context])) {
-            $this->metaBoxes[$screen][$context] = [];
+        if (!isset($this->metaBoxes[$reference][$context])) {
+            $this->metaBoxes[$reference][$context] = [];
         }
 
-        foreach (array_keys($this->metaBoxes[$screen]) as $a_context) {
+        foreach (array_keys($this->metaBoxes[$reference]) as $a_context) {
             foreach (['high', 'core', 'default', 'low'] as $a_priority) {
-                if (!isset($this->metaBoxes[$screen][$a_context][$a_priority][$id])) {
+                if (!isset($this->metaBoxes[$reference][$a_context][$a_priority][$id])) {
                     continue;
                 }
 
                 // If a core box was previously added or removed by a plugin, don't add.
                 if ('core' == $priority) {
                     // If core box previously deleted, don't add
-                    if (false === $this->metaBoxes[$screen][$a_context][$a_priority][$id]) {
+                    if (false === $this->metaBoxes[$reference][$a_context][$a_priority][$id]) {
                         return;
                     }
 
@@ -71,8 +71,8 @@ class MetaBox
                      * maintain sort order.
                      */
                     if ('default' == $a_priority) {
-                        $this->metaBoxes[$screen][$a_context]['core'][$id] = $this->metaBoxes[$screen][$a_context]['default'][$id];
-                        unset($this->metaBoxes[$screen][$a_context]['default'][$id]);
+                        $this->metaBoxes[$reference][$a_context]['core'][$id] = $this->metaBoxes[$reference][$a_context]['default'][$id];
+                        unset($this->metaBoxes[$reference][$a_context]['default'][$id]);
                     }
                     return;
                 }
@@ -84,13 +84,13 @@ class MetaBox
                 if (empty($priority)) {
                     $priority = $a_priority;
                 } elseif ('sorted' == $priority) {
-                    $title = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['title'];
-                    $callback = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['callback'];
-                    $callback_args = $this->metaBoxes[$screen][$a_context][$a_priority][$id]['args'];
+                    $title = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['title'];
+                    $callback = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['callback'];
+                    $callback_args = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['args'];
                 }
                 // An id can be in only one priority and one context.
                 if ($priority != $a_priority || $context != $a_context) {
-                    unset($this->metaBoxes[$screen][$a_context][$a_priority][$id]);
+                    unset($this->metaBoxes[$reference][$a_context][$a_priority][$id]);
                 }
             }
         }
@@ -99,11 +99,11 @@ class MetaBox
             $priority = 'low';
         }
 
-        if (!isset($this->metaBoxes[$screen][$context][$priority])) {
-            $this->metaBoxes[$screen][$context][$priority] = [];
+        if (!isset($this->metaBoxes[$reference][$context][$priority])) {
+            $this->metaBoxes[$reference][$context][$priority] = [];
         }
 
-        $this->metaBoxes[$screen][$context][$priority][$id] = [
+        $this->metaBoxes[$reference][$context][$priority][$id] = [
             'id'       => $id,
             'title'    => $title,
             'callback' => $callback,
@@ -114,31 +114,31 @@ class MetaBox
     /**
      * Meta-Box template function
      *
-     * @param string $screen Screen identifier
      * @param string $context box context
      * @param mixed $object gets passed to the box callback function as first parameter
      * @return int number of metaBoxes
      *
      * @throws Throwable
      */
-    public function doMetaBoxes($screen, $context, $object = null)
+    public function doMetaBoxes($context, $object = null)
     {
         $index = 0;
         $data = '';
-        if (isset($this->metaBoxes[$screen][$context])) {
+        $reference = get_class($object);
+        if (isset($this->metaBoxes[$reference][$context])) {
             foreach (['high', 'sorted', 'core', 'default', 'low'] as $priority) {
-                if (!isset($this->metaBoxes[$screen][$context][$priority])) {
+                if (!isset($this->metaBoxes[$reference][$context][$priority])) {
                     continue;
                 }
 
-                foreach ((array)$this->metaBoxes[$screen][$context][$priority] as $box) {
+                foreach ((array)$this->metaBoxes[$reference][$context][$priority] as $box) {
                     if (false == $box || !$box['title']) {
                         continue;
                     }
                     $index++;
                     $data .= view('core/base::elements.forms.meta-box-wrap', [
                         'box'      => $box,
-                        'callback' => call_user_func_array($box['callback'], [$object, $screen, $box]),
+                        'callback' => call_user_func_array($box['callback'], [$object, $reference, $box]),
                     ])->render();
                 }
             }
@@ -153,21 +153,21 @@ class MetaBox
      * Remove a meta box from an edit form.
      *
      * @param string $id String for use in the 'id' attribute of tags.
-     * @param string|object $screen The screen on which to show the box (post, page, link).
+     * @param string|object $reference The screen on which to show the box (post, page, link).
      * @param string $context The context within the page where the boxes should show ('normal', 'advanced').
      */
-    public function removeMetaBox($id, $screen, $context)
+    public function removeMetaBox($id, $reference, $context)
     {
-        if (!isset($this->metaBoxes[$screen])) {
-            $this->metaBoxes[$screen] = [];
+        if (!isset($this->metaBoxes[$reference])) {
+            $this->metaBoxes[$reference] = [];
         }
 
-        if (!isset($this->metaBoxes[$screen][$context])) {
-            $this->metaBoxes[$screen][$context] = [];
+        if (!isset($this->metaBoxes[$reference][$context])) {
+            $this->metaBoxes[$reference][$context] = [];
         }
 
         foreach (['high', 'core', 'default', 'low'] as $priority) {
-            $this->metaBoxes[$screen][$context][$priority][$id] = false;
+            $this->metaBoxes[$reference][$context][$priority][$id] = false;
         }
     }
 
