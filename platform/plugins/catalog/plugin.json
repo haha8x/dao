@@ -1,0 +1,9 @@
+{
+    "name": "Catalog",
+    "namespace": "Botble\\Catalog\\",
+    "provider": "Botble\\Catalog\\Providers\\CatalogServiceProvider",
+    "author": "Sang Nguyen",
+    "url": "https://sangnguyen.info",
+    "version": "1.0",
+    "description": "The description for module catalog"
+}

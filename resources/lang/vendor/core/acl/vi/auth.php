@@ -5,7 +5,7 @@ return [
         [
             'username'          => 'Tên truy cập',
             'password'          => 'Mật khẩu',
-            'title'             => 'Đăng nhập vào quản trị',
+            'title'             => 'Đăng nhập vào hệ thống',
             'remember'          => 'Nhớ mật khẩu?',
             'login'             => 'Đăng nhập',
             'placeholder'       =>

@@ -13,8 +13,7 @@
         "botble/plugin-management": "*@dev",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
-        "wikimedia/composer-merge-plugin": "^1.4",
-        "league/flysystem-aws-s3-v3": "^1.0"
+        "wikimedia/composer-merge-plugin": "^1.4"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

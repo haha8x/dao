@@ -1,11 +1,11 @@
-$bg-color: #364150;
+$bg-color: #ffffff;
 
 .login {
     background-color: $bg-color !important;
 
     .login-wrapper {
         display: flex;
-        // align-items: center;
+        align-items: center;
         justify-content: center;
         background-size: cover;
         height: 100vh;
@@ -23,7 +23,7 @@ $bg-color: #364150;
             text-align: center;
             font-size: 26px;
             color: #ffffff;
-            background: #00c0ef;
+            background: #00873f;
             border-radius: 0;
             margin-bottom: 0;
         }

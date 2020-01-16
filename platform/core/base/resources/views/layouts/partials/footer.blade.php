@@ -1,3 +1,6 @@
+<div class="alert alert-danger" role="alert">
+    Khuyến cáo: "Báo cáo anh/chị nhận được chứa dữ liệu vốn là tài sản của Vpbank, đặc biệt là các thông tin về khách hàng. Kính đề nghị anh/chị lưu ý và cẩn trọng khi sử dụng, lưu trữ và chia sẻ để đảm bảo không gây thất thoát"
+</div>
 <div class="page-footer">
     <div class="page-footer-inner">
         <div class="row">

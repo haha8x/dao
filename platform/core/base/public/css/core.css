@@ -9825,11 +9825,13 @@ select.input-group-lg > .form-control, select.input-group-lg > .input-group-addo
 }
 
 .login {
-  background-color: #364150 !important;
+  background-color: #ffffff !important;
 }
 .login .login-wrapper {
   display: -webkit-box;
   display: flex;
+  -webkit-box-align: center;
+          align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
   background-size: cover;
@@ -9847,7 +9849,7 @@ select.input-group-lg > .form-control, select.input-group-lg > .input-group-addo
   text-align: center;
   font-size: 26px;
   color: #ffffff;
-  background: #00c0ef;
+  background: #00873f;
   border-radius: 0;
   margin-bottom: 0;
 }
@@ -9976,7 +9978,7 @@ select.input-group-lg > .form-control, select.input-group-lg > .input-group-addo
   text-align: center;
   margin: 0 auto 30px 0;
   padding: 10px;
-  color: #7a8ca5;
+  color: white;
   font-size: 13px;
 }
 

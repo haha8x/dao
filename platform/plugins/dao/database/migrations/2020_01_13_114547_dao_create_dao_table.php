@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class DaoCreateDaoRegisterTable extends Migration
+class DaoCreateDaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -39,6 +39,6 @@ class DaoCreateDaoRegisterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dao_registers');
+        Schema::dropIfExists('daos');
     }
 }

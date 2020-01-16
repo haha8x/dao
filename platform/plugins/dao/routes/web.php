@@ -13,12 +13,39 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             ]);
         });
 
-        Route::group(['prefix' => 'dao-registers', 'as' => 'dao-register.'], function () {
-            Route::resource('', 'DaoRegisterController')->parameters(['' => 'dao-register']);
+        Route::group(['prefix' => 'dao/news', 'as' => 'dao-request-new.'], function () {
+            Route::resource('', 'DaoRequestNewController')->parameters(['' => 'dao-request-new']);
             Route::delete('items/destroy', [
                 'as'         => 'deletes',
-                'uses'       => 'DaoRegisterController@deletes',
-                'permission' => 'dao-register.destroy',
+                'uses'       => 'DaoRequestNewController@deletes',
+                'permission' => 'dao-request-new.destroy',
+            ]);
+        });
+
+        Route::group(['prefix' => 'dao/updates', 'as' => 'dao-request-update.'], function () {
+            Route::resource('', 'DaoRequestUpdateController')->parameters(['' => 'dao-request-update']);
+            Route::delete('items/destroy', [
+                'as'         => 'deletes',
+                'uses'       => 'DaoRequestUpdateController@deletes',
+                'permission' => 'dao-request-update.destroy',
+            ]);
+        });
+
+        Route::group(['prefix' => 'dao/transfers', 'as' => 'dao-request-transfer.'], function () {
+            Route::resource('', 'DaoRequestTransferController')->parameters(['' => 'dao-request-transfer']);
+            Route::delete('items/destroy', [
+                'as'         => 'deletes',
+                'uses'       => 'DaoRequestTransferController@deletes',
+                'permission' => 'dao-request-transfer.destroy',
+            ]);
+        });
+
+        Route::group(['prefix' => 'dao/closes', 'as' => 'dao-request-close.'], function () {
+            Route::resource('', 'DaoRequestCloseController')->parameters(['' => 'dao-request-close']);
+            Route::delete('items/destroy', [
+                'as'         => 'deletes',
+                'uses'       => 'DaoRequestCloseController@deletes',
+                'permission' => 'dao-request-close.destroy',
             ]);
         });
 

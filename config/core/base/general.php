@@ -2,13 +2,10 @@
 
 return [
     'admin_dir'                 => env('ADMIN_DIR', 'admin'),
-    'upload'                    => [
-        'base_dir' => public_path('uploads'),
-    ],
     'default-theme'             => env('DEFAULT_THEME', 'default'),
     'base_name'                 => env('APP_NAME', 'Botble Technologies'),
-    'logo'                      => '/vendor/core/images/logo_white.png',
-    'favicon'                   => '/vendor/core/images/favicon.png',
+    'logo'                      => '/storage/vpbank.png',
+    'favicon'                   => '/storage/favicon.ico',
     'editor'                    => [
         'ckeditor' => [
             'js' => [
@@ -38,12 +35,12 @@ return [
         'date'      => 'd/m/Y',
         'date_time' => 'd/m/Y H:i:s',
         'js'        => [
-            'date'      => 'dd/mm/yyyy',
-            'date_time' => 'dd/mm/yyyy H:i:s',
+            'date'      => 'dd-mm-yyyy',
+            'date_time' => 'dd-mm-yyyy H:i:s',
         ],
     ],
     'cache_site_map'            => env('ENABLE_CACHE_SITE_MAP', false),
     'public_single_ending_url'  => env('PUBLIC_SINGLE_ENDING_URL', null),
     'send_mail_using_job_queue' => env('SEND_MAIL_USING_JOB_QUEUE', false),
-    'locale'                    => env('APP_LOCALE', 'en'),
+    'locale'                    => env('APP_LOCALE', 'vi'),
 ];

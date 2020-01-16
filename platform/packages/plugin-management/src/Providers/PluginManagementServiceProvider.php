@@ -101,9 +101,9 @@ class PluginManagementServiceProvider extends ServiceProvider
                 ->registerItem([
                     'id'          => 'cms-core-plugins',
                     'priority'    => 997,
-                    'parent_id'   => null,
+                    'parent_id'   => 'cms-core-platform-administration',
                     'name'        => 'core/base::layouts.plugins',
-                    'icon'        => 'fa fa-plug',
+                    'icon'        => null,
                     'url'         => route('plugins.index'),
                     'permissions' => ['plugins.index'],
                 ]);

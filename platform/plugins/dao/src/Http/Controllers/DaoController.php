@@ -71,7 +71,7 @@ class DaoController extends BaseController
 
         return $response
             ->setPreviousUrl(route('dao.index'))
-            ->setNextUrl(route('dao.edit', $dao->id))
+            ->setNextUrl(route('dao.edit', $dao-request->id))
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
@@ -89,7 +89,7 @@ class DaoController extends BaseController
 
         event(new BeforeEditContentEvent($request, $dao));
 
-        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $dao->name . '"');
+        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $dao-request->name . '"');
 
         return $formBuilder->create(DaoForm::class, ['model' => $dao])->renderForm();
     }
@@ -103,7 +103,7 @@ class DaoController extends BaseController
     {
         $dao = $this->daoRepository->findOrFail($id);
 
-        $dao->fill($request->input());
+        $dao-request->fill($request->input());
 
         $this->daoRepository->createOrUpdate($dao);
 

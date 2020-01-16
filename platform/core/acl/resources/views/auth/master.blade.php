@@ -7,6 +7,11 @@ login
 @section ('page')
 <div class="login-wrapper">
     <div>
+        <div style="text-align: center;">
+            <a href="{{ route('dashboard.index') }}">
+                <img src="{{ setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('core.base.general.logo')) }}" alt="logo" class="logo-default" style="max-height: 90px;" />
+            </a>
+        </div>
         <div class="content">
             @yield('content')
         </div>

@@ -51,20 +51,11 @@ class CustomerTable extends TableAbstract
     {
         $data = $this->table
             ->eloquent($this->query())
-            ->editColumn('name', function ($item) {
-                if (!Auth::user()->hasPermission('customer.edit')) {
-                    return $item->name;
-                }
-                return anchor_link(route('customer.edit', $item->id), $item->name);
-            })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
-            ->editColumn('created_at', function ($item) {
-                return date_from_database($item->created_at, config('core.base.general.date_format.date'));
-            })
-            ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
+            ->editColumn('open_date', function ($item) {
+                return date_from_database($item->open_date, config('core.base.general.date_format.date'));
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -86,9 +77,13 @@ class CustomerTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'customers.id',
+            'customers.acctno',
+            'customers.cif',
             'customers.name',
-            'customers.created_at',
-            'customers.status',
+            'customers.product_name',
+            'customers.branch_code',
+            'customers.dao',
+            'customers.open_date',
         ]);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
@@ -106,20 +101,40 @@ class CustomerTable extends TableAbstract
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
             ],
-            'name' => [
-                'name'  => 'customers.name',
-                'title' => trans('core/base::tables.name'),
+            'acctno' => [
+                'name'  => 'customers.acctno',
+                'title' => __('ACCTNO'),
                 'class' => 'text-left',
             ],
-            'created_at' => [
-                'name'  => 'customers.created_at',
-                'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
+            'cif' => [
+                'name'  => 'customers.cif',
+                'title' => __('CIF'),
+                'class' => 'text-left',
             ],
-            'status' => [
-                'name'  => 'customers.status',
-                'title' => trans('core/base::tables.status'),
-                'width' => '100px',
+            'name' => [
+                'name'  => 'customers.name',
+                'title' => __('Khách hàng'),
+                'class' => 'text-left',
+            ],
+            'product_name' => [
+                'name'  => 'customers.product_name',
+                'title' => __('Sản phẩm'),
+                'class' => 'text-left',
+            ],
+            'branch_code' => [
+                'name'  => 'customers.branch_code',
+                'title' => __('Chi nhánh'),
+                'class' => 'text-left',
+            ],
+            'dao' => [
+                'name'  => 'customers.dao',
+                'title' => __('DAO'),
+                'class' => 'text-left',
+            ],
+            'open_date' => [
+                'name'  => 'customers.open_date',
+                'title' => __('Ngày mở'),
+                'class' => 'text-left',
             ],
         ];
     }
