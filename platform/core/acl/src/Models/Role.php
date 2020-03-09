@@ -4,6 +4,8 @@ namespace Botble\ACL\Models;
 
 use Botble\ACL\Traits\PermissionTrait;
 use Botble\Base\Models\BaseModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends BaseModel
 {
@@ -59,7 +61,7 @@ class Role extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function users()
     {
@@ -67,7 +69,7 @@ class Role extends BaseModel
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function author()
     {

@@ -5,6 +5,7 @@ namespace Botble\Table\Supports;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Events\BeforeSheet;
+use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
@@ -29,7 +30,7 @@ class TableExportHandler extends DataTablesExportHandler implements WithEvents
 
     /**
      * @param BeforeSheet $event
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     protected function beforeSheet(BeforeSheet $event)
     {
@@ -56,7 +57,7 @@ class TableExportHandler extends DataTablesExportHandler implements WithEvents
 
     /**
      * @param AfterSheet $event
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     protected function afterSheet(AfterSheet $event)
     {

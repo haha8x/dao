@@ -4,7 +4,7 @@ use Illuminate\Support\Arr;
 
 if (!function_exists('add_filter')) {
     /**
-     * @param $hook
+     * @param string$hook
      * @param $callback
      * @param int $priority
      * @param int $arguments
@@ -17,7 +17,7 @@ if (!function_exists('add_filter')) {
 
 if (!function_exists('remove_filter')) {
     /**
-     * @param $hook
+     * @param string $hook
      */
     function remove_filter($hook)
     {

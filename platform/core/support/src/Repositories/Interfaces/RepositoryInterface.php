@@ -2,6 +2,8 @@
 
 namespace Botble\Support\Repositories\Interfaces;
 
+use Eloquent;
+use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
@@ -26,7 +28,7 @@ interface RepositoryInterface
 
     /**
      * Get empty model.
-     * @return \Eloquent|Model
+     * @return Eloquent|Model
      */
     public function getModel();
 
@@ -116,7 +118,7 @@ interface RepositoryInterface
      *
      * @param Model $model
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(Model $model);
 
@@ -143,8 +145,8 @@ interface RepositoryInterface
 
     /**
      * @param array $condition
-     * @throws \Exception
      * @return mixed
+     * @throws Exception
      */
     public function deleteBy(array $condition = []);
 

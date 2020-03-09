@@ -1,452 +1,179 @@
-.pace .pace-progress {
-    background-color: #da0523;
-}
-
-.logo {
-    display: none;
-}
-
-.navbar-inverse .navbar-nav .open .dropdown-menu>li>a:hover {
-    color: #ffffff;
-}
-
-.user-menu>a {
-    background: url("/vendor/core/images/ui/nav_arrow_right.png") no-repeat 240px #2a2b31;
-}
-
-.navigation>li {
-    border-top: 1px solid #222222;
-    background-color: #00873f;
-
-    &:hover>a {
-        border-left: 3px solid #43b1d6;
-        background-color: #2c3a42;
-    }
-
-    &.active {
-
-        &:focus>a,
-        &:hover>a,
-        >a {
-            background-color: #00873f;
-        }
-    }
-}
-
-.dropdown-menu>li>a {
-
-    &:hover,
-    &:focus {
-        outline: 0;
-        color: #ffffff;
-        background-color: #FFFFFF;
-        box-shadow: 1px 0 0 #FFFFFF, -1px 0 0 #FFFFFF;
-    }
-}
-
-.panel-primary {
-    border-color: black;
-
-    >.panel-heading {
-        background-color: black;
-    }
-}
-
-.panel-info {
-    border-color: #00c6ff;
-
-    >.panel-heading {
-        background-color: #00c6ff;
-    }
-}
-
-.btn-info {
-    background-color: #00c6ff;
-    border-color: #00c6ff;
-
-    &:hover {
-        background-color: #00addf;
-        border-color: #00addf;
-    }
-}
-
-.bg-info {
-    color: #ffffff;
-    background-color: #00c6ff;
-
-    a {
-        color: #ffffff;
-        background-color: #00c6ff;
-    }
-}
-
-.btn-primary {
-    border-color: #00873f;
-}
-
-body,
-h1,
-.h1,
-h2,
-.h2,
-h3,
-.h3 {
-    font-family: Roboto, sans-serif;
-}
-
-h3,
-.h3 {
-    color: #FFFFFF;
-}
-
-body#login {
-    background-color: black;
-
-    .navbar {
-        display: none;
-    }
-}
-
-.btn-primary {
-    background-color: #00873f;
-
-    &:hover {
-        background-color: #00873f;
-    }
-}
-
-.btn-danger {
-    background-color: #da0523;
-    border-color: #da0523;
-
-    &:hover {
-        background-color: #a90018;
-    }
-}
-
-.fc-next-button,
-.fc-prev-button {
-    background-color: #FFFFFF;
-}
-
-.fc-next-button:hover,
-.fc-prev-button:hover {
-    background-color: #da0523;
-}
-
-.fc-state-down,
-.fc-state-active {
-    color: #ffffff;
-    background-color: #da0523;
-}
-
-.navbar-inverse {
-    background-color: #ffffff;
-}
-
-.navbar-brand {
-    background-color: #00873f;
-    margin: 0;
-}
-
-.navigation {
-    border-bottom: 1px solid #00873f;
-}
-
-.navbar-inverse .navbar-toggle {
-
-    &:hover,
-    &:focus {
-        background-color: #da0523;
-    }
-}
-
-.navbar-default .navbar-toggle {
-
-    &:hover,
-    &:focus {
-        background-color: #da0523;
-    }
-}
-
-@media screen and (min-width: 1224px) {
-    .shortcuts_dashboard {
-        display: none;
-    }
-}
-
-/* Override the Login Box Styles*/
-
-.popup-header {
-    background-color: #FFFFFF;
-}
-
-/* Media Query*/
-@media (max-width: 767px) {
-    .navbar-brand {
-        background-repeat: no-repeat;
-        background-position: left;
-        background-color: #FFFFFF;
-    }
-}
-
-.logo {
-    display: none;
-}
-
-.sidebar {
-    background-color: #00873f;
-}
-
-.user-menu>a {
-    background: url("/vendor/core/images/ui/nav_arrow_right.png") no-repeat 240px #222222;
-}
-
-.navigation>li {
-    border-top: 1px solid #00873f;
-}
-
-.top-menu .navbar-nav .dropdown-header-name {
-    color: #000000 !important;
-}
-
-.navigation>li {
-    &:hover>a {
-        border-left: 3px solid #da0523;
-        background-color: #00873f;
-        color: #ffffff;
-
-        >i {
-            color: #ffffff;
-        }
-    }
-
-    &.active {
-        &:hover>a>i {
-            color: #ffffff;
-        }
-
-        &:focus>a,
-        &:hover>a,
-        >a {
-            background-color: #da0523;
-            color: #ffffff;
-            border-color: #da0523;
-        }
-    }
-}
-
-@media (max-width: 991px) {
-    .navbar-inverse .navbar-nav {
-        background-color: #FFFFFF;
-    }
-}
-
-@media (max-width: 479px) {
-    #table_data_collection_wrapper tbody tr td {
-
-        &:nth-child(2),
-        &:nth-child(3) {
-            display: none;
-        }
-    }
-
-    #table_data_collection_length {
-        display: none;
-    }
-
-    .label {
-        font-size: 14px;
-        margin-top: 5px;
-    }
-
-    label {
-        display: block;
-        margin-top: 5px;
-    }
-
-    .fc-toolbar {
-        .fc-left {
-            float: none;
-        }
-
-        .fc-center {
-            padding-top: 10px;
-        }
-
-        .fc-right {
-            float: none;
-        }
-    }
-
-    .fc button {
-        padding: 0 0.8em;
-    }
-
-    .panel-default>.panel-heading {
-        padding-bottom: 5px;
-    }
-
-    .page-header small {
-        line-height: normal;
-    }
-}
-
-.header-buttons {
-    margin: 23px 0;
-}
-
-.navbar-inverse .navbar-nav .open .dropdown-menu>li>a {
-
-    &:hover,
-    &:focus {
-        background-color: #FFFFFF;
-        box-shadow: 1px 0 0 #FFFFFF, -1px 0 0 #FFFFFF;
-    }
-}
-
-.nav-list>li.nav-header {
-    background-color: #FFFFFF;
-}
-
-.navbar-inverse .navbar-nav>li>a>.label {
-    background-color: #da0523;
-}
-
-.crossfit_footer_logo span {
-    display: block;
-    background-position: top center;
-    background-repeat: no-repeat;
-    height: 55px;
-    margin-top: 15px;
-}
-
-.sidebar-narrow {
-    li.crossfit_footer_logo {
-        display: none;
-    }
-
-    .navigation>li>ul {
-        background-color: #00873f;
-    }
-}
-
-.panel-primary>.panel-heading {
-    background-color: #FFFFFF;
-    border-bottom: 0 none;
-    color: #ffffff;
-}
-
-.shortcuts_dashboard {
-    display: block;
-}
-
-.bg-primary {
-    background-color: #FFFFFF;
-    color: #ffffff;
-
-    a {
-        background-color: #FFFFFF;
-        color: #ffffff;
-    }
-}
-
-.bg-danger {
-    background-color: #da0523;
-    color: #ffffff;
-
-    a {
-        background-color: #da0523;
-        color: #ffffff;
-    }
-}
-
-.info-blocks {
-    text-align: left;
-}
-
-.bg-default {
-    background-color: #e8e8e8;
-    color: #6b6b6b;
-
-    a {
-        background-color: #e8e8e8;
-        color: #6b6b6b;
-    }
-}
-
-/* ipad ladscape view */
-@media only screen and (min-width: 768px) and (max-width: 1070px) {
-    .page-header small {
-        color: white;
-    }
-
-    .sidebar-narrow {
-        .sidebar {
-            display: none;
-        }
-
-        .page-content {
-            margin-left: 25px;
-        }
-    }
-
-    li.language {
-        display: none;
-    }
-
-    .page-title h3 {
-        color: white;
-    }
-
-    .footer {
-        border-top: none;
-        color: #ffffff;
-    }
-}
-
-/* Ipad landscape */
-@media (max-width: 767px) {
-    li.language {
-        display: none;
-    }
-
-    .page-title h3 {
-        color: white;
-    }
-
-    .footer {
-        border-top: none;
-        color: #ffffff;
-    }
-}
-
-/* Ipad portrait */
-@media only screen and (min-width: 768px) and (max-width: 1070px) {
-    .footer {
-        border-top: none;
-        color: #ffffff;
-    }
-}
-
-/* Mobile view*/
-@media only screen and (min-width: 320px) and (max-width: 568px) {
-    .navbar-toggle {
-        margin: 12px 0 0 4px;
-    }
-
-    .page-header small {
-        color: white;
-    }
-
-    .footer {
-        border-top: none;
-        color: #ffffff;
-    }
-}
-
-@media (max-width: 768px) {
-    .page-header-top.navbar.navbar-inverse .top-menu .navbar-nav {
-        background-color: #303d44;
-    }
-}
+// Theme Colors Settigns
+
+// Main settings
+$theme-name: "default";
+$brand-main-color: #d64635 !default;
+$brand-main-font-color: #ffffff !default;
+
+// Body and header    
+$bg-color: #3d3d3d !default;
+$header-bg-color: #1f1f1f !default;
+$header-toggler-color: lighten($header-bg-color, 40%) !default;
+$header-toggler-bg-color: darken($bg-color, 5%) !default;
+
+// Mega Menu 
+$header-hor-menu-bg-color: $header-bg-color;
+$header-hor-menu-fixed-border-box: 0px 1px 10px 0px rgba($header-hor-menu-bg-color, 0.2);
+
+//** Default Mega Menu
+$header-hor-menu-mega-menu-header-font-color: lighten($header-hor-menu-bg-color, 65%);
+
+$header-hor-menu-default-link-font-color: lighten($header-hor-menu-bg-color, 65%);
+$header-hor-menu-default-link-font-color-on-hover: lighten($header-hor-menu-default-link-font-color, 5%);
+$header-hor-menu-default-link-font-color-on-active: lighten($header-hor-menu-default-link-font-color, 30%);
+
+$header-hor-menu-default-link-icon-color: lighten($header-hor-menu-bg-color, 35%);
+$header-hor-menu-default-link-icon-color-on-hover: lighten($header-hor-menu-default-link-icon-color, 5%);
+$header-hor-menu-default-link-icon-color-on-active: lighten($header-hor-menu-default-link-icon-color, 30%);
+
+$header-hor-menu-default-link-bg-color-on-hover: lighten($header-bg-color, 10%);
+$header-hor-menu-default-link-bg-color-on-active: $brand-main-color;
+
+// Default Mega Menu Sub Menu 
+$header-hor-menu-dropdown-menu-bg-color: $header-hor-menu-default-link-bg-color-on-hover;
+$header-hor-menu-box-shadow: 5px 5px rgba($header-hor-menu-dropdown-menu-bg-color, 0.2);
+
+$header-hor-menu-dropdown-menu-link-bg-color-on-active: lighten($header-hor-menu-default-link-bg-color-on-hover, 4%);
+$header-hor-menu-dropdown-menu-link-bg-color-on-hover: lighten($header-hor-menu-default-link-bg-color-on-hover, 4%);
+
+$header-hor-menu-dropdown-menu-link-font-color: lighten($header-hor-menu-bg-color, 60%);
+$header-hor-menu-dropdown-menu-link-font-color-on-hover: lighten($header-hor-menu-dropdown-menu-link-font-color, 14%);
+$header-hor-menu-dropdown-menu-link-font-color-on-active: lighten($header-hor-menu-dropdown-menu-link-font-color, 14%);
+
+$header-hor-menu-dropdown-menu-link-icon-color: lighten($header-hor-menu-dropdown-menu-link-font-color, 0%);
+$header-hor-menu-dropdown-menu-link-icon-color-on-hover: lighten($header-hor-menu-dropdown-menu-link-icon-color, 14%);
+$header-hor-menu-dropdown-menu-link-icon-color-on-active: lighten($header-hor-menu-dropdown-menu-link-icon-color, 14%);
+
+//** Light Mega Menu
+$header-light-hor-menu-mega-menu-header-font-color: #666666;
+
+$header-light-hor-menu-default-link-font-color: $header-hor-menu-default-link-font-color;
+$header-light-hor-menu-default-link-font-color-on-hover: $header-hor-menu-default-link-font-color-on-hover;
+$header-light-hor-menu-default-link-font-color-on-active: $header-hor-menu-default-link-font-color-on-active;
+
+$header-light-hor-menu-default-link-icon-color: $header-hor-menu-default-link-icon-color;
+$header-light-hor-menu-default-link-icon-color-on-hover: $header-hor-menu-default-link-icon-color-on-hover;
+$header-light-hor-menu-default-link-icon-color-on-active: $header-hor-menu-default-link-icon-color-on-active;
+
+$header-light-hor-menu-default-link-bg-color-on-hover: $header-hor-menu-default-link-bg-color-on-hover;
+$header-light-hor-menu-default-link-bg-color-on-active: $header-hor-menu-default-link-bg-color-on-active;
+
+$header-light-hor-menu-default-link-bg-color-on-onen: lighten(#fafafc, 2%);
+$header-light-hor-menu-default-link-font-color-on-onen: #333333;
+$header-light-hor-menu-default-link-icon-color-on-onen: #333333;
+
+// Light Mega Menu Sub Menu 
+$header-light-hor-menu-dropdown-menu-bg-color: $header-light-hor-menu-default-link-bg-color-on-onen;
+$header-light-hor-menu-box-shadow: 5px 5px rgba(#666, 0.1);
+
+$header-light-hor-menu-dropdown-menu-link-bg-color-on-active: darken($header-light-hor-menu-dropdown-menu-bg-color, 4%);
+$header-light-hor-menu-dropdown-menu-link-bg-color-on-hover: darken($header-light-hor-menu-dropdown-menu-bg-color, 4%);
+
+$header-light-hor-menu-dropdown-menu-link-font-color: #000000;
+$header-light-hor-menu-dropdown-menu-link-font-color-on-hover: #000000;
+$header-light-hor-menu-dropdown-menu-link-font-color-on-active: #000000;
+
+$header-light-hor-menu-dropdown-menu-link-icon-color: #888888;
+$header-light-hor-menu-dropdown-menu-link-icon-color-on-hover: #666666;
+$header-light-hor-menu-dropdown-menu-link-icon-color-on-active: #666666;
+
+// Header search
+$header-search-bg-color: darken($header-bg-color, 4%) !default;
+$header-search-bg-hover-color: $header-hor-menu-default-link-bg-color-on-hover !default;
+$header-search-bg-color-on-open: $header-search-bg-hover-color !default;
+$header-search-font-color: #999999 !default;
+$header-search-placeholder-font-color: darken($header-search-font-color, 1%) !default;
+
+// Top menu
+$header-top-menu-bg-hover-color: $header-hor-menu-default-link-bg-color-on-hover !default;
+$header-top-menu-bg-hover-color-on-dropdown-open: $header-hor-menu-default-link-bg-color-on-hover !default;
+$header-top-menu-badge-bg-color: $brand-main-color;
+$header-top-menu-badge-font-color: #ffffff;
+$header-top-menu-icon-font-color: #999999 !default;
+
+// Top menu user bar
+$header-top-menu-user-font-color: $header-hor-menu-default-link-font-color !default;
+$header-top-menu-user-bg-color: $header-search-bg-color !default;
+
+//begin: Top Menu Extended Dropdowns
+$header-top-menu-extended-dropdown-item-bg-color-on-hover: #f8f9fa;
+$header-top-menu-extended-dropdown-item-border-color: #eff2f6;
+$header-top-menu-extended-dropdown-item-font-color: #888888;
+
+$header-top-menu-extended-dropdown-header-bg-color: darken(#f7f8fa, 4%);
+$header-top-menu-extended-dropdown-border-color: darken($header-top-menu-extended-dropdown-header-bg-color, 1%);
+$header-top-menu-extended-dropdown-header-font-color: darken(#6f949c, 5%);
+
+$header-top-menu-inbox-dropdown-from-font-color: #5b9bd1;
+
+$header-top-menu-task-dropdown-progress-bg-color: #dfe2e9;
+
+$header-top-menu-notification-time-bg-color: lighten(#eeeeee, 1%);
+
+// Top Menu Notifications
+$header-top-menu-dropdown-dark-bg-color: lighten($header-hor-menu-bg-color, 10%);
+$header-top-menu-dropdown-dark-header-bg-color: lighten($header-hor-menu-bg-color, 2%);
+$header-top-menu-dropdown-dark-header-font-color: lighten($header-top-menu-dropdown-dark-header-bg-color, 50%);
+
+$header-top-menu-dropdown-dark-item-font-color: lighten($header-top-menu-dropdown-dark-header-bg-color, 55%);
+$header-top-menu-dropdown-dark-item-border-color: lighten($header-top-menu-dropdown-dark-bg-color, 6%);
+$header-top-menu-dropdown-dark-item-icon-color: lighten($header-top-menu-dropdown-dark-header-bg-color, 45%);
+$header-top-menu-dropdown-dark-item-bg-color-on-hover: lighten($header-top-menu-dropdown-dark-bg-color, 4%);
+
+$header-top-menu-dropdown-dark-default-menu-divider: $header-top-menu-dropdown-dark-item-border-color;
+$header-top-menu-dropdown-dark-notification-time-bg-color: darken($header-top-menu-dropdown-dark-bg-color, 5%);
+//end: Top Menu Extended Dropdowns
+
+// Sidebar menu
+$sidebar-menu-devider-border-color: darken(#4d4d4d, 2%) !default;
+
+$sidebar-menu-link-font-color: #d9d9d9 !default;
+$sidebar-menu-link-font-color-on-hover: $sidebar-menu-link-font-color !default;
+$sidebar-menu-link-font-color-on-active: #ffffff !default;
+
+$sidebar-menu-link-icon-font-color: #888888 !default;
+$sidebar-menu-link-icon-font-color-on-active: $sidebar-menu-link-font-color-on-active !default;
+$sidebar-menu-link-icon-font-color-on-hover: $sidebar-menu-link-icon-font-color !default;
+
+$sidebar-menu-link-bg-color-on-hover: #303030 !default;
+$sidebar-menu-link-bg-color-on-active: $brand-main-color;
+
+$sidebar-menu-arrow-color: #777777 !default;
+$sidebar-menu-arrow-color-on-active: $sidebar-menu-link-font-color-on-active !default;
+$sidebar-menu-arrow-color-on-hover: $sidebar-menu-link-icon-font-color-on-hover !default;
+
+$sidebar-menu-sub-menu-box-shadow-color: $sidebar-menu-link-bg-color-on-hover !default;
+$sidebar-menu-sub-menu-link-font-color: #bdbdbd !default;
+$sidebar-menu-sub-menu-link-icon-font-color: $sidebar-menu-arrow-color !default;
+$sidebar-menu-sub-menu-link-bg-color-on-hover: lighten($bg-color, 4%) !default;
+$sidebar-menu-sub-menu-link-icon-font-color-on-hover: $sidebar-menu-link-icon-font-color-on-hover !default;
+
+$sidebar-menu-hover-sub-menu-bg-color: lighten($sidebar-menu-link-bg-color-on-hover, 4%) !default;
+
+// Sidebar for mobile
+$mobile-sidebar-menu-bg-color: darken($bg-color, 7%) !default;
+$mobile-sidebar-menu-link-bg-color-on-hover: darken($bg-color, 4%) !default;
+
+// Light sidebar menu
+$light-sidebar-menu-link-border-color: $brand-main-color !default;
+$light-sidebar-menu-link-bg-color-on-hover: lighten($bg-color, 2%) !default;
+$light-sidebar-menu-link-bg-color-on-active: lighten($bg-color, 4%) !default;
+$light-sidebar-menu-link-font-color-on-active: #f1f1f1 !default;
+$light-sidebar-menu-link-icon-color-on-active: #eeeeee !default;
+$light-sidebar-menu-link-arrow-color-on-active: #eeeeee !default;
+
+$light-sidebar-menu-sub-menu-bg-color: lighten($bg-color, 2%) !default;
+$light-sidebar-menu-sub-menu-link-bg-color-on-hover: lighten($bg-color, 4%) !default;
+
+$mobile-light-sidebar-menu-sub-menu-bg-color: $mobile-sidebar-menu-bg-color !default;
+$mobile-light-sidebar-menu-link-bg-color-on-hover: lighten($mobile-sidebar-menu-bg-color, 3%) !default;
+$mobile-light-sidebar-menu-link-bg-color-on-active: lighten($mobile-sidebar-menu-bg-color, 3%) !default;
+$mobile-light-sidebar-menu-sub-menu-link-bg-color-on-hover: lighten($mobile-sidebar-menu-bg-color, 3%) !default;
+
+// Footer
+$footer-default-font-color: lighten($bg-color, 40%) !default;
+$footer-default-go-top-bg-color: lighten($bg-color, 7%) !default;
+$footer-default-go-top-icon-font-color: lighten($bg-color, 30%) !default;
+$footer-fixed-bg-color: darken($bg-color, 7%) !default;
+
+@import '_base';

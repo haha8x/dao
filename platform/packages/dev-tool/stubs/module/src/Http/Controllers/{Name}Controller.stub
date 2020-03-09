@@ -39,7 +39,6 @@ class {Name}Controller extends BaseController
      */
     public function index({Name}Table $table)
     {
-
         page_title()->setTitle(trans('{types}/{-module}::{-name}.name'));
 
         return $table->renderTable();
@@ -57,7 +56,7 @@ class {Name}Controller extends BaseController
     }
 
     /**
-     * Insert new {Name} into database
+     * Create new item
      *
      * @param {Name}Request $request
      * @return BaseHttpResponse

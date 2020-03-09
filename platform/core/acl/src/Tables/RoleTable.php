@@ -3,11 +3,14 @@
 namespace Botble\ACL\Tables;
 
 use Botble\ACL\Models\Role;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Repositories\Interfaces\RoleInterface;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Throwable;
 use Yajra\DataTables\DataTables;
 
 class RoleTable extends TableAbstract
@@ -56,7 +59,7 @@ class RoleTable extends TableAbstract
     /**
      * Display ajax response.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @since 2.1
      */
@@ -92,7 +95,7 @@ class RoleTable extends TableAbstract
     /**
      * Get the query object to be processed by the table.
      *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Query\Builder|Builder
      *
      * @since 2.1
      */
@@ -150,8 +153,8 @@ class RoleTable extends TableAbstract
     /**
      * @return array
      *
+     * @throws Throwable
      * @since 2.1
-     * @throws \Throwable
      */
     public function buttons()
     {
@@ -162,7 +165,7 @@ class RoleTable extends TableAbstract
 
     /**
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function bulkActions(): array
     {

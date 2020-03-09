@@ -3,6 +3,7 @@
 namespace Botble\Media;
 
 use Botble\Media\Http\Resources\FileResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Botble\Media\Repositories\Interfaces\MediaFolderInterface;
@@ -83,7 +84,7 @@ class RvMedia
     {
         return [
             'base_url'                 => asset(''),
-            'base'                     => config('core.media.media.route.prefix') ? url(config('core.media.media.route.prefix')) : url(''),
+            'base'                     => route('media.index'),
             'get_media'                => route('media.list'),
             'create_folder'            => route('media.folders.create'),
             'get_quota'                => route('media.quota'),
@@ -118,7 +119,7 @@ class RvMedia
     /**
      * @param $data
      * @param null $message
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function responseSuccess($data, $message = null)
     {
@@ -134,7 +135,7 @@ class RvMedia
      * @param array $data
      * @param null $code
      * @param int $status
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function responseError($message, $data = [], $code = null, $status = 200)
     {
@@ -173,14 +174,14 @@ class RvMedia
      * @param $fileUpload
      * @param int $folderId
      * @param string $path
-     * @return \Illuminate\Http\JsonResponse|array
+     * @return JsonResponse|array
      */
     public function handleUpload($fileUpload, $folderId = 0, $path = '')
     {
         if (!$fileUpload) {
             return [
                 'error'   => true,
-                'message' => __('File is invalid!'),
+                'message' => trans('core/media::media.can_not_detect_file_type'),
             ];
         }
 
@@ -199,6 +200,13 @@ class RvMedia
             }
 
             $fileExtension = $fileUpload->getClientOriginalExtension();
+
+            if (!in_array($fileExtension, explode(',', config('core.media.media.allowed_mime_types')))) {
+                return [
+                    'error'   => true,
+                    'message' => trans('core/media::media.can_not_detect_file_type'),
+                ];
+            }
 
             $file->name = $this->fileRepository->createName(File::name($fileUpload->getClientOriginalName()),
                 $folderId);

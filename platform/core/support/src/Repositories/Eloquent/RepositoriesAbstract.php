@@ -184,7 +184,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
         }
         foreach ($where as $field => $value) {
             if (is_array($value)) {
-                list($field, $condition, $val) = $value;
+                [$field, $condition, $val] = $value;
                 switch (strtoupper($condition)) {
                     case 'IN':
                         $newModel = $newModel->whereIn($field, $val);

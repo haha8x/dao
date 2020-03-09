@@ -6,6 +6,7 @@ use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Dashboard\Supports\DashboardWidgetInstance;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
+use Throwable;
 
 class HookServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,7 @@ class HookServiceProvider extends ServiceProvider
      * @param array $widgets
      * @param Collection $widgetSettings
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function addUserStatsWidget($widgets, $widgetSettings)
     {

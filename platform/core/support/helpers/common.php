@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 if (!function_exists('format_time')) {
     /**
@@ -59,7 +60,7 @@ if (!function_exists('get_file_data')) {
      * @param string $file
      * @param bool $toArray
      * @return bool|mixed
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     function get_file_data($file, $toArray = true)
     {

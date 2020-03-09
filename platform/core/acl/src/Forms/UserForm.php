@@ -6,6 +6,7 @@ use Botble\ACL\Http\Requests\CreateUserRequest;
 use Botble\ACL\Models\User;
 use Botble\ACL\Repositories\Interfaces\RoleInterface;
 use Botble\Base\Forms\FormAbstract;
+use Throwable;
 
 class UserForm extends FormAbstract
 {
@@ -17,7 +18,7 @@ class UserForm extends FormAbstract
     /**
      * UserForm constructor.
      * @param RoleInterface $roleRepository
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function __construct(RoleInterface $roleRepository)
     {
@@ -27,7 +28,7 @@ class UserForm extends FormAbstract
 
     /**
      * @return mixed|void
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function buildForm()
     {

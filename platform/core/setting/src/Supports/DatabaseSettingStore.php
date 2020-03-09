@@ -2,14 +2,16 @@
 
 namespace Botble\Setting\Supports;
 
+use Botble\Base\Supports\Helper;
 use Closure;
 use Exception;
 use File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Schema;
 use UnexpectedValueException;
 
 class DatabaseSettingStore extends SettingStore
@@ -17,7 +19,7 @@ class DatabaseSettingStore extends SettingStore
     /**
      * The database connection instance.
      *
-     * @var \Illuminate\Database\Connection
+     * @var Connection
      */
     protected $connection;
 
@@ -62,7 +64,7 @@ class DatabaseSettingStore extends SettingStore
     protected $extraColumns = [];
 
     /**
-     * @param \Illuminate\Database\Connection $connection
+     * @param Connection $connection
      * @param string $table
      * @param null $keyColumn
      * @param null $valueColumn
@@ -207,7 +209,7 @@ class DatabaseSettingStore extends SettingStore
      * database. Call array_dot on a multidimensional array before passing it
      * into this method!
      *
-     * @param  array $data Call array_dot on a multidimensional array before passing it into this method!
+     * @param array $data Call array_dot on a multidimensional array before passing it into this method!
      *
      * @return array
      */
@@ -233,12 +235,12 @@ class DatabaseSettingStore extends SettingStore
 
     /**
      * {@inheritdoc}
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function read()
     {
         if (!$this->connectedDatabase) {
-            $this->connectedDatabase = check_database_connection() && Schema::hasTable('settings');
+            $this->connectedDatabase = Helper::isConnectedDatabase();
         }
 
         if (!$this->connectedDatabase) {
@@ -302,7 +304,7 @@ class DatabaseSettingStore extends SettingStore
      *
      * @param  $insert  boolean  Whether the query is an insert or not.
      *
-     * @return \Illuminate\Database\Query\Builder
+     * @return Builder
      */
     protected function newQuery($insert = false)
     {

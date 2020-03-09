@@ -3,6 +3,8 @@
 namespace Botble\ACL\Http\Controllers;
 
 use Assets;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Forms\PasswordForm;
 use Botble\ACL\Forms\ProfileForm;
@@ -28,9 +30,11 @@ use Botble\ACL\Http\Requests\AvatarRequest;
 use Exception;
 use File;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Intervention\Image\ImageManager;
 use RvMedia;
 use Storage;
+use Throwable;
 
 class UserController extends BaseController
 {
@@ -69,9 +73,9 @@ class UserController extends BaseController
     /**
      * Display all users
      * @param UserTable $dataTable
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function index(UserTable $dataTable)
     {
@@ -128,6 +132,13 @@ class UserController extends BaseController
 
         try {
             $user = $this->userRepository->findOrFail($id);
+
+            if (!$request->user()->isSuperUser() && $user->isSuperUser()) {
+                return $response
+                    ->setError()
+                    ->setMessage(__('Permission denied. Cannot delete a super user!'));
+            }
+
             $this->userRepository->delete($user);
             event(new DeletedContentEvent(USER_MODULE_SCREEN_NAME, $request, $user));
 
@@ -161,6 +172,9 @@ class UserController extends BaseController
             }
             try {
                 $user = $this->userRepository->findOrFail($id);
+                if (!$request->user()->isSuperUser() && $user->isSuperUser()) {
+                    continue;
+                }
                 $this->userRepository->delete($user);
                 event(new DeletedContentEvent(USER_MODULE_SCREEN_NAME, $request, $user));
             } catch (Exception $ex) {
@@ -177,7 +191,7 @@ class UserController extends BaseController
      * @param int $id
      * @param Request $request
      * @param FormBuilder $formBuilder
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View| \Illuminate\Http\RedirectResponse
+     * @return Factory|View| RedirectResponse
      */
     public function getUserProfile($id, Request $request, FormBuilder $formBuilder)
     {
@@ -369,7 +383,7 @@ class UserController extends BaseController
     /**
      * @param string $lang
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      * @throws Exception
      */
     public function getLanguage($lang, Request $request)
@@ -387,7 +401,7 @@ class UserController extends BaseController
 
     /**
      * @param string $theme
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function getTheme($theme)
     {

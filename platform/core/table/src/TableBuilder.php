@@ -2,6 +2,8 @@
 
 namespace Botble\Table;
 
+use Botble\Table\Abstracts\TableAbstract;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Container\Container;
 use InvalidArgumentException;
 
@@ -23,8 +25,8 @@ class TableBuilder
 
     /**
      * @param string $tableClass
-     * @return \Botble\Table\Abstracts\TableAbstract
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @return TableAbstract
+     * @throws BindingResolutionException
      */
     public function create($tableClass)
     {

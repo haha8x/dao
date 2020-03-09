@@ -5,8 +5,11 @@ namespace Botble\ACL\Http\Controllers\Auth;
 use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ResetPasswordController extends BaseController
 {
@@ -44,7 +47,7 @@ class ResetPasswordController extends BaseController
     /**
      * @param Request $request
      * @param null $token
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * @return Factory|RedirectResponse|View
      */
     public function showResetForm(Request $request, $token = null)
     {

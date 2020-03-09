@@ -1,28 +1,52 @@
 @extends('core/base::layouts.base')
 
-@section('body-class')
-login
-@stop
+@section('body-class') login @stop
+@section('body-style') background-image: url({{ url('vendor/core/images/backgrounds/background-' . rand(1, 7) . '.jpg') }}); @stop
 
+@push('header')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+@endpush
 @section ('page')
-<div class="login-wrapper">
-    <div>
-        <div style="text-align: center;">
-            <a href="{{ route('dashboard.index') }}">
-                <img src="{{ setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('core.base.general.logo')) }}" alt="logo" class="logo-default" style="max-height: 90px;" />
-            </a>
-        </div>
-        <div class="content">
-            @yield('content')
-        </div>
-        <div class="copyright">
-            <!-- <p>
-                Khuyến cáo: "Báo cáo anh/chị nhận được chứa dữ liệu vốn là tài sản của Vpbank, đặc biệt là các thông tin về khách hàng.
-            </p>
-            <p>
-                Kính đề nghị anh/chị lưu ý và cẩn trọng khi sử dụng, lưu trữ và chia sẻ để đảm bảo không gây thất thoát"
-            </p> -->
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="faded-bg animated"></div>
+            <div class="hidden-xs col-sm-4 col-md-3">
+                <div class="clearfix">
+                    <div class="col-sm-12 col-md-10 col-md-offset-2">
+                        <div class="logo-title-container">
+                            <div class="copy animated fadeIn">
+                                <h1>{{ setting('admin_title') }}</h1>
+                                <p>{!! trans('core/base::layouts.copyright', ['year' => now(config('app.timezone'))->format('Y'), 'company' => setting('admin_title', config('core.base.general.base_name')), 'version' => get_cms_version()]) !!}</p>
+                                <div class="copyright">
+                                    @if (setting('enable_change_admin_theme') != false && count(Assets::getAdminLocales()) > 1)
+                                        <p> {{ __('Languages') }}:
+                                            @foreach (Assets::getAdminLocales() as $key => $value)
+                                                <span @if (app()->getLocale() == $key) class="active" @endif>
+                                                    <a href="{{ route('admin.language', $key) }}">
+                                                        {!! language_flag($value['flag'], $value['name']) !!} <span>{{ $value['name'] }}</span>
+                                                    </a>
+                                                </span>
+                                            @endforeach
+                                        </p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div> <!-- .logo-title-container -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-8 col-md-9 login-sidebar">
+
+                <div class="login-container">
+
+                    @yield('content')
+
+                    <div style="clear:both"></div>
+
+                </div> <!-- .login-container -->
+
+            </div> <!-- .login-sidebar -->
+        </div> <!-- .row -->
     </div>
-</div>
 @stop

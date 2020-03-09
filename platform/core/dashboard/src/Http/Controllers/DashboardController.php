@@ -182,7 +182,8 @@ class DashboardController extends BaseController
                 'widget_id' => $widget->id,
                 'user_id'   => $request->user()->getKey(),
             ]);
-            if (array_key_exists($widget->name, $request->input('widgets', [])) && $request->input('widgets.' . $widget->name) == 1) {
+            if (array_key_exists($widget->name,
+                    $request->input('widgets', [])) && $request->input('widgets.' . $widget->name) == 1) {
                 $widgetSetting->status = 1;
                 $this->widgetRepository->createOrUpdate($widgetSetting);
             } else {

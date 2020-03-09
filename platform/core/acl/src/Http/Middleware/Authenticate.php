@@ -3,7 +3,9 @@
 namespace Botble\ACL\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Middleware\Authenticate as BaseAuthenticate;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 class Authenticate extends BaseAuthenticate
@@ -12,12 +14,12 @@ class Authenticate extends BaseAuthenticate
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Closure $next
+     * @param Request $request
+     * @param Closure $next
      * @param array $guards
      * @return mixed
      *
-     * @throws \Illuminate\Auth\AuthenticationException
+     * @throws AuthenticationException
      */
     public function handle($request, Closure $next, ...$guards)
     {

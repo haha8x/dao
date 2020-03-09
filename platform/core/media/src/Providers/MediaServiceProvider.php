@@ -72,9 +72,9 @@ class MediaServiceProvider extends ServiceProvider
             dashboard_menu()->registerItem([
                 'id'          => 'cms-core-media',
                 'priority'    => 995,
-                'parent_id'   => 'cms-core-platform-administration',
+                'parent_id'   => null,
                 'name'        => 'core/media::media.menu_name',
-                'icon'        => null,
+                'icon'        => 'far fa-images',
                 'url'         => route('media.index'),
                 'permissions' => ['media.index'],
             ]);

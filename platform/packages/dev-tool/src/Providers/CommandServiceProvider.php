@@ -12,7 +12,6 @@ use Botble\DevTool\Commands\Make\RepositoryMakeCommand;
 use Botble\DevTool\Commands\Make\RequestMakeCommand;
 use Botble\DevTool\Commands\Make\RouteMakeCommand;
 use Botble\DevTool\Commands\Make\TableMakeCommand;
-use Botble\DevTool\Commands\MediaOptimizeCommand;
 use Botble\DevTool\Commands\PackageCreateCommand;
 use Botble\DevTool\Commands\RebuildPermissionsCommand;
 use Botble\DevTool\Commands\TestSendMailCommand;
@@ -41,7 +40,6 @@ class CommandServiceProvider extends ServiceProvider
                 TruncateTablesCommand::class,
                 UserCreateCommand::class,
                 RebuildPermissionsCommand::class,
-                MediaOptimizeCommand::class,
                 LocaleRemoveCommand::class,
                 LocaleCreateCommand::class,
             ]);

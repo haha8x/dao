@@ -1,22 +1,36 @@
 @extends('core/acl::auth.master')
 
 @section('content')
-    <h3 class="form-title font-green">{{ trans('core/acl::auth.forgot_password.title') }}</h3>
-        <div class="content-wrapper">
-        {!! Form::open(['route' => 'access.password.email', 'class' => 'forget-form']) !!}
-        <div class="alert alert-danger display-hide">
-            <button class="close" data-close="alert"></button>
-            <span>{{ __('Please complete the form to submit!') }}</span>
-        </div>
+    <p>{{ __('Forgot Password') }}:</p>
+    {!! Form::open(['route' => 'access.password.email', 'class' => 'login-form']) !!}
         <p>{!! trans('core/acl::auth.forgot_password.message') !!}</p>
-        <div class="form-group">
-            <label class="control-label">{{ trans('core/acl::auth.login.email') }}</label>
-            {!! Form::text('email', old('email'), ['class' => 'form-control placeholder-no-fix', 'placeholder' => trans('core/acl::auth.login.placeholder.email')]) !!}
+    <br>
+        <div class="form-group" id="emailGroup">
+            <label>{{ trans('core/acl::auth.login.email') }}</label>
+            {!! Form::text('email', old('email'), ['class' => 'form-control', 'placeholder' => trans('core/acl::auth.login.email')]) !!}
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn green">{{ trans('core/acl::auth.forgot_password.submit') }}</button>
-        </div>
-        {!! Form::close() !!}
-        <p class="link-bottom"><a href="{{ route('access.login') }}">{{ trans('core/acl::auth.back_to_login') }}</a></p>
-    </div>
+        <button type="submit" class="btn btn-block login-button">
+            <span class="signin">{{ trans('core/acl::auth.forgot_password.submit') }}</span>
+        </button>
+        <div class="clearfix"></div>
+
+        <br>
+        <p><a class="lost-pass-link" href="{{ route('access.login') }}">{{ trans('core/acl::auth.back_to_login') }}</a></p>
+    {!! Form::close() !!}
 @stop
+@push('footer')
+    <script>
+        var email = document.querySelector('[name="email"]');
+        email.focus();
+        document.getElementById('emailGroup').classList.add('focused');
+
+        // Focus events for email and password fields
+        email.addEventListener('focusin', function(){
+            document.getElementById('emailGroup').classList.add('focused');
+        });
+        email.addEventListener('focusout', function(){
+            document.getElementById('emailGroup').classList.remove('focused');
+        });
+    </script>
+@endpush
+

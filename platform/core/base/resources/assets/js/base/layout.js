@@ -14,8 +14,8 @@ class Layout {
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
     handleSidebarAndContentHeight() {
         let content = $('.page-content');
-        let sidebar = $('.page-sidebar .sidebar');
-        let header = $('.page-header-top');
+        let sidebar = $('.page-sidebar');
+        let header = $('.page-header');
         let footer = $('.page-footer');
         let body = this.$body;
         let height;
@@ -46,7 +46,7 @@ class Layout {
                 }
 
                 if ((height + headerHeight + footerHeight) <= App.getViewPort().height) {
-                    height = App.getViewPort().height - headerHeight - footerHeight + 34;
+                    height = App.getViewPort().height - headerHeight - footerHeight;
                 }
             }
             content.css('min-height', height);
@@ -58,7 +58,7 @@ class Layout {
         let current = this;
 
         // offcanvas mobile menu
-        $('.page-sidebar-mobile-offcanvas .responsive-toggler').click((e) => {
+        $('.page-sidebar-mobile-offcanvas .responsive-toggler').on('click', (e) => {
             current.$body.toggleClass('page-sidebar-mobile-offcanvas-open');
             e.preventDefault();
             e.stopPropagation();
@@ -94,7 +94,7 @@ class Layout {
 
             if (hasSubMenu === false) {
                 if (App.getViewPort().width < current.resBreakpointMd && $('.page-sidebar').hasClass('in')) { // close the menu on mobile view while laoding a page
-                    $('.page-header .responsive-toggler').click();
+                    $('.page-header .responsive-toggler').trigger('click');
                 }
                 return;
             }
@@ -243,7 +243,7 @@ class Layout {
             });
         }
 
-        $('.scroll-to-top').click((e) => {
+        $('.scroll-to-top').on('click', (e) => {
             e.preventDefault();
             $('html, body').animate({scrollTop: 0}, duration);
             return false;
@@ -290,7 +290,6 @@ class Layout {
     }
 
     initSidebar() {
-        //layout handlers
         this.handleFixedSidebar(); // handles fixed sidebar menu
         this.handleSidebarMenu(); // handles main menu
         this.handleSidebarToggler(); // handles sidebar hide/show

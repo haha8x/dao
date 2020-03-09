@@ -3,6 +3,7 @@
 namespace Botble\Table\Abstracts;
 
 use Assets;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Support\Repositories\Interfaces\RepositoryInterface;
@@ -14,6 +15,8 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\View\View;
+use Throwable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\DataTables;
 
@@ -232,7 +235,7 @@ abstract class TableAbstract extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      *
-     * @throws \Throwable
+     * @throws Throwable
      * @since 2.1
      */
     public function html()
@@ -288,7 +291,12 @@ abstract class TableAbstract extends DataTable
                     ],
                     'infoFiltered'      => trans('core/table::general.filtered'),
                 ],
-                'aaSorting'    => $this->useDefaultSorting ? [[($this->hasCheckbox ? $this->defaultSortColumn : 0), 'desc']] : [],
+                'aaSorting'    => $this->useDefaultSorting ? [
+                    [
+                        ($this->hasCheckbox ? $this->defaultSortColumn : 0),
+                        'desc',
+                    ],
+                ] : [],
             ]);
     }
 
@@ -411,7 +419,7 @@ abstract class TableAbstract extends DataTable
     /**
      * @return array
      *
-     * @throws \Throwable
+     * @throws Throwable
      * @since 2.1
      */
     public function getBuilderParameters(): array
@@ -474,7 +482,7 @@ abstract class TableAbstract extends DataTable
     /**
      * @return array
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getActionsButton(): array
     {
@@ -494,7 +502,7 @@ abstract class TableAbstract extends DataTable
     /**
      * @return array
      *
-     * @throws \Throwable
+     * @throws Throwable
      * @since 2.1
      */
     public function getActions(): array
@@ -527,7 +535,7 @@ abstract class TableAbstract extends DataTable
     /**
      * @return array
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getDefaultButtons(): array
     {
@@ -622,8 +630,8 @@ abstract class TableAbstract extends DataTable
      * @param array $data
      * @param array $mergeData
      * @param string $view
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
-     * @throws \Throwable
+     * @return JsonResponse|View
+     * @throws Throwable
      * @since 2.4
      */
     public function renderTable($data = [], $mergeData = [])
@@ -636,7 +644,7 @@ abstract class TableAbstract extends DataTable
      * @param array $data
      * @param array $mergeData
      * @return mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render($view, $data = [], $mergeData = [])
     {
@@ -665,7 +673,7 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function bulkActions(): array
     {
@@ -690,7 +698,7 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Query\Builder $query
+     * @param \Illuminate\Database\Eloquent\Builder|Builder $query
      * @return mixed
      */
     public function applyScopes($query)
@@ -760,7 +768,7 @@ abstract class TableAbstract extends DataTable
      * @param $type
      * @param null $data
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getValueInput(?string $title, ?string $value, ?string $type, $data = null): array
     {
@@ -828,7 +836,7 @@ abstract class TableAbstract extends DataTable
      * @param Model $item
      * @param string $inputKey
      * @param string $inputValue
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @return false|Model
      */
     public function saveBulkChangeItem($item, string $inputKey, ?string $inputValue)
     {
@@ -860,7 +868,7 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return null
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function renderFilter(): string
     {
@@ -905,8 +913,8 @@ abstract class TableAbstract extends DataTable
     protected function getYesNoSelect(): array
     {
         return [
-            0 => __('No'),
-            1 => __('Yes'),
+            0 => trans('core/base::base.n'),
+            1 => trans('core/base::base.yes'),
         ];
     }
 
@@ -914,7 +922,7 @@ abstract class TableAbstract extends DataTable
      * @param array $buttons
      * @param string $url
      * @param null $permission
-     * @throws \Throwable
+     * @throws Throwable
      */
     protected function addCreateButton(string $url, $permission = null, array $buttons = []): array
     {

@@ -4,6 +4,7 @@ namespace Botble\ACL\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Throwable;
 
 class ResetPasswordNotification extends Notification
 {
@@ -17,7 +18,7 @@ class ResetPasswordNotification extends Notification
     /**
      * Create a notification instance.
      *
-     * @param  string $token
+     * @param string $token
      */
     public function __construct($token)
     {
@@ -27,7 +28,7 @@ class ResetPasswordNotification extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed $notifiable
+     * @param mixed $notifiable
      * @return array|string
      */
     public function via($notifiable)
@@ -38,9 +39,9 @@ class ResetPasswordNotification extends Notification
     /**
      * Build the mail representation of the notification.
      *
-     * @param  mixed $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     * @throws \Throwable
+     * @param mixed $notifiable
+     * @return MailMessage
+     * @throws Throwable
      */
     public function toMail($notifiable)
     {

@@ -2,6 +2,7 @@
 
 namespace Botble\ACL\Listeners;
 
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Events\RoleUpdateEvent;
 
@@ -10,10 +11,10 @@ class RoleUpdateListener
     /**
      * Handle the event.
      *
-     * @param  RoleUpdateEvent $event
+     * @param RoleUpdateEvent $event
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(RoleUpdateEvent $event)
     {

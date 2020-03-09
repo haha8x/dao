@@ -3,6 +3,8 @@
 namespace Botble\ACL\Tables;
 
 use Botble\ACL\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Enums\UserStatusEnum;
 use Botble\ACL\Repositories\Interfaces\ActivationInterface;
@@ -14,6 +16,7 @@ use Exception;
 use Html;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Arr;
+use Throwable;
 use Yajra\DataTables\DataTables;
 
 class UserTable extends TableAbstract
@@ -46,8 +49,7 @@ class UserTable extends TableAbstract
         UrlGenerator $urlGenerator,
         UserInterface $userRepository,
         ActivateUserService $service
-    )
-    {
+    ) {
         $this->repository = $userRepository;
         $this->service = $service;
         $this->setOption('id', 'table-users');
@@ -65,7 +67,7 @@ class UserTable extends TableAbstract
     /**
      * Display ajax response.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      *
      * @since 2.1
      */
@@ -129,7 +131,7 @@ class UserTable extends TableAbstract
     /**
      * Get the query object to be processed by the table.
      *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Query\Builder|Builder
      *
      * @since 2.1
      */
@@ -195,7 +197,7 @@ class UserTable extends TableAbstract
 
     /**
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      * @since 2.1
      */
     public function buttons()
@@ -215,7 +217,7 @@ class UserTable extends TableAbstract
 
     /**
      * @return array
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function bulkActions(): array
     {

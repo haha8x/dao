@@ -2,6 +2,7 @@
 
 namespace Botble\ACL\Listeners;
 
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Events\RoleAssignmentEvent;
 
@@ -11,10 +12,10 @@ class RoleAssignmentListener
     /**
      * Handle the event.
      *
-     * @param  RoleAssignmentEvent $event
+     * @param RoleAssignmentEvent $event
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function handle(RoleAssignmentEvent $event)
     {

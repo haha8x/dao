@@ -18,6 +18,7 @@ use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Event;
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -52,7 +53,7 @@ class AclServiceProvider extends ServiceProvider
     }
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function boot()
     {
@@ -99,7 +100,7 @@ class AclServiceProvider extends ServiceProvider
      * Garbage collect activations and reminders.
      *
      * @return void
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     protected function garbageCollect()
     {

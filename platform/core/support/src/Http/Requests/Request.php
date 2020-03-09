@@ -3,9 +3,10 @@
 namespace Botble\Support\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Concerns\InteractsWithInput;
 
 /**
- * @mixin \Illuminate\Http\Concerns\InteractsWithInput
+ * @mixin InteractsWithInput
  */
 abstract class Request extends FormRequest
 {

@@ -50,21 +50,6 @@ if (!function_exists('table_checkbox')) {
     }
 }
 
-if (!function_exists('check_database_connection')) {
-    /**
-     * @return boolean
-     */
-    function check_database_connection(): bool
-    {
-        try {
-            DB::connection(config('database.default'))->reconnect();
-            return true;
-        } catch (Exception $ex) {
-            return false;
-        }
-    }
-}
-
 if (!function_exists('language_flag')) {
     /**
      * @param $flag

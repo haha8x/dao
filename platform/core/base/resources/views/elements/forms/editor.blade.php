@@ -19,11 +19,9 @@
                     </button>
                     <ul class="dropdown-menu">
                         @foreach ($shortcodes = shortcode()->getAll() as $key => $item)
-                            @if (Arr::get($item, 'admin_config') != null)
-                                <li data-html="{{ Arr::get($item, 'admin_config') }}">
-                                    <a href="#" data-key="{{ $key }}" data-description="{{ $item['description'] }}">{{ $item['name'] }}</a>
-                                </li>
-                            @endif
+                            <li data-html="{{ Arr::get($item, 'admin_config') }}">
+                                <a href="#" data-key="{{ $key }}" data-description="{{ $item['description'] }}">{{ $item['name'] }}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>

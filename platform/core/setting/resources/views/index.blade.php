@@ -1,5 +1,12 @@
 @extends('core/base::layouts.master')
 @section('content')
+    <div id="main-settings">
+        <license-component
+            verify-url="{{ route('settings.license.verify') }}"
+            activate-license-url="{{ route('settings.license.activate') }}"
+            deactivate-license-url="{{ route('settings.license.deactivate') }}"
+        ></license-component>
+    </div>
     {!! Form::open(['route' => ['settings.edit']]) !!}
         <div class="max-width-1200">
             <div class="flexbox-annotated-section">
@@ -15,7 +22,6 @@
 
                 <div class="flexbox-annotated-section-content">
                     <div class="wrapper-content pd-all-20">
-
                         <div class="form-group">
                             <label class="text-title-field"
                                    for="admin_email">{{ trans('core/setting::setting.general.admin_email') }}</label>

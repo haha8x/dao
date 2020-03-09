@@ -9,6 +9,7 @@ use Exception;
 use File;
 use Illuminate\Database\Eloquent\Model;
 use Request;
+use Schema;
 
 class Helper
 {
@@ -109,5 +110,17 @@ class Helper
         }
 
         return Artisan::call($command, $parameters, $outputBuffer);
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isConnectedDatabase()
+    {
+        try {
+            return Schema::hasTable('settings');
+        } catch (Exception $ex) {
+            return false;
+        }
     }
 }

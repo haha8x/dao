@@ -57,7 +57,8 @@ class ComposerServiceProvider extends ServiceProvider
         $view->composer(['core/media::config'], function () {
             $mediaPermissions = config('core.media.media.permissions');
             if (Auth::check() && !Auth::user()->isSuperUser()) {
-                $mediaPermissions = array_intersect(array_keys(Auth::user()->permissions), config('core.media.media.permissions'));
+                $mediaPermissions = array_intersect(array_keys(Auth::user()->permissions),
+                    config('core.media.media.permissions'));
             }
             RvMedia::setPermissions($mediaPermissions);
         });

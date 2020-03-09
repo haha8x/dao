@@ -35,7 +35,7 @@ class ActivateUserService
      *
      * @param mixed $user
      * @return bool
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function activate($user)
     {

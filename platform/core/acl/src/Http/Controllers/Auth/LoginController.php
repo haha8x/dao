@@ -7,8 +7,12 @@ use Botble\ACL\Repositories\Interfaces\ActivationInterface;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends BaseController
 {
@@ -51,7 +55,7 @@ class LoginController extends BaseController
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function showLoginForm()
     {
@@ -79,10 +83,10 @@ class LoginController extends BaseController
     /**
      * Handle a login request to the application.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return BaseHttpResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Illuminate\Validation\ValidationException
-     * @throws \Illuminate\Validation\ValidationException
+     * @param Request $request
+     * @return BaseHttpResponse|Response
+     * @throws ValidationException
+     * @throws ValidationException
      */
     public function login(Request $request)
     {
@@ -134,7 +138,7 @@ class LoginController extends BaseController
     /**
      * Log the user out of the application.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return BaseHttpResponse
      */
     public function logout(Request $request)

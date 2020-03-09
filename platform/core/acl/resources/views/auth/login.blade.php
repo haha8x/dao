@@ -1,53 +1,58 @@
 @extends('core/acl::auth.master')
 
 @section('content')
-<h3 class="form-title font-green">{{ trans('core/acl::auth.login_title') }}</h3>
-<div class="content-wrapper">
+    <p>{{ __('Sign In Below') }}:</p>
+
     {!! Form::open(['route' => 'access.login', 'class' => 'login-form']) !!}
-    <div class="alert alert-danger display-hide">
-        <button class="close" data-close="alert"></button>
-        <span></span>
-    </div>
-    <div class="form-group">
-        <label class="control-label">{{ trans('core/acl::auth.login.username') }}</label>
-        {!! Form::text('username', old('username', app()->environment('demo') ? 'botble' : null), ['class' => 'form-control form-control-solid placeholder-no-fix', 'placeholder' => trans('core/acl::auth.login.username')]) !!}
-    </div>
-
-    <div class="form-group">
-        <label class="control-label">{{ trans('core/acl::auth.login.password') }}</label>
-        {!! Form::input('password', 'password', (app()->environment('demo') ? '159357' : null), ['class' => 'form-control form-control-solid placeholder-no-fix', 'placeholder' => trans('core/acl::auth.login.password')]) !!}
-    </div>
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-6">
-                <label>
-                    {!! Form::checkbox('remember', '1', true, ['class' => 'styled']) !!} {{ trans('core/acl::auth.login.remember') }}
-                </label>
-            </div>
-            <div class="col-6 text-right">
-                <a class="lost-pass-link" href="{{ route('access.password.request') }}" title="{{ trans('core/acl::auth.forgot_password.title') }}">{{ trans('core/acl::auth.lost_your_password') }}</a>
-            </div>
+        <div class="form-group" id="emailGroup">
+            <label>{{ trans('core/acl::auth.login.username') }}</label>
+            {!! Form::text('username', old('username', app()->environment('demo') ? 'botble' : null), ['class' => 'form-control', 'placeholder' => trans('core/acl::auth.login.username')]) !!}
         </div>
-    </div>
 
-    <div class="form-group form-actions">
-        <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> {{ trans('core/acl::auth.login.login') }}</button>
-    </div>
+        <div class="form-group" id="passwordGroup">
+            <label>{{ trans('core/acl::auth.login.password') }}</label>
+            {!! Form::input('password', 'password', (app()->environment('demo') ? '159357' : null), ['class' => 'form-control', 'placeholder' => trans('core/acl::auth.login.password')]) !!}
+        </div>
 
-    <div class="login-options">
-        <ul class="login-option">
-            <li>
-                <a href="{{ route('access.register.dao') }}">Đăng ký DAO</a>
-            </li>
-            <li>
-                <a href="{{ route('access.register.user') }}">Đăng ký USER (Sau khi có mã DAO được cấp)</a>
-            </li>
-        </ul>
-    </div>
+        <div>
+            <label>
+                {!! Form::checkbox('remember', '1', true, ['class' => 'hrv-checkbox']) !!} {{ trans('core/acl::auth.login.remember') }}
+            </label>
+        </div>
+        <br>
 
-    {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, 'core/acl') !!}
+        <button type="submit" class="btn btn-block login-button">
+            <span class="signin">{{ trans('core/acl::auth.login.login') }}</span>
+        </button>
+        <div class="clearfix"></div>
+
+        <br>
+        <p><a class="lost-pass-link" href="{{ route('access.password.request') }}" title="{{ trans('core/acl::auth.forgot_password.title') }}">{{ trans('core/acl::auth.lost_your_password') }}</a></p>
+
+        {!! apply_filters(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, null, \Botble\ACL\Models\User::class) !!}
 
     {!! Form::close() !!}
-</div>
 @stop
+@push('footer')
+    <script>
+        var username = document.querySelector('[name="username"]');
+        var password = document.querySelector('[name="password"]');
+        username.focus();
+        document.getElementById('emailGroup').classList.add('focused');
+
+        // Focus events for email and password fields
+        username.addEventListener('focusin', function(){
+            document.getElementById('emailGroup').classList.add('focused');
+        });
+        username.addEventListener('focusout', function(){
+            document.getElementById('emailGroup').classList.remove('focused');
+        });
+
+        password.addEventListener('focusin', function(){
+            document.getElementById('passwordGroup').classList.add('focused');
+        });
+        password.addEventListener('focusout', function(){
+            document.getElementById('passwordGroup').classList.remove('focused');
+        });
+    </script>
+@endpush

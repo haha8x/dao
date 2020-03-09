@@ -6,6 +6,10 @@ use Botble\ACL\Notifications\ResetPasswordNotification;
 use Botble\ACL\Traits\PermissionTrait;
 use Botble\Media\Models\MediaFile;
 use Botble\Base\Supports\Gravatar;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Storage;
@@ -92,7 +96,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function avatar()
     {
@@ -100,7 +104,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @return UrlGenerator|string
      */
     public function getAvatarUrlAttribute()
     {
@@ -108,7 +112,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function roles()
     {
@@ -165,7 +169,7 @@ class User extends Authenticatable
     /**
      * Send the password reset notification.
      *
-     * @param  string $token
+     * @param string $token
      * @return void
      */
     public function sendPasswordResetNotification($token)
@@ -176,7 +180,7 @@ class User extends Authenticatable
     /**
      * Returns the activations relationship.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function activations()
     {

@@ -9,10 +9,12 @@ use Botble\Table\Http\Requests\FilterRequest;
 use Botble\Table\TableBuilder;
 use Exception;
 use Form;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Throwable;
 
 class TableController extends Controller
 {
@@ -35,7 +37,7 @@ class TableController extends Controller
      * @param BulkChangeRequest $request
      * @param TableBuilder $tableBuilder
      * @return array|mixed
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function getDataForBulkChanges(BulkChangeRequest $request, TableBuilder $tableBuilder)
     {
@@ -81,7 +83,7 @@ class TableController extends Controller
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
      */
     public function postSaveBulkChange(Request $request, BaseHttpResponse $response)
     {
@@ -125,8 +127,8 @@ class TableController extends Controller
      * @param FilterRequest $request
      * @param TableBuilder $tableBuilder
      * @return array|mixed
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \Throwable
+     * @throws BindingResolutionException
+     * @throws Throwable
      */
     public function getFilterInput(FilterRequest $request, TableBuilder $tableBuilder)
     {

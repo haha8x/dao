@@ -104,7 +104,7 @@ class PluginActivateCommand extends Command
 
                     if (File::isDirectory(plugin_path($plugin . '/public'))) {
                         File::copyDirectory(plugin_path($plugin . '/public'),
-                            public_path('vendor/core/plugins/' . $plugin));
+                            public_path('vendor/core/packages/' . $plugin));
                     }
 
                     if (File::isDirectory(plugin_path($plugin . '/database/migrations'))) {

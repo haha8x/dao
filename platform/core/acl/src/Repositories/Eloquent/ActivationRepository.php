@@ -6,6 +6,8 @@ use Botble\ACL\Models\Activation;
 use Botble\ACL\Models\User;
 use Botble\ACL\Repositories\Interfaces\ActivationInterface;
 use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
+use Carbon\Carbon;
+use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Str;
 
@@ -110,7 +112,7 @@ class ActivationRepository extends RepositoriesAbstract implements ActivationInt
 
     /**
      * {@inheritDoc}
-     * @throws \Exception
+     * @throws Exception
      */
     public function remove(User $user)
     {
@@ -144,7 +146,7 @@ class ActivationRepository extends RepositoriesAbstract implements ActivationInt
     /**
      * Returns the expiration date.
      *
-     * @return \Carbon\Carbon
+     * @return Carbon
      */
     protected function expires()
     {

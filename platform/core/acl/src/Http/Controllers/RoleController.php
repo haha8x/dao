@@ -13,7 +13,11 @@ use Botble\ACL\Repositories\Interfaces\RoleInterface;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Supports\Helper;
+use Exception;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Throwable;
 
 class RoleController extends BaseController
 {
@@ -42,8 +46,8 @@ class RoleController extends BaseController
      * Show list roles
      *
      * @param RoleTable $dataTable
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Throwable
+     * @return Factory|View
+     * @throws Throwable
      */
     public function index(RoleTable $dataTable)
     {
@@ -57,7 +61,7 @@ class RoleController extends BaseController
      *
      * @param int $id
      * @return BaseHttpResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function destroy($id, BaseHttpResponse $response)
     {
@@ -76,7 +80,7 @@ class RoleController extends BaseController
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function deletes(Request $request, BaseHttpResponse $response)
     {
@@ -116,7 +120,7 @@ class RoleController extends BaseController
      * @param RoleCreateRequest $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
-     * @throws \Exception
+     * @throws Exception
      */
     public function update($id, RoleCreateRequest $request, BaseHttpResponse $response)
     {

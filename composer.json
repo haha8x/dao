@@ -11,6 +11,8 @@
         "php": "^7.2",
         "botble/platform": "*@dev",
         "botble/plugin-management": "*@dev",
+        "botble/dao": "*@dev",
+        "botble/catalog": "*@dev",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "wikimedia/composer-merge-plugin": "^1.4"

@@ -13,7 +13,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 use Psr\SimpleCache\InvalidArgumentException;
-use Schema;
 
 class PluginManagementServiceProvider extends ServiceProvider
 {
@@ -34,62 +33,60 @@ class PluginManagementServiceProvider extends ServiceProvider
 
         Helper::autoload(__DIR__ . '/../../helpers');
 
-        if (check_database_connection() && Schema::hasTable('settings')) {
-            $plugins = get_active_plugins();
-            if (!empty($plugins) && is_array($plugins)) {
-                $loader = new ClassLoader;
-                $providers = [];
-                $namespaces = [];
-                if (cache()->has('plugin_namespaces') && cache()->has('plugin_providers')) {
-                    $providers = cache('plugin_providers');
-                    if (!is_array($providers) || empty($providers)) {
-                        $providers = [];
-                    }
-
-                    $namespaces = cache('plugin_namespaces');
-
-                    if (!is_array($namespaces) || empty($namespaces)) {
-                        $namespaces = [];
-                    }
+        $plugins = get_active_plugins();
+        if (!empty($plugins) && is_array($plugins)) {
+            $loader = new ClassLoader;
+            $providers = [];
+            $namespaces = [];
+            if (cache()->has('plugin_namespaces') && cache()->has('plugin_providers')) {
+                $providers = cache('plugin_providers');
+                if (!is_array($providers) || empty($providers)) {
+                    $providers = [];
                 }
 
-                if (empty($namespaces) || empty($providers)) {
-                    foreach ($plugins as $plugin) {
-                        if (empty($plugin)) {
-                            continue;
-                        }
+                $namespaces = cache('plugin_namespaces');
 
-                        $pluginPath = plugin_path($plugin);
-
-                        if (!File::exists($pluginPath . '/plugin.json')) {
-                            continue;
-                        }
-                        $content = get_file_data($pluginPath . '/plugin.json');
-                        if (!empty($content)) {
-                            if (Arr::has($content, 'namespace') && !class_exists($content['provider'])) {
-                                $namespaces[$plugin] = $content['namespace'];
-                            }
-
-                            $providers[] = $content['provider'];
-                        }
-                    }
-                    cache()->forever('plugin_namespaces', $namespaces);
-                    cache()->forever('plugin_providers', $providers);
+                if (!is_array($namespaces) || empty($namespaces)) {
+                    $namespaces = [];
                 }
+            }
 
-                foreach ($namespaces as $key => $namespace) {
-                    $loader->setPsr4($namespace, plugin_path($key . '/src'));
-                }
-
-                $loader->register();
-
-                foreach ($providers as $provider) {
-                    if (!class_exists($provider)) {
+            if (empty($namespaces) || empty($providers)) {
+                foreach ($plugins as $plugin) {
+                    if (empty($plugin)) {
                         continue;
                     }
 
-                    $this->app->register($provider);
+                    $pluginPath = plugin_path($plugin);
+
+                    if (!File::exists($pluginPath . '/plugin.json')) {
+                        continue;
+                    }
+                    $content = get_file_data($pluginPath . '/plugin.json');
+                    if (!empty($content)) {
+                        if (Arr::has($content, 'namespace') && !class_exists($content['provider'])) {
+                            $namespaces[$plugin] = $content['namespace'];
+                        }
+
+                        $providers[] = $content['provider'];
+                    }
                 }
+                cache()->forever('plugin_namespaces', $namespaces);
+                cache()->forever('plugin_providers', $providers);
+            }
+
+            foreach ($namespaces as $key => $namespace) {
+                $loader->setPsr4($namespace, plugin_path($key . '/src'));
+            }
+
+            $loader->register();
+
+            foreach ($providers as $provider) {
+                if (!class_exists($provider)) {
+                    continue;
+                }
+
+                $this->app->register($provider);
             }
         }
 
@@ -101,9 +98,9 @@ class PluginManagementServiceProvider extends ServiceProvider
                 ->registerItem([
                     'id'          => 'cms-core-plugins',
                     'priority'    => 997,
-                    'parent_id'   => 'cms-core-platform-administration',
+                    'parent_id'   => null,
                     'name'        => 'core/base::layouts.plugins',
-                    'icon'        => null,
+                    'icon'        => 'fa fa-plug',
                     'url'         => route('plugins.index'),
                     'permissions' => ['plugins.index'],
                 ]);

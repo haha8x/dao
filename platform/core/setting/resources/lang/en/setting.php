@@ -98,6 +98,10 @@ return [
         'aws_bucket'         => 'AWS Bucket',
         'aws_url'            => 'AWS URL',
     ],
+    'license'                      => [
+        'purchase_code' => 'Purchase code',
+        'buyer'         => 'Buyer',
+    ],
     'field_type_not_exists'        => 'This field type does not exist',
     'save_settings'                => 'Save settings',
     'template'                     => 'Template',

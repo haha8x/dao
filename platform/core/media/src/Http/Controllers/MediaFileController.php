@@ -2,7 +2,10 @@
 
 namespace Botble\Media\Http\Controllers;
 
+use File;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Botble\Media\Http\Requests\MediaFileRequest;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
@@ -13,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use RvMedia;
+use Validator;
 
 /**
  * @since 19/08/2015 07:50 AM
@@ -93,12 +97,21 @@ class MediaFileController extends Controller
     }
 
     /**
-     * @param MediaFileRequest $request
-     * @return JsonResponse
+     * @param Request $request
+     * @return ResponseFactory|JsonResponse|Response
      * @throws FileNotFoundException
      */
-    public function postUploadFromEditor(MediaFileRequest $request)
+    public function postUploadFromEditor(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'upload' => 'required|image|mimes:jpg,jpeg,png',
+        ]);
+
+        if ($validator->fails()) {
+            return response('<script>alert("' . trans('core/media::media.can_not_detect_file_type') . '")</script>')
+                ->header('Content-Type', 'text/html');
+        }
+
         $result = RvMedia::handleUpload($request->file('upload'), 0, $request->input('upload_type'));
 
         if ($result['error'] == false) {
@@ -108,11 +121,19 @@ class MediaFileController extends Controller
                     'text/html');
             }
 
-            return response('<script type="text/javascript">window.parent.CKEDITOR.tools.callFunction("' . $request->input('CKEditorFuncNum') . '", "' . RvMedia::url($file->url) . '", "");</script>')->header('Content-Type',
-                'text/html');
+            if (!$request->input('CKEditorFuncNum')) {
+                return response()->json([
+                    'fileName' => File::name(RvMedia::url($file->url)),
+                    'uploaded' => 1,
+                    'url'      => RvMedia::url($file->url),
+                ]);
+            }
+
+            return response('<script type="text/javascript">window.parent.CKEDITOR.tools.callFunction("' . $request->input('CKEditorFuncNum') . '", "' . RvMedia::url($file->url) . '", "");</script>')
+                ->header('Content-Type', 'text/html');
         }
 
-        return response('<script>alert("' . Arr::get($result, 'message') . '")</script>')->header('Content-Type',
-            'text/html');
+        return response('<script>alert("' . Arr::get($result, 'message') . '")</script>')
+            ->header('Content-Type', 'text/html');
     }
 }

@@ -62,7 +62,7 @@ trait PermissionTrait
     /**
      * Create a new permissions instance.
      *
-     * @param  array $permissions
+     * @param array $permissions
      */
     public function __construct(array $permissions = null)
     {
@@ -128,8 +128,8 @@ trait PermissionTrait
     /**
      * Does the heavy lifting of preparing permissions.
      *
-     * @param  array $prepared
-     * @param  array $permissions
+     * @param array $prepared
+     * @param array $permissions
      * @return void
      */
     protected function preparePermissions(array &$prepared, array $permissions)
@@ -155,7 +155,7 @@ trait PermissionTrait
      * Takes the given permission key and inspects it for a class & method. If
      * it exists, methods may be comma-separated, e.g. Class@method1,method2.
      *
-     * @param  string $key
+     * @param string $key
      * @return array
      */
     protected function extractClassPermissions($key)
@@ -166,7 +166,7 @@ trait PermissionTrait
 
         $keys = [];
 
-        list($class, $methods) = explode('@', $key);
+        [$class, $methods] = explode('@', $key);
 
         foreach (explode(',', $methods) as $method) {
             $keys[] = $class . '@' . $method;
@@ -178,8 +178,8 @@ trait PermissionTrait
     /**
      * Checks a permission in the prepared array, including wildcard checks and permissions.
      *
-     * @param  array $prepared
-     * @param  string $permission
+     * @param array $prepared
+     * @param string $permission
      * @return bool
      */
     protected function checkPermission(array $prepared, $permission)

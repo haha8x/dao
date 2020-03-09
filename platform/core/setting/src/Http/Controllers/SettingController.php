@@ -3,17 +3,25 @@
 namespace Botble\Setting\Http\Controllers;
 
 use Assets;
+use Botble\Base\Supports\Core;
 use Botble\Base\Supports\EmailHandler;
 use Botble\Setting\Http\Requests\EmailTemplateRequest;
+use Botble\Setting\Http\Requests\LicenseSettingRequest;
 use Botble\Setting\Http\Requests\MediaSettingRequest;
 use Botble\Setting\Http\Requests\SendTestEmailRequest;
+use Botble\Setting\Models\Setting;
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
 use Botble\Setting\Supports\SettingStore;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\File;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Throwable;
 
 class SettingController extends BaseController
 {
@@ -39,11 +47,13 @@ class SettingController extends BaseController
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getOptions()
     {
         page_title()->setTitle(trans('core/setting::setting.title'));
+
+        Assets::addScriptsDirectly('vendor/core/js/setting.js');
 
         return view('core/setting::index');
     }
@@ -75,7 +85,7 @@ class SettingController extends BaseController
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getEmailConfig()
     {
@@ -105,8 +115,8 @@ class SettingController extends BaseController
      * @param $template
      * @param Request $request
      * @param BaseHttpResponse $response
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return Factory|View
+     * @throws FileNotFoundException
      */
     public function getEditEmailTemplate($type, $name, $template)
     {
@@ -190,7 +200,7 @@ class SettingController extends BaseController
      * @param SendTestEmailRequest $request
      * @param EmailHandler $emailHandler
      * @return BaseHttpResponse
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function postSendTestEmail(
         BaseHttpResponse $response,
@@ -214,7 +224,7 @@ class SettingController extends BaseController
     }
 
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function getMediaSetting()
     {
@@ -235,5 +245,80 @@ class SettingController extends BaseController
         return $response
             ->setPreviousUrl(route('settings.media'))
             ->setMessage(trans('core/base::notices.update_success_message'));
+    }
+
+    /**
+     * @param Core $coreApi
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function getVerifyLicense(Core $coreApi, BaseHttpResponse $response)
+    {
+        if (!File::exists(storage_path('.license'))) {
+            return $response->setError()->setMessage('Your license is invalid, please contact support.');
+        }
+
+        $result = $coreApi->verifyLicense();
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
+
+        $data = [
+            'activated_at' => $activatedAt->format('M d Y'),
+            'licensed_to'  => setting('licensed_to'),
+        ];
+
+        return $response->setMessage($result['message'])->setData($data);
+    }
+
+    /**
+     * @param LicenseSettingRequest $request
+     * @param BaseHttpResponse $response
+     * @param Core $coreApi
+     * @return BaseHttpResponse
+     * @throws FileNotFoundException
+     */
+    public function activateLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $coreApi)
+    {
+        $result = $coreApi->activateLicense($request->input('purchase_code'), $request->input('buyer'));
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        setting()
+            ->set(['licensed_to' => $request->input('buyer')])
+            ->save();
+
+        $activatedAt = Carbon::createFromTimestamp(filectime($coreApi->getLicenseFilePath()));
+
+        $data = [
+            'activated_at' => $activatedAt->format('M d Y'),
+            'licensed_to'  => $request->input('buyer'),
+        ];
+
+        return $response->setMessage($result['message'])->setData($data);
+    }
+
+    /**
+     * @param BaseHttpResponse $response
+     * @param Core $coreApi
+     * @return BaseHttpResponse
+     * @throws FileNotFoundException
+     */
+    public function deactivateLicense(BaseHttpResponse $response, Core $coreApi)
+    {
+        $result = $coreApi->deactivateLicense();
+
+        if (!$result['status']) {
+            return $response->setError()->setMessage($result['message']);
+        }
+
+        Setting::where('key', 'licensed_to')->delete();
+
+        return $response->setMessage($result['message']);
     }
 }

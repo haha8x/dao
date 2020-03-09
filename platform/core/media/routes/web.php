@@ -2,7 +2,7 @@
 
 Route::group(['namespace' => 'Botble\Media\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
-        Route::group(['prefix' => 'media', 'as' => 'media.'], function () {
+        Route::group(['prefix' => 'media', 'as' => 'media.', 'permission' => 'media.index'], function () {
             Route::get('', [
                 'as'   => 'index',
                 'uses' => 'MediaController@getMedia',
@@ -14,9 +14,8 @@ Route::group(['namespace' => 'Botble\Media\Http\Controllers', 'middleware' => 'w
             ]);
 
             Route::get('list', [
-                'as'         => 'list',
-                'uses'       => 'MediaController@getList',
-                'permission' => 'media.index',
+                'as'   => 'list',
+                'uses' => 'MediaController@getList',
             ]);
 
             Route::get('quota', [

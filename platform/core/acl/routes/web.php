@@ -3,8 +3,6 @@
 use Botble\ACL\Http\Controllers\Auth\ForgotPasswordController;
 use Botble\ACL\Http\Controllers\Auth\LoginController;
 use Botble\ACL\Http\Controllers\Auth\ResetPasswordController;
-use Botble\ACL\Http\Controllers\Auth\RegisterDaoController;
-use Botble\ACL\Http\Controllers\Auth\RegisterUserController;
 use Botble\ACL\Http\Controllers\UserController;
 
 Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web'], function () {
@@ -15,16 +13,6 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                 ->name('access.login');
             Route::post('login', [LoginController::class, 'login'])
                 ->name('access.login');
-
-            Route::get('register/dao', [RegisterDaoController::class, 'showRegisterDaoForm'])
-                ->name('access.register.dao');
-            Route::post('register/dao', [RegisterDaoController::class, 'RegisterDao'])
-                ->name('access.register.dao');
-
-            Route::get('register/user', [RegisterUserController::class, 'showRegisterUserForm'])
-                ->name('access.register.user');
-            Route::post('register/user', [RegisterUserController::class, 'RegisterUser'])
-                ->name('access.register.user');
 
             Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])
                 ->name('access.password.request');
@@ -57,6 +45,7 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                     'as'         => 'users.deletes',
                     'uses'       => 'UserController@deletes',
                     'permission' => 'users.destroy',
+                    'middleware' => 'preventDemo',
                 ]);
 
                 Route::post('update-profile/{id}', [
@@ -127,6 +116,7 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                 ]);
             });
         });
+
     });
 
     Route::get('admin-language/{alias}', [UserController::class, 'getLanguage'])->name('admin.language');

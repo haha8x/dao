@@ -30,8 +30,8 @@ abstract class SettingStore
     /**
      * Get a specific key from the settings data.
      *
-     * @param  string|array $key
-     * @param  mixed $default Optional default value.
+     * @param string|array $key
+     * @param mixed $default Optional default value.
      *
      * @return mixed
      */
@@ -45,7 +45,7 @@ abstract class SettingStore
     /**
      * Determine if a key exists in the settings data.
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return boolean
      */
@@ -81,7 +81,7 @@ abstract class SettingStore
     /**
      * Unset a key in the settings data.
      *
-     * @param  string $key
+     * @param string $key
      * @return $this
      */
     public function forget($key): self
@@ -159,7 +159,7 @@ abstract class SettingStore
     /**
      * Write the data into the store.
      *
-     * @param  array $data
+     * @param array $data
      *
      * @return void
      */

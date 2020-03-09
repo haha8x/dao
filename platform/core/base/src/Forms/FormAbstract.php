@@ -8,6 +8,7 @@ use Botble\Base\Forms\Fields\ColorField;
 use Botble\Base\Forms\Fields\CustomRadioField;
 use Botble\Base\Forms\Fields\CustomSelectField;
 use Botble\Base\Forms\Fields\EditorField;
+use Botble\Base\Forms\Fields\HtmlField;
 use Botble\Base\Forms\Fields\MediaImageField;
 use Botble\Base\Forms\Fields\OnOffField;
 use Botble\Base\Forms\Fields\TimeField;
@@ -203,15 +204,6 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return $this
-     */
-    public function removeActionButtons(): self
-    {
-        $this->actionButtons = '';
-        return $this;
-    }
-
-    /**
      * @param string $actionButtons
      * @return $this
      */
@@ -222,20 +214,11 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return string
-     */
-    public function getValidatorClass(): string
-    {
-        return $this->validatorClass;
-    }
-
-    /**
-     * @param string $validatorClass
      * @return $this
      */
-    public function setValidatorClass($validatorClass): self
+    public function removeActionButtons(): self
     {
-        $this->validatorClass = $validatorClass;
+        $this->actionButtons = '';
         return $this;
     }
 
@@ -294,21 +277,6 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * Setup model for form, add namespace if needed for child forms.
-     *
-     * @return $this
-     */
-    protected function setupModel($model)
-    {
-        if (!$this->model) {
-            $this->model = $model;
-            $this->setupNamedModel();
-        }
-
-        return $this;
-    }
-
-    /**
      * @return $this
      */
     public function withCustomFields(): self
@@ -322,6 +290,7 @@ abstract class FormAbstract extends Form
             'color'        => ColorField::class,
             'time'         => TimeField::class,
             'autocomplete' => AutocompleteField::class,
+            'html'         => HtmlField::class,
         ];
 
         foreach ($customFields as $key => $field) {
@@ -331,6 +300,18 @@ abstract class FormAbstract extends Form
         }
 
         return apply_filters('form_custom_fields', $this, $this->formHelper);
+    }
+
+    /**
+     * @param string $name
+     * @param string $class
+     * @return $this|Form
+     */
+    public function addCustomField($name, $class)
+    {
+        parent::addCustomField($name, $class);
+
+        return $this;
     }
 
     /**
@@ -409,13 +390,34 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @param string $name
-     * @param string $class
-     * @return $this|Form
+     * @return string
      */
-    public function addCustomField($name, $class)
+    public function getValidatorClass(): string
     {
-        parent::addCustomField($name, $class);
+        return $this->validatorClass;
+    }
+
+    /**
+     * @param string $validatorClass
+     * @return $this
+     */
+    public function setValidatorClass($validatorClass): self
+    {
+        $this->validatorClass = $validatorClass;
+        return $this;
+    }
+
+    /**
+     * Setup model for form, add namespace if needed for child forms.
+     *
+     * @return $this
+     */
+    protected function setupModel($model)
+    {
+        if (!$this->model) {
+            $this->model = $model;
+            $this->setupNamedModel();
+        }
 
         return $this;
     }

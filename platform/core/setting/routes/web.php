@@ -27,6 +27,25 @@ Route::group(['namespace' => 'Botble\Setting\Http\Controllers', 'middleware' => 
                 'permission' => 'settings.options',
             ]);
 
+            Route::get('license/verify', [
+                'as'   => 'settings.license.verify',
+                'uses' => 'SettingController@getVerifyLicense',
+            ]);
+
+            Route::post('license/activate', [
+                'as'         => 'settings.license.activate',
+                'uses'       => 'SettingController@activateLicense',
+                'middleware' => 'preventDemo',
+                'permission' => 'settings.options',
+            ]);
+
+            Route::post('license/deactivate', [
+                'as'         => 'settings.license.deactivate',
+                'uses'       => 'SettingController@deactivateLicense',
+                'middleware' => 'preventDemo',
+                'permission' => 'settings.options',
+            ]);
+
             Route::group(['prefix' => 'email', 'permission' => 'settings.options'], function () {
                 Route::get('', [
                     'as'   => 'settings.email',

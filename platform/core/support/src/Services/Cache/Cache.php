@@ -4,7 +4,10 @@ namespace Botble\Support\Services\Cache;
 
 use File;
 use Illuminate\Cache\CacheManager;
+use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Arr;
+use Psr\SimpleCache\InvalidArgumentException;
 
 class Cache implements CacheInterface
 {
@@ -25,7 +28,7 @@ class Cache implements CacheInterface
 
     /**
      * Cache constructor.
-     * @param \Illuminate\Cache\Repository|CacheManager $cache
+     * @param Repository|CacheManager $cache
      * @param null $cacheGroup
      * @param array $config
      */
@@ -69,7 +72,7 @@ class Cache implements CacheInterface
      * @param mixed $value The data to store
      * @param boolean $minutes The number of minutes to store the item
      * @return bool
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function put($key, $value, $minutes = false)
     {
@@ -91,7 +94,7 @@ class Cache implements CacheInterface
      *
      * @param $key
      * @return bool
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function storeCacheKey($key)
     {
@@ -116,7 +119,7 @@ class Cache implements CacheInterface
      * @param string $key Cache item key
      * @return bool If cache item exists
      *
-     * @throws \Psr\SimpleCache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function has($key)
     {
@@ -132,7 +135,7 @@ class Cache implements CacheInterface
      * Clear cache of an object
      *
      * @return bool
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     public function flush()
     {

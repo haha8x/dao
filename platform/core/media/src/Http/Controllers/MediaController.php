@@ -568,7 +568,8 @@ class MediaController extends Controller
         if ($newFolderId == null) {
             $fileData['name'] = $file->name . '-(copy)';
 
-            if (!in_array($file->type, array_merge(['video', 'youtube'], config('core.media.media.external_services')))) {
+            if (!in_array($file->type,
+                array_merge(['video', 'youtube'], config('core.media.media.external_services')))) {
 
                 $path = '';
 

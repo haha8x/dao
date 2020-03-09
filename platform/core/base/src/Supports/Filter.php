@@ -19,6 +19,7 @@ class Filter extends ActionHookEvent
         }
 
         foreach ($this->getListeners() as $hook => $listeners) { // go through each of the priorities
+            ksort($listeners);
             foreach ($listeners as $arguments) { // loop all hooks
                 if ($hook === $action) { // if the hook responds to the current filter
                     $parameters = [$value];

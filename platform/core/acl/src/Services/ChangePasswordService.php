@@ -27,7 +27,7 @@ class ChangePasswordService implements ProduceServiceInterface
 
     /**
      * @param Request $request
-     * @return bool|\Exception
+     * @return bool|Exception
      */
     public function execute(Request $request)
     {
