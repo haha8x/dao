@@ -115,9 +115,6 @@ class DaoRequestCloseForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('request_type', 'hidden', [
-                'value'      => 'close',
-            ])
             ;
     }
 }

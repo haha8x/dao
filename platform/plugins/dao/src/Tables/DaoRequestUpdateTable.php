@@ -82,21 +82,9 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         $model = $this->repository->getModel();
         $query = $model->select([
-            'daos.zone_id',
-            'daos.branch_code',
-            'daos.dao',
-            'daos.id',
-            'daos.name',
-            'daos.chuc_danh',
-            'daos.status_dao',
-            'daos.email',
-            'daos.cif',
-            'daos.cmnd',
-            'daos.phone',
-            'daos.status_process',
-            'daos.note_process',
-            'daos.created_at',
-        ])->where('request_type', 'update');
+            'dao_request_updates.dao_id',
+            'dao_request_updates.dao_update',
+        ]);
 
         if (!Auth::user()->isSuperUser()){
             $query = $model->where('created_by', Auth::id());
@@ -113,47 +101,47 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         return [
             'zone_id' => [
-                'name'  => 'daos.zone_id',
+                'name'  => 'dao_request_updates.zone_id',
                 'title' => __('Vùng'),
                 'class' => 'text-left',
             ],
-            'branch_code' => [
-                'name'  => 'daos.branch_code',
+            'branch_id' => [
+                'name'  => 'dao_request_updates.branch_id',
                 'title' => __('Chi nhánh'),
                 'class' => 'text-left',
             ],
             'id' => [
-                'name'  => 'daos.id',
+                'name'  => 'dao_request_updates.id',
                 'title' => __('Mã YC'),
                 'class' => 'text-left',
             ],
             'name' => [
-                'name'  => 'daos.name',
+                'name'  => 'dao_request_updates.name',
                 'title' => __('Nhân viên'),
                 'class' => 'text-left',
             ],
             'dao' => [
-                'name'  => 'daos.dao',
+                'name'  => 'dao_request_updates.dao',
                 'title' => __('DAO Thay đổi'),
                 'class' => 'text-left',
             ],
             'email' => [
-                'name'  => 'daos.email',
+                'name'  => 'dao_request_updates.email',
                 'title' => __('Email'),
                 'class' => 'text-left',
             ],
             'status_process' => [
-                'name'  => 'daos.status_process',
+                'name'  => 'dao_request_updates.status_process',
                 'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
             'note_process' => [
-                'name'  => 'daos.note_process',
+                'name'  => 'dao_request_updates.note_process',
                 'title' => __('Note'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name'  => 'daos.created_at',
+                'name'  => 'dao_request_updates.created_at',
                 'title' => trans('core/base::tables.created_at'),
                 'width' => '100px',
             ],
@@ -187,18 +175,18 @@ class DaoRequestUpdateTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'daos.name' => [
+            'dao_request_updates.name' => [
                 'title'    => trans('core/base::tables.name'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],
-            'daos.status' => [
+            'dao_request_updates.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
-            'daos.created_at' => [
+            'dao_request_updates.created_at' => [
                 'title' => trans('core/base::tables.created_at'),
                 'type'  => 'date',
             ],

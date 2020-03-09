@@ -82,21 +82,12 @@ class DaoRequestCloseTable extends TableAbstract
     {
         $model = $this->repository->getModel();
         $query = $model->select([
-            'daos.zone_id',
-            'daos.branch_code',
-            'daos.id',
-            'daos.name',
-            'daos.chuc_danh',
-            'daos.status_dao',
-            'daos.email',
-            'daos.dao',
-            'daos.cif',
-            'daos.cmnd',
-            'daos.phone',
-            'daos.status_process',
-            'daos.note_process',
-            'daos.created_at',
-        ])->where('request_type', 'close');
+            'dao_request_closes.id',
+            'dao_request_closes.dao_id',
+            'dao_request_closes.status',
+            'dao_request_closes.note',
+            'dao_request_closes.created_at',
+        ]);
 
         if (!Auth::user()->isSuperUser()){
             $query = $model->where('created_by', Auth::id());
@@ -112,48 +103,28 @@ class DaoRequestCloseTable extends TableAbstract
     public function columns()
     {
         return [
-            'zone_id' => [
-                'name'  => 'daos.zone_id',
-                'title' => __('Vùng'),
-                'class' => 'text-left',
-            ],
-            'branch_code' => [
-                'name'  => 'daos.branch_code',
-                'title' => __('Chi nhánh'),
-                'class' => 'text-left',
-            ],
             'id' => [
-                'name'  => 'daos.id',
+                'name'  => 'dao_request_closes.id',
                 'title' => __('Mã YC'),
                 'class' => 'text-left',
             ],
-            'name' => [
-                'name'  => 'daos.name',
-                'title' => __('Nhân viên'),
-                'class' => 'text-left',
-            ],
-            'dao' => [
-                'name'  => 'daos.dao',
+            'dao_id' => [
+                'name'  => 'dao_request_closes.dao',
                 'title' => __('DAO cần đóng'),
                 'class' => 'text-left',
             ],
-            'email' => [
-                'name'  => 'daos.email',
-                'title' => __('Email'),
-                'class' => 'text-left',
-            ],
-            'status_process' => [
-                'name'  => 'daos.status_process',
+            'status' => [
+                'name'  => 'dao_request_closes.status',
                 'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
-            'note_process' => [
-                'name'  => 'daos.note_process',
+            'note' => [
+                'name'  => 'dao_request_closes.note',
                 'title' => __('Note'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name'  => 'daos.created_at',
+                'name'  => 'dao_request_closes.created_at',
                 'title' => trans('core/base::tables.created_at'),
                 'width' => '100px',
             ],
@@ -187,18 +158,18 @@ class DaoRequestCloseTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'daos.name' => [
+            'dao_request_closes.name' => [
                 'title'    => trans('core/base::tables.name'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],
-            'daos.status' => [
+            'dao_request_closes.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
-            'daos.created_at' => [
+            'dao_request_closes.created_at' => [
                 'title' => trans('core/base::tables.created_at'),
                 'type'  => 'date',
             ],

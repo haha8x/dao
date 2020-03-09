@@ -158,4 +158,65 @@ class DaoRequestNewController extends BaseController
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
     }
+
+    /**
+     * @param $id
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function approve($id, BaseHttpResponse $response)
+    {
+        try {
+            $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
+            $daoRequestNew->status = 'gdcn_approve';
+            $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
+
+            return $response
+                ->setNextUrl(route('dao-request-new.index'))
+                ->setMessage(trans('core/base::notices.update_success_message'));
+        } catch (Exception $exception) {
+            return $response
+                ->setError()
+                ->setNextUrl(route('dao-request-new.index'))
+                ->setMessage($exception->getMessage());
+        }
+    }
+
+    /**
+     * @param $id
+     * @param Request $request
+     * @param BaseHttpResponse $response
+     * @return BaseHttpResponse
+     */
+    public function removeSuper($id, Request $request, BaseHttpResponse $response)
+    {
+        if ($request->user()->getKey() == $id) {
+            return $response
+                ->setError()
+                ->setMessage(trans('core/base::system.cannot_revoke_yourself'));
+        }
+
+        $user = $this->userRepository->findOrFail($id);
+
+        $user->updatePermission(ACL_ROLE_SUPER_USER, false);
+        $user->updatePermission(ACL_ROLE_MANAGE_SUPERS, false);
+        $user->super_user = 0;
+        $user->manage_supers = 0;
+        $this->userRepository->createOrUpdate($user);
+
+        return $response
+            ->setNextUrl(route('users.index'))
+            ->setMessage(trans('core/base::system.supper_revoked'));
+    }
+
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function info($id)
+    {
+        $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
+
+        return view('plugins/dao::request-new.info', compact('daoRequestNew'))->render();
+    }
 }

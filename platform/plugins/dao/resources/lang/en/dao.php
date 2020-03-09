@@ -9,7 +9,7 @@ return [
         DaoRequestStatusEnum::RECEIVE => 'Tiếp nhận',
         DaoRequestStatusEnum::REJECT => 'Từ chối',
         DaoRequestStatusEnum::IT_PROCESS => 'IT xử lý',
-        DaoRequestStatusEnum::GDCN_APPROVE => 'Giám đốc chi nhánh duyệt',
+        DaoRequestStatusEnum::GDCN_APPROVE => 'GDCN duyệt',
         DaoRequestStatusEnum::HOISO_APPROVE => 'Hội sở duyệt',
         DaoRequestStatusEnum::SUCCESS => 'Thành công',
     ],

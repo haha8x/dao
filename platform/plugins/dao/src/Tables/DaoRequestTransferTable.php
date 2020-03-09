@@ -82,25 +82,15 @@ class DaoRequestTransferTable extends TableAbstract
     {
         $model = $this->repository->getModel();
         $query = $model->select([
-            'daos.zone_id',
-            'daos.branch_code',
-            'daos.id',
-            'daos.name',
-            'daos.chuc_danh',
-            'daos.status_dao',
-            'daos.email',
-            'daos.cif',
-            'daos.cmnd',
-            'daos.phone',
-            'daos.status_process',
-            'daos.note_process',
-            'daos.dao',
-            'daos.dao_transfer',
-            'daos.note_transfer',
-            'daos.dao_transfer_type',
-            'daos.note_sale',
-            'daos.created_at',
-        ])->where('request_type', 'transfer');
+            'dao_request_transfers.id',
+            'dao_request_transfers.type',
+            'dao_request_transfers.dao_id',
+            'dao_request_transfers.dao_transfer',
+            'dao_request_transfers.reason',
+            'dao_request_transfers.status',
+            'dao_request_transfers.note',
+            'dao_request_transfers.created_at',
+        ]);
 
         if (!Auth::user()->isSuperUser()){
             $query = $model->where('created_by', Auth::id());
@@ -116,68 +106,43 @@ class DaoRequestTransferTable extends TableAbstract
     public function columns()
     {
         return [
-            'zone_id' => [
-                'name'  => 'daos.zone_id',
-                'title' => __('Vùng'),
-                'class' => 'text-left',
-            ],
-            'branch_code' => [
-                'name'  => 'daos.branch_code',
-                'title' => __('Chi nhánh'),
-                'class' => 'text-left',
-            ],
             'id' => [
-                'name'  => 'daos.id',
+                'name'  => 'dao_request_transfers.id',
                 'title' => __('Mã YC'),
                 'class' => 'text-left',
             ],
-            'name' => [
-                'name'  => 'daos.name',
-                'title' => __('Nhân viên'),
-                'class' => 'text-left',
-            ],
-            'email' => [
-                'name'  => 'daos.email',
-                'title' => __('Email'),
-                'class' => 'text-left',
-            ],
-            'dao' => [
-                'name'  => 'daos.dao',
+            'dao_id' => [
+                'name'  => 'dao_request_transfers.dao_id',
                 'title' => __('DAO cũ'),
                 'class' => 'text-left',
             ],
             'dao_transfer' => [
-                'name'  => 'daos.dao_transfer',
+                'name'  => 'dao_request_transfers.dao_transfer',
                 'title' => __('DAO mới'),
                 'class' => 'text-left',
             ],
-            'note_transfer' => [
-                'name'  => 'daos.note_transfer',
+            'reason' => [
+                'name'  => 'dao_request_transfers.reason',
                 'title' => __('Lý do'),
                 'class' => 'text-left',
             ],
-            'note_sale' => [
-                'name'  => 'daos.note_sale',
-                'title' => __('Note sale'),
-                'class' => 'text-left',
-            ],
-            'dao_transfer_type' => [
-                'name'  => 'daos.dao_transfer_type',
-                'title' => __('Yêu cầu'),
-                'class' => 'text-left',
-            ],
-            'status_process' => [
-                'name'  => 'daos.status_process',
+            'status' => [
+                'name'  => 'dao_request_transfers.status',
                 'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
-            'note_process' => [
-                'name'  => 'daos.note_process',
+            'type' => [
+                'name'  => 'dao_request_transfers.type',
+                'title' => __('Yêu cầu'),
+                'class' => 'text-left',
+            ],
+            'note' => [
+                'name'  => 'dao_request_transfers.note',
                 'title' => __('Note'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name'  => 'daos.created_at',
+                'name'  => 'dao_request_transfers.created_at',
                 'title' => trans('core/base::tables.created_at'),
                 'width' => '100px',
             ],
@@ -211,18 +176,18 @@ class DaoRequestTransferTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'daos.name' => [
+            'dao_request_transfers.name' => [
                 'title'    => trans('core/base::tables.name'),
                 'type'     => 'text',
                 'validate' => 'required|max:120',
             ],
-            'daos.status' => [
+            'dao_request_transfers.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
             ],
-            'daos.created_at' => [
+            'dao_request_transfers.created_at' => [
                 'title' => trans('core/base::tables.created_at'),
                 'type'  => 'date',
             ],

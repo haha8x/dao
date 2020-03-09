@@ -71,7 +71,7 @@ class DaoController extends BaseController
 
         return $response
             ->setPreviousUrl(route('dao.index'))
-            ->setNextUrl(route('dao.edit', $dao-request->id))
+            ->setNextUrl(route('dao.edit', $dao->id))
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
@@ -89,7 +89,7 @@ class DaoController extends BaseController
 
         event(new BeforeEditContentEvent($request, $dao));
 
-        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $dao-request->name . '"');
+        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $dao->name . '"');
 
         return $formBuilder->create(DaoForm::class, ['model' => $dao])->renderForm();
     }
@@ -103,7 +103,7 @@ class DaoController extends BaseController
     {
         $dao = $this->daoRepository->findOrFail($id);
 
-        $dao-request->fill($request->input());
+        $dao->fill($request->input());
 
         $this->daoRepository->createOrUpdate($dao);
 
@@ -158,5 +158,16 @@ class DaoController extends BaseController
         }
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
+    }
+
+        /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function info($id)
+    {
+        $dao = $this->daoRepository->findOrFail($id);
+
+        return view('plugins/dao::index.info', compact('dao'))->render();
     }
 }

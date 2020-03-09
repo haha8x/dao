@@ -3,12 +3,15 @@
 namespace Botble\Dao\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Botble\Dao\Repositories\Interfaces\DaoInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
-use Botble\Dao\Models\Dao;
+use Html;
+
 
 class DaoTable extends TableAbstract
 {
@@ -16,12 +19,12 @@ class DaoTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $hasActions = true;
+    protected $hasActions = false;
 
     /**
      * @var bool
      */
-    protected $hasFilter = true;
+    protected $hasFilter = false;
 
     /**
      * DaoTable constructor.
@@ -29,9 +32,18 @@ class DaoTable extends TableAbstract
      * @param UrlGenerator $urlDevTool
      * @param DaoInterface $daoRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoInterface $daoRepository)
-    {
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlDevTool,
+        DaoInterface $daoRepository,
+        CatalogPositionInterface $catalogPositionRepository,
+        CatalogBranchInterface $catalogBranchRepository,
+        CatalogZoneInterface $catalogZoneRepository
+    ) {
         $this->repository = $daoRepository;
+        $this->catalogPositionRepository = $catalogPositionRepository;
+        $this->catalogBranchRepository = $catalogBranchRepository;
+        $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-dao');
         parent::__construct($table, $urlDevTool);
 
@@ -51,25 +63,35 @@ class DaoTable extends TableAbstract
     {
         $data = $this->table
             ->eloquent($this->query())
-            ->editColumn('name', function ($item) {
-                if (!Auth::user()->hasPermission('dao.edit')) {
-                    return $item->name;
-                }
-                return anchor_link(route('dao.edit', $item->id), $item->name);
-            })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
+            ->editColumn('zone_id', function ($item) {
+                return $item->zone->name;
+            })
+            ->editColumn('branch_id', function ($item) {
+                return $item->branch->name;
+            })
+            ->editColumn('name', function ($item) {
+                return
+                    Html::tag('p', $item->name, ['class' => 'no-margin'])
+                    ->toHtml() .
+                    Html::mailto('p', 'Email: ' . $item->email, ['class' => 'no-margin'])
+                    ->toHtml() .
+                    Html::tag('p', 'Vị trí: ' . $item->position->name, ['class' => 'no-margin'])
+                    ->toHtml() .
+                    Html::tag('p', 'CMND: ' . $item->cmnd, ['class' => 'no-margin'])
+                    ->toHtml() .
+                    Html::tag('p', 'Điện thoại: ' . $item->phone, ['class' => 'no-margin'])
+                    ->toHtml();
+            })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
-            })
-            ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return table_actions('dao.edit', 'dao.destroy', $item);
+                return view('plugins/dao::index.actions', compact('item'))->render();
             })
             ->escapeColumns([])
             ->make(true);
@@ -86,10 +108,24 @@ class DaoTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'daos.id',
+            'daos.dao',
+            'daos.zone_id',
+            'daos.branch_id',
+            'daos.staff_id',
             'daos.name',
-            'daos.created_at',
+            'daos.position_id',
+            'daos.cif',
+            'daos.email',
+            'daos.cmnd',
+            'daos.phone',
             'daos.status',
+            'daos.created_at',
+            'daos.updated_by',
         ]);
+
+        if (!Auth::user()->isSuperUser()) {
+            $query = $model->where('created_by', Auth::id());
+        }
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
@@ -101,24 +137,39 @@ class DaoTable extends TableAbstract
     public function columns()
     {
         return [
-            'id' => [
-                'name' => 'daos.id',
-                'title' => trans('core/base::tables.id'),
-                'width' => '20px',
+            'zone_id' => [
+                'name'  => 'daos.zone_id',
+                'title' => __('Vùng'),
+                'class' => 'text-left',
+            ],
+            'branch_id' => [
+                'name'  => 'daos.branch_id',
+                'title' => __('Chi nhánh'),
+                'class' => 'text-left',
+            ],
+            'dao' => [
+                'name'  => 'daos.dao',
+                'title' => __('DAO'),
+                'class' => 'text-left',
             ],
             'name' => [
-                'name' => 'daos.name',
-                'title' => trans('core/base::tables.name'),
+                'name'  => 'daos.name',
+                'title' => __('Nhân viên'),
+                'class' => 'text-left',
+            ],
+            'cif' => [
+                'name'  => 'daos.cif',
+                'title' => __('CIF'),
+                'class' => 'text-left',
+            ],
+            'status' => [
+                'name'  => 'daos.status',
+                'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name' => 'daos.created_at',
+                'name'  => 'daos.created_at',
                 'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
-            ],
-            'status' => [
-                'name' => 'daos.status',
-                'title' => trans('core/base::tables.status'),
                 'width' => '100px',
             ],
         ];
@@ -126,46 +177,33 @@ class DaoTable extends TableAbstract
 
     /**
      * @return array
-     * @since 2.1
-     * @throws \Throwable
      */
-    public function buttons()
+    public function getDefaultButtons(): array
     {
-        $buttons = $this->addCreateButton(route('dao.create'), 'dao.create');
-
-        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, Dao::class);
-    }
-
-    /**
-     * @return array
-     * @throws \Throwable
-     */
-    public function bulkActions(): array
-    {
-        return $this->addDeleteAction(route('dao.deletes'), 'dao.destroy', parent::bulkActions());
+        return ['excel', 'reload'];
     }
 
     /**
      * @return array
      */
-    public function getBulkChanges(): array
+    public function getPositions()
     {
-        return [
-            'daos.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
-            'daos.status' => [
-                'title'    => trans('core/base::tables.status'),
-                'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
-            ],
-            'daos.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
-                'type'  => 'date',
-            ],
-        ];
+        return $this->catalogPositionRepository->pluck('catalog_positions.name', 'catalog_positions.id');
+    }
+
+    /**
+     * @return array
+     */
+    public function getBranchs()
+    {
+        return $this->catalogBranchRepository->pluck('catalog_branches.name', 'catalog_branches.id');
+    }
+
+    /**
+     * @return array
+     */
+    public function getZones()
+    {
+        return $this->catalogZoneRepository->pluck('catalog_zones.name', 'catalog_zones.id');
     }
 }

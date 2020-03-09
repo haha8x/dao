@@ -81,8 +81,17 @@ class DaoServiceProvider extends ServiceProvider
                 'permissions' => ['dao.index'],
             ])
             ->registerItem([
+                'id'          => 'cms-plugins-dao-index',
+                'priority'    => 1,
+                'parent_id'   => 'cms-plugins-dao',
+                'name'        => __('Danh sách DAO'),
+                'icon'        => null,
+                'url'         => route('dao.index'),
+                'permissions' => ['dao.index'],
+            ])
+            ->registerItem([
                 'id'          => 'cms-plugins-dao-request-new',
-                'priority'    => 0,
+                'priority'    => 2,
                 'parent_id'   => 'cms-plugins-dao',
                 'name'        => __('Yêu cầu cấp mới mã DAO'),
                 'icon'        => null,
@@ -90,7 +99,7 @@ class DaoServiceProvider extends ServiceProvider
                 'permissions' => ['dao-request-new.index'],
             ])->registerItem([
                 'id'          => 'cms-plugins-dao-request-update',
-                'priority'    => 0,
+                'priority'    => 3,
                 'parent_id'   => 'cms-plugins-dao',
                 'name'        => __('Yêu cầu cập nhật thông tin mã DAO'),
                 'icon'        => null,
@@ -98,7 +107,7 @@ class DaoServiceProvider extends ServiceProvider
                 'permissions' => ['dao-request-update.index'],
             ])->registerItem([
                 'id'          => 'cms-plugins-dao-request-transfer',
-                'priority'    => 0,
+                'priority'    => 4,
                 'parent_id'   => 'cms-plugins-dao',
                 'name'        => __('Yêu cầu chuyển mã DAO'),
                 'icon'        => null,
@@ -106,7 +115,7 @@ class DaoServiceProvider extends ServiceProvider
                 'permissions' => ['dao-request-transfer.index'],
             ])->registerItem([
                 'id'          => 'cms-plugins-dao-request-close',
-                'priority'    => 0,
+                'priority'    => 5,
                 'parent_id'   => 'cms-plugins-dao',
                 'name'        => __('Yêu cầu đóng mã DAO'),
                 'icon'        => null,
@@ -125,6 +134,6 @@ class DaoServiceProvider extends ServiceProvider
             ]);
         });
 
-        $this->app->register(HookServiceProvider::class);
+        // $this->app->register(HookServiceProvider::class);
     }
 }

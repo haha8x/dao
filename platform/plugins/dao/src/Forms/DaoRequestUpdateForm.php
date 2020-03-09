@@ -124,9 +124,6 @@ class DaoRequestUpdateForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('request_type', 'hidden', [
-                'value'      => 'update',
-            ])
             ;
     }
 }

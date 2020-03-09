@@ -37154,10 +37154,21 @@ if (token) {
 
 /***/ }),
 
+/***/ "./platform/themes/main/assets/admin/default.scss":
+/*!********************************************************!*\
+  !*** ./platform/themes/main/assets/admin/default.scss ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./platform/core/base/resources/assets/js/app.js ./platform/core/base/resources/assets/sass/base/themes/black.scss ./platform/core/base/resources/assets/sass/base/themes/default.scss ./platform/core/base/resources/assets/sass/core.scss ./platform/core/base/resources/assets/sass/custom/system-info.scss ./platform/core/base/resources/assets/sass/custom/email.scss ./platform/core/setting/resources/assets/sass/setting.scss ./platform/core/table/resources/assets/sass/table.scss ./platform/core/media/resources/assets/sass/media.scss ./platform/packages/plugin-management/resources/assets/sass/plugin.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./platform/core/base/resources/assets/js/app.js ./platform/core/base/resources/assets/sass/base/themes/black.scss ./platform/core/base/resources/assets/sass/base/themes/default.scss ./platform/core/base/resources/assets/sass/core.scss ./platform/core/base/resources/assets/sass/custom/system-info.scss ./platform/core/base/resources/assets/sass/custom/email.scss ./platform/core/setting/resources/assets/sass/setting.scss ./platform/core/table/resources/assets/sass/table.scss ./platform/core/media/resources/assets/sass/media.scss ./platform/packages/plugin-management/resources/assets/sass/plugin.scss ./platform/themes/main/assets/admin/default.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37170,7 +37181,8 @@ __webpack_require__(/*! /home/vagrant/code/dao/platform/core/base/resources/asse
 __webpack_require__(/*! /home/vagrant/code/dao/platform/core/setting/resources/assets/sass/setting.scss */"./platform/core/setting/resources/assets/sass/setting.scss");
 __webpack_require__(/*! /home/vagrant/code/dao/platform/core/table/resources/assets/sass/table.scss */"./platform/core/table/resources/assets/sass/table.scss");
 __webpack_require__(/*! /home/vagrant/code/dao/platform/core/media/resources/assets/sass/media.scss */"./platform/core/media/resources/assets/sass/media.scss");
-module.exports = __webpack_require__(/*! /home/vagrant/code/dao/platform/packages/plugin-management/resources/assets/sass/plugin.scss */"./platform/packages/plugin-management/resources/assets/sass/plugin.scss");
+__webpack_require__(/*! /home/vagrant/code/dao/platform/packages/plugin-management/resources/assets/sass/plugin.scss */"./platform/packages/plugin-management/resources/assets/sass/plugin.scss");
+module.exports = __webpack_require__(/*! /home/vagrant/code/dao/platform/themes/main/assets/admin/default.scss */"./platform/themes/main/assets/admin/default.scss");
 
 
 /***/ })

@@ -18,3 +18,6 @@ if (!defined('DAO_REQUEST_TRANSFER_MODULE_SCREEN_NAME')) {
 if (!defined('DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME')) {
     define('DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME', 'dao-request-close');
 }
+if (!defined('DAO_REQUEST_NEW_TABLE_ACTIONS')) {
+    define('DAO_REQUEST_NEW_TABLE_ACTIONS', 'dao-request-new-table-actions');
+}
