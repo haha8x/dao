@@ -4,12 +4,11 @@ use Botble\Base\Facades\DashboardMenuFacade;
 use Botble\Base\Facades\PageTitleFacade;
 use Botble\Base\Supports\Editor;
 use Botble\Base\Supports\PageTitle;
-use Illuminate\Support\Facades\DB;
 
 if (!function_exists('table_actions')) {
     /**
-     * @param $edit
-     * @param $delete
+     * @param string $edit
+     * @param string $delete
      * @param $item
      * @param string $extra
      * @return string
@@ -23,23 +22,24 @@ if (!function_exists('table_actions')) {
 
 if (!function_exists('anchor_link')) {
     /**
-     * @param $link
-     * @param $name
+     * @param string $link
+     * @param string $name
      * @param array $options
      * @return string
      *
      * @throws Throwable
      */
-    function anchor_link($link, $name, array $options = []): string
+    function anchor_link(string $link, string $name, array $options = []): string
     {
         $options = Html::attributes($options);
+
         return view('core/base::elements.tables.link', compact('link', 'name', 'options'))->render();
     }
 }
 
 if (!function_exists('table_checkbox')) {
     /**
-     * @param $id
+     * @param int $id
      * @return string
      *
      * @throws Throwable
@@ -52,12 +52,12 @@ if (!function_exists('table_checkbox')) {
 
 if (!function_exists('language_flag')) {
     /**
-     * @param $flag
-     * @param $name
+     * @param string $flag
+     * @param string $name
      *
      * @return string
      */
-    function language_flag($flag, $name = null): string
+    function language_flag(string $flag, ?string $name = null): string
     {
         return Html::image(url(BASE_LANGUAGE_FLAG_PATH . $flag . '.svg'), $name, ['title' => $name, 'width' => 16]);
     }
@@ -65,7 +65,7 @@ if (!function_exists('language_flag')) {
 
 if (!function_exists('render_editor')) {
     /**
-     * @param $name
+     * @param string $name
      * @param null $value
      * @param bool $withShortCode
      * @param array $attributes
@@ -73,7 +73,7 @@ if (!function_exists('render_editor')) {
      *
      * @throws Throwable
      */
-    function render_editor($name, $value = null, $withShortCode = false, array $attributes = []): string
+    function render_editor(string $name, ?string $value = null, $withShortCode = false, array $attributes = []): string
     {
         $editor = new Editor;
 
@@ -170,7 +170,7 @@ if (!function_exists('get_cms_version')) {
         try {
             return trim(get_file_data(core_path('/VERSION'), false));
         } catch (Exception $exception) {
-            return '3.7';
+            return '5.2';
         }
     }
 }

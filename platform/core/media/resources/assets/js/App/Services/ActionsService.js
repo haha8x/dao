@@ -18,7 +18,7 @@ export class ActionsService {
     static handlePreview() {
         let selected = [];
 
-        _.each(Helpers.getSelectedFiles(), (value) => {
+        _.each(Helpers.getSelectedFiles(), value => {
             if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
                 selected.push({
                     src: value.full_url
@@ -37,7 +37,7 @@ export class ActionsService {
 
     static handleCopyLink() {
         let links = '';
-        _.each(Helpers.getSelectedFiles(), (value) => {
+        _.each(Helpers.getSelectedFiles(), value => {
             if (!_.isEmpty(links)) {
                 links += '\n';
             }
@@ -56,7 +56,7 @@ export class ActionsService {
 
     static handleGlobalAction(type, callback) {
         let selected = [];
-        _.each(Helpers.getSelectedItems(), (value) => {
+        _.each(Helpers.getSelectedItems(), value => {
             selected.push({
                 is_folder: value.is_folder,
                 id: value.id,
@@ -86,7 +86,7 @@ export class ActionsService {
             case 'download':
                 let downloadLink = RV_MEDIA_URL.download;
                 let count = 0;
-                _.each(Helpers.getSelectedItems(), (value) => {
+                _.each(Helpers.getSelectedItems(), value => {
                     if (!_.includes(Helpers.getConfigs().denied_download, value.mime_type)) {
                         downloadLink += (count === 0 ? '?' : '&') + 'selected[' + count + '][is_folder]=' + value.is_folder + '&selected[' + count + '][id]=' + value.id;
                         count++;
@@ -116,7 +116,7 @@ export class ActionsService {
             beforeSend: () => {
                 Helpers.showAjaxLoading();
             },
-            success: (res) => {
+            success: res => {
                 Helpers.resetPagination();
                 if (!res.error) {
                     MessageService.showMessage('success', res.message, RV_MEDIA_CONFIG.translations.message.success_header);
@@ -130,7 +130,7 @@ export class ActionsService {
             complete: () => {
                 Helpers.hideAjaxLoading();
             },
-            error: (data) => {
+            error: data => {
                 MessageService.handleError(data);
             }
         });
@@ -158,50 +158,50 @@ export class ActionsService {
         let hasFolderSelected = Helpers.getSelectedFolder().length > 0;
 
         let ACTION_TEMPLATE = $('#rv_action_item').html();
-        let initialized_item = 0;
+        let initializedItem = 0;
         let $dropdownActions = $('.rv-dropdown-actions .dropdown-menu');
         $dropdownActions.empty();
 
         let actionsList = $.extend({}, true, Helpers.getConfigs().actions_list);
 
         if (hasFolderSelected) {
-            actionsList.basic = _.reject(actionsList.basic, (item) => {
+            actionsList.basic = _.reject(actionsList.basic, item => {
                 return item.action === 'preview';
             });
-            actionsList.file = _.reject(actionsList.file, (item) =>{
+            actionsList.file = _.reject(actionsList.file, item =>{
                 return item.action === 'copy_link';
             });
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.create')) {
-                actionsList.file = _.reject(actionsList.file, (item) => {
+                actionsList.file = _.reject(actionsList.file, item => {
                     return item.action === 'make_copy';
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.edit')) {
-                actionsList.file = _.reject(actionsList.file, (item) => {
+                actionsList.file = _.reject(actionsList.file, item => {
                     return _.includes(['rename'], item.action);
                 });
 
-                actionsList.user = _.reject(actionsList.user, (item) => {
+                actionsList.user = _.reject(actionsList.user, item => {
                     return _.includes(['rename'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.trash')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['trash', 'restore'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.destroy')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['delete'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.favorite')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['favorite', 'remove_favorite'], item.action);
                 });
             }
@@ -209,46 +209,46 @@ export class ActionsService {
 
         let selectedFiles = Helpers.getSelectedFiles();
 
-        let can_preview = false;
+        let canPreview = false;
         _.each(selectedFiles, (value) => {
             if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
-                can_preview = true;
+                canPreview = true;
             }
         });
 
-        if (!can_preview) {
-            actionsList.basic = _.reject(actionsList.basic, (item) => {
+        if (!canPreview) {
+            actionsList.basic = _.reject(actionsList.basic, item => {
                 return item.action === 'preview';
             });
         }
 
         if (selectedFiles.length > 0) {
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.create')) {
-                actionsList.file = _.reject(actionsList.file, (item) => {
+                actionsList.file = _.reject(actionsList.file, item => {
                     return item.action === 'make_copy';
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.edit')) {
-                actionsList.file = _.reject(actionsList.file, (item) => {
+                actionsList.file = _.reject(actionsList.file, item => {
                     return _.includes(['rename'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.trash')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['trash', 'restore'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.destroy')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['delete'], item.action);
                 });
             }
 
             if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.favorite')) {
-                actionsList.other = _.reject(actionsList.other, (item) => {
+                actionsList.other = _.reject(actionsList.other, item => {
                     return _.includes(['favorite', 'remove_favorite'], item.action);
                 });
             }
@@ -284,14 +284,15 @@ export class ActionsService {
                         .replace(/__action__/gi, item.action || '')
                         .replace(/__icon__/gi, item.icon || '')
                         .replace(/__name__/gi, RV_MEDIA_CONFIG.translations.actions_list[key][item.action] || item.name);
-                    if (!index && initialized_item) {
+                    if (!index && initializedItem) {
                         template = '<li role="separator" class="divider"></li>' + template;
                     }
                     $dropdownActions.append(template);
                 }
             });
+
             if (action.length > 0) {
-                initialized_item++;
+                initializedItem++;
             }
         });
     }

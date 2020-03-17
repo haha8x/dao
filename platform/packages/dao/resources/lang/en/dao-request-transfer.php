@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name'   => 'Dao transfers',
-    'create' => 'New dao transfer',
-    'edit'   => 'Edit dao transfer',
+    'name'   => 'Yêu cầu chuyển mã DAO',
+    'create' => 'Tạo Yêu cầu chuyển mã DAO',
+    'edit'   => 'Sửa Yêu cầu chuyển mã DAO',
 ];

@@ -34,6 +34,8 @@ class UserForm extends FormAbstract
     {
         $roles = $this->roleRepository->pluck('name', 'id');
 
+        $defaultRole = $this->roleRepository->getFirstBy(['is_default' => 1]);
+
         $this
             ->setupModel(new User)
             ->setValidatorClass(CreateUserRequest::class)
@@ -73,7 +75,7 @@ class UserForm extends FormAbstract
                 'label'      => trans('core/acl::users.email'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
-                    'placeholder'  => __('Ex: example@gmail.com'),
+                    'placeholder'  => trans('core/acl::users.email_placeholder'),
                     'data-counter' => 60,
                 ],
                 'wrapper'    => [
@@ -91,7 +93,7 @@ class UserForm extends FormAbstract
                 ],
             ])
             ->add('password_confirmation', 'password', [
-                'label'      => __('Re-type password'),
+                'label'      => trans('core/acl::users.password_confirmation'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'data-counter' => 60,
@@ -101,13 +103,14 @@ class UserForm extends FormAbstract
                 ],
             ])
             ->add('role_id', 'customSelect', [
-                'label'      => trans('core/acl::users.role'),
-                'label_attr' => ['class' => 'control-label'],
-                'attr'       => [
+                'label'         => trans('core/acl::users.role'),
+                'label_attr'    => ['class' => 'control-label'],
+                'attr'          => [
                     'class' => 'form-control roles-list',
                 ],
-                'choices'    => ['' => __('Select role')] + $roles,
-                'wrapper'    => [
+                'choices'       => ['' => trans('core/acl::users.select_role')] + $roles,
+                'default_value' => $defaultRole ? $defaultRole->id : null,
+                'wrapper'       => [
                     'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-12',
                 ],
             ]);

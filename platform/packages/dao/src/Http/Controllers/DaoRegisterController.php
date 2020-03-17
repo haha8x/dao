@@ -1,6 +1,6 @@
 <?php
 
-namespace Botble\ACL\Http\Controllers\Auth;
+namespace Botble\Dao\Http\Controllers;
 
 use Assets;
 use Botble\Base\Http\Controllers\BaseController;
@@ -48,7 +48,7 @@ class DaoRegisterController extends BaseController
                 'cookie',
             ]);
 
-        return view('core/acl::auth.register-dao');
+        return view('packages/dao::register.dao');
     }
 
     /**

@@ -14,22 +14,30 @@ class MailConfigServiceProvider extends ServiceProvider
     public function boot()
     {
         $config = [
-            'driver'     => setting('email_driver', config('mail.driver')),
-            'host'       => setting('email_host', config('mail.host')),
-            'port'       => (int)setting('email_port', config('mail.port')),
-            'encryption' => setting('email_encryption', config('mail.encryption')),
-            'username'   => setting('email_username', config('mail.username')),
-            'password'   => setting('email_password', config('mail.password')),
-            'from'       => [
+            'default' => setting('email_driver', config('mail.default')),
+            'mailers' => array_merge(config('mail.mailers'), [
+                'smtp'     => [
+                    'transport'  => 'smtp',
+                    'host'       => setting('email_host', config('mail.mailers.smtp.host')),
+                    'port'       => (int)setting('email_port', config('mail.mailers.smtp.port')),
+                    'encryption' => setting('email_encryption', config('mail.mailers.smtp.encryption')),
+                    'username'   => setting('email_username', config('mail.mailers.smtp.username')),
+                    'password'   => setting('email_password', config('mail.mailers.smtp.password')),
+                ],
+                'sendmail' => [
+                    'transport' => 'sendmail',
+                    'path'      => setting('email_sendmail_path', config('mail.mailers.sendmail.path')),
+                ],
+            ]),
+            'from'    => [
                 'address' => setting('email_from_address', config('mail.from.address')),
                 'name'    => setting('email_from_name', config('mail.from.name')),
             ],
-            'sendmail'   => setting('email_sendmail_path', config('mail.sendmail')),
         ];
 
-        config(['mail' => $config]);
+        config(['mail' => array_merge(config('mail'), $config)]);
 
-        if (setting('email_driver', config('mail.driver')) === 'mailgun') {
+        if (setting('email_driver', config('mail.default')) === 'mailgun') {
             config([
                 'services.mailgun' => [
                     'domain' => setting('email_mail_gun_domain', config('services.mailgun.domain')),

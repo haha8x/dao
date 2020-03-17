@@ -63,9 +63,7 @@ class CreateUserService implements ProduceServiceInterface
             ]);
 
             if ($this->activateUserService->activate($user) && $request->input('role_id')) {
-                $role = $this->roleRepository->getFirstBy([
-                    'id' => $request->input('role_id'),
-                ]);
+                $role = $this->roleRepository->findById($request->input('role_id'));
 
                 if (!empty($role)) {
                     $role->users()->attach($user->id);

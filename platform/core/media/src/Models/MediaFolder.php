@@ -57,7 +57,7 @@ class MediaFolder extends BaseModel
         parent::boot();
         static::deleting(function (MediaFolder $folder) {
             if ($folder->isForceDeleting()) {
-                $files = MediaFile::where('folder_id', '=', $folder->id)->onlyTrashed()->get();
+                $files = MediaFile::where('folder_id', $folder->id)->onlyTrashed()->get();
 
                 $uploadManager = new UploadsManager;
 
@@ -69,7 +69,7 @@ class MediaFolder extends BaseModel
                     $file->forceDelete();
                 }
             } else {
-                $files = MediaFile::where('folder_id', '=', $folder->id)->withTrashed()->get();
+                $files = MediaFile::where('folder_id', $folder->id)->withTrashed()->get();
 
                 foreach ($files as $file) {
                     /**
@@ -81,7 +81,7 @@ class MediaFolder extends BaseModel
         });
 
         static::restoring(function ($folder) {
-            MediaFile::where('folder_id', '=', $folder->id)->restore();
+            MediaFile::where('folder_id', $folder->id)->restore();
         });
     }
 }

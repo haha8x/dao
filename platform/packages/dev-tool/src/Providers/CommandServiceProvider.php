@@ -16,7 +16,6 @@ use Botble\DevTool\Commands\PackageCreateCommand;
 use Botble\DevTool\Commands\RebuildPermissionsCommand;
 use Botble\DevTool\Commands\TestSendMailCommand;
 use Botble\DevTool\Commands\TruncateTablesCommand;
-use Botble\DevTool\Commands\UserCreateCommand;
 use Botble\DevTool\Commands\PackageMakeCrudCommand;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,7 +37,6 @@ class CommandServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 TestSendMailCommand::class,
                 TruncateTablesCommand::class,
-                UserCreateCommand::class,
                 RebuildPermissionsCommand::class,
                 LocaleRemoveCommand::class,
                 LocaleCreateCommand::class,

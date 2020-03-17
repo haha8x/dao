@@ -1,5 +1,6 @@
 import {Helpers} from './App/Helpers/Helpers';
 import {MediaConfig} from './App/Config/MediaConfig';
+import {ContextMenuService} from "./App/Services/ContextMenuService";
 
 export class EditorService {
     static editorSelectFile(selectedFiles) {
@@ -61,7 +62,7 @@ class rvMedia {
             }
 
             if ($('#rv_media_body .rv-media-container').length === 0) {
-                $('#rv_media_body').load(RV_MEDIA_URL.popup, (data) => {
+                $('#rv_media_body').load(RV_MEDIA_URL.popup, data => {
                     if (data.error) {
                         alert(data.message);
                     }
@@ -69,6 +70,9 @@ class rvMedia {
                         .removeClass('media-modal-loading')
                         .closest('.modal-content').removeClass('bb-loading');
                     $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
+
+                    ContextMenuService.destroyContext();
+                    ContextMenuService.initContext();
                 });
             } else {
                 $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
@@ -97,11 +101,7 @@ $.fn.rvMedia = function (options) {
     let $selector = $(this);
 
     MediaConfig.request_params.filter = 'everything';
-    if (MediaConfig.request_params.view_in === 'trash') {
-        $(document).find('.js-insert-to-editor').prop('disabled', true);
-    } else {
-        $(document).find('.js-insert-to-editor').prop('disabled', false);
-    }
+    $(document).find('.js-insert-to-editor').prop('disabled', MediaConfig.request_params.view_in === 'trash');
     Helpers.storeConfig();
 
     new rvMedia($selector, options);

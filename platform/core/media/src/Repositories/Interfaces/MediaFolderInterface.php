@@ -8,7 +8,7 @@ interface MediaFolderInterface extends RepositoryInterface
 {
 
     /**
-     * @param $folderId
+     * @param int $folderId
      * @param array $params
      * @param bool $withTrash
      * @return mixed
@@ -16,59 +16,59 @@ interface MediaFolderInterface extends RepositoryInterface
     public function getFolderByParentId($folderId, array $params = [], $withTrash = false);
 
     /**
-     * @param $name
-     * @param $parentId
+     * @param string $name
+     * @param int $parentId
      * @return string
      */
     public function createSlug($name, $parentId);
 
     /**
-     * @param $name
-     * @param $parentId
+     * @param string $name
+     * @param int $parentId
      */
     public function createName($name, $parentId);
 
     /**
-     * @param $parentId
+     * @param int $parentId
      * @param array $breadcrumbs
      * @return array
      */
     public function getBreadcrumbs($parentId, $breadcrumbs = []);
 
     /**
-     * @param $parentId
+     * @param int $parentId
      * @param array $params
      * @return mixed
      */
     public function getTrashed($parentId, array $params = []);
 
     /**
-     * @param $folderId
+     * @param int $folderId
      * @param bool $force
      */
     public function deleteFolder($folderId, $force = false);
 
     /**
-     * @param $parentId
+     * @param int $parentId
      * @param array $child
      * @return array
      */
     public function getAllChildFolders($parentId, $child = []);
 
     /**
-     * @param $folderId
+     * @param int $folderId
      * @param string $path
      * @return string
      */
     public function getFullPath($folderId, $path = '');
 
     /**
-     * @param $folderId
+     * @param int $folderId
      */
     public function restoreFolder($folderId);
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function emptyTrash();
 }

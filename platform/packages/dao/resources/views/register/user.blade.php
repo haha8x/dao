@@ -3,7 +3,7 @@
 @section('content')
 <h3 class="form-title font-green">Đăng ký User</h3>
 <div class="content-wrapper">
-    {!! Form::open(['route' => 'access.register.dao', 'class' => 'register-daodao-form']) !!}
+    {!! Form::open(['route' => 'user.register', 'class' => 'user-register-form']) !!}
     <div class="alert alert-danger display-hide">
         <button class="close" data-close="alert"></button>
         <span></span>

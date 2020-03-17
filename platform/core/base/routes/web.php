@@ -1,5 +1,7 @@
 <?php
 
+use Botble\Base\Http\Controllers\SystemController;
+
 Route::group(['namespace' => 'Botble\Base\Http\Controllers', 'middleware' => 'web'], function () {
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'system/info'], function () {
@@ -22,6 +24,7 @@ Route::group(['namespace' => 'Botble\Base\Http\Controllers', 'middleware' => 'we
                 'as'         => 'system.cache.clear',
                 'uses'       => 'SystemController@postClearCache',
                 'permission' => ACL_ROLE_SUPER_USER,
+                'middleware' => 'preventDemo',
             ]);
         });
 
@@ -31,4 +34,6 @@ Route::group(['namespace' => 'Botble\Base\Http\Controllers', 'middleware' => 'we
             'permission' => ACL_ROLE_SUPER_USER,
         ]);
     });
+
+    Route::get('settings-language/{alias}', [SystemController::class, 'getLanguage'])->name('settings.language');
 });

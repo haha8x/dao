@@ -49,7 +49,7 @@ class MembershipAuthorization
     /**
      * @return boolean
      */
-    public function authorize()
+    public function authorize(): bool
     {
         try {
 
@@ -84,7 +84,7 @@ class MembershipAuthorization
     /**
      * @return bool
      */
-    protected function isInvalidDomain()
+    protected function isInvalidDomain(): bool
     {
         if (filter_var($this->url, FILTER_VALIDATE_IP)) {
             return true;
@@ -112,7 +112,7 @@ class MembershipAuthorization
     /**
      * @return bool
      */
-    protected function processAuthorize()
+    protected function processAuthorize(): bool
     {
         $this->client->post('https://botble.com/membership/authorize', [
             'form_params' => [

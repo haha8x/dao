@@ -1,6 +1,6 @@
 @extends('core/acl::auth.master')
 @section('content')
-    <p>{{ __('Reset Password') }}:</p>
+    <p>{{ trans('core/acl::auth.reset_password') }}:</p>
     {!! Form::open(['route' => 'access.password.reset.post', 'method' => 'POST', 'class' => 'login-form']) !!}
         <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}" id="emailGroup">
             <label>{{ trans('core/acl::auth.reset.email') }}</label>

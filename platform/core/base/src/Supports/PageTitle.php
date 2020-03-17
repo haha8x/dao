@@ -10,9 +10,9 @@ class PageTitle
     protected $title;
 
     /**
-     * @param $title
+     * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -21,7 +21,7 @@ class PageTitle
      * @param bool $full
      * @return string
      */
-    public function getTitle($full = true)
+    public function getTitle(bool $full = true)
     {
         if (empty($this->title)) {
             return setting('admin_title', config('core.base.general.base_name'));

@@ -17,7 +17,7 @@ class ChangePasswordService implements ProduceServiceInterface
     protected $userRepository;
 
     /**
-     * ResetPasswordService constructor.
+     * ChangePasswordService constructor.
      * @param UserInterface $userRepository
      */
     public function __construct(UserInterface $userRepository)
@@ -41,8 +41,6 @@ class ChangePasswordService implements ProduceServiceInterface
         $this->userRepository->update(['id' => $user->id], [
             'password' => Hash::make($request->input('password')),
         ]);
-
-        Auth::logoutOtherDevices($request->input('password'));
 
         do_action(USER_ACTION_AFTER_UPDATE_PASSWORD, USER_MODULE_SCREEN_NAME, $request, $user);
 

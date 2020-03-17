@@ -24,4 +24,15 @@ trait EnumCastable
 
         return $castedValue;
     }
+
+    /**
+     * Determine if the given key is cast using a custom class.
+     *
+     * @param string $key
+     * @return bool
+     */
+    protected function isClassCastable($key)
+    {
+        return false;
+    }
 }

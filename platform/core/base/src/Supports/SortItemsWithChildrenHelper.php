@@ -34,7 +34,7 @@ class SortItemsWithChildrenHelper
     protected $result = [];
 
     /**
-     * @param $items
+     * @param array|Collection $items
      * @return $this
      * @throws Exception
      */
@@ -51,30 +51,30 @@ class SortItemsWithChildrenHelper
     }
 
     /**
-     * @param $string
+     * @param string $string
      * @return $this
      */
-    public function setParentField($string)
+    public function setParentField(string $string): self
     {
         $this->parentField = $string;
         return $this;
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return $this
      */
-    public function setCompareKey($key)
+    public function setCompareKey(string $key): self
     {
         $this->compareKey = $key;
         return $this;
     }
 
     /**
-     * @param $string
+     * @param string $string
      * @return $this
      */
-    public function setChildrenProperty($string)
+    public function setChildrenProperty(string $string): self
     {
         $this->childrenProperty = $string;
         return $this;
@@ -83,16 +83,16 @@ class SortItemsWithChildrenHelper
     /**
      * @return array
      */
-    public function sort()
+    public function sort(): array
     {
         return $this->processSort();
     }
 
     /**
-     * @param null $parentId
+     * @param int $parentId
      * @return array
      */
-    protected function processSort($parentId = 0)
+    protected function processSort(int $parentId = 0): array
     {
         $result = [];
         $filtered = $this->items->where($this->parentField, '=', $parentId);

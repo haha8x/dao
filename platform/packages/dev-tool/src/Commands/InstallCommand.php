@@ -2,6 +2,7 @@
 
 namespace Botble\DevTool\Commands;
 
+use Botble\ACL\Commands\UserCreateCommand;
 use Botble\Base\Supports\Core;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;

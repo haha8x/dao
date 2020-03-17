@@ -1,26 +1,26 @@
 <?php
 
-// use to change table heading of each module
+// Use to change table heading of each module
 if (!defined('BASE_FILTER_TABLE_HEADINGS')) {
     define('BASE_FILTER_TABLE_HEADINGS', 'table_headings');
 }
 
-// use to change admin menu
+// Use to change admin menu
 if (!defined('BASE_FILTER_ADMIN_MENU')) {
     define('BASE_FILTER_ADMIN_MENU', 'admin_menu');
 }
 
-// change data search result
+// Change data search result
 if (!defined('BASE_FILTER_SET_DATA_SEARCH')) {
     define('BASE_FILTER_SET_DATA_SEARCH', 'set_data_search');
 }
 
-// use in get list data function in each repository
+// Use in get list data function in each repository
 if (!defined('BASE_FILTER_GET_LIST_DATA')) {
     define('BASE_FILTER_GET_LIST_DATA', 'get_list_data');
 }
 
-// change data show in front page
+// Change data show in front page
 if (!defined('BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM')) {
     define('BASE_FILTER_BEFORE_GET_FRONT_PAGE_ITEM', 'before_get_front_page_item');
 }
@@ -29,7 +29,7 @@ if (!defined('BASE_FILTER_BEFORE_GET_SINGLE')) {
     define('BASE_FILTER_BEFORE_GET_SINGLE', 'before_get_home_page_data_single');
 }
 
-// use to add meta box to each module
+// Use to add meta box to each module
 if (!defined('BASE_ACTION_META_BOXES')) {
     define('BASE_ACTION_META_BOXES', 'meta_boxes');
 }

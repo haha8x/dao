@@ -14,21 +14,24 @@ trait PermissionTrait
     protected $preparedPermissions;
 
     /**
-     * {@inheritDoc}
+     * Create a new permissions instance.
+     *
+     * @param array $permissions
      */
-    public function addPermission($permission, $value = true)
+    public function __construct(array $permissions = null)
     {
-        if (!array_key_exists($permission, (array)$this->permissions)) {
-            $this->permissions = array_merge($this->permissions, [$permission => $value]);
+        if (isset($permissions)) {
+            $this->permissions = $permissions;
         }
-
-        return $this;
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $permission
+     * @param bool $value
+     * @param bool $create
+     * @return $this
      */
-    public function updatePermission($permission, $value = true, $create = false)
+    public function updatePermission(string $permission, $value = true, $create = false): self
     {
         if (array_key_exists($permission, (array)$this->permissions)) {
             $permissions = $this->permissions;
@@ -44,9 +47,24 @@ trait PermissionTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @param string $permission
+     * @param bool $value
+     * @return $this
      */
-    public function removePermission($permission)
+    public function addPermission(string $permission, $value = true): self
+    {
+        if (!array_key_exists($permission, (array)$this->permissions)) {
+            $this->permissions = array_merge($this->permissions, [$permission => $value]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $permission
+     * @return $this
+     */
+    public function removePermission(string $permission): self
     {
         if (array_key_exists($permission, (array)$this->permissions)) {
             $permissions = $this->permissions;
@@ -60,21 +78,10 @@ trait PermissionTrait
     }
 
     /**
-     * Create a new permissions instance.
-     *
-     * @param array $permissions
+     * @param array|string $permissions
+     * @return bool
      */
-    public function __construct(array $permissions = null)
-    {
-        if (isset($permissions)) {
-            $this->permissions = $permissions;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasAccess($permissions)
+    public function hasAccess($permissions): bool
     {
         if (is_string($permissions)) {
             $permissions = func_get_args();
@@ -92,31 +99,11 @@ trait PermissionTrait
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function hasAnyAccess($permissions)
-    {
-        if (is_string($permissions)) {
-            $permissions = func_get_args();
-        }
-
-        $prepared = $this->getPreparedPermissions();
-
-        foreach ($permissions as $permission) {
-            if ($this->checkPermission($prepared, $permission)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Lazily grab the prepared permissions.
      *
      * @return array
      */
-    protected function getPreparedPermissions()
+    protected function getPreparedPermissions(): array
     {
         if ($this->preparedPermissions === null) {
             $this->preparedPermissions = $this->createPreparedPermissions();
@@ -126,13 +113,27 @@ trait PermissionTrait
     }
 
     /**
+     * @return array
+     */
+    protected function createPreparedPermissions(): array
+    {
+        $prepared = [];
+
+        if (!empty($this->permissions)) {
+            $this->preparePermissions($prepared, $this->permissions);
+        }
+
+        return $prepared;
+    }
+
+    /**
      * Does the heavy lifting of preparing permissions.
      *
      * @param array $prepared
      * @param array $permissions
      * @return void
      */
-    protected function preparePermissions(array &$prepared, array $permissions)
+    protected function preparePermissions(array &$prepared, array $permissions): void
     {
         foreach ($permissions as $keys => $value) {
             foreach ($this->extractClassPermissions($keys) as $key) {
@@ -158,7 +159,7 @@ trait PermissionTrait
      * @param string $key
      * @return array
      */
-    protected function extractClassPermissions($key)
+    protected function extractClassPermissions($key): array
     {
         if (!Str::contains($key, '@')) {
             return (array)$key;
@@ -182,7 +183,7 @@ trait PermissionTrait
      * @param string $permission
      * @return bool
      */
-    protected function checkPermission(array $prepared, $permission)
+    protected function checkPermission(array $prepared, string $permission): bool
     {
         if (array_key_exists($permission, $prepared) && $prepared[$permission] === true) {
             return true;
@@ -198,16 +199,23 @@ trait PermissionTrait
     }
 
     /**
-     * {@inheritDoc}
+     * @param array|string $permissions
+     * @return bool
      */
-    protected function createPreparedPermissions()
+    public function hasAnyAccess($permissions): bool
     {
-        $prepared = [];
-
-        if (!empty($this->permissions)) {
-            $this->preparePermissions($prepared, $this->permissions);
+        if (is_string($permissions)) {
+            $permissions = func_get_args();
         }
 
-        return $prepared;
+        $prepared = $this->getPreparedPermissions();
+
+        foreach ($permissions as $permission) {
+            if ($this->checkPermission($prepared, $permission)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,22 +1,22 @@
-@if (Arr::get($meta_box, 'before_wrapper'))
-    {!! Arr::get($meta_box, 'before_wrapper') !!}
+@if (Arr::get($metaBox, 'before_wrapper'))
+    {!! Arr::get($metaBox, 'before_wrapper') !!}
 @endif
 
-@if (Arr::get($meta_box, 'wrap', true))
-    <div class="widget meta-boxes" {{ Html::attributes(Arr::get($meta_box, 'attributes', [])) }}>
+@if (Arr::get($metaBox, 'wrap', true))
+    <div class="widget meta-boxes" {{ Html::attributes(Arr::get($metaBox, 'attributes', [])) }}>
         <div class="widget-title">
             <h4>
-                <span> {{ Arr::get($meta_box, 'title') }}</span>
+                <span> {{ Arr::get($metaBox, 'title') }}</span>
             </h4>
         </div>
         <div class="widget-body">
-            {!! Arr::get($meta_box, 'content') !!}
+            {!! Arr::get($metaBox, 'content') !!}
         </div>
     </div>
 @else
-    {!! Arr::get($meta_box, 'content') !!}
+    {!! Arr::get($metaBox, 'content') !!}
 @endif
 
-@if (Arr::get($meta_box, 'after_wrapper'))
-    {!! Arr::get($meta_box, 'after_wrapper') !!}
+@if (Arr::get($metaBox, 'after_wrapper'))
+    {!! Arr::get($metaBox, 'after_wrapper') !!}
 @endif

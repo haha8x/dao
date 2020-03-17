@@ -20,6 +20,7 @@ export class Helpers {
         if (url.substring(0, 1) === '/') {
             return baseUrl + url.substring(1);
         }
+
         return baseUrl + url;
     }
 
@@ -69,11 +70,11 @@ export class Helpers {
         return MediaConfig.request_params;
     }
 
-    static setSelectedFile($file_id) {
+    static setSelectedFile(fileId) {
         if (typeof window.rvMedia.options !== 'undefined') {
-            window.rvMedia.options.selected_file_id = $file_id;
+            window.rvMedia.options.selected_file_id = fileId;
         } else {
-            MediaConfig.request_params.selected_file_id = $file_id;
+            MediaConfig.request_params.selected_file_id = fileId;
         }
     }
 
@@ -96,6 +97,7 @@ export class Helpers {
             });
         } else {
             RecentItems.push(id);
+            this.storeRecentItems();
         }
     }
 

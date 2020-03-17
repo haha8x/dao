@@ -63,13 +63,13 @@
                                     @foreach ($locales as $key => $value)
                                         @if (app()->getLocale() == $key)
                                             <li class="active">
-                                                <a href="{{ route('admin.language', $key) }}">
+                                                <a href="{{ route('settings.language', $key) }}">
                                                     {!! language_flag($value['flag'], $value['name']) !!} <span>{{ $value['name'] }}</span>
                                                 </a>
                                             </li>
                                         @else
                                             <li>
-                                                <a href="{{ route('admin.language', $key) }}">
+                                                <a href="{{ route('settings.language', $key) }}">
                                                     {!! language_flag($value['flag'], $value['name']) !!} <span>{{ $value['name'] }}</span>
                                                 </a>
                                             </li>

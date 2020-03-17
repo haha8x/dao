@@ -119,7 +119,5 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
 
     });
 
-    Route::get('admin-language/{alias}', [UserController::class, 'getLanguage'])->name('admin.language');
-
     Route::get('admin-theme/{theme}', [UserController::class, 'getTheme'])->name('admin.theme');
 });

@@ -7,40 +7,40 @@ use Botble\Support\Repositories\Interfaces\RepositoryInterface;
 interface MediaFileInterface extends RepositoryInterface
 {
     /**
-     * @return mixed
+     * @return int
      */
     public function getSpaceUsed();
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getSpaceLeft();
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getQuota();
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getPercentageUsed();
 
     /**
-     * @param $name
-     * @param $folder
+     * @param string $name
+     * @param string $folder
      */
     public function createName($name, $folder);
 
     /**
-     * @param $name
-     * @param $extension
-     * @param $folder
+     * @param string $name
+     * @param string $extension
+     * @param string $folderPath
      */
-    public function createSlug($name, $extension, $folder);
+    public function createSlug($name, $extension, $folderPath);
 
     /**
-     * @param $folderId
+     * @param int $folderId
      * @param array $params
      * @param bool $withFolders
      * @param array $folderParams
@@ -49,7 +49,7 @@ interface MediaFileInterface extends RepositoryInterface
     public function getFilesByFolderId($folderId, array $params = [], $withFolders = true, $folderParams = []);
 
     /**
-     * @param $folderId
+     * @param int $folderId
      * @param array $params
      * @param bool $withFolders
      * @param array $folderParams
@@ -58,7 +58,7 @@ interface MediaFileInterface extends RepositoryInterface
     public function getTrashed($folderId, array $params = [], $withFolders = true, $folderParams = []);
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function emptyTrash();
 }

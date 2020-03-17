@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
+use Request;
 use Throwable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\DataTables;
@@ -167,6 +168,16 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
+     * @param bool $hasFilter
+     * @return $this
+     */
+    public function setHasFilter(bool $hasFilter): self
+    {
+        $this->hasFilter = $hasFilter;
+        return $this;
+    }
+
+    /**
      * @return RepositoryInterface
      */
     public function getRepository(): RepositoryInterface
@@ -282,7 +293,7 @@ abstract class TableAbstract extends DataTable
                     'infoEmpty'         => trans('core/base::tables.no_record'),
                     'lengthMenu'        => Html::tag('span', '_MENU_', ['class' => 'dt-length-style'])->toHtml(),
                     'search'            => '',
-                    'searchPlaceholder' => __('Search...'),
+                    'searchPlaceholder' => trans('core/table::general.search'),
                     'zeroRecords'       => trans('core/base::tables.no_record'),
                     'processing'        => Html::image(url('vendor/core/images/loading-spinner-blue.gif')),
                     'paginate'          => [
@@ -913,7 +924,7 @@ abstract class TableAbstract extends DataTable
     protected function getYesNoSelect(): array
     {
         return [
-            0 => trans('core/base::base.n'),
+            0 => trans('core/base::base.no'),
             1 => trans('core/base::base.yes'),
         ];
     }
@@ -927,6 +938,7 @@ abstract class TableAbstract extends DataTable
     protected function addCreateButton(string $url, $permission = null, array $buttons = []): array
     {
         if (!$permission || Auth::user()->hasPermission($permission)) {
+            $url .= '?' . http_build_query(Request::query());
             $buttons['create'] = [
                 'link' => $url,
                 'text' => view('core/base::elements.tables.actions.create')->render(),

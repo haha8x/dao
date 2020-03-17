@@ -41,7 +41,7 @@ class UploadsManager
     /**
      * Return the mime type
      *
-     * @param $path
+     * @param string $path
      * @return mixed|null|string
      */
     public function fileMimeType($path): ?string
@@ -52,7 +52,7 @@ class UploadsManager
     /**
      * Return the file size
      *
-     * @param $path
+     * @param string $path
      * @return int
      */
     public function fileSize($path)
@@ -63,7 +63,7 @@ class UploadsManager
     /**
      * Return the last modified time
      *
-     * @param $path
+     * @param string $path
      * @return string
      */
     public function fileModified($path)
@@ -74,7 +74,7 @@ class UploadsManager
     /**
      * Create a new directory
      *
-     * @param $folder
+     * @param string $folder
      * @return bool|string|TranslatorInterface
      */
     public function createDirectory($folder)
@@ -91,7 +91,7 @@ class UploadsManager
     /**
      * Sanitize the folder name
      *
-     * @param $folder
+     * @param string $folder
      * @return string
      */
     protected function cleanFolder($folder)
@@ -102,7 +102,7 @@ class UploadsManager
     /**
      * Delete a directory
      *
-     * @param $folder
+     * @param string $folder
      * @return bool|string|TranslatorInterface
      */
     public function deleteDirectory($folder)
@@ -123,7 +123,7 @@ class UploadsManager
     /**
      * Delete a file
      *
-     * @param $path
+     * @param string $path
      * @return bool|string|TranslatorInterface
      */
     public function deleteFile($path)
@@ -147,8 +147,8 @@ class UploadsManager
     /**
      * Save a file
      *
-     * @param $path
-     * @param $content
+     * @param string $path
+     * @param string $content
      * @return bool|string|TranslatorInterface
      */
     public function saveFile($path, $content)

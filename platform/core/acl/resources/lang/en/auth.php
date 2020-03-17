@@ -20,7 +20,7 @@ return [
         'dont_have_account' => 'You don\'t have account on this system, please contact administrator for more information!',
     ],
     'forgot_password'       => [
-        'title'   => 'Lost password',
+        'title'   => 'Forgot Password',
         'message' => '<p>Have you forgotten your password?</p><p>Please enter your email account. System will send a email with active link to reset your password.</p>',
         'submit'  => 'Submit',
     ],
@@ -57,4 +57,7 @@ return [
     'login_title'           => 'Admin',
     'login_via_social'      => 'Login with social networks',
     'back_to_login'         => 'Back to login page',
+    'sign_in_below'         => 'Sign In Below',
+    'languages'             => 'Languages',
+    'reset_password'        => 'Reset Password',
 ];

@@ -131,7 +131,7 @@ class RvMedia
     }
 
     /**
-     * @param $message
+     * @param string $message
      * @param array $data
      * @param null $code
      * @param int $status
@@ -171,7 +171,7 @@ class RvMedia
     }
 
     /**
-     * @param $fileUpload
+     * @param UploadedFile $fileUpload
      * @param int $folderId
      * @param string $path
      * @return JsonResponse|array
@@ -185,9 +185,6 @@ class RvMedia
             ];
         }
 
-        /**
-         * @var UploadedFile $fileUpload
-         */
         try {
             $file = $this->fileRepository->getModel();
 
@@ -295,7 +292,7 @@ class RvMedia
     }
 
     /**
-     * @param $permission
+     * @param string $permission
      */
     public function removePermission($permission)
     {
@@ -303,7 +300,7 @@ class RvMedia
     }
 
     /**
-     * @param $permission
+     * @param string $permission
      */
     public function addPermission($permission)
     {
@@ -311,7 +308,7 @@ class RvMedia
     }
 
     /**
-     * @param $permission
+     * @param string $permission
      * @return bool
      */
     public function hasPermission($permission)
@@ -356,7 +353,7 @@ class RvMedia
     }
 
     /**
-     * @param $size
+     * @param int $size
      * @return float - bytes
      */
     public function parseSize($size)
@@ -372,7 +369,7 @@ class RvMedia
     }
 
     /**
-     * @param $path
+     * @param string $path
      * @return string
      */
     public function url($path)

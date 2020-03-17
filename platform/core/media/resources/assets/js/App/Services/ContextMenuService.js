@@ -40,7 +40,7 @@ export class ContextMenuService {
         };
 
         _.each(Helpers.getConfigs().actions_list, (actionGroup, key) => {
-            _.each(actionGroup, (value) => {
+            _.each(actionGroup, value => {
                 items[value.action] = {
                     name: value.name,
                     icon: (opt, $itemElement, itemKey, item) => {
@@ -137,14 +137,14 @@ export class ContextMenuService {
             }
         }
 
-        let can_preview = false;
+        let canPreview = false;
         _.each(selectedFiles, (value) => {
             if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
-                can_preview = true;
+                canPreview = true;
             }
         });
 
-        if (!can_preview) {
+        if (!canPreview) {
             items.preview = undefined;
         }
 

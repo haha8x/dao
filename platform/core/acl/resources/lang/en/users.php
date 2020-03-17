@@ -67,4 +67,12 @@ return [
         UserStatusEnum::ACTIVATED   => 'Activated',
         UserStatusEnum::DEACTIVATED => 'Deactivated',
     ],
+    'make_super'                 => 'Make super',
+    'remove_super'               => 'Remove super',
+    'is_super'                   => 'Is super?',
+    'email_placeholder'          => 'Ex: example@gmail.com',
+    'password_confirmation'      => 'Re-type password',
+    'select_role'                => 'Select role',
+    'create_new_user'            => 'Create a new user',
+    'cannot_delete_super_user'   => 'Permission denied. Cannot delete a super user!',
 ];

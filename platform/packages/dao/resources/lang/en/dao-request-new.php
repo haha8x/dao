@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name'   => 'Dao news',
-    'create' => 'New dao new',
-    'edit'   => 'Edit dao new',
+    'name'   => 'Yêu cầu cấp mới mã DAO',
+    'create' => 'Tạo Yêu cầu cấp mới mã DAO',
+    'edit'   => 'Sửa Yêu cầu cấp mới mã DAO',
 ];

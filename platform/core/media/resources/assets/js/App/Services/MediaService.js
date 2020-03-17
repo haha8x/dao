@@ -76,7 +76,7 @@ export class MediaService {
                         RV_MEDIA_CONFIG.pagination.in_process_get_media = false;
                     }
 
-                    if (typeof RV_MEDIA_CONFIG.pagination.posts_per_page != 'undefined' && res.data.files.length < RV_MEDIA_CONFIG.pagination.posts_per_page && typeof RV_MEDIA_CONFIG.pagination.has_more != 'undefined') {
+                    if (typeof RV_MEDIA_CONFIG.pagination.posts_per_page != 'undefined' && (res.data.files.length + res.data.folders.length) < RV_MEDIA_CONFIG.pagination.posts_per_page && typeof RV_MEDIA_CONFIG.pagination.has_more != 'undefined') {
                         RV_MEDIA_CONFIG.pagination.has_more = false;
                     }
                 }
@@ -107,7 +107,7 @@ export class MediaService {
                     width: data.percent + '%',
                 });
             },
-            error: (data) => {
+            error: data => {
                 MessageService.handleError(data);
             }
         });
@@ -131,8 +131,8 @@ export class MediaService {
 
     static refreshFilter() {
         let $rvMediaContainer = $('.rv-media-container');
-        let view_in = Helpers.getRequestParams().view_in;
-        if (view_in !== 'all_media' && !Helpers.getRequestParams().folder_id) {
+        let viewIn = Helpers.getRequestParams().view_in;
+        if (viewIn !== 'all_media' && !Helpers.getRequestParams().folder_id) {
             $('.rv-media-actions .btn:not([data-type="refresh"]):not(label)').addClass('disabled');
             $rvMediaContainer.attr('data-allow-upload', 'false');
         } else {
@@ -143,7 +143,7 @@ export class MediaService {
         $('.rv-media-actions .btn.js-rv-media-change-filter-group').removeClass('disabled');
 
         let $empty_trash_btn = $('.rv-media-actions .btn[data-action="empty_trash"]');
-        if (view_in === 'trash') {
+        if (viewIn === 'trash') {
             $empty_trash_btn.removeClass('hidden').removeClass('disabled');
             if (!_.size(Helpers.getItems())) {
                 $empty_trash_btn.addClass('hidden').addClass('disabled');
@@ -155,6 +155,6 @@ export class MediaService {
         ContextMenuService.destroyContext();
         ContextMenuService.initContext();
 
-        $rvMediaContainer.attr('data-view-in', view_in);
+        $rvMediaContainer.attr('data-view-in', viewIn);
     }
 }

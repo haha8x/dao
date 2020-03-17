@@ -19,10 +19,10 @@
                         <label class="text-title-field" for="email_driver">{{ trans('core/setting::setting.email.driver') }}</label>
                         <div class="ui-select-wrapper">
                             <select name="email_driver" class="ui-select" id="email_driver">
-                                <option value="smtp" @if (setting('email_driver', config('mail.driver')) == 'smtp') selected @endif>SMTP</option>
-                                <option value="sendmail" @if (setting('email_driver', config('mail.driver')) == 'sendmail') selected @endif>SendMail</option>
-                                <option value="mailgun" @if (setting('email_driver', config('mail.driver')) == 'mailgun') selected @endif>MailGun</option>
-                                <option value="mandrill" @if (setting('email_driver', config('mail.driver')) == 'mandrill') selected @endif>Mandrill</option>
+                                <option value="smtp" @if (setting('email_driver', config('mail.default')) == 'smtp') selected @endif>SMTP</option>
+                                <option value="sendmail" @if (setting('email_driver', config('mail.default')) == 'sendmail') selected @endif>SendMail</option>
+                                <option value="mailgun" @if (setting('email_driver', config('mail.default')) == 'mailgun') selected @endif>MailGun</option>
+                                <option value="mandrill" @if (setting('email_driver', config('mail.default')) == 'mandrill') selected @endif>Mandrill</option>
                             </select>
                             <svg class="svg-next-icon svg-next-icon-size-16">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
@@ -32,24 +32,24 @@
                     <div class="form-group">
                         <label class="text-title-field" for="email_port">{{ trans('core/setting::setting.email.port') }}</label>
                         <input data-counter="10" type="number" class="next-input" name="email_port" id="email_port"
-                               value="{{ setting('email_port', config('mail.port')) }}" placeholder="{{ trans('core/setting::setting.email.port_placeholder') }}">
+                               value="{{ setting('email_port', config('mail.mailers.smtp.port')) }}" placeholder="{{ trans('core/setting::setting.email.port_placeholder') }}">
                     </div>
                     <div class="form-group">
                         <label class="text-title-field" for="email_host">{{ trans('core/setting::setting.email.host') }}</label>
                         <input data-counter="60" type="text" class="next-input" name="email_host" id="email_host"
-                               value="{{ setting('email_host', config('mail.host')) }}" placeholder="{{ trans('core/setting::setting.email.host_placeholder') }}">
+                               value="{{ setting('email_host', config('mail.mailers.smtp.host')) }}" placeholder="{{ trans('core/setting::setting.email.host_placeholder') }}">
                     </div>
                     <div class="form-group">
                         <label class="text-title-field" for="email_username">{{ trans('core/setting::setting.email.username') }}</label>
                         <input data-counter="60" type="text" class="next-input" name="email_username" id="email_username"
-                               value="{{ setting('email_username', config('mail.username')) }}" placeholder="{{ trans('core/setting::setting.email.username_placeholder') }}">
+                               value="{{ setting('email_username', config('mail.mailers.smtp.username')) }}" placeholder="{{ trans('core/setting::setting.email.username_placeholder') }}">
                     </div>
-                    <div class="form-group setting-mail-password @if (setting('email_driver', config('mail.driver')) == 'mailgun') hidden @endif">
+                    <div class="form-group setting-mail-password @if (setting('email_driver', config('mail.default')) == 'mailgun') hidden @endif">
                         <label class="text-title-field" for="email_password">{{ trans('core/setting::setting.email.password')  }}</label>
                         <input data-counter="60" type="password" class="next-input" name="email_password" id="email_password"
-                               value="{{ setting('email_password', config('mail.password')) }}" placeholder="{{ trans('core/setting::setting.email.password_placeholder') }}">
+                               value="{{ setting('email_password', config('mail.mailers.smtp.password')) }}" placeholder="{{ trans('core/setting::setting.email.password_placeholder') }}">
                     </div>
-                    <div class="setting-mail-mail-gun @if (setting('email_driver', config('mail.driver')) !== 'mailgun') hidden @endif">
+                    <div class="setting-mail-mail-gun @if (setting('email_driver', config('mail.default')) !== 'mailgun') hidden @endif">
                         <div class="form-group">
                             <label class="text-title-field" for="email_mail_gun_domain">{{ trans('core/setting::setting.email.mail_gun_domain') }}</label>
                             <input data-counter="60" type="text" class="next-input" name="email_mail_gun_domain" id="email_mail_gun_domain"
@@ -67,8 +67,8 @@
                         <label class="text-title-field" for="email_encryption">{{ trans('core/setting::setting.email.encryption') }}</label>
                         <div class="ui-select-wrapper">
                             <select name="email_encryption" class="ui-select" id="email_encryption">
-                                <option value="tls" @if (setting('email_encryption', config('mail.encryption')) == 'tls') selected @endif>TLS</option>
-                                <option value="ssl" @if (setting('email_encryption', config('mail.encryption')) == 'ssl') selected @endif>SSL</option>
+                                <option value="tls" @if (setting('email_encryption', config('mail.mailers.smtp.encryption')) == 'tls') selected @endif>TLS</option>
+                                <option value="ssl" @if (setting('email_encryption', config('mail.mailers.smtp.encryption')) == 'ssl') selected @endif>SSL</option>
                             </select>
                             <svg class="svg-next-icon svg-next-icon-size-16">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select-chevron"></use>
@@ -76,11 +76,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group setting-mail-sendmail @if (setting('email_driver', config('mail.driver')) !== 'sendmail') hidden @endif">
+                    <div class="form-group setting-mail-sendmail @if (setting('email_driver', config('mail.default')) !== 'sendmail') hidden @endif">
                         <label class="text-title-field" for="email_password">{{ __('Sendmail Path')  }}</label>
                         <input type="text" class="next-input" name="email_sendmail_path" id="email_sendmail_path"
-                               value="{{ setting('email_sendmail_path', config('mail.sendmail')) }}" placeholder="{{ __('Sendmail Path') }}">
-                        <span class="help-ts">Default: <code>{{ config('mail.sendmail') }}</code></span>
+                               value="{{ setting('email_sendmail_path', config('mail.sendmail.path')) }}" placeholder="{{ __('Sendmail Path') }}">
+                        <span class="help-ts">Default: <code>{{ config('mail.sendmail.path') }}</code></span>
                     </div>
 
                     <div class="form-group">

@@ -81,8 +81,8 @@ class CustomerTable extends TableAbstract
             'customers.cif',
             'customers.name',
             'customers.product_name',
-            'customers.branch_code',
-            'customers.dao',
+            'customers.branch_id',
+            'customers.dao_id',
             'customers.open_date',
         ]);
 
@@ -121,13 +121,13 @@ class CustomerTable extends TableAbstract
                 'title' => __('Sản phẩm'),
                 'class' => 'text-left',
             ],
-            'branch_code' => [
-                'name'  => 'customers.branch_code',
+            'branch_id' => [
+                'name'  => 'customers.branch_id',
                 'title' => __('Chi nhánh'),
                 'class' => 'text-left',
             ],
-            'dao' => [
-                'name'  => 'customers.dao',
+            'dao_id' => [
+                'name'  => 'customers.dao_id',
                 'title' => __('DAO'),
                 'class' => 'text-left',
             ],

@@ -56,7 +56,7 @@ class ProfileForm extends FormAbstract
                 'label'      => trans('core/acl::users.email'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
-                    'placeholder'  => __('Ex: example@gmail.com'),
+                    'placeholder'  => trans('core/acl::users.email_placeholder'),
                     'data-counter' => 60,
                 ],
                 'wrapper'    => [

@@ -29,13 +29,13 @@ class MetaBox
     }
 
     /**
-     * @param $id
-     * @param $title
-     * @param $callback
+     * @param string $id
+     * @param string $title
+     * @param string|array $callback
      * @param null $reference
      * @param string $context
      * @param string $priority
-     * @param null $callback_args
+     * @param null $callbackArgs
      */
     public function addMetaBox(
         $id,
@@ -44,7 +44,7 @@ class MetaBox
         $reference = null,
         $context = 'advanced',
         $priority = 'default',
-        $callback_args = null
+        $callbackArgs = null
     ) {
         if (!isset($this->metaBoxes[$reference])) {
             $this->metaBoxes[$reference] = [];
@@ -86,7 +86,7 @@ class MetaBox
                 } elseif ('sorted' == $priority) {
                     $title = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['title'];
                     $callback = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['callback'];
-                    $callback_args = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['args'];
+                    $callbackArgs = $this->metaBoxes[$reference][$a_context][$a_priority][$id]['args'];
                 }
                 // An id can be in only one priority and one context.
                 if ($priority != $a_priority || $context != $a_context) {
@@ -107,7 +107,7 @@ class MetaBox
             'id'       => $id,
             'title'    => $title,
             'callback' => $callback,
-            'args'     => $callback_args,
+            'args'     => $callbackArgs,
         ];
     }
 
@@ -173,13 +173,13 @@ class MetaBox
 
     /**
      * @param Model $object
-     * @param $key
+     * @param string $key
      * @param $value
      * @param $options
      * @return boolean
      * @throws Exception
      */
-    public function saveMetaBoxData($object, $key, $value, $options = null)
+    public function saveMetaBoxData($object, string $key, $value, $options = null)
     {
         try {
             $fieldMeta = $this->metaBoxRepository->getFirstBy([
@@ -208,12 +208,12 @@ class MetaBox
 
     /**
      * @param Model $object
-     * @param $key
+     * @param string $key
      * @param boolean $single
      * @param array $select
      * @return mixed
      */
-    public function getMetaData($object, $key, $single = false, $select = ['meta_value'])
+    public function getMetaData($object, string $key, $single = false, $select = ['meta_value'])
     {
         $field = $this->getMeta($object, $key, $select);
         if (!$field) {
@@ -228,11 +228,11 @@ class MetaBox
 
     /**
      * @param Model $object
-     * @param $key
+     * @param string $key
      * @param array $select
      * @return mixed
      */
-    public function getMeta($object, $key, $select = ['meta_value'])
+    public function getMeta($object, string $key, $select = ['meta_value'])
     {
         return $this->metaBoxRepository->getFirstBy([
             'meta_key'       => $key,
@@ -243,11 +243,11 @@ class MetaBox
 
     /**
      * @param Model $object
-     * @param $key
+     * @param string $key
      * @return mixed
      * @throws Exception
      */
-    public function deleteMetaData($object, $key)
+    public function deleteMetaData($object, string $key)
     {
         return $this->metaBoxRepository->deleteBy([
             'meta_key'       => $key,

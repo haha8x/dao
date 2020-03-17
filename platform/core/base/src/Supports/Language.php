@@ -369,7 +369,7 @@ class Language
     /**
      * @return array
      */
-    public static function getListLanguages()
+    public static function getListLanguages(): array
     {
         return self::$languages;
     }
@@ -377,7 +377,7 @@ class Language
     /**
      * @return array
      */
-    public static function getListLanguageFlags()
+    public static function getListLanguageFlags(): array
     {
         return self::$flags;
     }

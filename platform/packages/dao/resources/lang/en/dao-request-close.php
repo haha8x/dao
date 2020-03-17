@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name'   => 'Dao closes',
-    'create' => 'New dao close',
-    'edit'   => 'Edit dao close',
+    'name'   => 'Yêu cầu đóng mã DAO',
+    'create' => 'Tạo Yêu cầu đóng mã DAO',
+    'edit'   => 'Sửa Yêu cầu đóng mã DAO',
 ];

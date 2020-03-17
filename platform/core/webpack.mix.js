@@ -87,8 +87,3 @@ mix
     .js(resourcePath + '/media/resources/assets/js/integrate.js', publicPath + '/media/js')
     .copy(publicPath + '/media/js/integrate.js', resourcePath + '/media/public/media/js');
 
-// JS Validation
-mix
-    .copy('./vendor/proengsoft/laravel-jsvalidation/public/js/jsvalidation.min.js', publicPath + '/js/form-validation.js')
-    .copy(publicPath + '/js/form-validation.js', resourcePath + '/base/public/js');
-

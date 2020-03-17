@@ -37,7 +37,7 @@ export class MediaList {
             $itemsWrapper = this.$groupContainer.find('.rv-media-grid ul');
         }
 
-        if ((_.size(data.folders) > 0 || _.size(data.files) > 0) || load_more_file) {
+        if (_.size(data.folders) > 0 || _.size(data.files) > 0 || load_more_file) {
             $('.rv-media-items').addClass('has-items');
         } else {
             $('.rv-media-items').removeClass('has-items');
@@ -95,15 +95,13 @@ export class MediaList {
             _self.$groupContainer.empty();
         }
 
-        if (load_more_file && this.$groupContainer.find('.rv-media-grid ul').length > 0) {
-
-        } else {
+        if (!(load_more_file && this.$groupContainer.find('.rv-media-grid ul').length > 0)) {
             _self.$groupContainer.append($result);
         }
         _self.$groupContainer.find('.loading-wrapper').remove();
         ActionsService.handleDropdown();
 
-        //trigger event click for file selected
+        // Trigger event click for file selected
         $('.js-media-list-title[data-id=' + data.selected_file_id + ']').trigger('click');
     }
 }

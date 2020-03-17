@@ -13,7 +13,7 @@ class Gravatar
      * @param string $default
      * @return string
      */
-    public static function image($email, $size = 200, $rating = 'g', $default = 'monsterid')
+    public static function image($email, $size = 200, $rating = 'g', $default = 'monsterid'): string
     {
         $id = md5(strtolower(trim($email)));
 

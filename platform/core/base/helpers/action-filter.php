@@ -27,12 +27,12 @@ if (!function_exists('remove_filter')) {
 
 if (!function_exists('add_action')) {
     /**
-     * @param $hook
+     * @param string $hook
      * @param $callback
      * @param int $priority
      * @param int $arguments
      */
-    function add_action($hook, $callback, $priority = 20, $arguments = 1)
+    function add_action(string $hook, $callback, int $priority = 20, int $arguments = 1)
     {
         Action::addListener($hook, $callback, $priority, $arguments);
     }
@@ -63,7 +63,7 @@ if (!function_exists('get_hooks')) {
      * @param bool $isFilter
      * @return array
      */
-    function get_hooks($name = null, $isFilter = true)
+    function get_hooks(?string $name = null, $isFilter = true): array
     {
         if ($isFilter == true) {
             $listeners = Filter::getListeners();

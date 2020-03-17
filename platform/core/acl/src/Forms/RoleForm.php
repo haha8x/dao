@@ -51,13 +51,10 @@ class RoleForm extends FormAbstract
                     'data-counter' => 400,
                 ],
             ])
-            ->add('is_default', 'checkbox', [
+            ->add('is_default', 'onOff', [
                 'label'      => trans('core/base::forms.is_default'),
-                'label_attr' => ['class' => 'control-label'],
-                'attr'       => [
-                    'class' => 'hrv-checkbox',
-                ],
-                'value'      => 1,
+                'label_attr'    => ['class' => 'control-label'],
+                'default_value' => false,
             ])
             ->addMetaBoxes([
                 'permissions' => [

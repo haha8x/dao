@@ -8,12 +8,12 @@ use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Botble\Dao\Enums\DaoRequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
-use Botble\Table\Abstracts\TableAbstract;
+use Botble\Dao\Abstracts\ScrollTableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Html;
 
-class DaoRequestNewTable extends TableAbstract
+class DaoRequestNewTable extends ScrollTableAbstract
 {
 
     /**
@@ -76,27 +76,17 @@ class DaoRequestNewTable extends TableAbstract
             ->editColumn('branch_id', function ($item) {
                 return $item->branch->name;
             })
-            // ->editColumn('position_id', function ($item) {
-            //     return $item->position->name;
-            // })
+            ->editColumn('position_id', function ($item) {
+                return $item->position->name;
+            })
+            ->editColumn('status_dao', function ($item) {
+                return '60';
+            })
             ->editColumn('id', function ($item) {
                 return ('DAO' . $item->id);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
-            })
-            ->editColumn('staff_name', function ($item) {
-                return
-                    Html::tag('p', $item->staff_name, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::mailto('p', 'Email: ' . $item->email, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'Vị trí: ' . $item->position->name, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'CMND: ' . $item->cmnd, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'Điện thoại: ' . $item->phone, ['class' => 'no-margin'])
-                    ->toHtml();
             })
             ->editColumn('status', function ($item) {
                 return $item->status->toHtml();
@@ -169,7 +159,6 @@ class DaoRequestNewTable extends TableAbstract
             'dao_request_news.email',
             'dao_request_news.cmnd',
             'dao_request_news.phone',
-            'dao_request_news.decision_file',
             'dao_request_news.status',
             'dao_request_news.created_at',
             'dao_request_news.updated_by',
@@ -209,36 +198,36 @@ class DaoRequestNewTable extends TableAbstract
                 'title' => __('Nhân viên'),
                 'class' => 'text-left',
             ],
-            // 'position_id' => [
-            //     'name'  => 'dao_request_news.position_id',
-            //     'title' => __('Vị trí'),
-            //     'class' => 'text-left',
-            // ],
-            // 'level' => [
-            //     'name'  => 'dao_request_news.level',
-            //     'title' => __('Trạng thái DAO'),
-            //     'class' => 'text-left',
-            // ],
-            // 'email' => [
-            //     'name'  => 'dao_request_news.email',
-            //     'title' => __('Email'),
-            //     'class' => 'text-left',
-            // ],
+            'position_id' => [
+                'name'  => 'dao_request_news.position_id',
+                'title' => __('Vị trí'),
+                'class' => 'text-left',
+            ],
+            'status_dao' => [
+                'name'  => 'dao_request_news.status_dao',
+                'title' => __('Trạng thái DAO'),
+                'class' => 'text-left',
+            ],
+            'email' => [
+                'name'  => 'dao_request_news.email',
+                'title' => __('Email'),
+                'class' => 'text-left',
+            ],
             'cif' => [
                 'name'  => 'dao_request_news.cif',
                 'title' => __('CIF'),
                 'class' => 'text-left',
             ],
-            // 'cmnd' => [
-            //     'name'  => 'dao_request_news.cmnd',
-            //     'title' => __('CMND'),
-            //     'class' => 'text-left',
-            // ],
-            // 'phone' => [
-            //     'name'  => 'dao_request_news.phone',
-            //     'title' => __('Điện thoại'),
-            //     'class' => 'text-left',
-            // ],
+            'cmnd' => [
+                'name'  => 'dao_request_news.cmnd',
+                'title' => __('CMND'),
+                'class' => 'text-left',
+            ],
+            'phone' => [
+                'name'  => 'dao_request_news.phone',
+                'title' => __('Điện thoại'),
+                'class' => 'text-left',
+            ],
             'status' => [
                 'name'  => 'dao_request_news.status',
                 'title' => __('Trạng thái xử lý'),
@@ -247,7 +236,6 @@ class DaoRequestNewTable extends TableAbstract
             'created_at' => [
                 'name'  => 'dao_request_news.created_at',
                 'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
             ],
         ];
     }
@@ -275,7 +263,7 @@ class DaoRequestNewTable extends TableAbstract
         return [
             'operations' => [
                 'title'      => trans('core/base::tables.operations'),
-                'width'      => '350px',
+                // 'width'      => '350px',
                 'class'      => 'text-right',
                 'orderable'  => false,
                 'searchable' => false,

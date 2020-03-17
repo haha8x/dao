@@ -17,6 +17,7 @@ class Action extends ActionHookEvent
         }
 
         foreach ($this->getListeners() as $hook => $listeners) {
+            krsort($listeners);
             foreach ($listeners as $arguments) {
                 if ($hook !== $action) {
                     continue;

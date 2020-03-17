@@ -24,11 +24,11 @@ class LoginListener
     {
         $user = $event->user;
         if ($user instanceof User) {
-            $locale = UserMeta::getMeta('admin-locale', false, $user->getKey());
+            $locale = UserMeta::getMeta('site-locale', false, $user->getKey());
 
             if ($locale != false && array_key_exists($locale, Assets::getAdminLocales())) {
                 app()->setLocale($locale);
-                session()->put('admin-locale', $locale);
+                session()->put('site-locale', $locale);
             }
 
             cache()->forget(md5('cache-dashboard-menu-' . Auth::user()->getKey()));

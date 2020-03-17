@@ -58,7 +58,7 @@ class Zipper
      * Create a new zip Archive if the file does not exists
      * opens a zip archive if the file exists
      *
-     * @param $pathToFile string The file to open
+     * @param string $pathToFile The file to open
      * @param ZipperInterface|string $type The type of the archive, defaults to zip, possible are zip, phar
      *
      * @return $this Zipper instance
@@ -79,11 +79,10 @@ class Zipper
     }
 
     /**
-     * @param $pathToZip
+     * @param string $pathToZip
      *
      * @return bool
      * @throws Exception
-     *
      */
     protected function createArchiveFile($pathToZip)
     {
@@ -104,7 +103,7 @@ class Zipper
     /**
      * Add one or multiple files to the zip.
      *
-     * @param $pathToAdd array|string An array or string of files and folders to add
+     * @param array|string $pathToAdd An array or string of files and folders to add
      * @param null|mixed $fileName
      *
      * @return $this Zipper instance
@@ -161,7 +160,7 @@ class Zipper
     }
 
     /**
-     * @param $pathToDir
+     * @param string $pathToDir
      */
     protected function addDir($pathToDir)
     {
@@ -182,8 +181,8 @@ class Zipper
     /**
      * Add a file to the zip using its contents
      *
-     * @param $filename string The name of the file to create
-     * @param $content string The file contents
+     * @param string $filename The name of the file to create
+     * @param string $content The file contents
      *
      * @return $this Zipper instance
      */

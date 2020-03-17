@@ -4,6 +4,7 @@ namespace Botble\ACL\Models;
 
 use Botble\ACL\Traits\PermissionTrait;
 use Botble\Base\Models\BaseModel;
+use Exception;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -47,6 +48,30 @@ class Role extends BaseModel
     protected $casts = [
         'permissions' => 'json',
     ];
+
+    /**
+     * @param string $value
+     * @return array
+     */
+    public function getPermissionsAttribute($value)
+    {
+        try {
+            return json_decode($value, true) ?: [];
+        } catch (Exception $exception) {
+            return [];
+        }
+    }
+
+    /**
+     * Set mutator for the "permissions" attribute.
+     *
+     * @param array $permissions
+     * @return void
+     */
+    public function setPermissionsAttribute(array $permissions)
+    {
+        $this->attributes['permissions'] = $permissions ? json_encode($permissions) : '';
+    }
 
     /**
      * {@inheritDoc}

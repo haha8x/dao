@@ -4,6 +4,7 @@ namespace Botble\Media\Commands;
 
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
 use Botble\Media\Services\ThumbnailService;
+use Exception;
 use File;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -68,13 +69,17 @@ class GenerateThumbnailCommand extends Command
             }
 
             foreach (RvMedia::getSizes() as $size) {
-                $readableSize = explode('x', $size);
-                $this->thumbnailService
-                    ->setImage(Storage::path($file->url))
-                    ->setSize($readableSize[0], $readableSize[1])
-                    ->setDestinationPath(File::dirname($file->url))
-                    ->setFileName(File::name($file->url) . '-' . $size . '.' . File::extension($file->url))
-                    ->save();
+                try {
+                    $readableSize = explode('x', $size);
+                    $this->thumbnailService
+                        ->setImage(Storage::path($file->url))
+                        ->setSize($readableSize[0], $readableSize[1])
+                        ->setDestinationPath(File::dirname($file->url))
+                        ->setFileName(File::name($file->url) . '-' . $size . '.' . File::extension($file->url))
+                        ->save();
+                } catch (Exception $exception) {
+                    $this->error($exception->getMessage());
+                }
             }
         }
 

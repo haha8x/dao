@@ -22,10 +22,10 @@ class SystemManagement
     /**
      * Get Installed packages & their Dependencies
      *
-     * @param $packagesArray
+     * @param array $packagesArray
      * @return array
      */
-    public static function getPackagesAndDependencies($packagesArray)
+    public static function getPackagesAndDependencies(array $packagesArray): array
     {
         $packages = [];
         foreach ($packagesArray as $key => $value) {
@@ -56,7 +56,7 @@ class SystemManagement
      *
      * @return array
      */
-    public static function getSystemEnv()
+    public static function getSystemEnv(): array
     {
         return [
             'version'              => App::version(),
@@ -74,7 +74,7 @@ class SystemManagement
      * @param string $directory
      * @return int
      */
-    protected static function folderSize($directory)
+    protected static function folderSize($directory): int
     {
         $size = 0;
         foreach (File::glob(rtrim($directory, '/') . '/*', GLOB_NOSORT) as $each) {
@@ -88,7 +88,7 @@ class SystemManagement
      * Get PHP/Server environment details
      * @return array
      */
-    public static function getServerEnv()
+    public static function getServerEnv(): array
     {
         return [
             'version'                  => phpversion(),
@@ -113,7 +113,7 @@ class SystemManagement
      * Check if SSL is installed or not
      * @return boolean
      */
-    protected static function checkSslIsInstalled()
+    protected static function checkSslIsInstalled(): bool
     {
         return (!empty(Request::server('HTTPS')) && Request::server('HTTPS') != 'off') ? true : false;
     }

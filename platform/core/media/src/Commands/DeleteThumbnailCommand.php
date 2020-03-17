@@ -10,7 +10,6 @@ use File;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use RvMedia;
-use Storage;
 
 class DeleteThumbnailCommand extends Command
 {

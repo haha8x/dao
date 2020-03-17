@@ -6,7 +6,7 @@ use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Botble\ACL\Traits\ResetsPasswords;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

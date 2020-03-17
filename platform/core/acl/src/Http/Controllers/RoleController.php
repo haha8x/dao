@@ -124,13 +124,17 @@ class RoleController extends BaseController
      */
     public function update($id, RoleCreateRequest $request, BaseHttpResponse $response)
     {
+        if ($request->input('is_default')) {
+            $this->roleRepository->getModel()->where('id', '!=', $id)->update(['is_default' => 0]);
+        }
+
         $role = $this->roleRepository->findOrFail($id);
 
         $role->name = $request->input('name');
         $role->permissions = $this->cleanPermission($request->input('flags'));
         $role->description = $request->input('description');
         $role->updated_by = $request->user()->getKey();
-        $role->is_default = $request->input('is_default', 0);
+        $role->is_default = $request->input('is_default');
         $this->roleRepository->createOrUpdate($role);
 
         Helper::executeCommand('cache:clear');
@@ -179,12 +183,16 @@ class RoleController extends BaseController
      */
     public function store(RoleCreateRequest $request, BaseHttpResponse $response)
     {
+        if ($request->input('is_default')) {
+            $this->roleRepository->getModel()->where('id', '>', 0)->update(['is_default' => 0]);
+        }
+
         $role = $this->roleRepository->createOrUpdate([
             'name'        => $request->input('name'),
             'slug'        => $this->roleRepository->createSlug($request->input('name'), 0),
             'permissions' => $this->cleanPermission($request->input('flags')),
             'description' => $request->input('description'),
-            'is_default'  => $request->input('is_default') !== null ? 1 : 0,
+            'is_default'  => $request->input('is_default'),
             'created_by'  => $request->user()->getKey(),
             'updated_by'  => $request->user()->getKey(),
         ]);

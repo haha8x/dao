@@ -22,15 +22,11 @@ class LocaleMiddleware
     {
         app()->setLocale(env('APP_LOCALE', config('app.locale')));
 
-        if ($request->is(config('core.base.general.admin_dir') . '/*') ||
-            $request->is(config('core.base.general.admin_dir'))
+        if ($request->session()->has('site-locale') &&
+            array_key_exists($request->session()->get('site-locale'), Assets::getAdminLocales())
         ) {
-            if ($request->session()->has('admin-locale') &&
-                array_key_exists($request->session()->get('admin-locale'), Assets::getAdminLocales())
-            ) {
-                app()->setLocale($request->session()->get('admin-locale'));
-                $request->setLocale($request->session()->get('admin-locale'));
-            }
+            app()->setLocale($request->session()->get('site-locale'));
+            $request->setLocale($request->session()->get('site-locale'));
         }
 
         return $next($request);

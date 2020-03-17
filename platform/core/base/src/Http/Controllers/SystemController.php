@@ -3,6 +3,7 @@
 namespace Botble\Base\Http\Controllers;
 
 use Assets;
+use Botble\ACL\Models\UserMeta;
 use Botble\Base\Commands\ClearLogCommand;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Base\Supports\Helper;
@@ -12,8 +13,10 @@ use Botble\Base\Tables\InfoTable;
 use Botble\Table\TableBuilder;
 use Exception;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Throwable;
 
@@ -106,5 +109,24 @@ class SystemController extends Controller
         $authorization->authorize();
 
         return $response;
+    }
+
+    /**
+     * @param string $lang
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function getLanguage($lang, Request $request)
+    {
+        if ($lang != false && array_key_exists($lang, Assets::getAdminLocales())) {
+            if (Auth::check()) {
+                UserMeta::setMeta('site-locale', $lang);
+                cache()->forget(md5('cache-dashboard-menu-' . $request->user()->getKey()));
+            }
+            session()->put('site-locale', $lang);
+        }
+
+        return redirect()->back();
     }
 }

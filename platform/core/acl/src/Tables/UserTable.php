@@ -57,9 +57,6 @@ class UserTable extends TableAbstract
 
         if (!Auth::user()->hasAnyPermission(['users.edit', 'users.destroy'])) {
             $this->hasOperations = false;
-        }
-
-        if (!Auth::user()->hasAnyPermission(['users.edit', 'users.destroy'])) {
             $this->hasActions = false;
         }
     }
@@ -96,7 +93,7 @@ class UserTable extends TableAbstract
                 return view('core/acl::users.partials.role', ['item' => $item])->render();
             })
             ->editColumn('super_user', function ($item) {
-                return $item->super_user ? __('Yes') : __('No');
+                return $item->super_user ? trans('core/base::base.yes') : trans('core/base::base.no');
             })
             ->editColumn('status', function ($item) {
                 if (app(ActivationInterface::class)->completed($item)) {
@@ -112,11 +109,11 @@ class UserTable extends TableAbstract
 
                 $action = null;
                 if (Auth::user()->isSuperUser()) {
-                    $action = Html::link(route('users.make-super', $item->id), __('Make super'),
+                    $action = Html::link(route('users.make-super', $item->id), trans('core/acl::users.make_super'),
                         ['class' => 'btn btn-info'])->toHtml();
 
                     if ($item->super_user) {
-                        $action = Html::link(route('users.remove-super', $item->id), __('Remove super'),
+                        $action = Html::link(route('users.remove-super', $item->id), trans('core/acl::users.remove_super'),
                             ['class' => 'btn btn-danger'])->toHtml();
                     }
                 }
@@ -189,7 +186,7 @@ class UserTable extends TableAbstract
             ],
             'super_user' => [
                 'name'  => 'users.super_user',
-                'title' => __('Is super?'),
+                'title' => trans('core/acl::users.is_super'),
                 'width' => '100px',
             ],
         ];

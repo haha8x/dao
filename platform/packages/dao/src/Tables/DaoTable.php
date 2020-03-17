@@ -7,13 +7,13 @@ use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Botble\Dao\Repositories\Interfaces\DaoInterface;
-use Botble\Table\Abstracts\TableAbstract;
+use Botble\Dao\Abstracts\ScrollTableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Html;
 
 
-class DaoTable extends TableAbstract
+class DaoTable extends ScrollTableAbstract
 {
 
     /**
@@ -72,18 +72,8 @@ class DaoTable extends TableAbstract
             ->editColumn('branch_id', function ($item) {
                 return $item->branch->name;
             })
-            ->editColumn('name', function ($item) {
-                return
-                    Html::tag('p', $item->name, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::mailto('p', 'Email: ' . $item->email, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'Vị trí: ' . $item->position->name, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'CMND: ' . $item->cmnd, ['class' => 'no-margin'])
-                    ->toHtml() .
-                    Html::tag('p', 'Điện thoại: ' . $item->phone, ['class' => 'no-margin'])
-                    ->toHtml();
+            ->editColumn('position_id', function ($item) {
+                return $item->position->name;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
@@ -155,6 +145,21 @@ class DaoTable extends TableAbstract
             'name' => [
                 'name'  => 'daos.name',
                 'title' => __('Nhân viên'),
+                'class' => 'text-left',
+            ],
+            'email' => [
+                'name'  => 'daos.email',
+                'title' => __('Email'),
+                'class' => 'text-left',
+            ],
+            'cmnd' => [
+                'name'  => 'daos.cmnd',
+                'title' => __('CMND'),
+                'class' => 'text-left',
+            ],
+            'phone' => [
+                'name'  => 'daos.phone',
+                'title' => __('Điện thoại'),
                 'class' => 'text-left',
             ],
             'cif' => [

@@ -53,3 +53,9 @@
 .hidden {
     display: none !important;
 }
+
+.modal-open {
+    .context-menu-root {
+        z-index: 99994 !important;
+    }
+}

@@ -12,7 +12,6 @@ use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Concerns\InteractsWithContentTypes;
 use Illuminate\Http\Exceptions\PostTooLargeException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -30,12 +29,14 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      * @param Request $request
-     * @param Exception $ex
-     * @return BaseHttpResponse|JsonResponse|Response|\Response
+     * @param Throwable $ex
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws FileNotFoundException
+     * @throws Exception
+     * @throws Throwable
      */
-    public function render($request, Exception $ex)
+    public function render($request, Throwable $ex)
     {
         if ($ex instanceof PostTooLargeException) {
             return RvMedia::responseError(trans('core/media::media.upload_failed', [
@@ -135,7 +136,7 @@ class Handler extends ExceptionHandler
      * @throws MissingExtensionException
      * @throws Throwable
      */
-    public function report(Exception $exception)
+    public function report(Throwable $exception)
     {
         if ($this->shouldReport($exception) && !$this->isExceptionFromBot()) {
             if (!app()->isLocal() && !app()->runningInConsole()) {

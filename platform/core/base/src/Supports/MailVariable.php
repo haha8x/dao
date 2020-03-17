@@ -57,22 +57,22 @@ class MailVariable
     }
 
     /**
-     * @param $module
+     * @param string $module
      * @return MailVariable
      */
-    public function setModule($module): self
+    public function setModule(string $module): self
     {
         $this->module = $module;
         return $this;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $description
      * @param string $module
      * @return MailVariable
      */
-    public function addVariable($name, $description = null): self
+    public function addVariable(string $name, ?string $description = null): self
     {
         $this->variables[$this->module][$name] = $description;
         return $this;
@@ -93,11 +93,11 @@ class MailVariable
     }
 
     /**
-     * @param null $module
+     * @param string|null $module
      * @return array
      * @throws FileNotFoundException
      */
-    public function getVariables($module = null): array
+    public function getVariables(?string $module = null): array
     {
         $this->initVariable();
 
@@ -109,12 +109,12 @@ class MailVariable
     }
 
     /**
-     * @param $variable
-     * @param $value
+     * @param string $variable
+     * @param string $value
      * @param string $module
      * @return MailVariable
      */
-    public function setVariableValue($variable, $value): self
+    public function setVariableValue(string $variable, string $value): self
     {
         $this->variables[$this->module][$variable] = $value;
         return $this;
@@ -135,20 +135,21 @@ class MailVariable
     }
 
     /**
-     * @param $variable
-     * @param $module
+     * @param string $variable
+     * @param string $module
      * @param string $default
      * @return string
      */
-    public function getVariableValue($variable, $module, $default = ''): string
+    public function getVariableValue(string $variable, string $module, string $default = ''): string
     {
         return (string)Arr::get($this->variableValues, $module . '.' . $variable, $default);
     }
 
     /**
+     * @param string|null $module
      * @return array
      */
-    public function getVariableValues($module = null)
+    public function getVariableValues(?string $module = null)
     {
         if ($module) {
             return Arr::get($this->variableValues, $module, []);
@@ -158,12 +159,12 @@ class MailVariable
     }
 
     /**
-     * @param $content
-     * @param null $module
+     * @param string $content
+     * @param array $variables
      * @return string
      * @throws FileNotFoundException
      */
-    public function prepareData($content, $variables = []): string
+    public function prepareData(string $content, $variables = []): string
     {
         $this->initVariable();
         $this->initVariableValues();
@@ -188,11 +189,11 @@ class MailVariable
 
     /**
      * @param array $variables
-     * @param $module
-     * @param $content
+     * @param string $module
+     * @param string $content
      * @return string
      */
-    protected function replaceVariableValue(array $variables, $module, $content): string
+    protected function replaceVariableValue(array $variables, string $module, string $content): string
     {
         foreach ($variables as $variable) {
             $keys = [

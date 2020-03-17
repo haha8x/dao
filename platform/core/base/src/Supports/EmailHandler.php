@@ -6,8 +6,8 @@ use Botble\Base\Events\SendMailEvent;
 use Botble\Base\Jobs\SendMailJob;
 use Exception;
 use MailVariable;
-use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
+use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Throwable;
 use URL;
 
@@ -15,9 +15,9 @@ class EmailHandler
 {
 
     /**
-     * @param $view
+     * @param string $view
      */
-    public function setEmailTemplate($view)
+    public function setEmailTemplate(string $view)
     {
         config()->set('core.base.general.email_template', $view);
     }
@@ -30,7 +30,7 @@ class EmailHandler
      * @param bool $debug
      * @throws Throwable
      */
-    public function send($content, $title, $to = null, $args = [], $debug = false)
+    public function send(string $content, string $title, $to = null, $args = [], $debug = false)
     {
         try {
             if (empty($to)) {
@@ -67,10 +67,8 @@ class EmailHandler
         try {
             $ex = FlattenException::create($exception);
 
-            $handler = new SymfonyExceptionHandler;
-
             $url = URL::full();
-            $error = $handler->getHtml($ex);
+            $error = $this->renderException($exception);
 
             $this->send(
                 view('core/base::emails.error-reporting', compact('url', 'ex', 'error'))->render(),
@@ -82,5 +80,26 @@ class EmailHandler
         } catch (Exception $ex) {
             info($ex->getMessage());
         }
+    }
+
+    /**
+     * @param Throwable $exception
+     * @return string
+     */
+    protected function renderException($exception)
+    {
+        $renderer = new HtmlErrorRenderer(true);
+
+        $exception = $renderer->render($exception);
+
+        if (!headers_sent()) {
+            http_response_code($exception->getStatusCode());
+
+            foreach ($exception->getHeaders() as $name => $value) {
+                header($name . ': ' . $value, false);
+            }
+        }
+
+        return $exception->getAsString();
     }
 }

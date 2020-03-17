@@ -43,4 +43,5 @@ return [
     'public_single_ending_url'  => env('PUBLIC_SINGLE_ENDING_URL', null),
     'send_mail_using_job_queue' => env('SEND_MAIL_USING_JOB_QUEUE', false),
     'locale'                    => env('APP_LOCALE', 'en'),
+    'can_execute_command'       => env('CAN_EXECUTE_COMMAND', true),
 ];

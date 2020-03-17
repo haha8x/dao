@@ -146,24 +146,21 @@ class DashboardMenu
                 continue;
             }
 
-            $link['active'] = $currentUrl == $link['url'] ||
-                (Str::contains($link['url'], $routePrefix) && $routePrefix != '//');
+            $link['active'] = $currentUrl == $link['url'] || (Str::contains($link['url'], $routePrefix) && $routePrefix != '//');
             if (!count($link['children'])) {
                 continue;
             }
 
             $link['children'] = collect($link['children'])->sortBy('priority')->toArray();
 
-            foreach ($link['children'] as $sub_key => $sub_menu) {
-                if (!Auth::user()->hasAnyPermission($sub_menu['permissions'])) {
-                    Arr::forget($link['children'], $sub_key);
+            foreach ($link['children'] as $subKey => $subMenu) {
+                if (!Auth::user()->hasAnyPermission($subMenu['permissions'])) {
+                    Arr::forget($link['children'], $subKey);
                     continue;
                 }
 
-                if ($currentUrl == $sub_menu['url'] ||
-                    (Str::contains($sub_menu['url'], $routePrefix) && $routePrefix != '//')
-                ) {
-                    $link['children'][$sub_key]['active'] = true;
+                if ($currentUrl == $subMenu['url'] || Str::contains($currentUrl, $subMenu['url'])) {
+                    $link['children'][$subKey]['active'] = true;
                     $link['active'] = true;
                 }
             }

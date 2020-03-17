@@ -439,19 +439,19 @@ class MediaManagement {
     }
 
 
-    //scroll get more media
+    // Scroll get more media
     scrollGetMore() {
         let _self = this;
         $('.rv-media-main .rv-media-items').bind('DOMMouseScroll mousewheel', (e) => {
             if (e.originalEvent.detail > 0 || e.originalEvent.wheelDelta < 0) {
-                let $load_more = false;
+                let loadMore;
                 if ($(e.currentTarget).closest('.media-modal').length > 0) {
-                    $load_more = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() / 2 >= $(e.currentTarget)[0].scrollHeight - 450
+                    loadMore = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() / 2 >= $(e.currentTarget)[0].scrollHeight - 450;
                 } else {
-                    $load_more = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() >= $(e.currentTarget)[0].scrollHeight - 150
+                    loadMore = $(e.currentTarget).scrollTop() + $(e.currentTarget).innerHeight() >= $(e.currentTarget)[0].scrollHeight - 150;
                 }
 
-                if ($load_more) {
+                if (loadMore) {
                     if (typeof RV_MEDIA_CONFIG.pagination != 'undefined' && RV_MEDIA_CONFIG.pagination.has_more) {
                         _self.MediaService.getMedia(false, false, true);
                     }

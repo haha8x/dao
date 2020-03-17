@@ -57,10 +57,6 @@ export class UploadService {
             _self.initProgress(file.name, file.size);
         });
 
-        _self.dropZone.on('success', file => {
-
-        });
-
         _self.dropZone.on('complete', file => {
             _self.changeProgressStatus(file);
         });
@@ -107,7 +103,7 @@ export class UploadService {
 
     changeProgressStatus(file) {
         let _self = this;
-        let $progressLine = _self.uploadProgressContainer.find('li:nth-child(' + (file.index) + ')');
+        let $progressLine = _self.uploadProgressContainer.find('li:nth-child(' + file.index + ')');
         let $label = $progressLine.find('.label');
         $label.removeClass('label-success label-danger label-warning');
 

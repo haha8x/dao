@@ -57,6 +57,7 @@ class AclServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->register(CommandServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
 
         $this->setNamespace('core/acl')

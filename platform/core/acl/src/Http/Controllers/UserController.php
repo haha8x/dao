@@ -93,7 +93,7 @@ class UserController extends BaseController
      */
     public function create(FormBuilder $formBuilder)
     {
-        page_title()->setTitle(__('Create new user'));
+        page_title()->setTitle(trans('core/acl::users.create_new_user'));
 
         return $formBuilder->create(UserForm::class)->renderForm();
     }
@@ -136,7 +136,7 @@ class UserController extends BaseController
             if (!$request->user()->isSuperUser() && $user->isSuperUser()) {
                 return $response
                     ->setError()
-                    ->setMessage(__('Permission denied. Cannot delete a super user!'));
+                    ->setMessage(trans('core/acl::users.cannot_delete_super_user'));
             }
 
             $this->userRepository->delete($user);
@@ -195,13 +195,12 @@ class UserController extends BaseController
      */
     public function getUserProfile($id, Request $request, FormBuilder $formBuilder)
     {
-
         Assets::addScripts(['bootstrap-pwstrength', 'cropper'])
             ->addScriptsDirectly('vendor/core/js/profile.js');
 
         $user = $this->userRepository->findOrFail($id);
 
-        page_title()->setTitle(__(':name', ['name' => $user->getFullName()]));
+        page_title()->setTitle(trans(':name', ['name' => $user->getFullName()]));
 
         $form = $formBuilder
             ->create(ProfileForm::class, ['model' => $user])
@@ -381,25 +380,6 @@ class UserController extends BaseController
     }
 
     /**
-     * @param string $lang
-     * @param Request $request
-     * @return RedirectResponse
-     * @throws Exception
-     */
-    public function getLanguage($lang, Request $request)
-    {
-        if ($lang != false && array_key_exists($lang, Assets::getAdminLocales())) {
-            if (Auth::check()) {
-                UserMeta::setMeta('admin-locale', $lang);
-                cache()->forget(md5('cache-dashboard-menu-' . $request->user()->getKey()));
-            }
-            session()->put('admin-locale', $lang);
-        }
-
-        return redirect()->back();
-    }
-
-    /**
      * @param string $theme
      * @return RedirectResponse
      */
@@ -419,7 +399,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
@@ -446,7 +426,7 @@ class UserController extends BaseController
     }
 
     /**
-     * @param $id
+     * @param int $id
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse

@@ -6,7 +6,7 @@ use Assets;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Botble\ACL\Traits\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -46,7 +46,7 @@ class ForgotPasswordController extends BaseController
      */
     public function showLinkRequestForm()
     {
-        page_title()->setTitle(trans('core/acl::auth.reset.title'));
+        page_title()->setTitle(trans('core/acl::auth.forgot_password.title'));
 
         Assets::addScripts(['jquery-validation'])
             ->addScriptsDirectly('vendor/core/js/login.js')

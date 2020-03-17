@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 if (!function_exists('add_meta_box')) {
     /**
-     * @param $id
-     * @param $title
+     * @param string $id
+     * @param string $title
      * @param $callback
      * @param null $screen
      * @param string $context
@@ -13,7 +13,7 @@ if (!function_exists('add_meta_box')) {
      * @param null $callbackArgs
      */
     function add_meta_box(
-        $id,
+        string $id,
         $title,
         $callback,
         $screen = null,

@@ -15,12 +15,6 @@ export class FolderService {
     create(folderName) {
         let _self = this;
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         $.ajax({
             url: RV_MEDIA_URL.create_folder,
             type: 'POST',
@@ -32,7 +26,7 @@ export class FolderService {
             beforeSend: () => {
                 Helpers.showAjaxLoading();
             },
-            success: (res) => {
+            success: res => {
                 if (res.error) {
                     MessageService.showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
                 } else {
@@ -45,7 +39,7 @@ export class FolderService {
             complete: () => {
                 Helpers.hideAjaxLoading();
             },
-            error: (data) => {
+            error: data => {
                 MessageService.handleError(data);
             }
         });

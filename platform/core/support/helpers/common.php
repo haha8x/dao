@@ -92,7 +92,7 @@ if (!function_exists('json_encode_prettify')) {
 if (!function_exists('save_file_data')) {
     /**
      * @param string $path
-     * @param array $data
+     * @param array|string $data
      * @param bool $json
      * @return bool|mixed
      */

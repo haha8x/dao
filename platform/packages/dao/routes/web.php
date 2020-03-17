@@ -1,20 +1,44 @@
 <?php
-use Botble\Dao\Http\Controllers\Auth\RegisterDaoController;
-use Botble\Dao\Http\Controllers\Auth\RegisterUserController;
 
 Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web'], function () {
 
     Route::group(['middleware' => 'guest'], function () {
 
-        Route::get('register/dao', [RegisterDaoController::class, 'showRegisterDaoForm'])
-            ->name('access.register.dao');
-        Route::post('register/dao', [RegisterDaoController::class, 'RegisterDao'])
-            ->name('access.register.dao');
+        Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
+            Route::get('check', [
+                'as'         => 'check',
+                'uses'       => 'DaoCheckController@formCheck',
+            ]);
+            Route::post('check', [
+                'as'         => 'check',
+                'uses'       => 'DaoCheckController@check',
+            ]);
 
-        Route::get('register/user', [RegisterUserController::class, 'showRegisterUserForm'])
-            ->name('access.register.user');
-        Route::post('register/user', [RegisterUserController::class, 'RegisterUser'])
-            ->name('access.register.user');
+            Route::get('register', [
+                'as'         => 'register',
+                'uses'       => 'DaoRegisterController@showRegisterDaoForm',
+            ]);
+            Route::post('register', [
+                'as'         => 'register',
+                'uses'       => 'DaoRegisterController@RegisterDao',
+            ]);
+
+            Route::get('list', [
+                'as'         => 'list',
+                'uses'       => 'DaoCheckController@list',
+            ]);
+        });
+
+        Route::group(['prefix' => 'users', 'as' => 'user.'], function () {
+            Route::get('register', [
+                'as'         => 'register',
+                'uses'       => 'UserRegisterController@showRegisterUserForm',
+            ]);
+            Route::post('register', [
+                'as'         => 'register',
+                'uses'       => 'UserRegisterController@RegisterUser',
+            ]);
+        });
     });
 
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {

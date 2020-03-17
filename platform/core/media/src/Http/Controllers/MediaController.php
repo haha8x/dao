@@ -191,7 +191,12 @@ class MediaController extends Controller
                     ],
                 ];
 
-                $queried = $this->fileRepository->getFilesByFolderId(-1, array_merge($paramsFile, [
+                if (!count($request->input('recent_items', []))) {
+                    $files = [];
+                    break;
+                }
+
+                $queried = $this->fileRepository->getFilesByFolderId(0, array_merge($paramsFile, [
                     'recent_items' => $request->input('recent_items', []),
                 ]), false, $paramsFolder);
 
@@ -224,19 +229,17 @@ class MediaController extends Controller
                         ->pluck('id')
                         ->all();
 
-                    if ($fileIds) {
-                        $paramsFile = array_merge_recursive($paramsFile, [
+                    $paramsFile = array_merge_recursive($paramsFile, [
+                        'condition' => [
                             ['media_files.id', 'IN', $fileIds],
-                        ]);
-                    }
+                        ],
+                    ]);
 
-                    if ($folderIds) {
-                        $paramsFolder = array_merge_recursive($paramsFolder, [
-                            'condition' => [
-                                ['media_folders.id', 'IN', $folderIds],
-                            ],
-                        ]);
-                    }
+                    $paramsFolder = array_merge_recursive($paramsFolder, [
+                        'condition' => [
+                            ['media_folders.id', 'IN', $folderIds],
+                        ],
+                    ]);
 
                     $queried = $this->fileRepository->getFilesByFolderId($request->input('folder_id'), $paramsFile,
                         true, $paramsFolder);

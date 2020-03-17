@@ -12,13 +12,6 @@ use UnexpectedValueException;
 abstract class Enum implements JsonSerializable
 {
     /**
-     * Enum value
-     *
-     * @var mixed
-     */
-    protected $value;
-
-    /**
      * Store existing constants in a static cache per object.
      *
      * @var array
@@ -29,6 +22,13 @@ abstract class Enum implements JsonSerializable
      * @var string
      */
     protected static $langPath = 'core/base::enums';
+
+    /**
+     * Enum value
+     *
+     * @var mixed
+     */
+    protected $value;
 
     /**
      * Creates a new value of some type
@@ -61,31 +61,40 @@ abstract class Enum implements JsonSerializable
     }
 
     /**
-     * Returns the enum key (i.e. the constant name).
+     * Check if is valid enum value
      *
-     * @return mixed
+     * @param $value
+     *
+     * @return bool
      */
-    public function getKey()
+    public static function isValid($value)
     {
-        return static::search($this->value);
+        return in_array($value, static::toArray(), true);
     }
 
     /**
-     * @return string
+     * @param bool $includeDefault
+     * @return array
      */
-    public function __toString()
+    public static function toArray(bool $includeDefault = false): array
     {
-        return (string)$this->value;
-    }
+        $class = get_called_class();
+        if (!isset(static::$cache[$class])) {
+            try {
+                $reflection = new ReflectionClass($class);
+            } catch (ReflectionException $error) {
+                info($error->getMessage());
+            }
+            static::$cache[$class] = $reflection->getConstants();
+        }
 
-    /**
-     * Compares one Enum with another.
-     *
-     * @return bool True if Enums are equal, false if not equal
-     */
-    final public function equals(Enum $enum = null)
-    {
-        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() === get_class($enum);
+        $result = static::$cache[$class];
+
+        if (isset($result['__default']) && !$includeDefault) {
+            unset($result['__default']);
+        }
+
+        return $result;
     }
 
     /**
@@ -115,30 +124,6 @@ abstract class Enum implements JsonSerializable
     }
 
     /**
-     * Check if is valid enum value
-     *
-     * @param $value
-     *
-     * @return bool
-     */
-    public static function isValid($value)
-    {
-        return in_array($value, static::toArray(), true);
-    }
-
-    /**
-     * Return key for value
-     *
-     * @param $value
-     *
-     * @return mixed
-     */
-    public static function search($value)
-    {
-        return array_search($value, static::toArray(), true);
-    }
-
-    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
@@ -155,26 +140,6 @@ abstract class Enum implements JsonSerializable
         }
 
         throw new BadMethodCallException('No static method or enum constant ' . $name . ' in class ' . get_called_class());
-    }
-
-    /**
-     * Specify data which should be serialized to JSON. This method returns data that can be serialized by json_encode()
-     * natively.
-     *
-     * @return mixed
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     */
-    public function jsonSerialize()
-    {
-        return $this->getValue();
-    }
-
-    /**
-     * @return string
-     */
-    public function label(): string
-    {
-        return self::getLabel($this->getValue());
     }
 
     /**
@@ -195,39 +160,74 @@ abstract class Enum implements JsonSerializable
      * @param string $value
      * @return string
      */
-    public static function getLabel(?string $value): string
+    public static function getLabel(?string $value): ?string
     {
-        $lang_key = sprintf(
+        $key = sprintf(
             '%s.%s',
             static::$langPath,
             $value
         );
 
-        return Lang::has($lang_key) ? trans($lang_key) : $value;
+        return Lang::has($key) ? trans($key) : $value;
     }
 
     /**
-     * @param bool $includeDefault
-     * @return array
+     * Returns the enum key (i.e. the constant name).
+     *
+     * @return mixed
      */
-    public static function toArray(bool $includeDefault = false): array
+    public function getKey()
     {
-        $class = get_called_class();
-        if (!isset(static::$cache[$class])) {
-            try {
-                $reflection = new ReflectionClass($class);
-            } catch (ReflectionException $error) {
-                info($error->getMessage());
-            }
-            static::$cache[$class] = $reflection->getConstants();
-        }
+        return static::search($this->value);
+    }
 
-        $result = static::$cache[$class];
+    /**
+     * Return key for value
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    public static function search($value)
+    {
+        return array_search($value, static::toArray(), true);
+    }
 
-        if (isset($result['__default']) && !$includeDefault) {
-            unset($result['__default']);
-        }
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->value;
+    }
 
-        return $result;
+    /**
+     * Compares one Enum with another.
+     *
+     * @return bool True if Enums are equal, false if not equal
+     */
+    final public function equals(Enum $enum = null)
+    {
+        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() === get_class($enum);
+    }
+
+    /**
+     * Specify data which should be serialized to JSON. This method returns data that can be serialized by json_encode()
+     * natively.
+     *
+     * @return mixed
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     */
+    public function jsonSerialize()
+    {
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
+    public function label(): ?string
+    {
+        return self::getLabel($this->getValue());
     }
 }

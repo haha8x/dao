@@ -6,6 +6,7 @@ use Botble\ACL\Notifications\ResetPasswordNotification;
 use Botble\ACL\Traits\PermissionTrait;
 use Botble\Media\Models\MediaFile;
 use Botble\Base\Supports\Gravatar;
+use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -109,6 +110,30 @@ class User extends Authenticatable
     public function getAvatarUrlAttribute()
     {
         return $this->avatar->url ? Storage::url($this->avatar->url) : Gravatar::image($this->email);
+    }
+
+    /**
+     * @param string $value
+     * @return array
+     */
+    public function getPermissionsAttribute($value)
+    {
+        try {
+            return json_decode($value, true) ?: [];
+        } catch (Exception $exception) {
+            return [];
+        }
+    }
+
+    /**
+     * Set mutator for the "permissions" attribute.
+     *
+     * @param array $permissions
+     * @return void
+     */
+    public function setPermissionsAttribute(array $permissions)
+    {
+        $this->attributes['permissions'] = $permissions ? json_encode($permissions) : '';
     }
 
     /**

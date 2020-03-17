@@ -52,7 +52,6 @@ class BaseServiceProvider extends ServiceProvider
 
         $config->set([
             'app.timezone'                     => $setting->get('time_zone', $config->get('app.timezone')),
-            'jsvalidation.view'                => 'jsvalidation::bootstrap4',
             'ziggy.blacklist'                  => ['debugbar.*'],
             'session.cookie'                   => 'botble_session',
             'filesystems.default'              => $setting->get('media_driver', $config->get('filesystems.default')),

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'name'   => 'Customers',
-    'create' => 'New customer',
-    'edit'   => 'Edit customer',
+    'name'   => 'Khách hàng',
+    'create' => 'Thêm Khách hàng',
+    'edit'   => 'Sửa Khách hàng',
 ];

@@ -113,25 +113,6 @@ abstract class FormAbstract extends Form
     }
 
     /**
-     * @return string
-     * @deprecated
-     */
-    public function getModuleName(): string
-    {
-        return '';
-    }
-
-    /**
-     * @param string $module
-     * @return $this
-     * @deprecated
-     */
-    public function setModuleName($module): self
-    {
-        return $this;
-    }
-
-    /**
      * @return array
      */
     public function getMetaBoxes(): array
@@ -161,9 +142,9 @@ abstract class FormAbstract extends Form
             return '';
         }
 
-        $meta_box = $this->metaBoxes[$name];
+        $metaBox = $this->metaBoxes[$name];
 
-        return view('core/base::forms.partials.meta-box', compact('meta_box'))->render();
+        return view('core/base::forms.partials.meta-box', compact('metaBox'))->render();
     }
 
     /**

@@ -80,8 +80,8 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     protected function checkIfExistsName($name, $folder)
     {
         $count = $this->model
-            ->where('name', '=', $name)
-            ->where('folder_id', '=', $folder)
+            ->where('name', $name)
+            ->where('folder_id', $folder)
             ->withTrashed();
 
         /**
@@ -179,7 +179,6 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
         }
 
         if (empty($folderId)) {
-
             $this->model = $this->model
                 ->leftJoin('media_folders', 'media_folders.id', '=', 'media_files.folder_id')
                 ->where(function ($query) use ($folderId) {
@@ -232,8 +231,8 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 $currentFile = $this->originalModel;
 
                 $currentFile = $currentFile
-                    ->where('media_files.folder_id', '=', $folderId)
-                    ->where('id', '=', $params['selected_file_id'])
+                    ->where('media_files.folder_id', $folderId)
+                    ->where('id', $params['selected_file_id'])
                     ->select($params['select'])
                     ->first();
             }
@@ -251,8 +250,8 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     }
 
     /**
-     * @param $params
-     * @return Eloquent
+     * @param array $params
+     * @return Eloquent[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Model[]|Builder|Builder[]|\Illuminate\Support\Collection|object
      */
     protected function getFile($params)
     {
@@ -305,7 +304,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                 $currentFile = $this->originalModel;
 
                 $currentFile = $currentFile
-                    ->where('id', '=', $params['selected_file_id'])
+                    ->where('id', $params['selected_file_id'])
                     ->select($params['select'])
                     ->first();
             }
@@ -398,12 +397,12 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                          * @var Eloquent $query
                          */
                         $query
-                            ->orWhere('media_folders.parent_id', '=', 0)
-                            ->orWhere('mf_parent.deleted_at', '=', null);
+                            ->orWhere('media_folders.parent_id', 0)
+                            ->orWhere('mf_parent.deleted_at', null);
                     })
                     ->withTrashed();
             } else {
-                $folder = $folder->where('media_folders.parent_id', '=', $folderId);
+                $folder = $folder->where('media_folders.parent_id', $folderId);
             }
 
             $this->applyConditions($folderParams['condition'], $folder);
@@ -420,11 +419,11 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
                      * @var Eloquent $query
                      */
                     $query
-                        ->where('media_files.folder_id', '=', 0)
+                        ->where('media_files.folder_id', 0)
                         ->orWhereNull('media_folders.deleted_at');
                 });
         } else {
-            $this->model = $this->model->where('media_files.folder_id', '=', $folderId);
+            $this->model = $this->model->where('media_files.folder_id', $folderId);
         }
 
         $result = $this->getFile($params);
