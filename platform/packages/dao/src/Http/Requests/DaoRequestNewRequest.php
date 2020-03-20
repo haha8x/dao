@@ -2,7 +2,7 @@
 
 namespace Botble\Dao\Http\Requests;
 
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Support\Http\Requests\Request;
 use Illuminate\Validation\Rule;
 
@@ -17,8 +17,17 @@ class DaoRequestNewRequest extends Request
     public function rules()
     {
         return [
-            'name'   => 'required',
-            'status' => Rule::in(BaseStatusEnum::values()),
+            'zone_id'   => 'required',
+            'branch_id'   => 'required',
+            'staff_id'   => 'required|numeric',
+            'staff_name'   => 'required',
+            'position_id'   => 'required',
+            'cif'   => 'required|numeric',
+            'email'   => 'required|email|regex:/(.*)vpbank\.com\.vn$/i',
+            'cmnd'   => 'required|numeric',
+            'phone'   => 'required|numeric',
+            'decision_file'   => 'required',
+            'status'   => Rule::in(RequestStatusEnum::values()),
         ];
     }
 }

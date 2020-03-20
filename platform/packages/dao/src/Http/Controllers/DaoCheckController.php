@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Botble\Table\TableBuilder;
 use Botble\Dao\Tables\DaoCheckTable;
 
-class DaoCheckController extends BaseController
+class CheckController extends BaseController
 {
     /**
      * @var BaseHttpResponse

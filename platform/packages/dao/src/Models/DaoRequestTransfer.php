@@ -3,8 +3,9 @@
 namespace Botble\Dao\Models;
 
 use Botble\Base\Traits\EnumCastable;
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Base\Models\BaseModel;
+use Botble\Dao\Enums\TransferTypeEnum;
 
 class DaoRequestTransfer extends BaseModel
 {
@@ -21,14 +22,27 @@ class DaoRequestTransfer extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name',
+        'type',
+        'dao_id',
+        'dao_transfer',
+        'reason',
         'status',
+        'note',
     ];
 
     /**
      * @var array
      */
     protected $casts = [
-        'status' => BaseStatusEnum::class,
+        'status' => RequestStatusEnum::class,
+        'type' => TransferTypeEnum::class,
     ];
+
+        /**
+     * @return BelongsTo
+     */
+    public function dao()
+    {
+        return $this->belongsTo(Dao::class);
+    }
 }

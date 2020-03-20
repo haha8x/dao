@@ -5,18 +5,7 @@
                 <a href="{{ route('dashboard.index') }}">
                     <img src="{{ setting('admin_logo') ? get_image_url(setting('admin_logo')) : url(config('core.base.general.logo')) }}" alt="logo" class="logo-default" />
                 </a>
-                @auth
-                    <div class="menu-toggler sidebar-toggler">
-                        <span></span>
-                    </div>
-                @endauth
             </div>
-
-            @auth
-                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span></span>
-                </a>
-            @endauth
 
             <div class="top-menu">
                 <ul class="nav navbar-nav float-right">

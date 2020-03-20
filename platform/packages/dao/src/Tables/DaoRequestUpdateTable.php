@@ -32,10 +32,10 @@ class DaoRequestUpdateTable extends TableAbstract
     public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoRequestUpdateInterface $DaoRequestUpdateRepository)
     {
         $this->repository = $DaoRequestUpdateRepository;
-        $this->setOption('id', 'table-plugins-dao-request-update');
+        $this->setOption('id', 'table-plugins-request-update');
         parent::__construct($table, $urlDevTool);
 
-        if (!Auth::user()->hasAnyPermission(['dao-request-update.edit', 'dao-request-update.destroy'])) {
+        if (!Auth::user()->hasAnyPermission(['request-update.edit', 'request-update.destroy'])) {
             $this->hasOperations = false;
             $this->hasActions = false;
         }
@@ -55,18 +55,21 @@ class DaoRequestUpdateTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return ('Vùng '.$item->zone_id);
+                return ('Vùng ' . $item->zone_id);
             })
             ->editColumn('id', function ($item) {
-                return ('DAO'.$item->id);
+                return ('DAO' . $item->id);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+            })
+            ->editColumn('status', function ($item) {
+                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return table_actions('dao-request-update.edit', 'dao-request-update.destroy', $item);
+                return view('packages/dao::request.update.actions', compact('item'))->render();
             })
             ->escapeColumns([])
             ->make(true);
@@ -86,7 +89,7 @@ class DaoRequestUpdateTable extends TableAbstract
             'dao_request_updates.dao_update',
         ]);
 
-        if (!Auth::user()->isSuperUser()){
+        if (!Auth::user()->isSuperUser()) {
             $query = $model->where('created_by', Auth::id());
         }
 
@@ -155,18 +158,17 @@ class DaoRequestUpdateTable extends TableAbstract
      */
     public function buttons()
     {
-        $buttons = $this->addCreateButton(route('dao-request-update.create'), 'dao-request-update.create');
+        $buttons = $this->addCreateButton(route('request-update.create'), 'request-update.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, DaoRequestUpdate::class);
     }
 
     /**
      * @return array
-     * @throws \Throwable
      */
-    public function bulkActions(): array
+    public function getDefaultButtons(): array
     {
-        return $this->addDeleteAction(route('dao-request-update.deletes'), 'dao-request-update.destroy', parent::bulkActions());
+        return ['excel'];
     }
 
     /**
@@ -175,20 +177,11 @@ class DaoRequestUpdateTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'dao_request_updates.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
             'dao_request_updates.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
-            ],
-            'dao_request_updates.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
-                'type'  => 'date',
             ],
         ];
     }

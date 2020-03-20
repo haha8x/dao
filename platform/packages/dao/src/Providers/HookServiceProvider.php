@@ -5,6 +5,7 @@ namespace Botble\Dao\Providers;
 use Event;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Events\RouteMatched;
+use Illuminate\Support\Facades\Auth;
 
 class HookServiceProvider extends ServiceProvider
 {
@@ -12,12 +13,12 @@ class HookServiceProvider extends ServiceProvider
     {
         add_filter(BASE_FILTER_AFTER_LOGIN_OR_REGISTER_FORM, [$this, 'addLoginOptions'], 25, 2);
 
-        Event::listen(RouteMatched::class, function () {
-            dashboard_menu()
-                ->removeItem('cms-core-media')
-                ->removeItem('cms-core-settings-media')
-                ->removeItem('cms-core-system-information');
-        });
+            // Event::listen(RouteMatched::class, function () {
+            //     dashboard_menu()
+            //         ->removeItem('cms-core-media')
+            //         ->removeItem('cms-core-settings')
+            //         ->removeItem('cms-core-platform-administration');
+            // });
     }
 
     /**

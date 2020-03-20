@@ -6,7 +6,7 @@ use Auth;
 use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
-use Botble\Dao\Enums\DaoRequestStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
 use Botble\Dao\Abstracts\ScrollTableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -48,10 +48,10 @@ class DaoRequestNewTable extends ScrollTableAbstract
         $this->catalogPositionRepository = $catalogPositionRepository;
         $this->catalogBranchRepository = $catalogBranchRepository;
         $this->catalogZoneRepository = $catalogZoneRepository;
-        $this->setOption('id', 'table-plugins-dao-request-new');
+        $this->setOption('id', 'table-plugins-request-new');
         parent::__construct($table, $urlDevTool);
 
-        if (!Auth::user()->hasAnyPermission(['dao-request-new.edit', 'dao-request-new.destroy'])) {
+        if (!Auth::user()->hasAnyPermission(['request-new.edit', 'request-new.destroy'])) {
             $this->hasOperations = false;
             $this->hasActions = false;
         }
@@ -94,47 +94,8 @@ class DaoRequestNewTable extends ScrollTableAbstract
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return view('packages/dao::request-new.actions', compact('item'))->render();
+                return view('packages/dao::request.new.actions', compact('item'))->render();
             })
-            // ->addColumn('operations', function ($item) {
-            //     $action = null;
-            //     // if (Auth::user()->isSuperUser()) {
-            //     if ($item->status != 'gdcn_approve') {
-            //         $action = Html::link(
-            //             route('dao-request-new.approve', $item->id),
-            //             __('Duyệt'),
-            //             ['class' => 'btn btn-info']
-            //         )->toHtml();
-            //     }
-
-            //     $action = Html::link(
-            //         'javascript:;',
-            //         __('i'),
-            //         [
-            //             "class" => "btn btn-info",
-            //             "data-fancybox" => "",
-            //             "data-type" => "ajax",
-            //             "data-src" => "{{ route('dao-request-new.edit', $item->id) }}",
-            //         ]
-            //     )->toHtml();
-
-            //     if ($item->super_user) {
-            //         $action = Html::link(
-            //             route('users.remove-super', $item->id),
-            //             __('Remove super'),
-            //             ['class' => 'btn btn-danger']
-            //         )->toHtml();
-            //     }
-            // }
-            //     return apply_filters(
-            //         ACL_FILTER_USER_TABLE_ACTIONS,
-            //         $action,
-            //         $item
-            //     );
-            // })
-            // ->addColumn('operations', function ($item) {
-            //     return table_actions('dao-request-new.edit', 'dao-request-new.destroy', $item);
-            // })
             ->escapeColumns([])
             ->make(true);
     }
@@ -249,8 +210,8 @@ class DaoRequestNewTable extends ScrollTableAbstract
             'dao_request_news.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => DaoRequestStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', DaoRequestStatusEnum::values()),
+                'choices'  => RequestStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
         ];
     }
@@ -278,7 +239,7 @@ class DaoRequestNewTable extends ScrollTableAbstract
      */
     public function getDefaultButtons(): array
     {
-        return ['excel', 'reload'];
+        return ['excel'];
     }
 
     /**

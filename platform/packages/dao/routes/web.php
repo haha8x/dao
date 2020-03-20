@@ -4,52 +4,58 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
 
     Route::group(['middleware' => 'guest'], function () {
 
-        Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
+        Route::group(['prefix' => '', 'as' => 'dao.'], function () {
             Route::get('check', [
                 'as'         => 'check',
-                'uses'       => 'DaoCheckController@formCheck',
+                'uses'       => 'CheckController@formCheck',
             ]);
             Route::post('check', [
                 'as'         => 'check',
-                'uses'       => 'DaoCheckController@check',
+                'uses'       => 'CheckController@check',
             ]);
 
-            Route::get('register', [
+            Route::get('register/dao', [
                 'as'         => 'register',
-                'uses'       => 'DaoRegisterController@showRegisterDaoForm',
+                'uses'       => 'RequestNewController@create',
             ]);
-            Route::post('register', [
+            Route::post('register/dao', [
                 'as'         => 'register',
-                'uses'       => 'DaoRegisterController@RegisterDao',
+                'uses'       => 'RequestNewController@store',
             ]);
 
             Route::get('list', [
                 'as'         => 'list',
-                'uses'       => 'DaoCheckController@list',
+                'uses'       => 'CheckController@list',
             ]);
         });
 
-        Route::group(['prefix' => 'users', 'as' => 'user.'], function () {
-            Route::get('register', [
+        Route::group(['prefix' => '', 'as' => 'user.'], function () {
+            Route::get('register/user', [
                 'as'         => 'register',
-                'uses'       => 'UserRegisterController@showRegisterUserForm',
+                'uses'       => 'StaffController@create',
             ]);
-            Route::post('register', [
+            Route::post('register/user', [
                 'as'         => 'register',
-                'uses'       => 'UserRegisterController@RegisterUser',
+                'uses'       => 'StaffController@store',
             ]);
         });
     });
 
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
 
-        Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
-            Route::resource('', 'DaoController')->parameters(['' => 'dao']);
+        Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
+            Route::resource('', 'StaffController')->parameters(['' => 'staff']);
             Route::delete('items/destroy', [
                 'as'         => 'deletes',
-                'uses'       => 'DaoController@deletes',
-                'permission' => 'dao.destroy',
+                'uses'       => 'StaffController@deletes',
+                'permission' => 'staff.destroy',
             ]);
+        });
+
+        Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
+            Route::resource('', 'DaoController')
+                ->parameters(['' => 'dao'])
+                ->except(['edit', 'update']);
 
             Route::get('info/{id}', [
                 'as'         => 'info',
@@ -58,75 +64,191 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             ]);
         });
 
-        Route::group(['prefix' => 'dao/news', 'as' => 'dao-request-new.'], function () {
-            Route::resource('', 'DaoRequestNewController')->parameters(['' => 'dao-request-new']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'DaoRequestNewController@deletes',
-                'permission' => 'dao-request-new.destroy',
-            ]);
-
+        Route::group(['prefix' => 'dao/news', 'as' => 'request-new.'], function () {
+            Route::resource('', 'RequestNewController')
+                ->parameters(['' => 'request-new'])
+                ->except(['create', 'store', 'edit', 'update']);
             Route::get('info/{id}', [
                 'as'         => 'info',
-                'uses'       => 'DaoRequestNewController@info',
-                'permission' => 'dao-request-new.info',
+                'uses'       => 'RequestNewController@info',
+                'permission' => 'request-new.info',
             ]);
 
             Route::get('receive/{id}', [
                 'as'         => 'receive',
-                'uses'       => 'DaoRequestNewController@receive',
-                'permission' => 'dao-request-new.receive',
+                'uses'       => 'RequestNewController@receive',
+                'permission' => 'request-new.receive',
             ]);
 
             Route::get('reject/{id}', [
                 'as'         => 'reject',
-                'uses'       => 'DaoRequestNewController@reject',
-                'permission' => 'dao-request-new.reject',
+                'uses'       => 'RequestNewController@reject',
+                'permission' => 'request-new.reject',
             ]);
 
-            Route::get('it_process/{id}', [
+            Route::get('it-process/{id}', [
                 'as'         => 'it_process',
-                'uses'       => 'DaoRequestNewController@it_process',
-                'permission' => 'dao-request-new.it_process',
+                'uses'       => 'RequestNewController@it_process',
+                'permission' => 'request-new.it_process',
             ]);
 
-            Route::get('approve/{id}', [
-                'as'         => 'approve',
-                'uses'       => 'DaoRequestNewController@approve',
-                'permission' => 'dao-request-new.approve',
+            Route::get('gdcn-approve/{id}', [
+                'as'         => 'gdcn_approve',
+                'uses'       => 'RequestNewController@gdcn_approve',
+                'permission' => 'request-new.gdcn_approve',
             ]);
 
-            Route::get('success/{id}', [
-                'as'         => 'success',
-                'uses'       => 'DaoRequestNewController@success',
-                'permission' => 'dao-request-new.success',
+            Route::get('hoiso-approve/{id}', [
+                'as'         => 'hoiso_approve',
+                'uses'       => 'RequestNewController@hoiso_approve',
+                'permission' => 'request-new.hoiso_approve',
             ]);
-        });
 
-        Route::group(['prefix' => 'dao/updates', 'as' => 'dao-request-update.'], function () {
-            Route::resource('', 'DaoRequestUpdateController')->parameters(['' => 'dao-request-update']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'DaoRequestUpdateController@deletes',
-                'permission' => 'dao-request-update.destroy',
+            Route::get('create-dao/{id}', [
+                'as'         => 'create_dao',
+                'uses'       => 'RequestNewController@create_dao',
+                'permission' => 'request-new.create_dao',
             ]);
         });
 
-        Route::group(['prefix' => 'dao/transfers', 'as' => 'dao-request-transfer.'], function () {
-            Route::resource('', 'DaoRequestTransferController')->parameters(['' => 'dao-request-transfer']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'DaoRequestTransferController@deletes',
-                'permission' => 'dao-request-transfer.destroy',
+        Route::group(['prefix' => 'dao/updates', 'as' => 'request-update.'], function () {
+            Route::resource('', 'RequestUpdateController')
+                ->parameters(['' => 'request-update'])
+                ->except(['edit', 'delete']);
+            Route::get('info/{id}', [
+                'as'         => 'info',
+                'uses'       => 'RequestUpdateController@info',
+                'permission' => 'request-update.info',
+            ]);
+
+            Route::get('receive/{id}', [
+                'as'         => 'receive',
+                'uses'       => 'RequestUpdateController@receive',
+                'permission' => 'request-update.receive',
+            ]);
+
+            Route::get('reject/{id}', [
+                'as'         => 'reject',
+                'uses'       => 'RequestUpdateController@reject',
+                'permission' => 'request-update.reject',
+            ]);
+
+            Route::get('it-process/{id}', [
+                'as'         => 'it_process',
+                'uses'       => 'RequestUpdateController@it_process',
+                'permission' => 'request-update.it_process',
+            ]);
+
+            Route::get('gdcn-approve/{id}', [
+                'as'         => 'gdcn_approve',
+                'uses'       => 'RequestUpdateController@gdcn_approve',
+                'permission' => 'request-update.gdcn_approve',
+            ]);
+
+            Route::get('hoiso-approve/{id}', [
+                'as'         => 'hoiso_approve',
+                'uses'       => 'RequestUpdateController@hoiso_approve',
+                'permission' => 'request-update.hoiso_approve',
+            ]);
+
+            Route::get('update-dao/{id}', [
+                'as'         => 'update_dao',
+                'uses'       => 'RequestUpdateController@update_dao',
+                'permission' => 'request-update.update_dao',
             ]);
         });
 
-        Route::group(['prefix' => 'dao/closes', 'as' => 'dao-request-close.'], function () {
-            Route::resource('', 'DaoRequestCloseController')->parameters(['' => 'dao-request-close']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'DaoRequestCloseController@deletes',
-                'permission' => 'dao-request-close.destroy',
+        Route::group(['prefix' => 'dao/transfers', 'as' => 'request-transfer.'], function () {
+            Route::resource('', 'RequestTransferController')
+                ->parameters(['' => 'request-transfer'])
+                ->except(['edit', 'update']);
+            Route::get('info/{id}', [
+                'as'         => 'info',
+                'uses'       => 'RequestTransferController@info',
+                'permission' => 'request-transfer.info',
+            ]);
+
+            Route::get('receive/{id}', [
+                'as'         => 'receive',
+                'uses'       => 'RequestTransferController@receive',
+                'permission' => 'request-transfer.receive',
+            ]);
+
+            Route::get('reject/{id}', [
+                'as'         => 'reject',
+                'uses'       => 'RequestTransferController@reject',
+                'permission' => 'request-transfer.reject',
+            ]);
+
+            Route::get('it-process/{id}', [
+                'as'         => 'it_process',
+                'uses'       => 'RequestTransferController@it_process',
+                'permission' => 'request-transfer.it_process',
+            ]);
+
+            Route::get('gdcn-approve/{id}', [
+                'as'         => 'gdcn_approve',
+                'uses'       => 'RequestTransferController@gdcn_approve',
+                'permission' => 'request-transfer.gdcn_approve',
+            ]);
+
+            Route::get('hoiso-approve/{id}', [
+                'as'         => 'hoiso_approve',
+                'uses'       => 'RequestTransferController@hoiso_approve',
+                'permission' => 'request-transfer.hoiso_approve',
+            ]);
+
+            Route::get('transfer-dao/{id}', [
+                'as'         => 'transfer_dao',
+                'uses'       => 'RequestTransferController@transfer_dao',
+                'permission' => 'request-transfer.transfer_dao',
+            ]);
+        });
+
+        Route::group(['prefix' => 'dao/closes', 'as' => 'request-close.'], function () {
+            Route::resource('', 'RequestCloseController')
+            ->parameters(['' => 'request-close'])
+            ->except(['edit', 'update']);
+            Route::get('info/{id}', [
+                'as'         => 'info',
+                'uses'       => 'RequestCloseController@info',
+                'permission' => 'request-close.info',
+            ]);
+
+            Route::get('receive/{id}', [
+                'as'         => 'receive',
+                'uses'       => 'RequestCloseController@receive',
+                'permission' => 'request-close.receive',
+            ]);
+
+            Route::get('reject/{id}', [
+                'as'         => 'reject',
+                'uses'       => 'RequestCloseController@reject',
+                'permission' => 'request-close.reject',
+            ]);
+
+            Route::get('it-process/{id}', [
+                'as'         => 'it_process',
+                'uses'       => 'RequestCloseController@it_process',
+                'permission' => 'request-close.it_process',
+            ]);
+
+            Route::get('gdcn-approve/{id}', [
+                'as'         => 'gdcn_approve',
+                'uses'       => 'RequestCloseController@gdcn_approve',
+                'permission' => 'request-close.gdcn_approve',
+            ]);
+
+            Route::get('hoiso-approve/{id}', [
+                'as'         => 'hoiso_approve',
+                'uses'       => 'RequestCloseController@hoiso_approve',
+                'permission' => 'request-close.hoiso_approve',
+            ]);
+
+            Route::get('close-dao/{id}', [
+                'as'         => 'close_dao',
+                'uses'       => 'RequestCloseController@close_dao',
+                'permission' => 'request-close.close_dao',
             ]);
         });
 

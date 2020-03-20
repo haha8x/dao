@@ -39,6 +39,9 @@ class User extends Authenticatable
         'super_user',
         'avatar_id',
         'permissions',
+        'staff_id',
+        'branch_id',
+        'position_id',
     ];
 
     /**

@@ -1,16 +1,16 @@
 <?php
 
-use Botble\Dao\Enums\DaoRequestStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 
 return [
     'name' => 'Danh sách DAO',
     'statuses' => [
-        DaoRequestStatusEnum::CREATE => 'Tạo mới',
-        DaoRequestStatusEnum::RECEIVE => 'Tiếp nhận',
-        DaoRequestStatusEnum::REJECT => 'Từ chối',
-        DaoRequestStatusEnum::IT_PROCESS => 'IT xử lý',
-        DaoRequestStatusEnum::GDCN_APPROVE => 'GDCN duyệt',
-        DaoRequestStatusEnum::HOISO_APPROVE => 'Hội sở duyệt',
-        DaoRequestStatusEnum::SUCCESS => 'Thành công',
+        RequestStatusEnum::CREATE => 'Tạo mới',
+        RequestStatusEnum::RECEIVE => 'Tiếp nhận',
+        RequestStatusEnum::REJECT => 'Từ chối',
+        RequestStatusEnum::IT_PROCESS => 'IT xử lý',
+        RequestStatusEnum::GDCN_APPROVE => 'GDCN duyệt',
+        RequestStatusEnum::HOISO_APPROVE => 'Hội sở duyệt',
+        RequestStatusEnum::SUCCESS => 'Thành công',
     ],
 ];

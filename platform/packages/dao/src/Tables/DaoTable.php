@@ -185,7 +185,7 @@ class DaoTable extends ScrollTableAbstract
      */
     public function getDefaultButtons(): array
     {
-        return ['excel', 'reload'];
+        return ['excel'];
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Botble\Dao\Tables;
 
 use Auth;
 use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -32,10 +33,10 @@ class DaoRequestTransferTable extends TableAbstract
     public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoRequestTransferInterface $DaoRequestTransferRepository)
     {
         $this->repository = $DaoRequestTransferRepository;
-        $this->setOption('id', 'table-plugins-dao-request-transfer');
+        $this->setOption('id', 'table-plugins-request-transfer');
         parent::__construct($table, $urlDevTool);
 
-        if (!Auth::user()->hasAnyPermission(['dao-request-transfer.edit', 'dao-request-transfer.destroy'])) {
+        if (!Auth::user()->hasAnyPermission(['request-transfer.edit', 'request-transfer.destroy'])) {
             $this->hasOperations = false;
             $this->hasActions = false;
         }
@@ -55,18 +56,27 @@ class DaoRequestTransferTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return ('Vùng '.$item->zone_id);
+                return ('Vùng ' . $item->zone_id);
             })
             ->editColumn('id', function ($item) {
-                return ('DAO'.$item->id);
+                return ('DAO' . $item->id);
+            })
+            ->editColumn('dao_id', function ($item) {
+                return $item->dao->dao;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+            })
+            ->editColumn('type', function ($item) {
+                return $item->type->toHtml();
+            })
+            ->editColumn('status', function ($item) {
+                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return table_actions('dao-request-transfer.edit', 'dao-request-transfer.destroy', $item);
+                return view('packages/dao::request.transfer.actions', compact('item'))->render();
             })
             ->escapeColumns([])
             ->make(true);
@@ -92,7 +102,7 @@ class DaoRequestTransferTable extends TableAbstract
             'dao_request_transfers.created_at',
         ]);
 
-        if (!Auth::user()->isSuperUser()){
+        if (!Auth::user()->isSuperUser()) {
             $query = $model->where('created_by', Auth::id());
         }
 
@@ -156,18 +166,9 @@ class DaoRequestTransferTable extends TableAbstract
      */
     public function buttons()
     {
-        $buttons = $this->addCreateButton(route('dao-request-transfer.create'), 'dao-request-transfer.create');
+        $buttons = $this->addCreateButton(route('request-transfer.create'), 'request-transfer.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, DaoRequestTransfer::class);
-    }
-
-    /**
-     * @return array
-     * @throws \Throwable
-     */
-    public function bulkActions(): array
-    {
-        return $this->addDeleteAction(route('dao-request-transfer.deletes'), 'dao-request-transfer.destroy', parent::bulkActions());
     }
 
     /**
@@ -176,20 +177,11 @@ class DaoRequestTransferTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'dao_request_transfers.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
             'dao_request_transfers.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
-            ],
-            'dao_request_transfers.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
-                'type'  => 'date',
+                'choices'  => RequestStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
         ];
     }

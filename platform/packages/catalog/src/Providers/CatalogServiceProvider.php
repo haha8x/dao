@@ -51,9 +51,9 @@ class CatalogServiceProvider extends ServiceProvider
         Event::listen(RouteMatched::class, function () {
             dashboard_menu()->registerItem([
                 'id'          => 'cms-plugins-catalog',
-                'priority'    => 5,
+                'priority'    => 99,
                 'parent_id'   => null,
-                'name'        => __('Danh mục'),
+                'name'        => __('Quản lý danh mục'),
                 'icon'        => 'fa fa-list',
                 'url'         => null,
                 'permissions' => ['catalog.index'],

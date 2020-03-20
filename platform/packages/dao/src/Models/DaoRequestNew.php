@@ -3,7 +3,7 @@
 namespace Botble\Dao\Models;
 
 use Botble\Base\Traits\EnumCastable;
-use Botble\Dao\Enums\DaoRequestStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Base\Models\BaseModel;
 use Botble\Catalog\Models\CatalogBranch;
 use Botble\Catalog\Models\CatalogPosition;
@@ -45,7 +45,7 @@ class DaoRequestNew extends BaseModel
      * @var array
      */
     protected $casts = [
-        'status' => DaoRequestStatusEnum::class,
+        'status' => RequestStatusEnum::class,
     ];
 
     /**

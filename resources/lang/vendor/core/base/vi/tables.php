@@ -36,7 +36,7 @@ return [
     'deactivate'         => 'Hủy kích hoạt',
     'delete_entry'       => 'Xóa bản ghi',
     'display'            => 'Hiển thị',
-    'excel'              => 'Excel',
+    'excel'              => 'Xuất ra Excel',
     'export'             => 'Xuất bản',
     'filter'             => 'Nhập từ khóa...',
     'filtered_from'      => 'được lọc từ',

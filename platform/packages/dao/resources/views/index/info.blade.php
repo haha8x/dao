@@ -56,27 +56,27 @@
     <div class="modal-footer">
         <a href="javascript:;" class="btn btn-primary" data-fancybox-close>{{ __('Đóng')  }}</a>
         @if ($dao->status == 'create')
-        <a href="{{ route('dao-request-new.receive', $dao->id) }}" class="btn btn-info">
+        <a href="{{ route('request-new.receive', $dao->id) }}" class="btn btn-info">
             {{ __('Tiếp nhận') }}
         </a>
         @endif
         @if ($dao->status == 'receive')
-        <a href="{{ route('dao-request-new.reject', $dao->id) }}" class="btn btn-info">
+        <a href="{{ route('request-new.reject', $dao->id) }}" class="btn btn-info">
             {{ __('Từ chối') }}
         </a>
         @endif
         @if ($dao->status == 'receive')
-        <a href="{{ route('dao-request-new.approve', $dao->id) }}" class="btn btn-info">
+        <a href="{{ route('request-new.approve', $dao->id) }}" class="btn btn-info">
             {{ __('Duyệt') }}
         </a>
         @endif
         @if ($dao->status == 'gdcn_approve')
-        <a href="{{ route('dao-request-new.it_process', $dao->id) }}" class="btn btn-info">
+        <a href="{{ route('request-new.it_process', $dao->id) }}" class="btn btn-info">
             {{ __('IT Xử lý') }}
         </a>
         @endif
         @if ($dao->status == 'it_process')
-        <a href="{{ route('dao-request-new.approve', $dao->id) }}" class="btn btn-info">
+        <a href="{{ route('request-new.approve', $dao->id) }}" class="btn btn-info">
             {{ __('Duyệt') }}
         </a>
         @endif

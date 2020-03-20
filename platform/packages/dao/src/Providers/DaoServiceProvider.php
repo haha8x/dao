@@ -36,6 +36,10 @@ use Botble\Dao\Models\DaoRequestClose;
 use Botble\Dao\Repositories\Caches\DaoRequestCloseCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestCloseRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
+use Botble\Demo\Models\Staff;
+use Botble\Demo\Repositories\Caches\StaffCacheDecorator;
+use Botble\Demo\Repositories\Eloquent\StaffRepository;
+use Botble\Demo\Repositories\Interfaces\StaffInterface;
 
 class DaoServiceProvider extends ServiceProvider
 {
@@ -84,6 +88,12 @@ class DaoServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->bind(StaffInterface::class, function () {
+            return new StaffCacheDecorator(
+                new StaffRepository(new Staff)
+            );
+        });
+
         Helper::autoload(__DIR__ . '/../../helpers');
     }
 
@@ -103,7 +113,7 @@ class DaoServiceProvider extends ServiceProvider
                 'priority'    => 5,
                 'parent_id'   => null,
                 'name'        => __('Quản lý DAO'),
-                'icon'        => 'fa fa-list',
+                'icon'        => 'fas fa-clipboard-list',
                 'url'         => route('dao.index'),
                 'permissions' => ['dao.index'],
             ])
@@ -117,47 +127,57 @@ class DaoServiceProvider extends ServiceProvider
                     'permissions' => ['dao.index'],
                 ])
                 ->registerItem([
-                    'id'          => 'cms-plugins-dao-request-new',
+                    'id'          => 'cms-plugins-request-new',
                     'priority'    => 2,
                     'parent_id'   => 'cms-plugins-dao',
                     'name'        => __('Yêu cầu cấp mới mã DAO'),
                     'icon'        => null,
-                    'url'         => route('dao-request-new.index'),
-                    'permissions' => ['dao-request-new.index'],
+                    'url'         => route('request-new.index'),
+                    'permissions' => ['request-new.index'],
                 ])->registerItem([
-                    'id'          => 'cms-plugins-dao-request-update',
+                    'id'          => 'cms-plugins-request-update',
                     'priority'    => 3,
                     'parent_id'   => 'cms-plugins-dao',
                     'name'        => __('Yêu cầu cập nhật mã DAO'),
                     'icon'        => null,
-                    'url'         => route('dao-request-update.index'),
-                    'permissions' => ['dao-request-update.index'],
+                    'url'         => route('request-update.index'),
+                    'permissions' => ['request-update.index'],
                 ])->registerItem([
-                    'id'          => 'cms-plugins-dao-request-transfer',
+                    'id'          => 'cms-plugins-request-transfer',
                     'priority'    => 4,
                     'parent_id'   => 'cms-plugins-dao',
                     'name'        => __('Yêu cầu chuyển mã DAO'),
                     'icon'        => null,
-                    'url'         => route('dao-request-transfer.index'),
-                    'permissions' => ['dao-request-transfer.index'],
+                    'url'         => route('request-transfer.index'),
+                    'permissions' => ['request-transfer.index'],
                 ])->registerItem([
-                    'id'          => 'cms-plugins-dao-request-close',
+                    'id'          => 'cms-plugins-request-close',
                     'priority'    => 5,
                     'parent_id'   => 'cms-plugins-dao',
                     'name'        => __('Yêu cầu đóng mã DAO'),
                     'icon'        => null,
-                    'url'         => route('dao-request-close.index'),
-                    'permissions' => ['dao-request-close.index'],
+                    'url'         => route('request-close.index'),
+                    'permissions' => ['request-close.index'],
                 ]);
 
             dashboard_menu()->registerItem([
                 'id'          => 'cms-plugins-customer',
                 'priority'    => 5,
                 'parent_id'   => null,
-                'name'        => __('Danh sách khách hàng'),
-                'icon'        => 'fa fa-list',
+                'name'        => __('Quản lý khách hàng'),
+                'icon'        => 'fas fa-users',
                 'url'         => route('customer.index'),
                 'permissions' => ['customer.index'],
+            ]);
+
+            dashboard_menu()->registerItem([
+                'id'          => 'cms-plugins-staff',
+                'priority'    => 10,
+                'parent_id'   => null,
+                'name'        => __('Quản lý tài khoản'),
+                'icon'        => 'fas fa-user',
+                'url'         => route('staff.index'),
+                'permissions' => ['staff.index'],
             ]);
         });
 

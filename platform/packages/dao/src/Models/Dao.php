@@ -20,8 +20,19 @@ class Dao extends BaseModel
      * @var array
      */
     protected $fillable = [
+        'dao',
+        'zone_id',
+        'branch_id',
+        'staff_id',
         'name',
+        'position_id',
+        'cif',
+        'email',
+        'cmnd',
+        'phone',
         'status',
+        'created_by',
+        'updated_by',
     ];
 
     /**

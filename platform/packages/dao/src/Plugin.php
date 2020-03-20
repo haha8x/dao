@@ -12,5 +12,6 @@ class Plugin extends PluginOperationAbstract
         Schema::dropIfExists('daos');
         Schema::dropIfExists('dao_registers');
         Schema::dropIfExists('customers');
+        Schema::dropIfExists('staff');
     }
 }

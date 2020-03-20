@@ -3,12 +3,13 @@
 namespace Botble\Dao\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Models\DaoRequestClose;
+use Botble\Dao\Enums\RequestStatusEnum;
+use Html;
 
 class DaoRequestCloseTable extends TableAbstract
 {
@@ -32,10 +33,10 @@ class DaoRequestCloseTable extends TableAbstract
     public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoRequestCloseInterface $DaoRequestCloseRepository)
     {
         $this->repository = $DaoRequestCloseRepository;
-        $this->setOption('id', 'table-plugins-dao-request-close');
+        $this->setOption('id', 'table-plugins-request-close');
         parent::__construct($table, $urlDevTool);
 
-        if (!Auth::user()->hasAnyPermission(['dao-request-close.edit', 'dao-request-close.destroy'])) {
+        if (!Auth::user()->hasAnyPermission(['request-close.edit', 'request-close.destroy'])) {
             $this->hasOperations = false;
             $this->hasActions = false;
         }
@@ -55,18 +56,24 @@ class DaoRequestCloseTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return ('Vùng '.$item->zone_id);
+                return ('Vùng ' . $item->zone_id);
             })
             ->editColumn('id', function ($item) {
-                return ('DAO'.$item->id);
+                return ('DAO' . $item->id);
+            })
+            ->editColumn('dao_id', function ($item) {
+                return $item->dao->dao;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+            })
+            ->editColumn('status', function ($item) {
+                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return table_actions('dao-request-close.edit', 'dao-request-close.destroy', $item);
+                return view('packages/dao::request.close.actions', compact('item'))->render();
             })
             ->escapeColumns([])
             ->make(true);
@@ -89,7 +96,7 @@ class DaoRequestCloseTable extends TableAbstract
             'dao_request_closes.created_at',
         ]);
 
-        if (!Auth::user()->isSuperUser()){
+        if (!Auth::user()->isSuperUser()) {
             $query = $model->where('created_by', Auth::id());
         }
 
@@ -115,7 +122,7 @@ class DaoRequestCloseTable extends TableAbstract
             ],
             'status' => [
                 'name'  => 'dao_request_closes.status',
-                'title' => __('Trạng thái'),
+                'title' => __('Trạng thái xử lý'),
                 'class' => 'text-left',
             ],
             'note' => [
@@ -138,18 +145,9 @@ class DaoRequestCloseTable extends TableAbstract
      */
     public function buttons()
     {
-        $buttons = $this->addCreateButton(route('dao-request-close.create'), 'dao-request-close.create');
+        $buttons = $this->addCreateButton(route('request-close.create'), 'request-close.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, DaoRequestClose::class);
-    }
-
-    /**
-     * @return array
-     * @throws \Throwable
-     */
-    public function bulkActions(): array
-    {
-        return $this->addDeleteAction(route('dao-request-close.deletes'), 'dao-request-close.destroy', parent::bulkActions());
     }
 
     /**
@@ -158,20 +156,11 @@ class DaoRequestCloseTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'dao_request_closes.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
             'dao_request_closes.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
-            ],
-            'dao_request_closes.created_at' => [
-                'title' => trans('core/base::tables.created_at'),
-                'type'  => 'date',
+                'choices'  => RequestStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
         ];
     }

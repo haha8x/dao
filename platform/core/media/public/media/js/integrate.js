@@ -1,1 +1,1204 @@
-!function(e){var n={};function t(a){if(n[a])return n[a].exports;var r=n[a]={i:a,l:!1,exports:{}};return e[a].call(r.exports,r,r.exports,t),r.l=!0,r.exports}t.m=e,t.c=n,t.d=function(e,n,a){t.o(e,n)||Object.defineProperty(e,n,{enumerable:!0,get:a})},t.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},t.t=function(e,n){if(1&n&&(e=t(e)),8&n)return e;if(4&n&&"object"==typeof e&&e&&e.__esModule)return e;var a=Object.create(null);if(t.r(a),Object.defineProperty(a,"default",{enumerable:!0,value:e}),2&n&&"string"!=typeof e)for(var r in e)t.d(a,r,function(n){return e[n]}.bind(null,r));return a},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,n){return Object.prototype.hasOwnProperty.call(e,n)},t.p="/",t(t.s=175)}({1:function(e,n,t){"use strict";t.d(n,"a",function(){return o});var a=t(4);function r(e,n){for(var t=0;t<n.length;t++){var a=n[t];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var o=function(){function e(){!function(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}(this,e)}var n,t,o;return n=e,o=[{key:"getUrlParam",value:function(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;n||(n=window.location.search);var t=new RegExp("(?:[?&]|&)"+e+"=([^&]+)","i"),a=n.match(t);return a&&a.length>1?a[1]:null}},{key:"asset",value:function(e){if("//"===e.substring(0,2)||"http://"===e.substring(0,7)||"https://"===e.substring(0,8))return e;var n="/"!==RV_MEDIA_URL.base_url.substr(-1,1)?RV_MEDIA_URL.base_url+"/":RV_MEDIA_URL.base_url;return"/"===e.substring(0,1)?n+e.substring(1):n+e}},{key:"showAjaxLoading",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-main");e.addClass("on-loading").append($("#rv_media_loading").html())}},{key:"hideAjaxLoading",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-main");e.removeClass("on-loading").find(".loading-wrapper").remove()}},{key:"isOnAjaxLoading",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:$(".rv-media-items");return e.hasClass("on-loading")}},{key:"jsonEncode",value:function(e){return void 0===e&&(e=null),JSON.stringify(e)}},{key:"jsonDecode",value:function(e,n){if(!e)return n;if("string"==typeof e){var t;try{t=$.parseJSON(e)}catch(e){t=n}return t}return e}},{key:"getRequestParams",value:function(){return window.rvMedia.options&&"modal"===window.rvMedia.options.open_in?$.extend(!0,a.a.request_params,window.rvMedia.options||{}):a.a.request_params}},{key:"setSelectedFile",value:function(e){void 0!==window.rvMedia.options?window.rvMedia.options.selected_file_id=e:a.a.request_params.selected_file_id=e}},{key:"getConfigs",value:function(){return a.a}},{key:"storeConfig",value:function(){localStorage.setItem("MediaConfig",e.jsonEncode(a.a))}},{key:"storeRecentItems",value:function(){localStorage.setItem("RecentItems",e.jsonEncode(a.b))}},{key:"addToRecent",value:function(e){e instanceof Array?_.each(e,function(e){a.b.push(e)}):(a.b.push(e),this.storeRecentItems())}},{key:"getItems",value:function(){var e=[];return $(".js-media-list-title").each(function(n,t){var a=$(t),r=a.data()||{};r.index_key=a.index(),e.push(r)}),e}},{key:"getSelectedItems",value:function(){var e=[];return $(".js-media-list-title input[type=checkbox]:checked").each(function(n,t){var a=$(t).closest(".js-media-list-title"),r=a.data()||{};r.index_key=a.index(),e.push(r)}),e}},{key:"getSelectedFiles",value:function(){var e=[];return $(".js-media-list-title[data-context=file] input[type=checkbox]:checked").each(function(n,t){var a=$(t).closest(".js-media-list-title"),r=a.data()||{};r.index_key=a.index(),e.push(r)}),e}},{key:"getSelectedFolder",value:function(){var e=[];return $(".js-media-list-title[data-context=folder] input[type=checkbox]:checked").each(function(n,t){var a=$(t).closest(".js-media-list-title"),r=a.data()||{};r.index_key=a.index(),e.push(r)}),e}},{key:"isUseInModal",value:function(){return"select-files"===e.getUrlParam("media-action")||window.rvMedia&&window.rvMedia.options&&"modal"===window.rvMedia.options.open_in}},{key:"resetPagination",value:function(){RV_MEDIA_CONFIG.pagination={paged:1,posts_per_page:40,in_process_get_media:!1,has_more:!0}}}],(t=null)&&r(n.prototype,t),o&&r(n,o),e}()},175:function(e,n,t){e.exports=t(95)},30:function(e,n,t){"use strict";t.d(n,"a",function(){return i});var a=t(9),r=t(1);function o(e,n){for(var t=0;t<n.length;t++){var a=n[t];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var i=function(){function e(){!function(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}(this,e)}var n,t,i;return n=e,i=[{key:"initContext",value:function(){jQuery().contextMenu&&($.contextMenu({selector:'.js-context-menu[data-context="file"]',build:function(){return{items:e._fileContextMenu()}}}),$.contextMenu({selector:'.js-context-menu[data-context="folder"]',build:function(){return{items:e._folderContextMenu()}}}))}},{key:"_fileContextMenu",value:function(){var e={preview:{name:"Preview",icon:function(e,n,t,a){return n.html('<i class="fa fa-eye" aria-hidden="true"></i> '+a.name),"context-menu-icon-updated"},callback:function(){a.a.handlePreview()}}};_.each(r.a.getConfigs().actions_list,function(n,t){_.each(n,function(n){e[n.action]={name:n.name,icon:function(e,a,r,o){return a.html('<i class="'+n.icon+'" aria-hidden="true"></i> '+(RV_MEDIA_CONFIG.translations.actions_list[t][n.action]||o.name)),"context-menu-icon-updated"},callback:function(){$('.js-files-action[data-action="'+n.action+'"]').trigger("click")}}})});var n=[];switch(r.a.getRequestParams().view_in){case"all_media":n=["remove_favorite","delete","restore"];break;case"recent":n=["remove_favorite","delete","restore","make_copy"];break;case"favorites":n=["favorite","delete","restore","make_copy"];break;case"trash":e={preview:e.preview,rename:e.rename,download:e.download,delete:e.delete,restore:e.restore}}_.each(n,function(n){e[n]=void 0}),r.a.getSelectedFolder().length>0&&(e.preview=void 0,e.copy_link=void 0,_.includes(RV_MEDIA_CONFIG.permissions,"folders.create")||(e.make_copy=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.edit")||(e.rename=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.trash")||(e.trash=void 0,e.restore=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.destroy")||(e.delete=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"folders.favorite")||(e.favorite=void 0,e.remove_favorite=void 0));var t=r.a.getSelectedFiles();t.length>0&&(_.includes(RV_MEDIA_CONFIG.permissions,"files.create")||(e.make_copy=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.edit")||(e.rename=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.trash")||(e.trash=void 0,e.restore=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.destroy")||(e.delete=void 0),_.includes(RV_MEDIA_CONFIG.permissions,"files.favorite")||(e.favorite=void 0,e.remove_favorite=void 0));var o=!1;return _.each(t,function(e){_.includes(["image","youtube","pdf","text","video"],e.type)&&(o=!0)}),o||(e.preview=void 0),e}},{key:"_folderContextMenu",value:function(){var n=e._fileContextMenu();return n.preview=void 0,n.copy_link=void 0,n}},{key:"destroyContext",value:function(){jQuery().contextMenu&&$.contextMenu("destroy")}}],(t=null)&&o(n.prototype,t),i&&o(n,i),e}()},4:function(e,n,t){"use strict";t.d(n,"a",function(){return a}),t.d(n,"b",function(){return o});var a=$.parseJSON(localStorage.getItem("MediaConfig"))||{},r={app_key:"483a0xyzytz1242c0d520426e8ba366c530c3d9d3xs",request_params:{view_type:"tiles",filter:"everything",view_in:"all_media",search:"",sort_by:"created_at-desc",folder_id:0},hide_details_pane:!1,icons:{folder:"fa fa-folder"},actions_list:{basic:[{icon:"fa fa-eye",name:"Preview",action:"preview",order:0,class:"rv-action-preview"}],file:[{icon:"fa fa-link",name:"Copy link",action:"copy_link",order:0,class:"rv-action-copy-link"},{icon:"far fa-edit",name:"Rename",action:"rename",order:1,class:"rv-action-rename"},{icon:"fa fa-copy",name:"Make a copy",action:"make_copy",order:2,class:"rv-action-make-copy"}],user:[{icon:"fa fa-star",name:"Favorite",action:"favorite",order:2,class:"rv-action-favorite"},{icon:"fa fa-star",name:"Remove favorite",action:"remove_favorite",order:3,class:"rv-action-favorite"}],other:[{icon:"fa fa-download",name:"Download",action:"download",order:0,class:"rv-action-download"},{icon:"fa fa-trash",name:"Move to trash",action:"trash",order:1,class:"rv-action-trash"},{icon:"fa fa-eraser",name:"Delete permanently",action:"delete",order:2,class:"rv-action-delete"},{icon:"fa fa-undo",name:"Restore",action:"restore",order:3,class:"rv-action-restore"}]},denied_download:["youtube"]};a.app_key&&a.app_key===r.app_key||(a=r);var o=$.parseJSON(localStorage.getItem("RecentItems"))||[]},6:function(e,n,t){"use strict";function a(e,n){for(var t=0;t<n.length;t++){var a=n[t];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}t.d(n,"a",function(){return r});var r=function(){function e(){!function(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}(this,e)}var n,t,r;return n=e,r=[{key:"showMessage",value:function(e,n){toastr.options={closeButton:!0,progressBar:!0,positionClass:"toast-bottom-right",onclick:null,showDuration:1e3,hideDuration:1e3,timeOut:1e4,extendedTimeOut:1e3,showEasing:"swing",hideEasing:"linear",showMethod:"fadeIn",hideMethod:"fadeOut"};var t="";switch(e){case"error":t=RV_MEDIA_CONFIG.translations.message.error_header;break;case"success":t=RV_MEDIA_CONFIG.translations.message.success_header}toastr[e](n,t)}},{key:"handleError",value:function(n){void 0===n.responseJSON||_.isArray(n.errors)?void 0!==n.responseJSON?void 0!==n.responseJSON.errors?422===n.status&&e.handleValidationError(n.responseJSON.errors):void 0!==n.responseJSON.message?e.showMessage("error",n.responseJSON.message):$.each(n.responseJSON,function(n,t){$.each(t,function(n,t){e.showMessage("error",t)})}):e.showMessage("error",n.statusText):e.handleValidationError(n.responseJSON.errors)}},{key:"handleValidationError",value:function(n){var t="";$.each(n,function(e,n){t+=n+"<br />",$('*[name="'+e+'"]').addClass("field-has-error"),$('*[name$="['+e+']"]').addClass("field-has-error")}),e.showMessage("error",t)}}],(t=null)&&a(n.prototype,t),r&&a(n,r),e}()},9:function(e,n,t){"use strict";t.d(n,"a",function(){return s});var a=t(4),r=t(1),o=t(6);function i(e,n){for(var t=0;t<n.length;t++){var a=n[t];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var s=function(){function e(){!function(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}(this,e)}var n,t,s;return n=e,s=[{key:"handleDropdown",value:function(){var n=_.size(r.a.getSelectedItems());e.renderActions(),n>0?$(".rv-dropdown-actions").removeClass("disabled"):$(".rv-dropdown-actions").addClass("disabled")}},{key:"handlePreview",value:function(){var e=[];_.each(r.a.getSelectedFiles(),function(n){_.includes(["image","youtube","pdf","text","video"],n.type)&&(e.push({src:n.full_url}),a.b.push(n.id))}),_.size(e)>0?($.fancybox.open(e),r.a.storeRecentItems()):this.handleGlobalAction("download")}},{key:"handleCopyLink",value:function(){var e="";_.each(r.a.getSelectedFiles(),function(n){_.isEmpty(e)||(e+="\n"),e+=n.full_url});var n=$(".js-rv-clipboard-temp");n.data("clipboard-text",e),new Clipboard(".js-rv-clipboard-temp",{text:function(){return e}}),o.a.showMessage("success",RV_MEDIA_CONFIG.translations.clipboard.success,RV_MEDIA_CONFIG.translations.message.success_header),n.trigger("click")}},{key:"handleGlobalAction",value:function(n,t){var a=[];switch(_.each(r.a.getSelectedItems(),function(e){a.push({is_folder:e.is_folder,id:e.id,full_url:e.full_url})}),n){case"rename":$("#modal_rename_items").modal("show").find("form.rv-form").data("action",n);break;case"copy_link":e.handleCopyLink();break;case"preview":e.handlePreview();break;case"trash":$("#modal_trash_items").modal("show").find("form.rv-form").data("action",n);break;case"delete":$("#modal_delete_items").modal("show").find("form.rv-form").data("action",n);break;case"empty_trash":$("#modal_empty_trash").modal("show").find("form.rv-form").data("action",n);break;case"download":var i=RV_MEDIA_URL.download,s=0;_.each(r.a.getSelectedItems(),function(e){_.includes(r.a.getConfigs().denied_download,e.mime_type)||(i+=(0===s?"?":"&")+"selected["+s+"][is_folder]="+e.is_folder+"&selected["+s+"][id]="+e.id,s++)}),i!==RV_MEDIA_URL.download?window.open(i,"_blank"):o.a.showMessage("error",RV_MEDIA_CONFIG.translations.download.error,RV_MEDIA_CONFIG.translations.message.error_header);break;default:e.processAction({selected:a,action:n},t)}}},{key:"processAction",value:function(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:null;$.ajax({url:RV_MEDIA_URL.global_actions,type:"POST",data:e,dataType:"json",beforeSend:function(){r.a.showAjaxLoading()},success:function(e){r.a.resetPagination(),e.error?o.a.showMessage("error",e.message,RV_MEDIA_CONFIG.translations.message.error_header):o.a.showMessage("success",e.message,RV_MEDIA_CONFIG.translations.message.success_header),n&&n(e)},complete:function(){r.a.hideAjaxLoading()},error:function(e){o.a.handleError(e)}})}},{key:"renderRenameItems",value:function(){var e=$("#rv_media_rename_item").html(),n=$("#modal_rename_items .rename-items").empty();_.each(r.a.getSelectedItems(),function(t){var a=e.replace(/__icon__/gi,t.icon||"fa fa-file").replace(/__placeholder__/gi,"Input file name").replace(/__value__/gi,t.name),r=$(a);r.data("id",t.id),r.data("is_folder",t.is_folder),r.data("name",t.name),n.append(r)})}},{key:"renderActions",value:function(){var e=r.a.getSelectedFolder().length>0,n=$("#rv_action_item").html(),t=0,a=$(".rv-dropdown-actions .dropdown-menu");a.empty();var o=$.extend({},!0,r.a.getConfigs().actions_list);e&&(o.basic=_.reject(o.basic,function(e){return"preview"===e.action}),o.file=_.reject(o.file,function(e){return"copy_link"===e.action}),_.includes(RV_MEDIA_CONFIG.permissions,"folders.create")||(o.file=_.reject(o.file,function(e){return"make_copy"===e.action})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.edit")||(o.file=_.reject(o.file,function(e){return _.includes(["rename"],e.action)}),o.user=_.reject(o.user,function(e){return _.includes(["rename"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.trash")||(o.other=_.reject(o.other,function(e){return _.includes(["trash","restore"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.destroy")||(o.other=_.reject(o.other,function(e){return _.includes(["delete"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"folders.favorite")||(o.other=_.reject(o.other,function(e){return _.includes(["favorite","remove_favorite"],e.action)})));var i=r.a.getSelectedFiles(),s=!1;_.each(i,function(e){_.includes(["image","youtube","pdf","text","video"],e.type)&&(s=!0)}),s||(o.basic=_.reject(o.basic,function(e){return"preview"===e.action})),i.length>0&&(_.includes(RV_MEDIA_CONFIG.permissions,"files.create")||(o.file=_.reject(o.file,function(e){return"make_copy"===e.action})),_.includes(RV_MEDIA_CONFIG.permissions,"files.edit")||(o.file=_.reject(o.file,function(e){return _.includes(["rename"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.trash")||(o.other=_.reject(o.other,function(e){return _.includes(["trash","restore"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.destroy")||(o.other=_.reject(o.other,function(e){return _.includes(["delete"],e.action)})),_.includes(RV_MEDIA_CONFIG.permissions,"files.favorite")||(o.other=_.reject(o.other,function(e){return _.includes(["favorite","remove_favorite"],e.action)}))),_.each(o,function(e,o){_.each(e,function(e,i){var s=!1;switch(r.a.getRequestParams().view_in){case"all_media":_.includes(["remove_favorite","delete","restore"],e.action)&&(s=!0);break;case"recent":_.includes(["remove_favorite","delete","restore","make_copy"],e.action)&&(s=!0);break;case"favorites":_.includes(["favorite","delete","restore","make_copy"],e.action)&&(s=!0);break;case"trash":_.includes(["preview","delete","restore","rename","download"],e.action)||(s=!0)}if(!s){var c=n.replace(/__action__/gi,e.action||"").replace(/__icon__/gi,e.icon||"").replace(/__name__/gi,RV_MEDIA_CONFIG.translations.actions_list[o][e.action]||e.name);!i&&t&&(c='<li role="separator" class="divider"></li>'+c),a.append(c)}}),e.length>0&&t++})}}],(t=null)&&i(n.prototype,t),s&&i(n,s),e}()},95:function(e,n,t){"use strict";t.r(n),t.d(n,"EditorService",function(){return c});var a=t(1),r=t(4),o=t(30);function i(e,n){if(!(e instanceof n))throw new TypeError("Cannot call a class as a function")}function s(e,n){for(var t=0;t<n.length;t++){var a=n[t];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}var c=function(){function e(){i(this,e)}var n,t,r;return n=e,r=[{key:"editorSelectFile",value:function(e){var n=a.a.getUrlParam("CKEditor")||a.a.getUrlParam("CKEditorFuncNum");if(window.opener&&n){var t=_.first(e);window.opener.CKEDITOR.tools.callFunction(a.a.getUrlParam("CKEditorFuncNum"),t.full_url),window.opener&&window.close()}}}],(t=null)&&s(n.prototype,t),r&&s(n,r),e}(),l=function e(n,t){i(this,e),window.rvMedia=window.rvMedia||{};var s=$("body");t=$.extend(!0,{multiple:!0,type:"*",onSelectFiles:function(e,n){}},t);var c=function(e){e.preventDefault();var n=$(e.currentTarget);$("#rv_media_modal").modal(),window.rvMedia.options=t,window.rvMedia.options.open_in="modal",window.rvMedia.$el=n,r.a.request_params.filter="everything",a.a.storeConfig();var i=window.rvMedia.$el.data("rv-media");void 0!==i&&i.length>0&&(i=i[0],window.rvMedia.options=$.extend(!0,window.rvMedia.options,i||{}),void 0!==i.selected_file_id?window.rvMedia.options.is_popup=!0:void 0!==window.rvMedia.options.is_popup&&(window.rvMedia.options.is_popup=void 0)),0===$("#rv_media_body .rv-media-container").length?$("#rv_media_body").load(RV_MEDIA_URL.popup,function(e){e.error&&alert(e.message),$("#rv_media_body").removeClass("media-modal-loading").closest(".modal-content").removeClass("bb-loading"),$(document).find(".rv-media-container .js-change-action[data-type=refresh]").trigger("click"),o.a.destroyContext(),o.a.initContext()}):$(document).find(".rv-media-container .js-change-action[data-type=refresh]").trigger("click")};"string"==typeof n?s.off("click",n).on("click",n,c):n.off("click").on("click",c)};window.RvMediaStandAlone=l,$(".js-insert-to-editor").off("click").on("click",function(e){e.preventDefault();var n=a.a.getSelectedFiles();_.size(n)>0&&c.editorSelectFile(n)}),$.fn.rvMedia=function(e){var n=$(this);r.a.request_params.filter="everything",$(document).find(".js-insert-to-editor").prop("disabled","trash"===r.a.request_params.view_in),a.a.storeConfig(),new l(n,e)}}});
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js":
+/*!***************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Config/MediaConfig.js ***!
+  \***************************************************************************/
+/*! exports provided: MediaConfig, RecentItems */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MediaConfig", function() { return MediaConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RecentItems", function() { return RecentItems; });
+var MediaConfig = $.parseJSON(localStorage.getItem('MediaConfig')) || {};
+var defaultConfig = {
+  app_key: '483a0xyzytz1242c0d520426e8ba366c530c3d9d3xs',
+  request_params: {
+    view_type: 'tiles',
+    filter: 'everything',
+    view_in: 'all_media',
+    search: '',
+    sort_by: 'created_at-desc',
+    folder_id: 0
+  },
+  hide_details_pane: false,
+  icons: {
+    folder: 'fa fa-folder'
+  },
+  actions_list: {
+    basic: [{
+      icon: 'fa fa-eye',
+      name: 'Preview',
+      action: 'preview',
+      order: 0,
+      "class": 'rv-action-preview'
+    }],
+    file: [{
+      icon: 'fa fa-link',
+      name: 'Copy link',
+      action: 'copy_link',
+      order: 0,
+      "class": 'rv-action-copy-link'
+    }, {
+      icon: 'far fa-edit',
+      name: 'Rename',
+      action: 'rename',
+      order: 1,
+      "class": 'rv-action-rename'
+    }, {
+      icon: 'fa fa-copy',
+      name: 'Make a copy',
+      action: 'make_copy',
+      order: 2,
+      "class": 'rv-action-make-copy'
+    }],
+    user: [{
+      icon: 'fa fa-star',
+      name: 'Favorite',
+      action: 'favorite',
+      order: 2,
+      "class": 'rv-action-favorite'
+    }, {
+      icon: 'fa fa-star',
+      name: 'Remove favorite',
+      action: 'remove_favorite',
+      order: 3,
+      "class": 'rv-action-favorite'
+    }],
+    other: [{
+      icon: 'fa fa-download',
+      name: 'Download',
+      action: 'download',
+      order: 0,
+      "class": 'rv-action-download'
+    }, {
+      icon: 'fa fa-trash',
+      name: 'Move to trash',
+      action: 'trash',
+      order: 1,
+      "class": 'rv-action-trash'
+    }, {
+      icon: 'fa fa-eraser',
+      name: 'Delete permanently',
+      action: 'delete',
+      order: 2,
+      "class": 'rv-action-delete'
+    }, {
+      icon: 'fa fa-undo',
+      name: 'Restore',
+      action: 'restore',
+      order: 3,
+      "class": 'rv-action-restore'
+    }]
+  },
+  denied_download: ['youtube']
+};
+
+if (!MediaConfig.app_key || MediaConfig.app_key !== defaultConfig.app_key) {
+  MediaConfig = defaultConfig;
+}
+
+var RecentItems = $.parseJSON(localStorage.getItem('RecentItems')) || [];
+
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js":
+/*!************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Helpers/Helpers.js ***!
+  \************************************************************************/
+/*! exports provided: Helpers */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Helpers", function() { return Helpers; });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var Helpers =
+/*#__PURE__*/
+function () {
+  function Helpers() {
+    _classCallCheck(this, Helpers);
+  }
+
+  _createClass(Helpers, null, [{
+    key: "getUrlParam",
+    value: function getUrlParam(paramName) {
+      var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      if (!url) {
+        url = window.location.search;
+      }
+
+      var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+      var match = url.match(reParam);
+      return match && match.length > 1 ? match[1] : null;
+    }
+  }, {
+    key: "asset",
+    value: function asset(url) {
+      if (url.substring(0, 2) === '//' || url.substring(0, 7) === 'http://' || url.substring(0, 8) === 'https://') {
+        return url;
+      }
+
+      var baseUrl = RV_MEDIA_URL.base_url.substr(-1, 1) !== '/' ? RV_MEDIA_URL.base_url + '/' : RV_MEDIA_URL.base_url;
+
+      if (url.substring(0, 1) === '/') {
+        return baseUrl + url.substring(1);
+      }
+
+      return baseUrl + url;
+    }
+  }, {
+    key: "showAjaxLoading",
+    value: function showAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-main');
+      $element.addClass('on-loading').append($('#rv_media_loading').html());
+    }
+  }, {
+    key: "hideAjaxLoading",
+    value: function hideAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-main');
+      $element.removeClass('on-loading').find('.loading-wrapper').remove();
+    }
+  }, {
+    key: "isOnAjaxLoading",
+    value: function isOnAjaxLoading() {
+      var $element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : $('.rv-media-items');
+      return $element.hasClass('on-loading');
+    }
+  }, {
+    key: "jsonEncode",
+    value: function jsonEncode(object) {
+      if (typeof object === 'undefined') {
+        object = null;
+      }
+
+      return JSON.stringify(object);
+    }
+  }, {
+    key: "jsonDecode",
+    value: function jsonDecode(jsonString, defaultValue) {
+      if (!jsonString) {
+        return defaultValue;
+      }
+
+      if (typeof jsonString === 'string') {
+        var result;
+
+        try {
+          result = $.parseJSON(jsonString);
+        } catch (err) {
+          result = defaultValue;
+        }
+
+        return result;
+      }
+
+      return jsonString;
+    }
+  }, {
+    key: "getRequestParams",
+    value: function getRequestParams() {
+      if (window.rvMedia.options && window.rvMedia.options.open_in === 'modal') {
+        return $.extend(true, _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["MediaConfig"].request_params, window.rvMedia.options || {});
+      }
+
+      return _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["MediaConfig"].request_params;
+    }
+  }, {
+    key: "setSelectedFile",
+    value: function setSelectedFile(fileId) {
+      if (typeof window.rvMedia.options !== 'undefined') {
+        window.rvMedia.options.selected_file_id = fileId;
+      } else {
+        _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["MediaConfig"].request_params.selected_file_id = fileId;
+      }
+    }
+  }, {
+    key: "getConfigs",
+    value: function getConfigs() {
+      return _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["MediaConfig"];
+    }
+  }, {
+    key: "storeConfig",
+    value: function storeConfig() {
+      localStorage.setItem('MediaConfig', Helpers.jsonEncode(_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["MediaConfig"]));
+    }
+  }, {
+    key: "storeRecentItems",
+    value: function storeRecentItems() {
+      localStorage.setItem('RecentItems', Helpers.jsonEncode(_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["RecentItems"]));
+    }
+  }, {
+    key: "addToRecent",
+    value: function addToRecent(id) {
+      if (id instanceof Array) {
+        _.each(id, function (value) {
+          _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["RecentItems"].push(value);
+        });
+      } else {
+        _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["RecentItems"].push(id);
+        this.storeRecentItems();
+      }
+    }
+  }, {
+    key: "getItems",
+    value: function getItems() {
+      var items = [];
+      $('.js-media-list-title').each(function (index, el) {
+        var $box = $(el);
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        items.push(data);
+      });
+      return items;
+    }
+  }, {
+    key: "getSelectedItems",
+    value: function getSelectedItems() {
+      var selected = [];
+      $('.js-media-list-title input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "getSelectedFiles",
+    value: function getSelectedFiles() {
+      var selected = [];
+      $('.js-media-list-title[data-context=file] input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "getSelectedFolder",
+    value: function getSelectedFolder() {
+      var selected = [];
+      $('.js-media-list-title[data-context=folder] input[type=checkbox]:checked').each(function (index, el) {
+        var $box = $(el).closest('.js-media-list-title');
+        var data = $box.data() || {};
+        data.index_key = $box.index();
+        selected.push(data);
+      });
+      return selected;
+    }
+  }, {
+    key: "isUseInModal",
+    value: function isUseInModal() {
+      return Helpers.getUrlParam('media-action') === 'select-files' || window.rvMedia && window.rvMedia.options && window.rvMedia.options.open_in === 'modal';
+    }
+  }, {
+    key: "resetPagination",
+    value: function resetPagination() {
+      RV_MEDIA_CONFIG.pagination = {
+        paged: 1,
+        posts_per_page: 40,
+        in_process_get_media: false,
+        has_more: true
+      };
+    }
+  }]);
+
+  return Helpers;
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js":
+/*!********************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/ActionsService.js ***!
+  \********************************************************************************/
+/*! exports provided: ActionsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActionsService", function() { return ActionsService; });
+/* harmony import */ var _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/MessageService */ "./platform/core/media/resources/assets/js/App/Services/MessageService.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ActionsService =
+/*#__PURE__*/
+function () {
+  function ActionsService() {
+    _classCallCheck(this, ActionsService);
+  }
+
+  _createClass(ActionsService, null, [{
+    key: "handleDropdown",
+    value: function handleDropdown() {
+      var selected = _.size(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedItems());
+
+      ActionsService.renderActions();
+
+      if (selected > 0) {
+        $('.rv-dropdown-actions').removeClass('disabled');
+      } else {
+        $('.rv-dropdown-actions').addClass('disabled');
+      }
+    }
+  }, {
+    key: "handlePreview",
+    value: function handlePreview() {
+      var selected = [];
+
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFiles(), function (value) {
+        if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+          selected.push({
+            src: value.full_url
+          });
+          _Config_MediaConfig__WEBPACK_IMPORTED_MODULE_0__["RecentItems"].push(value.id);
+        }
+      });
+
+      if (_.size(selected) > 0) {
+        $.fancybox.open(selected);
+        _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].storeRecentItems();
+      } else {
+        this.handleGlobalAction('download');
+      }
+    }
+  }, {
+    key: "handleCopyLink",
+    value: function handleCopyLink() {
+      var links = '';
+
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFiles(), function (value) {
+        if (!_.isEmpty(links)) {
+          links += '\n';
+        }
+
+        links += value.full_url;
+      });
+
+      var $clipboardTemp = $('.js-rv-clipboard-temp');
+      $clipboardTemp.data('clipboard-text', links);
+      new Clipboard('.js-rv-clipboard-temp', {
+        text: function text() {
+          return links;
+        }
+      });
+      _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"].showMessage('success', RV_MEDIA_CONFIG.translations.clipboard.success, RV_MEDIA_CONFIG.translations.message.success_header);
+      $clipboardTemp.trigger('click');
+    }
+  }, {
+    key: "handleGlobalAction",
+    value: function handleGlobalAction(type, callback) {
+      var selected = [];
+
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedItems(), function (value) {
+        selected.push({
+          is_folder: value.is_folder,
+          id: value.id,
+          full_url: value.full_url
+        });
+      });
+
+      switch (type) {
+        case 'rename':
+          $('#modal_rename_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+
+        case 'copy_link':
+          ActionsService.handleCopyLink();
+          break;
+
+        case 'preview':
+          ActionsService.handlePreview();
+          break;
+
+        case 'trash':
+          $('#modal_trash_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+
+        case 'delete':
+          $('#modal_delete_items').modal('show').find('form.rv-form').data('action', type);
+          break;
+
+        case 'empty_trash':
+          $('#modal_empty_trash').modal('show').find('form.rv-form').data('action', type);
+          break;
+
+        case 'download':
+          var downloadLink = RV_MEDIA_URL.download;
+          var count = 0;
+
+          _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedItems(), function (value) {
+            if (!_.includes(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getConfigs().denied_download, value.mime_type)) {
+              downloadLink += (count === 0 ? '?' : '&') + 'selected[' + count + '][is_folder]=' + value.is_folder + '&selected[' + count + '][id]=' + value.id;
+              count++;
+            }
+          });
+
+          if (downloadLink !== RV_MEDIA_URL.download) {
+            window.open(downloadLink, '_blank');
+          } else {
+            _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"].showMessage('error', RV_MEDIA_CONFIG.translations.download.error, RV_MEDIA_CONFIG.translations.message.error_header);
+          }
+
+          break;
+
+        default:
+          ActionsService.processAction({
+            selected: selected,
+            action: type
+          }, callback);
+          break;
+      }
+    }
+  }, {
+    key: "processAction",
+    value: function processAction(data) {
+      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      $.ajax({
+        url: RV_MEDIA_URL.global_actions,
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        beforeSend: function beforeSend() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].showAjaxLoading();
+        },
+        success: function success(res) {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].resetPagination();
+
+          if (!res.error) {
+            _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"].showMessage('success', res.message, RV_MEDIA_CONFIG.translations.message.success_header);
+          } else {
+            _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"].showMessage('error', res.message, RV_MEDIA_CONFIG.translations.message.error_header);
+          }
+
+          if (callback) {
+            callback(res);
+          }
+        },
+        complete: function complete() {
+          _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].hideAjaxLoading();
+        },
+        error: function error(data) {
+          _Services_MessageService__WEBPACK_IMPORTED_MODULE_2__["MessageService"].handleError(data);
+        }
+      });
+    }
+  }, {
+    key: "renderRenameItems",
+    value: function renderRenameItems() {
+      var VIEW = $('#rv_media_rename_item').html();
+      var $itemsWrapper = $('#modal_rename_items .rename-items').empty();
+
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedItems(), function (value) {
+        var item = VIEW.replace(/__icon__/gi, value.icon || 'fa fa-file').replace(/__placeholder__/gi, 'Input file name').replace(/__value__/gi, value.name);
+        var $item = $(item);
+        $item.data('id', value.id);
+        $item.data('is_folder', value.is_folder);
+        $item.data('name', value.name);
+        $itemsWrapper.append($item);
+      });
+    }
+  }, {
+    key: "renderActions",
+    value: function renderActions() {
+      var hasFolderSelected = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFolder().length > 0;
+      var ACTION_TEMPLATE = $('#rv_action_item').html();
+      var initializedItem = 0;
+      var $dropdownActions = $('.rv-dropdown-actions .dropdown-menu');
+      $dropdownActions.empty();
+      var actionsList = $.extend({}, true, _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getConfigs().actions_list);
+
+      if (hasFolderSelected) {
+        actionsList.basic = _.reject(actionsList.basic, function (item) {
+          return item.action === 'preview';
+        });
+        actionsList.file = _.reject(actionsList.file, function (item) {
+          return item.action === 'copy_link';
+        });
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.create')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return item.action === 'make_copy';
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.edit')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+          actionsList.user = _.reject(actionsList.user, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.trash')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['trash', 'restore'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.destroy')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['delete'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.favorite')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['favorite', 'remove_favorite'], item.action);
+          });
+        }
+      }
+
+      var selectedFiles = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFiles();
+      var canPreview = false;
+
+      _.each(selectedFiles, function (value) {
+        if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+          canPreview = true;
+        }
+      });
+
+      if (!canPreview) {
+        actionsList.basic = _.reject(actionsList.basic, function (item) {
+          return item.action === 'preview';
+        });
+      }
+
+      if (selectedFiles.length > 0) {
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.create')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return item.action === 'make_copy';
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.edit')) {
+          actionsList.file = _.reject(actionsList.file, function (item) {
+            return _.includes(['rename'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.trash')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['trash', 'restore'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.destroy')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['delete'], item.action);
+          });
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.favorite')) {
+          actionsList.other = _.reject(actionsList.other, function (item) {
+            return _.includes(['favorite', 'remove_favorite'], item.action);
+          });
+        }
+      }
+
+      _.each(actionsList, function (action, key) {
+        _.each(action, function (item, index) {
+          var is_break = false;
+
+          switch (_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getRequestParams().view_in) {
+            case 'all_media':
+              if (_.includes(['remove_favorite', 'delete', 'restore'], item.action)) {
+                is_break = true;
+              }
+
+              break;
+
+            case 'recent':
+              if (_.includes(['remove_favorite', 'delete', 'restore', 'make_copy'], item.action)) {
+                is_break = true;
+              }
+
+              break;
+
+            case 'favorites':
+              if (_.includes(['favorite', 'delete', 'restore', 'make_copy'], item.action)) {
+                is_break = true;
+              }
+
+              break;
+
+            case 'trash':
+              if (!_.includes(['preview', 'delete', 'restore', 'rename', 'download'], item.action)) {
+                is_break = true;
+              }
+
+              break;
+          }
+
+          if (!is_break) {
+            var template = ACTION_TEMPLATE.replace(/__action__/gi, item.action || '').replace(/__icon__/gi, item.icon || '').replace(/__name__/gi, RV_MEDIA_CONFIG.translations.actions_list[key][item.action] || item.name);
+
+            if (!index && initializedItem) {
+              template = '<li role="separator" class="divider"></li>' + template;
+            }
+
+            $dropdownActions.append(template);
+          }
+        });
+
+        if (action.length > 0) {
+          initializedItem++;
+        }
+      });
+    }
+  }]);
+
+  return ActionsService;
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js":
+/*!************************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js ***!
+  \************************************************************************************/
+/*! exports provided: ContextMenuService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContextMenuService", function() { return ContextMenuService; });
+/* harmony import */ var _ActionsService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActionsService */ "./platform/core/media/resources/assets/js/App/Services/ActionsService.js");
+/* harmony import */ var _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ContextMenuService =
+/*#__PURE__*/
+function () {
+  function ContextMenuService() {
+    _classCallCheck(this, ContextMenuService);
+  }
+
+  _createClass(ContextMenuService, null, [{
+    key: "initContext",
+    value: function initContext() {
+      if (jQuery().contextMenu) {
+        $.contextMenu({
+          selector: '.js-context-menu[data-context="file"]',
+          build: function build() {
+            return {
+              items: ContextMenuService._fileContextMenu()
+            };
+          }
+        });
+        $.contextMenu({
+          selector: '.js-context-menu[data-context="folder"]',
+          build: function build() {
+            return {
+              items: ContextMenuService._folderContextMenu()
+            };
+          }
+        });
+      }
+    }
+  }, {
+    key: "_fileContextMenu",
+    value: function _fileContextMenu() {
+      var items = {
+        preview: {
+          name: 'Preview',
+          icon: function icon(opt, $itemElement, itemKey, item) {
+            $itemElement.html('<i class="fa fa-eye" aria-hidden="true"></i> ' + item.name);
+            return 'context-menu-icon-updated';
+          },
+          callback: function callback() {
+            _ActionsService__WEBPACK_IMPORTED_MODULE_0__["ActionsService"].handlePreview();
+          }
+        }
+      };
+
+      _.each(_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getConfigs().actions_list, function (actionGroup, key) {
+        _.each(actionGroup, function (value) {
+          items[value.action] = {
+            name: value.name,
+            icon: function icon(opt, $itemElement, itemKey, item) {
+              $itemElement.html('<i class="' + value.icon + '" aria-hidden="true"></i> ' + (RV_MEDIA_CONFIG.translations.actions_list[key][value.action] || item.name));
+              return 'context-menu-icon-updated';
+            },
+            callback: function callback() {
+              $('.js-files-action[data-action="' + value.action + '"]').trigger('click');
+            }
+          };
+        });
+      });
+
+      var except = [];
+
+      switch (_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getRequestParams().view_in) {
+        case 'all_media':
+          except = ['remove_favorite', 'delete', 'restore'];
+          break;
+
+        case 'recent':
+          except = ['remove_favorite', 'delete', 'restore', 'make_copy'];
+          break;
+
+        case 'favorites':
+          except = ['favorite', 'delete', 'restore', 'make_copy'];
+          break;
+
+        case 'trash':
+          items = {
+            preview: items.preview,
+            rename: items.rename,
+            download: items.download,
+            "delete": items["delete"],
+            restore: items.restore
+          };
+          break;
+      }
+
+      _.each(except, function (value) {
+        items[value] = undefined;
+      });
+
+      var hasFolderSelected = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFolder().length > 0;
+
+      if (hasFolderSelected) {
+        items.preview = undefined;
+        items.copy_link = undefined;
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.create')) {
+          items.make_copy = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.edit')) {
+          items.rename = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.trash')) {
+          items.trash = undefined;
+          items.restore = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.destroy')) {
+          items["delete"] = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'folders.favorite')) {
+          items.favorite = undefined;
+          items.remove_favorite = undefined;
+        }
+      }
+
+      var selectedFiles = _Helpers_Helpers__WEBPACK_IMPORTED_MODULE_1__["Helpers"].getSelectedFiles();
+
+      if (selectedFiles.length > 0) {
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.create')) {
+          items.make_copy = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.edit')) {
+          items.rename = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.trash')) {
+          items.trash = undefined;
+          items.restore = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.destroy')) {
+          items["delete"] = undefined;
+        }
+
+        if (!_.includes(RV_MEDIA_CONFIG.permissions, 'files.favorite')) {
+          items.favorite = undefined;
+          items.remove_favorite = undefined;
+        }
+      }
+
+      var canPreview = false;
+
+      _.each(selectedFiles, function (value) {
+        if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+          canPreview = true;
+        }
+      });
+
+      if (!canPreview) {
+        items.preview = undefined;
+      }
+
+      return items;
+    }
+  }, {
+    key: "_folderContextMenu",
+    value: function _folderContextMenu() {
+      var items = ContextMenuService._fileContextMenu();
+
+      items.preview = undefined;
+      items.copy_link = undefined;
+      return items;
+    }
+  }, {
+    key: "destroyContext",
+    value: function destroyContext() {
+      if (jQuery().contextMenu) {
+        $.contextMenu('destroy');
+      }
+    }
+  }]);
+
+  return ContextMenuService;
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/App/Services/MessageService.js":
+/*!********************************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/App/Services/MessageService.js ***!
+  \********************************************************************************/
+/*! exports provided: MessageService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageService", function() { return MessageService; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var MessageService =
+/*#__PURE__*/
+function () {
+  function MessageService() {
+    _classCallCheck(this, MessageService);
+  }
+
+  _createClass(MessageService, null, [{
+    key: "showMessage",
+    value: function showMessage(type, message) {
+      toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        positionClass: 'toast-bottom-right',
+        onclick: null,
+        showDuration: 1000,
+        hideDuration: 1000,
+        timeOut: 10000,
+        extendedTimeOut: 1000,
+        showEasing: 'swing',
+        hideEasing: 'linear',
+        showMethod: 'fadeIn',
+        hideMethod: 'fadeOut'
+      };
+      var messageHeader = '';
+
+      switch (type) {
+        case 'error':
+          messageHeader = RV_MEDIA_CONFIG.translations.message.error_header;
+          break;
+
+        case 'success':
+          messageHeader = RV_MEDIA_CONFIG.translations.message.success_header;
+          break;
+      }
+
+      toastr[type](message, messageHeader);
+    }
+  }, {
+    key: "handleError",
+    value: function handleError(data) {
+      if (typeof data.responseJSON !== 'undefined' && !_.isArray(data.errors)) {
+        MessageService.handleValidationError(data.responseJSON.errors);
+      } else {
+        if (typeof data.responseJSON !== 'undefined') {
+          if (typeof data.responseJSON.errors !== 'undefined') {
+            if (data.status === 422) {
+              MessageService.handleValidationError(data.responseJSON.errors);
+            }
+          } else if (typeof data.responseJSON.message !== 'undefined') {
+            MessageService.showMessage('error', data.responseJSON.message);
+          } else {
+            $.each(data.responseJSON, function (index, el) {
+              $.each(el, function (key, item) {
+                MessageService.showMessage('error', item);
+              });
+            });
+          }
+        } else {
+          MessageService.showMessage('error', data.statusText);
+        }
+      }
+    }
+  }, {
+    key: "handleValidationError",
+    value: function handleValidationError(errors) {
+      var message = '';
+      $.each(errors, function (index, item) {
+        message += item + '<br />';
+        var $input = $('*[name="' + index + '"]');
+        $input.addClass('field-has-error');
+        var $input_array = $('*[name$="[' + index + ']"]');
+        $input_array.addClass('field-has-error');
+      });
+      MessageService.showMessage('error', message);
+    }
+  }]);
+
+  return MessageService;
+}();
+
+/***/ }),
+
+/***/ "./platform/core/media/resources/assets/js/integrate.js":
+/*!**************************************************************!*\
+  !*** ./platform/core/media/resources/assets/js/integrate.js ***!
+  \**************************************************************/
+/*! exports provided: EditorService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EditorService", function() { return EditorService; });
+/* harmony import */ var _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./App/Helpers/Helpers */ "./platform/core/media/resources/assets/js/App/Helpers/Helpers.js");
+/* harmony import */ var _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App/Config/MediaConfig */ "./platform/core/media/resources/assets/js/App/Config/MediaConfig.js");
+/* harmony import */ var _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App/Services/ContextMenuService */ "./platform/core/media/resources/assets/js/App/Services/ContextMenuService.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var EditorService =
+/*#__PURE__*/
+function () {
+  function EditorService() {
+    _classCallCheck(this, EditorService);
+  }
+
+  _createClass(EditorService, null, [{
+    key: "editorSelectFile",
+    value: function editorSelectFile(selectedFiles) {
+      var is_ckeditor = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].getUrlParam('CKEditor') || _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].getUrlParam('CKEditorFuncNum');
+
+      if (window.opener && is_ckeditor) {
+        var firstItem = _.first(selectedFiles);
+
+        window.opener.CKEDITOR.tools.callFunction(_App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].getUrlParam('CKEditorFuncNum'), firstItem.full_url);
+
+        if (window.opener) {
+          window.close();
+        }
+      } else {// No WYSIWYG editor found, use custom method.
+      }
+    }
+  }]);
+
+  return EditorService;
+}();
+
+var rvMedia = function rvMedia(selector, options) {
+  _classCallCheck(this, rvMedia);
+
+  window.rvMedia = window.rvMedia || {};
+  var $body = $('body');
+  var defaultOptions = {
+    multiple: true,
+    type: '*',
+    onSelectFiles: function onSelectFiles(files, $el) {}
+  };
+  options = $.extend(true, defaultOptions, options);
+
+  var clickCallback = function clickCallback(event) {
+    event.preventDefault();
+    var $current = $(event.currentTarget);
+    $('#rv_media_modal').modal();
+    window.rvMedia.options = options;
+    window.rvMedia.options.open_in = 'modal';
+    window.rvMedia.$el = $current;
+    _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__["MediaConfig"].request_params.filter = 'everything';
+    _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].storeConfig();
+    var elementOptions = window.rvMedia.$el.data('rv-media');
+
+    if (typeof elementOptions !== 'undefined' && elementOptions.length > 0) {
+      elementOptions = elementOptions[0];
+      window.rvMedia.options = $.extend(true, window.rvMedia.options, elementOptions || {});
+
+      if (typeof elementOptions.selected_file_id !== 'undefined') {
+        window.rvMedia.options.is_popup = true;
+      } else if (typeof window.rvMedia.options.is_popup !== 'undefined') {
+        window.rvMedia.options.is_popup = undefined;
+      }
+    }
+
+    if ($('#rv_media_body .rv-media-container').length === 0) {
+      $('#rv_media_body').load(RV_MEDIA_URL.popup, function (data) {
+        if (data.error) {
+          alert(data.message);
+        }
+
+        $('#rv_media_body').removeClass('media-modal-loading').closest('.modal-content').removeClass('bb-loading');
+        $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
+        _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__["ContextMenuService"].destroyContext();
+        _App_Services_ContextMenuService__WEBPACK_IMPORTED_MODULE_2__["ContextMenuService"].initContext();
+      });
+    } else {
+      $(document).find('.rv-media-container .js-change-action[data-type=refresh]').trigger('click');
+    }
+  };
+
+  if (typeof selector === 'string') {
+    $body.off('click', selector).on('click', selector, clickCallback);
+  } else {
+    selector.off('click').on('click', clickCallback);
+  }
+};
+
+window.RvMediaStandAlone = rvMedia;
+$('.js-insert-to-editor').off('click').on('click', function (event) {
+  event.preventDefault();
+  var selectedFiles = _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].getSelectedFiles();
+
+  if (_.size(selectedFiles) > 0) {
+    EditorService.editorSelectFile(selectedFiles);
+  }
+});
+
+$.fn.rvMedia = function (options) {
+  var $selector = $(this);
+  _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__["MediaConfig"].request_params.filter = 'everything';
+  $(document).find('.js-insert-to-editor').prop('disabled', _App_Config_MediaConfig__WEBPACK_IMPORTED_MODULE_1__["MediaConfig"].request_params.view_in === 'trash');
+  _App_Helpers_Helpers__WEBPACK_IMPORTED_MODULE_0__["Helpers"].storeConfig();
+  new rvMedia($selector, options);
+};
+
+/***/ }),
+
+/***/ 15:
+/*!********************************************************************!*\
+  !*** multi ./platform/core/media/resources/assets/js/integrate.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\media\resources\assets\js\integrate.js */"./platform/core/media/resources/assets/js/integrate.js");
+
+
+/***/ })
+
+/******/ });
