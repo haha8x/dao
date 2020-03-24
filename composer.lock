@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8a1fa40bbfc68d458d409d7aafe4cd7",
+    "content-hash": "3b1903a36b740ae80425af1230be7128",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -173,52 +173,6 @@
             "time": "2020-03-03T15:23:35+00:00"
         },
         {
-            "name": "botble/catalog",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./platform/packages/catalog",
-                "reference": "7443a3695cffe68accd01c9fbc5e9cb7d6f7ebd0"
-            },
-            "type": "package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Botble\\Catalog\\Providers\\CatalogServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Botble\\Catalog\\": "src"
-                }
-            },
-            "description": "Catalog management package"
-        },
-        {
-            "name": "botble/dao",
-            "version": "dev-master",
-            "dist": {
-                "type": "path",
-                "url": "./platform/packages/dao",
-                "reference": "9875668cc1d17ffc8ade2caa1769f5b97364ed91"
-            },
-            "type": "package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Botble\\Dao\\Providers\\DaoServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Botble\\Dao\\": "src"
-                }
-            },
-            "description": "DAO management package"
-        },
-        {
             "name": "botble/js-validation",
             "version": "dev-master",
             "dist": {
@@ -326,6 +280,29 @@
                 "issues": "https://github.com/botble/issues",
                 "document": "https://docs.botble.com/cms"
             }
+        },
+        {
+            "name": "botble/plugin-management",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./platform/packages/plugin-management",
+                "reference": "4a8268a9ae4519b501f076e45310394c912f441b"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Botble\\PluginManagement\\Providers\\PluginManagementServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Botble\\PluginManagement\\": "src"
+                }
+            },
+            "description": "Plugin management package for Botble CMS application"
         },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
@@ -1313,16 +1290,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v7.1.3",
+            "version": "v7.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "42b311862adfc36b8628ac62d226a3682f463439"
+                "reference": "de01e2926a7560c43fb763d86de134a52b46928b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/42b311862adfc36b8628ac62d226a3682f463439",
-                "reference": "42b311862adfc36b8628ac62d226a3682f463439",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/de01e2926a7560c43fb763d86de134a52b46928b",
+                "reference": "de01e2926a7560c43fb763d86de134a52b46928b",
                 "shasum": ""
             },
             "require": {
@@ -1460,7 +1437,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-03-14T14:33:32+00:00"
+            "time": "2020-03-20T18:11:43+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -1602,20 +1579,34 @@
                 "md",
                 "parser"
             ],
+            "funding": [
+                {
+                    "url": "https://github.com/colinodell",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/colinodell",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/league%2fcommonmark",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-28T18:53:50+00:00"
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.65",
+            "version": "1.0.66",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8"
+                "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
-                "reference": "8f17b3ba67097aafb8318cd5c553b1acf7c891c8",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/021569195e15f8209b1c4bebb78bd66aa4f08c21",
+                "reference": "021569195e15f8209b1c4bebb78bd66aa4f08c21",
                 "shasum": ""
             },
             "require": {
@@ -1686,7 +1677,13 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-03-08T18:53:20+00:00"
+            "funding": [
+                {
+                    "url": "https://offset.earth/frankdejonge",
+                    "type": "other"
+                }
+            ],
+            "time": "2020-03-17T18:58:12+00:00"
         },
         {
             "name": "maatwebsite/excel",
@@ -1752,6 +1749,16 @@
                 "laravel",
                 "php",
                 "phpspreadsheet"
+            ],
+            "funding": [
+                {
+                    "url": "https://laravel-excel.com/commercial-support",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/patrickbrouwers",
+                    "type": "github"
+                }
             ],
             "time": "2020-02-28T15:47:45+00:00"
         },
@@ -1921,16 +1928,16 @@
         },
         {
             "name": "mews/purifier",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mewebstudio/Purifier.git",
-                "reference": "261ac8abb0298e853af22ca4ef57bc2a5a723d22"
+                "reference": "c70be34e78848ab1771223a771ce7397ddab8c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mewebstudio/Purifier/zipball/261ac8abb0298e853af22ca4ef57bc2a5a723d22",
-                "reference": "261ac8abb0298e853af22ca4ef57bc2a5a723d22",
+                "url": "https://api.github.com/repos/mewebstudio/Purifier/zipball/c70be34e78848ab1771223a771ce7397ddab8c6e",
+                "reference": "c70be34e78848ab1771223a771ce7397ddab8c6e",
                 "shasum": ""
             },
             "require": {
@@ -1995,7 +2002,7 @@
                 "security",
                 "xss"
             ],
-            "time": "2020-03-06T00:05:13+00:00"
+            "time": "2020-03-21T08:50:37+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -2145,6 +2152,16 @@
                 "date",
                 "datetime",
                 "time"
+            ],
+            "funding": [
+                {
+                    "url": "https://opencollective.com/Carbon",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/nesbot/carbon",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-03-01T11:11:58+00:00"
         },
@@ -2426,20 +2443,20 @@
         },
         {
             "name": "phpoption/phpoption",
-            "version": "1.7.2",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-option.git",
-                "reference": "77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959"
+                "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
-                "reference": "77f7c4d2e65413aff5b5a8cc8b3caf7a28d81959",
+                "url": "https://api.github.com/repos/schmittjoh/php-option/zipball/4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
+                "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5.9 || ^7.0"
+                "php": "^5.5.9 || ^7.0 || ^8.0"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.3",
@@ -2477,7 +2494,7 @@
                 "php",
                 "type"
             ],
-            "time": "2019-12-15T19:35:24+00:00"
+            "time": "2020-03-21T18:07:53+00:00"
         },
         {
             "name": "psr/container",
@@ -3634,6 +3651,20 @@
             "keywords": [
                 "mime",
                 "mime-type"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-02-04T09:41:09+00:00"
         },
@@ -4814,6 +4845,16 @@
                 "jquery",
                 "laravel"
             ],
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/yajra",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/yajra",
+                    "type": "patreon"
+                }
+            ],
             "time": "2020-03-03T16:32:17+00:00"
         },
         {
@@ -4873,6 +4914,16 @@
                 "html",
                 "jquery",
                 "laravel"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/yajra",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/yajra",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-03-07T02:47:38+00:00"
         },
@@ -4944,6 +4995,16 @@
                 "datatables",
                 "jquery",
                 "laravel"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/yajra",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/yajra",
+                    "type": "patreon"
+                }
             ],
             "time": "2020-03-03T16:29:31+00:00"
         }
@@ -5143,14 +5204,14 @@
             "dist": {
                 "type": "path",
                 "url": "./platform/packages/dev-tool",
-                "reference": "d606964308ef1e01bbb38d7c1f302d7896d9d7e9"
+                "reference": "ec41bf0d8f31cfc23cc9eded4f5bf08b690c4c57"
             },
             "require": {
                 "barryvdh/laravel-debugbar": "^3.2",
                 "barryvdh/laravel-ide-helper": "^2.6",
                 "botble/git-commit-checker": "^1.0",
                 "doctrine/dbal": "^2.9",
-                "jakub-onderka/php-parallel-lint": "dev-master",
+                "php-parallel-lint/php-parallel-lint": "dev-master",
                 "phpmd/phpmd": "^2.8",
                 "squizlabs/php_codesniffer": "^3.3"
             },
@@ -5557,6 +5618,12 @@
                 "Xdebug",
                 "performance"
             ],
+            "funding": [
+                {
+                    "url": "https://packagist.com",
+                    "type": "custom"
+                }
+            ],
             "time": "2020-03-01T12:26:26+00:00"
         },
         {
@@ -5950,20 +6017,26 @@
                 "flare",
                 "reporting"
             ],
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/spatie",
+                    "type": "patreon"
+                }
+            ],
             "time": "2020-03-02T15:52:04+00:00"
         },
         {
             "name": "facade/ignition",
-            "version": "2.0.1",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "b8dbf7791c81619161270d580a64a30bad41b832"
+                "reference": "67f1677954ad33ca6b77f2c41cf43a58624f27fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/b8dbf7791c81619161270d580a64a30bad41b832",
-                "reference": "b8dbf7791c81619161270d580a64a30bad41b832",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/67f1677954ad33ca6b77f2c41cf43a58624f27fc",
+                "reference": "67f1677954ad33ca6b77f2c41cf43a58624f27fc",
                 "shasum": ""
             },
             "require": {
@@ -5985,7 +6058,7 @@
                 "orchestra/testbench": "5.0"
             },
             "suggest": {
-                "laravel/telescope": "^2.0"
+                "laravel/telescope": "^3.1"
             },
             "type": "library",
             "extra": {
@@ -6021,7 +6094,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2020-03-05T12:32:22+00:00"
+            "time": "2020-03-18T19:20:44+00:00"
         },
         {
             "name": "filp/whoops",
@@ -6271,56 +6344,6 @@
             "time": "2018-09-29T18:48:56+00:00"
         },
         {
-            "name": "jakub-onderka/php-parallel-lint",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JakubOnderka/PHP-Parallel-Lint.git",
-                "reference": "9df953cd03414e88dca163b4a3e8e9e972252513"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JakubOnderka/PHP-Parallel-Lint/zipball/9df953cd03414e88dca163b4a3e8e9e972252513",
-                "reference": "9df953cd03414e88dca163b4a3e8e9e972252513",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "jakub-onderka/php-console-highlighter": "~0.3",
-                "nette/tester": "~1.3",
-                "squizlabs/php_codesniffer": "~2.7"
-            },
-            "suggest": {
-                "jakub-onderka/php-console-highlighter": "Highlight syntax in code snippet"
-            },
-            "bin": [
-                "parallel-lint"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "./"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-2-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Jakub Onderka",
-                    "email": "ahoj@jakubonderka.cz"
-                }
-            ],
-            "description": "This tool check syntax of PHP files about 20x faster than serial check.",
-            "homepage": "https://github.com/JakubOnderka/PHP-Parallel-Lint",
-            "abandoned": "php-parallel-lint/php-parallel-lint",
-            "time": "2020-03-15T07:34:26+00:00"
-        },
-        {
             "name": "justinrainbow/json-schema",
             "version": "5.2.9",
             "source": {
@@ -6388,24 +6411,24 @@
         },
         {
             "name": "laravel/tinker",
-            "version": "v2.2.0",
+            "version": "v2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/tinker.git",
-                "reference": "37579c93271ec30ef099dd633ec7c2de5e5fb112"
+                "reference": "5271893ec90ad9f8d3e34792ac6b72cad3b84cc2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/tinker/zipball/37579c93271ec30ef099dd633ec7c2de5e5fb112",
-                "reference": "37579c93271ec30ef099dd633ec7c2de5e5fb112",
+                "url": "https://api.github.com/repos/laravel/tinker/zipball/5271893ec90ad9f8d3e34792ac6b72cad3b84cc2",
+                "reference": "5271893ec90ad9f8d3e34792ac6b72cad3b84cc2",
                 "shasum": ""
             },
             "require": {
-                "illuminate/console": "^6.0|^7.0",
-                "illuminate/contracts": "^6.0|^7.0",
-                "illuminate/support": "^6.0|^7.0",
+                "illuminate/console": "^6.0|^7.0|^8.0",
+                "illuminate/contracts": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
                 "php": "^7.2",
-                "psy/psysh": "^0.9",
+                "psy/psysh": "^0.9|^0.10",
                 "symfony/var-dumper": "^4.0|^5.0"
             },
             "require-dev": {
@@ -6413,7 +6436,7 @@
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "suggest": {
-                "illuminate/database": "The Illuminate Database package (^6.0|^7.0)."
+                "illuminate/database": "The Illuminate Database package (^6.0|^7.0|^8.0)."
             },
             "type": "library",
             "extra": {
@@ -6448,7 +6471,7 @@
                 "laravel",
                 "psysh"
             ],
-            "time": "2020-02-05T15:00:44+00:00"
+            "time": "2020-03-17T15:34:59+00:00"
         },
         {
             "name": "maximebf/debugbar",
@@ -6908,6 +6931,59 @@
             ],
             "description": "Library for handling version information and constraints",
             "time": "2018-07-08T19:19:57+00:00"
+        },
+        {
+            "name": "php-parallel-lint/php-parallel-lint",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-parallel-lint/PHP-Parallel-Lint.git",
+                "reference": "0ad7bb924169001475c7bb6244f712b1ec3ad06e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-parallel-lint/PHP-Parallel-Lint/zipball/0ad7bb924169001475c7bb6244f712b1ec3ad06e",
+                "reference": "0ad7bb924169001475c7bb6244f712b1ec3ad06e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "grogy/php-parallel-lint": "*",
+                "jakub-onderka/php-parallel-lint": "*"
+            },
+            "require-dev": {
+                "nette/tester": "^1.3 || ^2.0",
+                "php-parallel-lint/php-console-highlighter": "~0.3",
+                "squizlabs/php_codesniffer": "~3.0"
+            },
+            "suggest": {
+                "php-parallel-lint/php-console-highlighter": "Highlight syntax in code snippet"
+            },
+            "bin": [
+                "parallel-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "./"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Jakub Onderka",
+                    "email": "ahoj@jakubonderka.cz"
+                }
+            ],
+            "description": "This tool check syntax of PHP files about 20x faster than serial check.",
+            "homepage": "https://github.com/php-parallel-lint/PHP-Parallel-Lint",
+            "time": "2020-03-19T22:40:24+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -7530,32 +7606,31 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.9.12",
+            "version": "v0.10.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "90da7f37568aee36b116a030c5f99c915267edd4"
+                "reference": "573c2362c3cdebe846b4adae4b630eecb350afd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/90da7f37568aee36b116a030c5f99c915267edd4",
-                "reference": "90da7f37568aee36b116a030c5f99c915267edd4",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/573c2362c3cdebe846b4adae4b630eecb350afd8",
+                "reference": "573c2362c3cdebe846b4adae4b630eecb350afd8",
                 "shasum": ""
             },
             "require": {
                 "dnoegel/php-xdg-base-dir": "0.1.*",
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "jakub-onderka/php-console-highlighter": "0.3.*|0.4.*",
-                "nikic/php-parser": "~1.3|~2.0|~3.0|~4.0",
-                "php": ">=5.4.0",
-                "symfony/console": "~2.3.10|^2.4.2|~3.0|~4.0|~5.0",
-                "symfony/var-dumper": "~2.7|~3.0|~4.0|~5.0"
+                "jakub-onderka/php-console-highlighter": "0.4.*|0.3.*",
+                "nikic/php-parser": "~4.0|~3.0|~2.0|~1.3",
+                "php": "^8.0 || ^7.0 || ^5.5.9",
+                "symfony/console": "~5.0|~4.0|~3.0|^2.4.2|~2.3.10",
+                "symfony/var-dumper": "~5.0|~4.0|~3.0|~2.7"
             },
             "require-dev": {
                 "bamarni/composer-bin-plugin": "^1.2",
-                "hoa/console": "~2.15|~3.16",
-                "phpunit/phpunit": "~4.8.35|~5.0|~6.0|~7.0"
+                "hoa/console": "~3.16|~2.15"
             },
             "suggest": {
                 "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
@@ -7570,7 +7645,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-develop": "0.9.x-dev"
+                    "dev-master": "0.10.x-dev"
                 }
             },
             "autoload": {
@@ -7600,7 +7675,7 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2019-12-06T14:19:43+00:00"
+            "time": "2020-03-21T06:55:27+00:00"
         },
         {
             "name": "scrivo/highlight.php",
@@ -7668,6 +7743,12 @@
                 "highlight.js",
                 "highlight.php",
                 "syntax"
+            ],
+            "funding": [
+                {
+                    "url": "https://github.com/allejo",
+                    "type": "github"
+                }
             ],
             "time": "2020-03-02T05:59:21+00:00"
         },
@@ -8492,6 +8573,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-04T09:41:09+00:00"
         },
         {
@@ -8621,6 +8716,20 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-24T15:05:31+00:00"
         },
         {
@@ -8765,8 +8874,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "botble/catalog": 20,
-        "botble/dao": 20,
+        "botble/plugin-management": 20,
         "botble/js-validation": 20,
         "botble/platform": 20,
         "botble/dev-tool": 20,

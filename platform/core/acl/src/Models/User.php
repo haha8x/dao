@@ -14,11 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Storage;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
     use PermissionTrait;
     use Notifiable;
+    use Impersonate;
 
     /**
      * {@inheritDoc}

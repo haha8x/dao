@@ -1,0 +1,9 @@
+{
+    "name": "EnhancedUser",
+    "namespace": "Botble\\EnhancedUser\\",
+    "provider": "Botble\\EnhancedUser\\Providers\\EnhancedUserServiceProvider",
+    "author": "Sang Nguyen",
+    "url": "https://sangnguyen.info",
+    "version": "1.0",
+    "description": "The description for module enhanced_user"
+}

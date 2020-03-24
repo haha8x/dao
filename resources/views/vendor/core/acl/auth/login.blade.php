@@ -10,8 +10,9 @@
 
 <div class="form-group" id="passwordGroup">
     <label>{{ trans('core/acl::auth.login.password') }}</label>
-    {!! Form::input('password', 'password', (app()->environment('demo') ? '159357' : null), ['class' => 'form-control',
+    {!! Form::input('password', 'password', (app()->environment('demo') ? '159357' : null), ['class' => 'password-field form-control',
     'placeholder' => trans('core/acl::auth.login.password')]) !!}
+    <span toggle=".password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
 </div>
 
 <div>

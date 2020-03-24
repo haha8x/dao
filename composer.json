@@ -9,14 +9,12 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
-        "botble/catalog": "*@dev",
-        "botble/dao": "*@dev",
+        "botble/plugin-management": "*@dev",
         "botble/js-validation": "*@dev",
         "botble/platform": "*@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "lab404/laravel-impersonate": "^1.6",
         "laravel/framework": "^7.0",
         "wikimedia/composer-merge-plugin": "^1.4"
     },

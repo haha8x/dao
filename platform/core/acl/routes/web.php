@@ -74,6 +74,18 @@ Route::group(['namespace' => 'Botble\ACL\Http\Controllers', 'middleware' => 'web
                     'permission' => false,
                 ]);
 
+                Route::get('/impersonate/{id}', [
+                    'as' => 'users.impersonate',
+                    'uses' => 'UserController@getImpersonate',
+                    'permission' => 'superuser',
+                ]);
+    
+                Route::get('/leave-impersonation', [
+                    'as' => 'users.leave_impersonation',
+                    'uses' => 'UserController@leaveImpersonation',
+                    'permission' => false,
+                ]);
+
                 Route::get('make-super/{id}', [
                     'as'         => 'users.make-super',
                     'uses'       => 'UserController@makeSuper',

@@ -8,7 +8,8 @@
 
         <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}" id="passwordGroup">
             <label>{{ trans('core/acl::auth.reset.new_password') }}</label>
-            {!! Form::password('password', ['class' => 'form-control', 'placeholder' => trans('core/acl::auth.reset.new_password')]) !!}
+            {!! Form::password('password', ['class' => 'form-control password-field', 'placeholder' => trans('core/acl::auth.reset.new_password')]) !!}
+            <span toggle=".password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
         </div>
 
         <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}" id="passwordConfirmationGroup">

@@ -16,12 +16,12 @@ return [
         'flag'        => 'plugins.remove',
         'parent_flag' => 'plugins.index',
     ],
-    [
-        'name' => 'System',
-        'flag' => 'core.system',
-    ],
-    [
-        'name' => 'Appearance',
-        'flag' => 'core.appearance',
-    ],
+    // [
+    //     'name' => 'System',
+    //     'flag' => 'core.system',
+    // ],
+    // [
+    //     'name' => 'Appearance',
+    //     'flag' => 'core.appearance',
+    // ],
 ];

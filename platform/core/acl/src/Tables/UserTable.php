@@ -104,22 +104,41 @@ class UserTable extends TableAbstract
             })
             ->removeColumn('role_id');
 
+        if (Auth::user()->isSuperUser()) {
+            $data = $data->editColumn('impersonation', function ($item) {
+                if (Auth::user()->id !== $item->id) {
+                    return Html::link(route('users.impersonate', $item->id), __('Đăng nhập'), ['class' => 'btn btn-warning'])->toHtml();
+                }
+
+                return Html::tag('button', __('Đăng nhập'), ['class' => 'btn btn-warning', 'disabled' => true])->toHtml();
+            });
+        }
+
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
 
                 $action = null;
                 if (Auth::user()->isSuperUser()) {
-                    $action = Html::link(route('users.make-super', $item->id), trans('core/acl::users.make_super'),
-                        ['class' => 'btn btn-info'])->toHtml();
+                    $action = Html::link(
+                        route('users.make-super', $item->id),
+                        trans('core/acl::users.make_super'),
+                        ['class' => 'btn btn-info']
+                    )->toHtml();
 
                     if ($item->super_user) {
-                        $action = Html::link(route('users.remove-super', $item->id), trans('core/acl::users.remove_super'),
-                            ['class' => 'btn btn-danger'])->toHtml();
+                        $action = Html::link(
+                            route('users.remove-super', $item->id),
+                            trans('core/acl::users.remove_super'),
+                            ['class' => 'btn btn-danger']
+                        )->toHtml();
                     }
                 }
 
-                return apply_filters(ACL_FILTER_USER_TABLE_ACTIONS,
-                    $action . view('core/acl::users.partials.actions', ['item' => $item])->render(), $item);
+                return apply_filters(
+                    ACL_FILTER_USER_TABLE_ACTIONS,
+                    $action . view('core/acl::users.partials.actions', ['item' => $item])->render(),
+                    $item
+                );
             })
             ->escapeColumns([])
             ->make(true);
@@ -158,7 +177,7 @@ class UserTable extends TableAbstract
      */
     public function columns()
     {
-        return [
+        $columns = [
             'username'   => [
                 'name'  => 'users.username',
                 'title' => trans('core/acl::users.username'),
@@ -177,19 +196,25 @@ class UserTable extends TableAbstract
             'created_at' => [
                 'name'  => 'users.created_at',
                 'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
             ],
             'status'     => [
                 'name'  => 'users.updated_at',
                 'title' => trans('core/base::tables.status'),
-                'width' => '100px',
             ],
             'super_user' => [
                 'name'  => 'users.super_user',
                 'title' => trans('core/acl::users.is_super'),
-                'width' => '100px',
             ],
         ];
+
+        if (Auth::user()->isSuperUser()) {
+            $columns['impersonation'] = [
+                'name' => 'users.updated_at',
+                'title' => __('Đăng nhập'),
+            ];
+        }
+
+        return $columns;
     }
 
     /**

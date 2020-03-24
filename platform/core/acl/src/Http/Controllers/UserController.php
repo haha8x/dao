@@ -451,4 +451,26 @@ class UserController extends BaseController
             ->setNextUrl(route('users.index'))
             ->setMessage(trans('core/base::system.supper_revoked'));
     }
+
+        /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @author Sang Nguyen
+     */
+    public function getImpersonate($id)
+    {
+        $user = $this->userRepository->findOrFail($id);
+        Auth::user()->impersonate($user);
+        return redirect()->route('dashboard.index');
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * @author Sang Nguyen
+     */
+    public function leaveImpersonation()
+    {
+        Auth::user()->leaveImpersonation();
+        return redirect()->route('dashboard.index');
+    }
 }
