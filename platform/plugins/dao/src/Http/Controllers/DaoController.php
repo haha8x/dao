@@ -159,15 +159,4 @@ class DaoController extends BaseController
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
     }
-
-        /**
-     * @return string
-     * @throws \Throwable
-     */
-    public function info($id)
-    {
-        $dao = $this->daoRepository->findOrFail($id);
-
-        return view('plugins/dao::index.info', compact('dao'))->render();
-    }
 }

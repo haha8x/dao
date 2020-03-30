@@ -1,12 +1,10 @@
-// let mix = require('laravel-mix');
+let mix = require('laravel-mix');
 
-// mix.options({
-//     processCssUrls: false
-// });
+const publicPath = 'public/vendor/core/plugins/dao';
+const resourcePath = './platform/plugins/dao';
 
-// const resourcePath = 'platform/plugins/dao';
-// const publicPath = 'public/vendor/plugins/dao';
-
-// mix
-//     .js(resourcePath + '/resources/assets/js/validate.js', publicPath + '/js')
-//     .copy(publicPath + '/js/validate.js', resourcePath + '/public/js');
+mix
+    .js(resourcePath + '/resources/assets/js/dao.js', publicPath + '/js')
+    .copy(publicPath + '/js/dao.js', resourcePath + '/public/js')
+    .sass(resourcePath + '/resources/assets/sass/dao.scss', publicPath + '/css')
+    .copy(publicPath + '/css/dao.css', resourcePath + '/public/css');

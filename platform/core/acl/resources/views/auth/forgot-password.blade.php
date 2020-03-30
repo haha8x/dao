@@ -1,7 +1,6 @@
 @extends('core/acl::auth.master')
 
 @section('content')
-    <p>{{ trans('core/acl::auth.forgot_password.title') }}:</p>
     {!! Form::open(['route' => 'access.password.email', 'class' => 'login-form']) !!}
         <p>{!! trans('core/acl::auth.forgot_password.message') !!}</p>
     <br>

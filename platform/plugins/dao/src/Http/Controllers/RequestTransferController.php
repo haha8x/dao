@@ -3,7 +3,7 @@
 namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
-use Botble\Dao\Http\Requests\DaoRequestTransferRequest;
+use Botble\Dao\Http\Requests\RequestTransferRequest;
 use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -13,8 +13,9 @@ use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Dao\Forms\DaoRequestTransferForm;
+use Botble\Dao\Forms\RequestTransferForm;
 use Botble\Base\Forms\FormBuilder;
+use Auth;
 
 class RequestTransferController extends BaseController
 {
@@ -53,18 +54,23 @@ class RequestTransferController extends BaseController
     {
         page_title()->setTitle(trans('plugins/dao::request-transfer.create'));
 
-        return $formBuilder->create(DaoRequestTransferForm::class)->renderForm();
+        return $formBuilder->create(RequestTransferForm::class)->renderForm();
     }
 
     /**
-     * Insert new DaoRequestTransfer into database
+     * Insert new RequestTransfer into database
      *
-     * @param DaoRequestTransferRequest $request
+     * @param RequestTransferRequest $request
      * @return BaseHttpResponse
      */
-    public function store(DaoRequestTransferRequest $request, BaseHttpResponse $response)
+    public function store(RequestTransferRequest $request, BaseHttpResponse $response)
     {
         $daoRequestTransfer = $this->daoRequestTransferRepository->createOrUpdate($request->input());
+
+        $request->merge([
+            'status' => 'create',
+            'created_by' => Auth::id(),
+        ]);
 
         event(new CreatedContentEvent(DAO_REQUEST_TRANSFER_MODULE_SCREEN_NAME, $request, $daoRequestTransfer));
 
@@ -88,9 +94,9 @@ class RequestTransferController extends BaseController
 
         event(new BeforeEditContentEvent($request, $daoRequestTransfer));
 
-        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $daoRequestTransfer->name . '"');
+        page_title()->setTitle(trans('plugins/dao::request-transfer.edit') . ' "' . $daoRequestTransfer->id . '"');
 
-        return $formBuilder->create(DaoForm::class, ['model' => $daoRequestTransfer])->renderForm();
+        return $formBuilder->create(RequestTransferForm::class, ['model' => $daoRequestTransfer])->renderForm();
     }
 
     /**
@@ -98,9 +104,13 @@ class RequestTransferController extends BaseController
      * @param DaoRequest $request
      * @return BaseHttpResponse
      */
-    public function update($id, DaoRequest $request, BaseHttpResponse $response)
+    public function update($id, RequestTransferRequest $request, BaseHttpResponse $response)
     {
         $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
+
+        $request->merge([
+            'updated_by' => Auth::id(),
+        ]);
 
         $daoRequestTransfer->fill($request->input());
 
@@ -109,7 +119,7 @@ class RequestTransferController extends BaseController
         event(new UpdatedContentEvent(DAO_REQUEST_TRANSFER_MODULE_SCREEN_NAME, $request, $daoRequestTransfer));
 
         return $response
-            ->setPreviousUrl(route('dao.index'))
+            ->setPreviousUrl(route('request-transfer.index'))
             ->setMessage(trans('core/base::notices.update_success_message'));
     }
 
@@ -165,9 +175,9 @@ class RequestTransferController extends BaseController
      */
     public function info($id)
     {
-        $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
+        $item = $this->daoRequestTransferRepository->findOrFail($id);
 
-        return view('plugins/dao::request.transfer.info', compact('daoRequestTransfer'))->render();
+        return view('plugins/dao::request.transfer.info', compact('item'))->render();
     }
 
     /**
@@ -285,7 +295,7 @@ class RequestTransferController extends BaseController
         }
     }
 
-    public function success($id, DaoRequestTransferRequest $request, BaseHttpResponse $response)
+    public function success($id, RequestTransferRequest $request, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
@@ -294,7 +304,7 @@ class RequestTransferController extends BaseController
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
-                ->setNextUrl(route('dao.index'))
+                ->setNextUrl(route('request-transfer.index'))
                 ->setMessage(trans('core/base::notices.update_success_message'));
         } catch (Exception $exception) {
             return $response

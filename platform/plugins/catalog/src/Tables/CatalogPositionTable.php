@@ -3,7 +3,6 @@
 namespace Botble\Catalog\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -21,7 +20,7 @@ class CatalogPositionTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $hasFilter = true;
+    protected $hasFilter = false;
 
     /**
      * CatalogPositionTable constructor.
@@ -116,28 +115,5 @@ class CatalogPositionTable extends TableAbstract
         $buttons = $this->addCreateButton(route('catalog-position.create'), 'catalog-position.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, CatalogPosition::class);
-    }
-
-    /**
-     * @return array
-     * @throws \Throwable
-     */
-    public function bulkActions(): array
-    {
-        return $this->addDeleteAction(route('catalog-position.deletes'), 'catalog-position.destroy', parent::bulkActions());
-    }
-
-    /**
-     * @return array
-     */
-    public function getBulkChanges(): array
-    {
-        return [
-            'catalog_positions.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
-        ];
     }
 }

@@ -56,10 +56,11 @@ class UserCreateCommand extends Command
 
         try {
             $user = $this->userRepository->getModel();
-            $user->first_name = $this->askWithValidate('Enter first name', 'required|min:2|max:60');
-            $user->last_name = $this->askWithValidate('Enter last name', 'required|min:2|max:60');
+            $user->name = $this->askWithValidate('Enter name', 'required|min:2|max:60');
+            // $user->first_name = $this->askWithValidate('Enter first name', 'required|min:2|max:60');
+            // $user->last_name = $this->askWithValidate('Enter last name', 'required|min:2|max:60');
             $user->email = $this->askWithValidate('Enter email address', 'required|email|unique:users,email');
-            $user->username = $this->askWithValidate('Enter username', 'required|min:4|max:60|unique:users,username');
+            // $user->username = $this->askWithValidate('Enter username', 'required|min:4|max:60|unique:users,username');
             $user->password = bcrypt($this->askWithValidate('Enter password', 'required|min:6|max:60', true));
             $user->super_user = 1;
             $user->manage_supers = 1;

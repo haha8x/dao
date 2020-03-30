@@ -3,8 +3,10 @@
 namespace Botble\Dao\Models;
 
 use Botble\Base\Traits\EnumCastable;
-use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Models\BaseModel;
+use Botble\Catalog\Models\CatalogBranch;
+use Botble\Catalog\Models\CatalogPosition;
+use Botble\Catalog\Models\CatalogZone;
 
 class Customer extends BaseModel
 {
@@ -21,14 +23,37 @@ class Customer extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'name',
-        'status',
+        'acct_no',
+        'cif',
+        'customer_name',
+        'product_name',
+        'branch_id',
+        'dao',
+        'open_date',
+        'staff_id',
     ];
 
     /**
-     * @var array
+     * @return BelongsTo
      */
-    protected $casts = [
-        'status' => BaseStatusEnum::class,
-    ];
+    public function zone()
+    {
+        return $this->belongsTo(CatalogZone::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function branch()
+    {
+        return $this->belongsTo(CatalogBranch::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function position()
+    {
+        return $this->belongsTo(CatalogPosition::class);
+    }
 }

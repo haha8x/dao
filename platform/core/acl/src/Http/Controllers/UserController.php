@@ -200,7 +200,7 @@ class UserController extends BaseController
 
         $user = $this->userRepository->findOrFail($id);
 
-        page_title()->setTitle(trans(':name', ['name' => $user->getFullName()]));
+        page_title()->setTitle(trans(':name', ['name' => $user->name]));
 
         $form = $formBuilder
             ->create(ProfileForm::class, ['model' => $user])
@@ -254,18 +254,18 @@ class UserController extends BaseController
                 }
             }
 
-            if ($user->username !== $request->input('username')) {
-                $users = $this->userRepository->getModel()
-                    ->where('username', $request->input('username'))
-                    ->where('id', '<>', $user->id)
-                    ->count();
-                if ($users) {
-                    return $response
-                        ->setError()
-                        ->setMessage(trans('core/acl::users.username_exist'))
-                        ->withInput();
-                }
-            }
+            // if ($user->username !== $request->input('username')) {
+            //     $users = $this->userRepository->getModel()
+            //         ->where('username', $request->input('username'))
+            //         ->where('id', '<>', $user->id)
+            //         ->count();
+            //     if ($users) {
+            //         return $response
+            //             ->setError()
+            //             ->setMessage(trans('core/acl::users.username_exist'))
+            //             ->withInput();
+            //     }
+            // }
         }
 
         $user->fill($request->input());

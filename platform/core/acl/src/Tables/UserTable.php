@@ -75,12 +75,12 @@ class UserTable extends TableAbstract
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
-            ->editColumn('username', function ($item) {
+            ->editColumn('email', function ($item) {
                 if (!Auth::user()->hasPermission('users.edit')) {
-                    return $item->username;
+                    return $item->email;
                 }
 
-                return anchor_link(route('user.profile.view', $item->id), $item->username);
+                return anchor_link(route('user.profile.view', $item->id), $item->email);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
@@ -158,7 +158,7 @@ class UserTable extends TableAbstract
             ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id')
             ->select([
                 'users.id',
-                'users.username',
+                // 'users.username',
                 'users.email',
                 'roles.name as role_name',
                 'roles.id as role_id',
@@ -178,11 +178,11 @@ class UserTable extends TableAbstract
     public function columns()
     {
         $columns = [
-            'username'   => [
-                'name'  => 'users.username',
-                'title' => trans('core/acl::users.username'),
-                'class' => 'text-left',
-            ],
+            // 'username'   => [
+            //     'name'  => 'users.username',
+            //     'title' => trans('core/acl::users.username'),
+            //     'class' => 'text-left',
+            // ],
             'email'      => [
                 'name'  => 'users.email',
                 'title' => trans('core/acl::users.email'),
@@ -263,11 +263,11 @@ class UserTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'users.username'   => [
-                'title'    => trans('core/acl::users.username'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
+            // 'users.username'   => [
+            //     'title'    => trans('core/acl::users.username'),
+            //     'type'     => 'text',
+            //     'validate' => 'required|max:120',
+            // ],
             'users.email'      => [
                 'title'    => trans('core/base::tables.email'),
                 'type'     => 'text',

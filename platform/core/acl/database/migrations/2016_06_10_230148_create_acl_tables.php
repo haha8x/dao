@@ -19,9 +19,9 @@ class CreateAclTables extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('username', 60)->unique()->nullable();
+            $table->string('name')->nullable();
+            // $table->string('last_name')->nullable();
+            // $table->string('username', 60)->unique()->nullable();
             $table->dateTime('dob')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('secondary_address', 255)->nullable();

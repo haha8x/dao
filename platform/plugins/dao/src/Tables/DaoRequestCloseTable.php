@@ -7,9 +7,11 @@ use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
-use Botble\Dao\Models\DaoRequestClose;
+use Botble\Dao\Models\RequestClose;
 use Botble\Dao\Enums\RequestStatusEnum;
-use Html;
+use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 
 class DaoRequestCloseTable extends TableAbstract
 {
@@ -24,15 +26,28 @@ class DaoRequestCloseTable extends TableAbstract
      */
     protected $hasFilter = true;
 
+    protected $catalogPositionRepository;
+    protected $catalogBranchRepository;
+    protected $catalogZoneRepository;
+
     /**
      * DaoRequestCloseTable constructor.
      * @param DataTables $table
      * @param UrlGenerator $urlDevTool
      * @param DaoRequestCloseInterface $DaoRequestCloseRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoRequestCloseInterface $DaoRequestCloseRepository)
-    {
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlDevTool,
+        DaoRequestCloseInterface $DaoRequestCloseRepository,
+        CatalogPositionInterface $catalogPositionRepository,
+        CatalogBranchInterface $catalogBranchRepository,
+        CatalogZoneInterface $catalogZoneRepository
+    ) {
         $this->repository = $DaoRequestCloseRepository;
+        $this->catalogPositionRepository = $catalogPositionRepository;
+        $this->catalogBranchRepository = $catalogBranchRepository;
+        $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-request-close');
         parent::__construct($table, $urlDevTool);
 
@@ -56,24 +71,30 @@ class DaoRequestCloseTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return ('Vùng ' . $item->zone_id);
+                return $item->zone? $item->zone->name : null;
+            })
+            ->editColumn('branch_id', function ($item) {
+                return $item->branch? $item->branch->name: null;
+            })
+            ->editColumn('branch_code', function ($item) {
+                return $item->branch? $item->branch->code : null;
             })
             ->editColumn('id', function ($item) {
                 return ('DAO' . $item->id);
-            })
-            ->editColumn('dao_id', function ($item) {
-                return $item->dao->dao;
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
+                return $item->status? $item->status->toHtml(): null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
-            ->addColumn('operations', function ($item) {
+            ->addColumn('action', function ($item) {
                 return view('plugins/dao::request.close.actions', compact('item'))->render();
+            })
+            ->addColumn('operations', function ($item) {
+                return table_actions('request-close.edit', 'request-close.destroy', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -89,14 +110,21 @@ class DaoRequestCloseTable extends TableAbstract
     {
         $model = $this->repository->getModel();
         $query = $model->select([
-            'dao_request_closes.id',
-            'dao_request_closes.dao_id',
-            'dao_request_closes.status',
-            'dao_request_closes.note',
-            'dao_request_closes.created_at',
+            'request_closes.id',
+            'request_closes.dao',
+            'request_closes.zone_id',
+            'request_closes.branch_id',
+            'request_closes.staff_id',
+            'request_closes.staff_name',
+            'request_closes.position_id',
+            'request_closes.cif',
+            'request_closes.email',
+            'request_closes.cmnd',
+            'request_closes.status',
+            'request_closes.created_at',
         ]);
 
-        if (!Auth::user()->isSuperUser()) {
+        if (!Auth::user()->isSuperUser() || !Auth::user()->hasPermission('request-close.all')) {
             $query = $model->where('created_by', Auth::id());
         }
 
@@ -110,30 +138,54 @@ class DaoRequestCloseTable extends TableAbstract
     public function columns()
     {
         return [
+            'zone_id' => [
+                'name'  => 'request_closes.zone_id',
+                'title' => __('Vùng'),
+                'class' => 'text-left',
+            ],
+            'branch_id' => [
+                'name'  => 'request_closes.branch_id',
+                'title' => __('Tên chi nhánh'),
+                'class' => 'text-left',
+            ],
+            'branch_code' => [
+                'name'  => 'request_closes.branch_code',
+                'title' => __('Mã chi nhánh'),
+                'class' => 'text-left',
+            ],
             'id' => [
-                'name'  => 'dao_request_closes.id',
+                'name'  => 'request_closes.id',
                 'title' => __('Mã YC'),
                 'class' => 'text-left',
             ],
-            'dao_id' => [
-                'name'  => 'dao_request_closes.dao',
+            'staff_name' => [
+                'name'  => 'request_closes.staff_name',
+                'title' => __('Tên nhân viên'),
+                'class' => 'text-left',
+            ],
+            'dao' => [
+                'name'  => 'request_closes.dao',
                 'title' => __('DAO cần đóng'),
                 'class' => 'text-left',
             ],
-            'status' => [
-                'name'  => 'dao_request_closes.status',
-                'title' => __('Trạng thái xử lý'),
+            'email' => [
+                'name'  => 'request_closes.email',
+                'title' => __('Email'),
                 'class' => 'text-left',
             ],
-            'note' => [
-                'name'  => 'dao_request_closes.note',
-                'title' => __('Note'),
+            'status' => [
+                'name'  => 'request_closes.status',
+                'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name'  => 'dao_request_closes.created_at',
+                'name'  => 'request_closes.created_at',
                 'title' => trans('core/base::tables.created_at'),
                 'width' => '100px',
+            ],
+            'action' => [
+                'name'  => 'request_closes.action',
+                'title' => __('Xem'),
             ],
         ];
     }
@@ -147,7 +199,7 @@ class DaoRequestCloseTable extends TableAbstract
     {
         $buttons = $this->addCreateButton(route('request-close.create'), 'request-close.create');
 
-        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, DaoRequestClose::class);
+        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, RequestClose::class);
     }
 
     /**
@@ -156,12 +208,38 @@ class DaoRequestCloseTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'dao_request_closes.status' => [
+            'request_closes.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => RequestStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getOperationsHeading()
+    {
+        return [
+            'operations' => [
+                'title'      => trans('core/base::tables.operations'),
+                // 'width'      => '350px',
+                'class'      => 'text-center',
+                'orderable'  => false,
+                'searchable' => false,
+                'exportable' => false,
+                'printable'  => false,
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultButtons(): array
+    {
+        return ['excel'];
     }
 }

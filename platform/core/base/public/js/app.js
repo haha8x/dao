@@ -36997,6 +36997,17 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./platform/core/acl/resources/assets/sass/login.scss":
+/*!************************************************************!*\
+  !*** ./platform/core/acl/resources/assets/sass/login.scss ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./platform/core/base/resources/assets/js/app.js":
 /*!*******************************************************!*\
   !*** ./platform/core/base/resources/assets/js/app.js ***!
@@ -37209,10 +37220,10 @@ if (token) {
 
 /***/ }),
 
-/***/ "./platform/plugins/enhanced-user/resources/assets/sass/enhanced-user.scss":
-/*!*********************************************************************************!*\
-  !*** ./platform/plugins/enhanced-user/resources/assets/sass/enhanced-user.scss ***!
-  \*********************************************************************************/
+/***/ "./platform/plugins/dao/resources/assets/sass/dao.scss":
+/*!*************************************************************!*\
+  !*** ./platform/plugins/dao/resources/assets/sass/dao.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -37221,9 +37232,9 @@ if (token) {
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./platform/core/base/resources/assets/js/app.js ./platform/core/base/resources/assets/sass/base/themes/black.scss ./platform/core/base/resources/assets/sass/base/themes/blue.scss ./platform/core/base/resources/assets/sass/base/themes/darkblue.scss ./platform/core/base/resources/assets/sass/base/themes/default.scss ./platform/core/base/resources/assets/sass/base/themes/green.scss ./platform/core/base/resources/assets/sass/base/themes/grey.scss ./platform/core/base/resources/assets/sass/base/themes/light.scss ./platform/core/base/resources/assets/sass/core.scss ./platform/core/base/resources/assets/sass/custom/system-info.scss ./platform/core/base/resources/assets/sass/custom/email.scss ./platform/core/setting/resources/assets/sass/setting.scss ./platform/core/table/resources/assets/sass/table.scss ./platform/core/media/resources/assets/sass/media.scss ./platform/packages/plugin-management/resources/assets/sass/plugin.scss ./platform/plugins/enhanced-user/resources/assets/sass/enhanced-user.scss ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./platform/core/base/resources/assets/js/app.js ./platform/core/base/resources/assets/sass/base/themes/black.scss ./platform/core/base/resources/assets/sass/base/themes/blue.scss ./platform/core/base/resources/assets/sass/base/themes/darkblue.scss ./platform/core/base/resources/assets/sass/base/themes/default.scss ./platform/core/base/resources/assets/sass/base/themes/green.scss ./platform/core/base/resources/assets/sass/base/themes/grey.scss ./platform/core/base/resources/assets/sass/base/themes/light.scss ./platform/core/base/resources/assets/sass/core.scss ./platform/core/base/resources/assets/sass/custom/system-info.scss ./platform/core/base/resources/assets/sass/custom/email.scss ./platform/core/setting/resources/assets/sass/setting.scss ./platform/core/table/resources/assets/sass/table.scss ./platform/core/acl/resources/assets/sass/login.scss ./platform/core/media/resources/assets/sass/media.scss ./platform/packages/plugin-management/resources/assets/sass/plugin.scss ./platform/plugins/dao/resources/assets/sass/dao.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37240,9 +37251,10 @@ __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\
 __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\custom\email.scss */"./platform/core/base/resources/assets/sass/custom/email.scss");
 __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\setting\resources\assets\sass\setting.scss */"./platform/core/setting/resources/assets/sass/setting.scss");
 __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\table\resources\assets\sass\table.scss */"./platform/core/table/resources/assets/sass/table.scss");
+__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\acl\resources\assets\sass\login.scss */"./platform/core/acl/resources/assets/sass/login.scss");
 __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\media\resources\assets\sass\media.scss */"./platform/core/media/resources/assets/sass/media.scss");
 __webpack_require__(/*! D:\xampp\htdocs\dao\platform\packages\plugin-management\resources\assets\sass\plugin.scss */"./platform/packages/plugin-management/resources/assets/sass/plugin.scss");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\enhanced-user\resources\assets\sass\enhanced-user.scss */"./platform/plugins/enhanced-user/resources/assets/sass/enhanced-user.scss");
+module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\dao\resources\assets\sass\dao.scss */"./platform/plugins/dao/resources/assets/sass/dao.scss");
 
 
 /***/ })

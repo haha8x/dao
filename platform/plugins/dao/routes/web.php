@@ -32,11 +32,11 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
         Route::group(['prefix' => '', 'as' => 'user.'], function () {
             Route::get('register/user', [
                 'as'         => 'register',
-                'uses'       => 'StaffController@create',
+                'uses'       => 'RegisterUserController@create',
             ]);
             Route::post('register/user', [
                 'as'         => 'register',
-                'uses'       => 'StaffController@store',
+                'uses'       => 'RegisterUserController@store',
             ]);
         });
     });
@@ -44,10 +44,10 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
-            Route::resource('', 'StaffController')->parameters(['' => 'staff']);
+            Route::resource('', 'RegisterUserController')->parameters(['' => 'staff']);
             Route::delete('items/destroy', [
                 'as'         => 'deletes',
-                'uses'       => 'StaffController@deletes',
+                'uses'       => 'RegisterUserController@deletes',
                 'permission' => 'staff.destroy',
             ]);
         });
@@ -60,7 +60,16 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'DaoController@info',
-                'permission' => 'dao.info',
+                'permission' => 'dao.index',
+            ]);
+        });
+
+        Route::group(['prefix' => 'request-histories', 'as' => 'request-history.'], function () {
+            Route::resource('', 'RequestHistoryController')->parameters(['' => 'request-history']);
+            Route::delete('items/destroy', [
+                'as'         => 'deletes',
+                'uses'       => 'RequestHistoryController@deletes',
+                'permission' => 'request-history.destroy',
             ]);
         });
 
@@ -71,7 +80,7 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'RequestNewController@info',
-                'permission' => 'request-new.info',
+                'permission' => 'request-new.index',
             ]);
 
             Route::get('receive/{id}', [
@@ -117,7 +126,7 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'RequestUpdateController@info',
-                'permission' => 'request-update.info',
+                'permission' => 'request-update.index',
             ]);
 
             Route::get('receive/{id}', [
@@ -163,7 +172,7 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'RequestTransferController@info',
-                'permission' => 'request-transfer.info',
+                'permission' => 'request-transfer.index',
             ]);
 
             Route::get('receive/{id}', [
@@ -209,7 +218,7 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'RequestCloseController@info',
-                'permission' => 'request-close.info',
+                'permission' => 'request-close.index',
             ]);
 
             Route::get('receive/{id}', [

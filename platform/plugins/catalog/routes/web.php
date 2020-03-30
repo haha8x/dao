@@ -2,6 +2,13 @@
 
 Route::group(['namespace' => 'Botble\Catalog\Http\Controllers', 'middleware' => 'web'], function () {
 
+    Route::group(['middleware' => 'guest'], function () {
+        Route::post('/get-branch', [
+            'as' => 'get-branch',
+            'uses' => 'CatalogBranchController@getChangeZone',
+        ]);
+    });
+
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
 
         Route::group(['prefix' => 'catalog-positions', 'as' => 'catalog-position.'], function () {

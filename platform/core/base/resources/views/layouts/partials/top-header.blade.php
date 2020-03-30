@@ -22,7 +22,7 @@
                 <li class="dropdown">
                     <a class="dropdown-toggle dropdown-header-name" style="padding-right: 10px"
                         href="{{ route('users.leave_impersonation') }}"><i class="fas fa-user-ninja"></i> <span
-                            class="d-none d-sm-inline">{{ __('Leave impersonation') }}</span> </a>
+                            class="d-none d-sm-inline">{{ __('Thoát') }}</span> </a>
                 </li>
                 @endif
                 @if (Auth::check())
@@ -85,9 +85,9 @@
                 <li class="dropdown dropdown-user">
                     <a href="javascript:void(0)" class="dropdown-toggle dropdown-header-name" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img alt="{{ Auth::user()->getFullName() }}" class="rounded-circle"
+                        <img alt="{{ Auth::user()->name }}" class="rounded-circle"
                             src="{{ Auth::user()->avatar_url }}" />
-                        <span class="username username-hide-on-mobile"> {{ Auth::user()->getFullName() }} </span>
+                        <span class="username username-hide-on-mobile"> {{ Auth::user()->name }} </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu">

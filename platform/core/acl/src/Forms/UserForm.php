@@ -41,36 +41,43 @@ class UserForm extends FormAbstract
             ->setValidatorClass(CreateUserRequest::class)
             ->setWrapperClass('form-body row')
             ->withCustomFields()
-            ->add('first_name', 'text', [
-                'label'      => trans('core/acl::users.info.first_name'),
+            ->add('name', 'text', [
+                'label'      => trans('core/acl::users.info.name'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'data-counter' => 30,
                 ],
-                'wrapper'    => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
-                ],
             ])
-            ->add('last_name', 'text', [
-                'label'      => trans('core/acl::users.info.last_name'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'data-counter' => 30,
-                ],
-                'wrapper'    => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
-                ],
-            ])
-            ->add('username', 'text', [
-                'label'      => trans('core/acl::users.username'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'data-counter' => 30,
-                ],
-                'wrapper'    => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
-                ],
-            ])
+            // ->add('first_name', 'text', [
+            //     'label'      => trans('core/acl::users.info.first_name'),
+            //     'label_attr' => ['class' => 'control-label required'],
+            //     'attr'       => [
+            //         'data-counter' => 30,
+            //     ],
+            //     'wrapper'    => [
+            //         'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
+            //     ],
+            // ])
+            // ->add('last_name', 'text', [
+            //     'label'      => trans('core/acl::users.info.last_name'),
+            //     'label_attr' => ['class' => 'control-label required'],
+            //     'attr'       => [
+            //         'data-counter' => 30,
+            //     ],
+            //     'wrapper'    => [
+            //         'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
+            //     ],
+            // ])
+            // ->add('username', 'text', [
+            //     'label'      => trans('core/acl::users.username'),
+            //     'label_attr' => ['class' => 'control-label required'],
+            //     'attr'       => [
+            //         'data-counter' => 30,
+            //     ],
+            //     'wrapper'    => [
+            //         'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
+            //     ],
+            // ])
             ->add('email', 'text', [
                 'label'      => trans('core/acl::users.email'),
                 'label_attr' => ['class' => 'control-label required'],

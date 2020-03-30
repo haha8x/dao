@@ -117,7 +117,7 @@ function () {
         focusInvalid: false,
         // do not focus the last invalid input
         rules: {
-          username: {
+          email: {
             required: true
           },
           password: {
@@ -128,8 +128,8 @@ function () {
           }
         },
         messages: {
-          username: {
-            required: 'Username is required.'
+          email: {
+            required: 'Email is required.'
           },
           password: {
             required: 'Password is required.'
@@ -228,6 +228,16 @@ function () {
 
 $(document).ready(function () {
   new Login().init();
+  $(".toggle-password").click(function () {
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    var input = $($(this).attr("toggle"));
+
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
 });
 
 /***/ }),

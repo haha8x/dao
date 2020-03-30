@@ -9,6 +9,9 @@ use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Models\Customer;
+use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 
 class CustomerTable extends TableAbstract
 {
@@ -23,15 +26,28 @@ class CustomerTable extends TableAbstract
      */
     protected $hasFilter = true;
 
+    protected $catalogPositionRepository;
+    protected $catalogBranchRepository;
+    protected $catalogZoneRepository;
+
     /**
      * CustomerTable constructor.
      * @param DataTables $table
      * @param UrlGenerator $urlDevTool
      * @param CustomerInterface $customerRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, CustomerInterface $customerRepository)
-    {
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlDevTool,
+        CustomerInterface $customerRepository,
+        CatalogPositionInterface $catalogPositionRepository,
+        CatalogBranchInterface $catalogBranchRepository,
+        CatalogZoneInterface $catalogZoneRepository
+    ) {
         $this->repository = $customerRepository;
+        $this->catalogPositionRepository = $catalogPositionRepository;
+        $this->catalogBranchRepository = $catalogBranchRepository;
+        $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-customer');
         parent::__construct($table, $urlDevTool);
 
@@ -53,6 +69,9 @@ class CustomerTable extends TableAbstract
             ->eloquent($this->query())
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
+            })
+            ->editColumn('branch_id', function ($item) {
+                return $item->branch? $item->branch->name: null;
             })
             ->editColumn('open_date', function ($item) {
                 return date_from_database($item->open_date, config('core.base.general.date_format.date'));
@@ -77,12 +96,12 @@ class CustomerTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'customers.id',
-            'customers.acctno',
+            'customers.acct_no',
             'customers.cif',
-            'customers.name',
+            'customers.customer_name',
             'customers.product_name',
             'customers.branch_id',
-            'customers.dao_id',
+            'customers.dao',
             'customers.open_date',
         ]);
 
@@ -101,8 +120,8 @@ class CustomerTable extends TableAbstract
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
             ],
-            'acctno' => [
-                'name'  => 'customers.acctno',
+            'acct_no' => [
+                'name'  => 'customers.acct_no',
                 'title' => __('ACCTNO'),
                 'class' => 'text-left',
             ],
@@ -111,8 +130,8 @@ class CustomerTable extends TableAbstract
                 'title' => __('CIF'),
                 'class' => 'text-left',
             ],
-            'name' => [
-                'name'  => 'customers.name',
+            'customer_name' => [
+                'name'  => 'customers.customer_name',
                 'title' => __('Khách hàng'),
                 'class' => 'text-left',
             ],
@@ -126,8 +145,8 @@ class CustomerTable extends TableAbstract
                 'title' => __('Chi nhánh'),
                 'class' => 'text-left',
             ],
-            'dao_id' => [
-                'name'  => 'customers.dao_id',
+            'dao' => [
+                'name'  => 'customers.dao',
                 'title' => __('DAO'),
                 'class' => 'text-left',
             ],

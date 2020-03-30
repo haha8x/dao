@@ -15,6 +15,7 @@ use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Catalog\Forms\CatalogBranchForm;
 use Botble\Base\Forms\FormBuilder;
+use Botble\Catalog\Http\Resources\BranchResource;
 
 class CatalogBranchController extends BaseController
 {
@@ -157,5 +158,18 @@ class CatalogBranchController extends BaseController
         }
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
+    }
+
+    public function getChangeZone(Request $request, BaseHttpResponse $response)
+    {
+        $branch = $this->catalogBranchRepository
+            ->getModel()
+            ->where(['zone_id' => $request->input('zone_id')])
+            ->select(['id', 'name'])
+            ->get();
+
+        return $response
+            ->setData(BranchResource::collection($branch))
+            ->toApiResponse();
     }
 }

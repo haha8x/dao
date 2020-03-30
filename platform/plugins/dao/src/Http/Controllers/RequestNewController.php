@@ -14,6 +14,11 @@ use Botble\Base\Forms\FormBuilder;
 use Botble\Dao\Http\Requests\DaoRequest;
 use Validator;
 use RvMedia;
+use Illuminate\Http\Request;
+use Botble\Base\Events\DeletedContentEvent;
+use Botble\Base\Events\UpdatedContentEvent;
+use Botble\Base\Events\BeforeEditContentEvent;
+use Auth;
 
 class RequestNewController extends BaseController
 {
@@ -57,7 +62,7 @@ class RequestNewController extends BaseController
     }
 
     /**
-     * Insert new DaoRequestNew into database
+     * Insert new RequestNew into database
      *
      * @param RequestNewRequest $request
      * @return BaseHttpResponse
@@ -80,9 +85,11 @@ class RequestNewController extends BaseController
             }
         }
 
-        $request
-            ->merge(['status' => 'create'])
-            ->merge(['staff_name' => mb_strtoupper($request->staff_name)]);
+
+        $request->merge([
+            'status' => 'create',
+            'created_by' => Auth::id(),
+        ]);
 
         $daoRequestNew = $this->daoRequestNewRepository->createOrUpdate($request->input());
 
@@ -105,9 +112,9 @@ class RequestNewController extends BaseController
 
         event(new BeforeEditContentEvent($request, $daoRequestNew));
 
-        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $daoRequestNew->name . '"');
+        page_title()->setTitle(trans('plugins/dao::request-new.edit') . ' "' . $daoRequestNew->name . '"');
 
-        return $formBuilder->create(DaoForm::class, ['model' => $daoRequestNew])->renderForm();
+        return $formBuilder->create(RequestNewForm::class, ['model' => $daoRequestNew])->renderForm();
     }
 
     /**
@@ -115,9 +122,13 @@ class RequestNewController extends BaseController
      * @param DaoRequest $request
      * @return BaseHttpResponse
      */
-    public function update($id, DaoRequest $request, BaseHttpResponse $response)
+    public function update($id, RequestNewRequest $request, BaseHttpResponse $response)
     {
         $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
+
+        $request->merge([
+            'updated_by' => Auth::id(),
+        ]);
 
         $daoRequestNew->fill($request->input());
 
@@ -126,7 +137,7 @@ class RequestNewController extends BaseController
         event(new UpdatedContentEvent(DAO_REQUEST_NEW_MODULE_SCREEN_NAME, $request, $daoRequestNew));
 
         return $response
-            ->setPreviousUrl(route('dao.index'))
+            ->setPreviousUrl(route('request-new.index'))
             ->setMessage(trans('core/base::notices.update_success_message'));
     }
 
@@ -182,9 +193,9 @@ class RequestNewController extends BaseController
      */
     public function info($id)
     {
-        $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
+        $item = $this->daoRequestNewRepository->findOrFail($id);
 
-        return view('plugins/dao::request.new.info', compact('daoRequestNew'))->render();
+        return view('plugins/dao::request.new.info', compact('item'))->render();
     }
 
     /**
@@ -311,7 +322,7 @@ class RequestNewController extends BaseController
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
-                ->setNextUrl(route('dao.index'))
+                ->setNextUrl(route('request-new.index'))
                 ->setMessage(trans('core/base::notices.update_success_message'));
         } catch (Exception $exception) {
             return $response

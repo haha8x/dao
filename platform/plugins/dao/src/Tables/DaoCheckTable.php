@@ -97,7 +97,6 @@ class DaoCheckTable extends ScrollTableAbstract
                 'daos.phone',
                 'daos.status',
                 'daos.created_at',
-                'daos.updated_by',
             ])
             ->where('daos.id', request()->route()->parameter('id'));
 

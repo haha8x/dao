@@ -17,25 +17,29 @@ use Botble\Dao\Repositories\Caches\CustomerCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\CustomerRepository;
 use Botble\Dao\Repositories\Interfaces\CustomerInterface;
 
-use Botble\Dao\Models\DaoRequestNew;
+use Botble\Dao\Models\RequestNew;
 use Botble\Dao\Repositories\Caches\DaoRequestNewCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestNewRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
 
-use Botble\Dao\Models\DaoRequestUpdate;
+use Botble\Dao\Models\RequestUpdate;
 use Botble\Dao\Repositories\Caches\DaoRequestUpdateCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestUpdateRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
 
-use Botble\Dao\Models\DaoRequestTransfer;
+use Botble\Dao\Models\RequestTransfer;
 use Botble\Dao\Repositories\Caches\DaoRequestTransferCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestTransferRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
 
-use Botble\Dao\Models\DaoRequestClose;
+use Botble\Dao\Models\RequestClose;
+use Botble\Dao\Models\RequestHistory;
 use Botble\Dao\Repositories\Caches\DaoRequestCloseCacheDecorator;
+use Botble\Dao\Repositories\Caches\RequestHistoryCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestCloseRepository;
+use Botble\Dao\Repositories\Eloquent\RequestHistoryRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
+use Botble\Dao\Repositories\Interfaces\RequestHistoryInterface;
 use Botble\Demo\Models\Staff;
 use Botble\Demo\Repositories\Caches\StaffCacheDecorator;
 use Botble\Demo\Repositories\Eloquent\StaffRepository;
@@ -66,31 +70,37 @@ class DaoServiceProvider extends ServiceProvider
 
         $this->app->bind(DaoRequestNewInterface::class, function () {
             return new DaoRequestNewCacheDecorator(
-                new DaoRequestNewRepository(new DaoRequestNew)
+                new DaoRequestNewRepository(new RequestNew)
             );
         });
 
         $this->app->bind(DaoRequestUpdateInterface::class, function () {
             return new DaoRequestUpdateCacheDecorator(
-                new DaoRequestUpdateRepository(new DaoRequestUpdate)
+                new DaoRequestUpdateRepository(new RequestUpdate)
             );
         });
 
         $this->app->bind(DaoRequestTransferInterface::class, function () {
             return new DaoRequestTransferCacheDecorator(
-                new DaoRequestTransferRepository(new DaoRequestTransfer)
+                new DaoRequestTransferRepository(new RequestTransfer)
             );
         });
 
         $this->app->bind(DaoRequestCloseInterface::class, function () {
             return new DaoRequestCloseCacheDecorator(
-                new DaoRequestCloseRepository(new DaoRequestClose)
+                new DaoRequestCloseRepository(new RequestClose)
             );
         });
 
         $this->app->bind(StaffInterface::class, function () {
             return new StaffCacheDecorator(
                 new StaffRepository(new Staff)
+            );
+        });
+
+        $this->app->bind(RequestHistoryInterface::class, function () {
+            return new RequestHistoryCacheDecorator(
+                new RequestHistoryRepository(new RequestHistory)
             );
         });
 

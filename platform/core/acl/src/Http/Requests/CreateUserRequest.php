@@ -15,11 +15,12 @@ class CreateUserRequest extends Request
     public function rules()
     {
         return [
-            'first_name'            => 'required|max:60|min:2',
-            'last_name'             => 'required|max:60|min:2',
+            'name'                  => 'required|max:60|min:2',
+            // 'first_name'            => 'required|max:60|min:2',
+            // 'last_name'             => 'required|max:60|min:2',
             'password'              => 'required|min:6',
             'password_confirmation' => 'required|same:password',
-            'username'              => 'required|min:4|max:30|unique:users',
+            // 'username'              => 'required|min:4|max:30|unique:users',
             'zone_id'   => 'required',
             'branch_id'   => 'required',
             'staff_id'   => 'required|numeric|unique:users',

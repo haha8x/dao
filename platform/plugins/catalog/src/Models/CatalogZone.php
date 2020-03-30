@@ -2,13 +2,10 @@
 
 namespace Botble\Catalog\Models;
 
-use Botble\Base\Traits\EnumCastable;
 use Botble\Base\Models\BaseModel;
 
 class CatalogZone extends BaseModel
 {
-    use EnumCastable;
-
     /**
      * The database table used by the model.
      *

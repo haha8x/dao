@@ -2,13 +2,14 @@
 
 namespace Botble\Dao\Models;
 
+use Botble\Base\Traits\EnumCastable;
+use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Models\BaseModel;
-use Botble\Catalog\Models\CatalogBranch;
-use Botble\Catalog\Models\CatalogPosition;
-use Botble\Catalog\Models\CatalogZone;
 
 class Dao extends BaseModel
 {
+    use EnumCastable;
+
     /**
      * The database table used by the model.
      *
@@ -20,42 +21,14 @@ class Dao extends BaseModel
      * @var array
      */
     protected $fillable = [
-        'dao',
-        'zone_id',
-        'branch_id',
-        'staff_id',
         'name',
-        'position_id',
-        'cif',
-        'email',
-        'cmnd',
-        'phone',
         'status',
-        'created_by',
-        'updated_by',
     ];
 
     /**
-     * @return BelongsTo
+     * @var array
      */
-    public function zone()
-    {
-        return $this->belongsTo(CatalogZone::class);
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function branch()
-    {
-        return $this->belongsTo(CatalogBranch::class);
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function position()
-    {
-        return $this->belongsTo(CatalogPosition::class);
-    }
+    protected $casts = [
+        'status' => BaseStatusEnum::class,
+    ];
 }

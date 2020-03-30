@@ -73,6 +73,8 @@ mix
     .copy(publicPath + '/js/profile.js', resourcePath + '/acl/public/js')
     .js(resourcePath + '/acl/resources/assets/js/login.js', publicPath + '/js')
     .copy(publicPath + '/js/login.js', resourcePath + '/acl/public/js')
+    .sass(resourcePath + '/acl/resources/assets/sass/login.scss', publicPath + '/css')
+    .copy(publicPath + '/css/login.css', resourcePath + '/acl/public/css')
     .js(resourcePath + '/acl/resources/assets/js/role.js', publicPath + '/js')
     .copy(publicPath + '/js/role.js', resourcePath + '/acl/public/js');
 

@@ -56,9 +56,9 @@ class CreateUserService implements ProduceServiceInterface
          */
         $user = $this->userRepository->createOrUpdate($request->input());
 
-        if ($request->has('username') && $request->has('password')) {
+        if ($request->has('email') && $request->has('password')) {
             $this->userRepository->update(['id' => $user->id], [
-                'username' => $request->input('username'),
+                'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
             ]);
 

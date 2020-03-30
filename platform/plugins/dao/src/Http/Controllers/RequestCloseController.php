@@ -3,7 +3,7 @@
 namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
-use Botble\Dao\Http\Requests\DaoRequestCloseRequest;
+use Botble\Dao\Http\Requests\RequestCloseRequest;
 use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -13,8 +13,9 @@ use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Dao\Forms\DaoRequestCloseForm;
+use Botble\Dao\Forms\RequestCloseForm;
 use Botble\Base\Forms\FormBuilder;
+use Auth;
 
 class RequestCloseController extends BaseController
 {
@@ -53,18 +54,23 @@ class RequestCloseController extends BaseController
     {
         page_title()->setTitle(trans('plugins/dao::request-close.create'));
 
-        return $formBuilder->create(DaoRequestCloseForm::class)->renderForm();
+        return $formBuilder->create(RequestCloseForm::class)->renderForm();
     }
 
     /**
-     * Insert new DaoRequestClose into database
+     * Insert new RequestClose into database
      *
-     * @param DaoRequestCloseRequest $request
+     * @param RequestCloseRequest $request
      * @return BaseHttpResponse
      */
-    public function store(DaoRequestCloseRequest $request, BaseHttpResponse $response)
+    public function store(RequestCloseRequest $request, BaseHttpResponse $response)
     {
         $daoRequestClose = $this->daoRequestCloseRepository->createOrUpdate($request->input());
+
+        $request->merge([
+            'status' => 'create',
+            'created_by' => Auth::id(),
+        ]);
 
         event(new CreatedContentEvent(DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME, $request, $daoRequestClose));
 
@@ -74,7 +80,7 @@ class RequestCloseController extends BaseController
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
-        /**
+    /**
      * Show edit form
      *
      * @param $id
@@ -88,9 +94,9 @@ class RequestCloseController extends BaseController
 
         event(new BeforeEditContentEvent($request, $daoRequestClose));
 
-        page_title()->setTitle(trans('plugins/dao::dao.edit') . ' "' . $daoRequestClose->name . '"');
+        page_title()->setTitle(trans('plugins/dao::request-close.edit') . ' "' . $daoRequestClose->name . '"');
 
-        return $formBuilder->create(DaoRequestCloseForm::class, ['model' => $daoRequestClose])->renderForm();
+        return $formBuilder->create(RequestCloseForm::class, ['model' => $daoRequestClose])->renderForm();
     }
 
     /**
@@ -98,9 +104,13 @@ class RequestCloseController extends BaseController
      * @param DaoRequest $request
      * @return BaseHttpResponse
      */
-    public function update($id, DaoRequest $request, BaseHttpResponse $response)
+    public function update($id, RequestCloseRequest $request, BaseHttpResponse $response)
     {
         $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
+
+        $request->merge([
+            'updated_by' => Auth::id(),
+        ]);
 
         $daoRequestClose->fill($request->input());
 
@@ -109,7 +119,7 @@ class RequestCloseController extends BaseController
         event(new UpdatedContentEvent(DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME, $request, $daoRequestClose));
 
         return $response
-            ->setPreviousUrl(route('dao.index'))
+            ->setPreviousUrl(route('request-close.index'))
             ->setMessage(trans('core/base::notices.update_success_message'));
     }
 
@@ -158,16 +168,16 @@ class RequestCloseController extends BaseController
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
     }
-    
+
     /**
      * @return string
      * @throws \Throwable
      */
     public function info($id)
     {
-        $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
+        $item = $this->daoRequestCloseRepository->findOrFail($id);
 
-        return view('plugins/dao::request.close.info', compact('daoRequestClose'))->render();
+        return view('plugins/dao::request.close.info', compact('item'))->render();
     }
 
     /**
@@ -294,7 +304,7 @@ class RequestCloseController extends BaseController
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
-                ->setNextUrl(route('dao.index'))
+                ->setNextUrl(route('request-close.index'))
                 ->setMessage(trans('core/base::notices.update_success_message'));
         } catch (Exception $exception) {
             return $response

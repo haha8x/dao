@@ -23,7 +23,7 @@ class RequestNewRequest extends Request
             'staff_name'   => 'required',
             'position_id'   => 'required',
             'cif'   => 'required|numeric',
-            'email'   => 'required|email|regex:/(.*)vpbank\.com\.vn$/i',
+            'email'   => 'required|email|regex:/(.*)vpbank\.com\.vn$/i|regex:/(.*)vpbank\.vn$/i',
             'cmnd'   => 'required|numeric',
             'phone'   => 'required|numeric',
             'decision_file'   => 'required',

@@ -25,6 +25,11 @@ return [
         'flag' => 'request-new.index',
     ],
     [
+        'name'        => 'Xem tất cả',
+        'flag'        => 'request-new.all',
+        'parent_flag' => 'request-new.index',
+    ],
+    [
         'name'        => 'Tạo',
         'flag'        => 'request-new.create',
         'parent_flag' => 'request-new.index',
@@ -72,6 +77,11 @@ return [
     [
         'name' => 'Yêu cầu cập nhật DAO',
         'flag' => 'request-update.index',
+    ],
+    [
+        'name'        => 'Xem tất cả',
+        'flag'        => 'request-update.all',
+        'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'Tạo',
@@ -123,6 +133,11 @@ return [
         'flag' => 'request-transfer.index',
     ],
     [
+        'name'        => 'Xem tất cả',
+        'flag'        => 'request-transfer.all',
+        'parent_flag' => 'request-transfer.index',
+    ],
+    [
         'name'        => 'Tạo',
         'flag'        => 'request-transfer.create',
         'parent_flag' => 'request-transfer.index',
@@ -170,6 +185,11 @@ return [
     [
         'name' => 'Yêu cầu đóng DAO',
         'flag' => 'request-close.index',
+    ],
+    [
+        'name'        => 'Xem tất cả',
+        'flag'        => 'request-close.all',
+        'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'Tạo',
@@ -253,5 +273,24 @@ return [
         'name'        => 'Xóa',
         'flag'        => 'staff.destroy',
         'parent_flag' => 'staff.index',
+    ],
+    [
+        'name' => 'Luồng xử lý yêu cầu',
+        'flag' => 'request-history.index',
+    ],
+    [
+        'name'        => 'Tạo',
+        'flag'        => 'request-history.create',
+        'parent_flag' => 'request-history.index',
+    ],
+    [
+        'name'        => 'Sửa',
+        'flag'        => 'request-history.edit',
+        'parent_flag' => 'request-history.index',
+    ],
+    [
+        'name'        => 'Xoá',
+        'flag'        => 'request-history.destroy',
+        'parent_flag' => 'request-history.index',
     ],
 ];

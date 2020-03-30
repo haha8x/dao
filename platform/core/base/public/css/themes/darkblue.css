@@ -659,7 +659,7 @@ body.login .login-container p {
   margin-top: 3px;
   color: #757C85;
   border-radius: 2px;
-  font-size: 10px;
+  font-size: 13px;
   text-transform: uppercase;
   width: auto;
   padding-left: 2px;
@@ -714,7 +714,7 @@ body.login .form-group label {
   -webkit-transition: opacity 0.2s ease;
   transition: opacity 0.2s ease;
   font-weight: 500;
-  font-size: 10px;
+  font-size: 13px;
   color: #58666e;
 }
 body.login .form-group .form-control {

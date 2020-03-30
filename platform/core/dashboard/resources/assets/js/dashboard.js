@@ -1,8 +1,8 @@
-import VerifyLicenseComponent from './components/VerifyLicenseComponent'
+// import VerifyLicenseComponent from './components/VerifyLicenseComponent'
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 
-Vue.component('verify-license-component', VerifyLicenseComponent);
+// Vue.component('verify-license-component', VerifyLicenseComponent);
 
 new Vue({
     el: '#dashboard-alerts',

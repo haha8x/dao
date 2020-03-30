@@ -7,7 +7,8 @@ use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Botble\Dao\Http\Requests\RequestNewRequest;
-use Botble\Dao\Models\DaoRequestNew;
+use Botble\Dao\Models\RequestNew;
+use Assets;
 
 class RequestNewForm extends FormAbstract
 {
@@ -33,12 +34,14 @@ class RequestNewForm extends FormAbstract
      */
     public function buildForm()
     {
+        Assets::addScriptsDirectly('vendor/core/plugins/catalog/js/catalog.js');
+
         $catalogBranch = $this->catalogBranchRepository->pluck('catalog_branches.name', 'catalog_branches.id');
         $catalogZone = $this->catalogZoneRepository->pluck('catalog_zones.name', 'catalog_zones.id');
         $catalogPosition = $this->catalogPositionRepository->pluck('catalog_positions.name', 'catalog_positions.id');
 
         $this
-            ->setupModel(new DaoRequestNew)
+            ->setupModel(new RequestNew)
             ->setFormOption('template', 'plugins/dao::forms.register.base')
             ->setFormOption('enctype', 'multipart/form-data')
             ->setValidatorClass(RequestNewRequest::class)
@@ -47,11 +50,21 @@ class RequestNewForm extends FormAbstract
                 'label' => __('Vùng'),
                 'label_attr' => ['class' => 'control-label required'],
                 'choices' => $catalogZone,
+                'attr'       => [
+                    'class' => 'form-control select-search-full',
+                    'data-type' => 'zone',
+                    'data-target' => '#branch_id',
+                    'data-change-zone-url' => route('get-branch'),
+                ],
             ])
             ->add('branch_id', 'select', [
                 'label'      => __('Chi nhánh'),
                 'label_attr' => ['class' => 'control-label required'],
-                'choices' => $catalogBranch,
+                'attr'       => [
+                    'class' => 'form-control select-search-full',
+                    'data-type' => 'branch',
+                    'data-placeholder' => __('Chọn chi nhánh'),
+                ],
             ])
             ->add('staff_name', 'text', [
                 'label'      => __('Họ tên CBBH'),

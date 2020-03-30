@@ -11,13 +11,14 @@ use Html;
  */
 class RequestStatusEnum extends Enum
 {
-    public const CREATE = 'create';
-    public const RECEIVE = 'receive';
-    public const REJECT = 'reject';
-    public const IT_PROCESS = 'it_process';
-    public const GDCN_APPROVE = 'gdcn_approve';
-    public const HOISO_APPROVE = 'hoiso_approve';
-    public const SUCCESS = 'success';
+    public const TAO_MOI = 'create';
+    public const TIEP_NHAN = 'tiep_nhan';
+    public const TU_CHOI = 'tu_choi';
+    public const IT_XULY = 'it_xyly';
+    public const GDCN_DUYET = 'gdcn_duyet';
+    public const HOISO_DUYET = 'hoiso_duyet';
+    public const TPKH_DUYET = 'tpkh_duyet';
+    public const THANH_CONG = 'thanh_cong';
 
     /**
      * @var string
@@ -30,26 +31,26 @@ class RequestStatusEnum extends Enum
     public function toHtml()
     {
         switch ($this->value) {
-            case self::CREATE:
-                return Html::tag('span', self::CREATE()->label(), ['class' => 'label-default status-label'])
+            case self::TAO_MOI:
+                return Html::tag('span', self::TAO_MOI()->label(), ['class' => 'label-default status-label'])
                     ->toHtml();
-            case self::RECEIVE:
-                return Html::tag('span', self::RECEIVE()->label(), ['class' => 'label-warning status-label'])
+            case self::TIEP_NHAN:
+                return Html::tag('span', self::TIEP_NHAN()->label(), ['class' => 'label-warning status-label'])
                     ->toHtml();
-            case self::REJECT:
-                return Html::tag('span', self::REJECT()->label(), ['class' => 'label-danger status-label'])
+            case self::TU_CHOI:
+                return Html::tag('span', self::TU_CHOI()->label(), ['class' => 'label-danger status-label'])
                     ->toHtml();
-            case self::IT_PROCESS:
-                return Html::tag('span', self::IT_PROCESS()->label(), ['class' => 'label-info status-label'])
+            case self::IT_XULY:
+                return Html::tag('span', self::IT_XULY()->label(), ['class' => 'label-info status-label'])
                     ->toHtml();
-            case self::GDCN_APPROVE:
-                return Html::tag('span', self::GDCN_APPROVE()->label(), ['class' => 'label-primary status-label'])
+            case self::GDCN_DUYET:
+                return Html::tag('span', self::GDCN_DUYET()->label(), ['class' => 'label-primary status-label'])
                     ->toHtml();
-            case self::HOISO_APPROVE:
-                return Html::tag('span', self::HOISO_APPROVE()->label(), ['class' => 'label-primary status-label'])
+            case self::HOISO_DUYET:
+                return Html::tag('span', self::HOISO_DUYET()->label(), ['class' => 'label-primary status-label'])
                     ->toHtml();
-            case self::SUCCESS:
-                return Html::tag('span', self::SUCCESS()->label(), ['class' => 'label-success status-label'])
+            case self::THANH_CONG:
+                return Html::tag('span', self::THANH_CONG()->label(), ['class' => 'label-success status-label'])
                     ->toHtml();
             default:
                 return null;
@@ -62,20 +63,20 @@ class RequestStatusEnum extends Enum
     public function toText()
     {
         switch ($this->value) {
-            case self::CREATE:
-                return self::CREATE()->label();
-            case self::RECEIVE:
-                return self::RECEIVE()->label();
-            case self::REJECT:
-                return self::REJECT()->label();
-            case self::IT_PROCESS:
-                return self::IT_PROCESS()->label();
-            case self::GDCN_APPROVE:
-                return self::GDCN_APPROVE()->label();
-            case self::HOISO_APPROVE:
-                return self::HOISO_APPROVE()->label();
-            case self::SUCCESS:
-                return self::SUCCESS()->label();
+            case self::TAO_MOI:
+                return self::TAO_MOI()->label();
+            case self::TIEP_NHAN:
+                return self::TIEP_NHAN()->label();
+            case self::TU_CHOI:
+                return self::TU_CHOI()->label();
+            case self::IT_XULY:
+                return self::IT_XULY()->label();
+            case self::GDCN_DUYET:
+                return self::GDCN_DUYET()->label();
+            case self::HOISO_DUYET:
+                return self::HOISO_DUYET()->label();
+            case self::THANH_CONG:
+                return self::THANH_CONG()->label();
             default:
                 return null;
         }

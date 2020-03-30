@@ -6,7 +6,7 @@ class Login {
             errorClass: 'help-block', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             rules: {
-                username: {
+                email: {
                     required: true
                 },
                 password: {
@@ -18,8 +18,8 @@ class Login {
             },
 
             messages: {
-                username: {
-                    required: 'Username is required.'
+                email: {
+                    required: 'Email is required.'
                 },
                 password: {
                     required: 'Password is required.'
@@ -120,4 +120,15 @@ class Login {
 
 $(document).ready(() => {
     new Login().init();
+
+    $(".toggle-password").click(function () {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
 });

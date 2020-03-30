@@ -36,21 +36,21 @@ class EnhancedSettingServiceProvider extends ServiceProvider
             dashboard_menu()
                 ->removeItem('cms-core-plugins')
                 ->removeItem('cms-core-media')
-                ->removeItem('cms-core-settings')
-            //    ->removeItem('cms-core-platform-administration')
+                ->removeItem('cms-core-system-information')
+                // ->removeItem('cms-core-platform-administration')
                 ;
         });
 
-        Event::listen(RouteMatched::class, function () {
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugins-enhanced-setting',
-                'priority'    => 100,
-                'parent_id'   => null,
-                'name'        => __('Cài đặt hệ thống'),
-                'icon'        => 'fa fa-cogs',
-                'url'         => route('enhanced-setting.settings'),
-                'permissions' => ['enhanced-setting.settings'],
-            ]);
-        });
+        // Event::listen(RouteMatched::class, function () {
+        //     dashboard_menu()->registerItem([
+        //         'id'          => 'cms-plugins-enhanced-setting',
+        //         'priority'    => 100,
+        //         'parent_id'   => null,
+        //         'name'        => __('Cài đặt hệ thống'),
+        //         'icon'        => 'fa fa-cogs',
+        //         'url'         => route('enhanced-setting.settings'),
+        //         'permissions' => ['enhanced-setting.settings'],
+        //     ]);
+        // });
     }
 }

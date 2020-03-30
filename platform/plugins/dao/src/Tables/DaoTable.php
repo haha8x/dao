@@ -3,28 +3,25 @@
 namespace Botble\Dao\Tables;
 
 use Auth;
-use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
-use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
-use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
+use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoInterface;
-use Botble\Dao\Abstracts\ScrollTableAbstract;
+use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
-use Html;
+use Botble\Dao\Models\Dao;
 
-
-class DaoTable extends ScrollTableAbstract
+class DaoTable extends TableAbstract
 {
 
     /**
      * @var bool
      */
-    protected $hasActions = false;
+    protected $hasActions = true;
 
     /**
      * @var bool
      */
-    protected $hasFilter = false;
+    protected $hasFilter = true;
 
     /**
      * DaoTable constructor.
@@ -32,18 +29,9 @@ class DaoTable extends ScrollTableAbstract
      * @param UrlGenerator $urlDevTool
      * @param DaoInterface $daoRepository
      */
-    public function __construct(
-        DataTables $table,
-        UrlGenerator $urlDevTool,
-        DaoInterface $daoRepository,
-        CatalogPositionInterface $catalogPositionRepository,
-        CatalogBranchInterface $catalogBranchRepository,
-        CatalogZoneInterface $catalogZoneRepository
-    ) {
+    public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoInterface $daoRepository)
+    {
         $this->repository = $daoRepository;
-        $this->catalogPositionRepository = $catalogPositionRepository;
-        $this->catalogBranchRepository = $catalogBranchRepository;
-        $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-dao');
         parent::__construct($table, $urlDevTool);
 
@@ -63,25 +51,25 @@ class DaoTable extends ScrollTableAbstract
     {
         $data = $this->table
             ->eloquent($this->query())
+            ->editColumn('name', function ($item) {
+                if (!Auth::user()->hasPermission('dao.edit')) {
+                    return $item->name;
+                }
+                return anchor_link(route('dao.edit', $item->id), $item->name);
+            })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
-            ->editColumn('zone_id', function ($item) {
-                return $item->zone->name;
-            })
-            ->editColumn('branch_id', function ($item) {
-                return $item->branch->name;
-            })
-            ->editColumn('position_id', function ($item) {
-                return $item->position->name;
-            })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
+            })
+            ->editColumn('status', function ($item) {
+                return $item->status->toHtml();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
-                return view('plugins/dao::index.actions', compact('item'))->render();
+                return table_actions('dao.edit', 'dao.destroy', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -98,24 +86,10 @@ class DaoTable extends ScrollTableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'daos.id',
-            'daos.dao',
-            'daos.zone_id',
-            'daos.branch_id',
-            'daos.staff_id',
             'daos.name',
-            'daos.position_id',
-            'daos.cif',
-            'daos.email',
-            'daos.cmnd',
-            'daos.phone',
-            'daos.status',
             'daos.created_at',
-            'daos.updated_by',
+            'daos.status',
         ]);
-
-        if (!Auth::user()->isSuperUser()) {
-            $query = $model->where('created_by', Auth::id());
-        }
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
@@ -127,54 +101,24 @@ class DaoTable extends ScrollTableAbstract
     public function columns()
     {
         return [
-            'zone_id' => [
-                'name'  => 'daos.zone_id',
-                'title' => __('Vùng'),
-                'class' => 'text-left',
-            ],
-            'branch_id' => [
-                'name'  => 'daos.branch_id',
-                'title' => __('Chi nhánh'),
-                'class' => 'text-left',
-            ],
-            'dao' => [
-                'name'  => 'daos.dao',
-                'title' => __('DAO'),
-                'class' => 'text-left',
+            'id' => [
+                'name' => 'daos.id',
+                'title' => trans('core/base::tables.id'),
+                'width' => '20px',
             ],
             'name' => [
-                'name'  => 'daos.name',
-                'title' => __('Nhân viên'),
-                'class' => 'text-left',
-            ],
-            'email' => [
-                'name'  => 'daos.email',
-                'title' => __('Email'),
-                'class' => 'text-left',
-            ],
-            'cmnd' => [
-                'name'  => 'daos.cmnd',
-                'title' => __('CMND'),
-                'class' => 'text-left',
-            ],
-            'phone' => [
-                'name'  => 'daos.phone',
-                'title' => __('Điện thoại'),
-                'class' => 'text-left',
-            ],
-            'cif' => [
-                'name'  => 'daos.cif',
-                'title' => __('CIF'),
-                'class' => 'text-left',
-            ],
-            'status' => [
-                'name'  => 'daos.status',
-                'title' => __('Trạng thái'),
+                'name' => 'daos.name',
+                'title' => trans('core/base::tables.name'),
                 'class' => 'text-left',
             ],
             'created_at' => [
-                'name'  => 'daos.created_at',
+                'name' => 'daos.created_at',
                 'title' => trans('core/base::tables.created_at'),
+                'width' => '100px',
+            ],
+            'status' => [
+                'name' => 'daos.status',
+                'title' => trans('core/base::tables.status'),
                 'width' => '100px',
             ],
         ];
@@ -182,33 +126,46 @@ class DaoTable extends ScrollTableAbstract
 
     /**
      * @return array
+     * @since 2.1
+     * @throws \Throwable
      */
-    public function getDefaultButtons(): array
+    public function buttons()
     {
-        return ['excel'];
+        $buttons = $this->addCreateButton(route('dao.create'), 'dao.create');
+
+        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, Dao::class);
+    }
+
+    /**
+     * @return array
+     * @throws \Throwable
+     */
+    public function bulkActions(): array
+    {
+        return $this->addDeleteAction(route('dao.deletes'), 'dao.destroy', parent::bulkActions());
     }
 
     /**
      * @return array
      */
-    public function getPositions()
+    public function getBulkChanges(): array
     {
-        return $this->catalogPositionRepository->pluck('catalog_positions.name', 'catalog_positions.id');
-    }
-
-    /**
-     * @return array
-     */
-    public function getBranchs()
-    {
-        return $this->catalogBranchRepository->pluck('catalog_branches.name', 'catalog_branches.id');
-    }
-
-    /**
-     * @return array
-     */
-    public function getZones()
-    {
-        return $this->catalogZoneRepository->pluck('catalog_zones.name', 'catalog_zones.id');
+        return [
+            'daos.name' => [
+                'title'    => trans('core/base::tables.name'),
+                'type'     => 'text',
+                'validate' => 'required|max:120',
+            ],
+            'daos.status' => [
+                'title'    => trans('core/base::tables.status'),
+                'type'     => 'select',
+                'choices'  => BaseStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
+            ],
+            'daos.created_at' => [
+                'title' => trans('core/base::tables.created_at'),
+                'type'  => 'date',
+            ],
+        ];
     }
 }

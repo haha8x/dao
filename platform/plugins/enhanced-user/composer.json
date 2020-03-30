@@ -1,8 +1,0 @@
-{
-  "name": "botble/enhanced-user",
-  "description": "Enhanced user plugin",
-  "type": "package",
-  "require": {
-    "lab404/laravel-impersonate": "^1.6"
-  }
-}

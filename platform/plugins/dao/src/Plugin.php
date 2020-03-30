@@ -9,9 +9,6 @@ class Plugin extends PluginOperationAbstract
 {
     public static function remove()
     {
-        Schema::dropIfExists('daos');
-        Schema::dropIfExists('dao_registers');
-        Schema::dropIfExists('customers');
-        Schema::dropIfExists('staff');
+
     }
 }

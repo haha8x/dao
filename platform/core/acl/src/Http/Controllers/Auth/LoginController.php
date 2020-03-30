@@ -63,6 +63,7 @@ class LoginController extends BaseController
 
         Assets::addScripts(['jquery-validation'])
             ->addScriptsDirectly('vendor/core/js/login.js')
+            ->addStylesDirectly('vendor/core/css/login.css')
             ->removeStyles([
                 'select2',
                 'fancybox',
@@ -101,7 +102,7 @@ class LoginController extends BaseController
             $this->sendLockoutResponse($request);
         }
 
-        $user = app(UserInterface::class)->getFirstBy(['username' => $request->input($this->username())]);
+        $user = app(UserInterface::class)->getFirstBy(['email' => $request->input($this->email())]);
         if (!empty($user)) {
             if (!app(ActivationInterface::class)->completed($user)) {
                 return $this->response
@@ -130,9 +131,9 @@ class LoginController extends BaseController
      * @return string
      *
      */
-    public function username()
+    public function email()
     {
-        return 'username';
+        return 'email';
     }
 
     /**

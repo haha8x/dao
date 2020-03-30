@@ -8,7 +8,10 @@ use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
-use Botble\Dao\Models\DaoRequestUpdate;
+use Botble\Dao\Models\RequestUpdate;
+use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
+use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 
 class DaoRequestUpdateTable extends TableAbstract
 {
@@ -23,15 +26,28 @@ class DaoRequestUpdateTable extends TableAbstract
      */
     protected $hasFilter = true;
 
+    protected $catalogPositionRepository;
+    protected $catalogBranchRepository;
+    protected $catalogZoneRepository;
+
     /**
      * DaoRequestUpdateTable constructor.
      * @param DataTables $table
      * @param UrlGenerator $urlDevTool
      * @param DaoRequestUpdateInterface $DaoRequestUpdateRepository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, DaoRequestUpdateInterface $DaoRequestUpdateRepository)
-    {
+    public function __construct(
+        DataTables $table,
+        UrlGenerator $urlDevTool,
+        DaoRequestUpdateInterface $DaoRequestUpdateRepository,
+        CatalogPositionInterface $catalogPositionRepository,
+        CatalogBranchInterface $catalogBranchRepository,
+        CatalogZoneInterface $catalogZoneRepository
+    ) {
         $this->repository = $DaoRequestUpdateRepository;
+        $this->catalogPositionRepository = $catalogPositionRepository;
+        $this->catalogBranchRepository = $catalogBranchRepository;
+        $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-request-update');
         parent::__construct($table, $urlDevTool);
 
@@ -55,7 +71,13 @@ class DaoRequestUpdateTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return ('Vùng ' . $item->zone_id);
+                return $item->zone? $item->zone->name : null;
+            })
+            ->editColumn('branch_id', function ($item) {
+                return $item->branch? $item->branch->name: null;
+            })
+            ->editColumn('branch_code', function ($item) {
+                return $item->branch? $item->branch->code : null;
             })
             ->editColumn('id', function ($item) {
                 return ('DAO' . $item->id);
@@ -64,12 +86,15 @@ class DaoRequestUpdateTable extends TableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
+                return $item->status? $item->status->toHtml(): null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
-            ->addColumn('operations', function ($item) {
+            ->addColumn('action', function ($item) {
                 return view('plugins/dao::request.update.actions', compact('item'))->render();
+            })
+            ->addColumn('operations', function ($item) {
+                return table_actions('request-update.edit', 'request-update.destroy', $item);
             })
             ->escapeColumns([])
             ->make(true);
@@ -85,11 +110,26 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         $model = $this->repository->getModel();
         $query = $model->select([
-            'dao_request_updates.dao_id',
-            'dao_request_updates.dao_update',
+            'request_updates.id',
+            'request_updates.dao_update',
+            'request_updates.zone_id',
+            'request_updates.branch_id',
+            'request_updates.staff_id',
+            'request_updates.staff_name',
+            'request_updates.position_id',
+            'request_updates.cif',
+            'request_updates.email',
+            'request_updates.cmnd',
+            'request_updates.from_date',
+            'request_updates.to_date',
+            'request_updates.status',
+            'request_updates.created_at',
+            'request_updates.updated_at',
+            'request_updates.updated_by',
+
         ]);
 
-        if (!Auth::user()->isSuperUser()) {
+        if (!Auth::user()->isSuperUser() || !Auth::user()->hasPermission('request-update.all')) {
             $query = $model->where('created_by', Auth::id());
         }
 
@@ -104,49 +144,52 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         return [
             'zone_id' => [
-                'name'  => 'dao_request_updates.zone_id',
+                'name'  => 'request_updates.zone_id',
                 'title' => __('Vùng'),
                 'class' => 'text-left',
             ],
             'branch_id' => [
-                'name'  => 'dao_request_updates.branch_id',
-                'title' => __('Chi nhánh'),
+                'name'  => 'request_updates.branch_id',
+                'title' => __('Tên chi nhánh'),
+                'class' => 'text-left',
+            ],
+            'branch_code' => [
+                'name'  => 'request_updates.branch_code',
+                'title' => __('Mã chi nhánh'),
                 'class' => 'text-left',
             ],
             'id' => [
-                'name'  => 'dao_request_updates.id',
-                'title' => __('Mã YC'),
+                'name'  => 'request_updates.id',
+                'title' => __('Mã Yêu cầu'),
                 'class' => 'text-left',
             ],
-            'name' => [
-                'name'  => 'dao_request_updates.name',
-                'title' => __('Nhân viên'),
+            'staff_name' => [
+                'name'  => 'request_updates.staff_name',
+                'title' => __('Tên nhân viên'),
                 'class' => 'text-left',
             ],
-            'dao' => [
-                'name'  => 'dao_request_updates.dao',
+            'dao_update' => [
+                'name'  => 'request_updates.dao_update',
                 'title' => __('DAO Thay đổi'),
                 'class' => 'text-left',
             ],
             'email' => [
-                'name'  => 'dao_request_updates.email',
+                'name'  => 'request_updates.email',
                 'title' => __('Email'),
                 'class' => 'text-left',
             ],
-            'status_process' => [
-                'name'  => 'dao_request_updates.status_process',
+            'status' => [
+                'name'  => 'request_updates.status',
                 'title' => __('Trạng thái'),
                 'class' => 'text-left',
             ],
-            'note_process' => [
-                'name'  => 'dao_request_updates.note_process',
-                'title' => __('Note'),
-                'class' => 'text-left',
-            ],
             'created_at' => [
-                'name'  => 'dao_request_updates.created_at',
+                'name'  => 'request_updates.created_at',
                 'title' => trans('core/base::tables.created_at'),
-                'width' => '100px',
+            ],
+            'action' => [
+                'name'  => 'request_updates.action',
+                'title' => __('Xem'),
             ],
         ];
     }
@@ -160,7 +203,7 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         $buttons = $this->addCreateButton(route('request-update.create'), 'request-update.create');
 
-        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, DaoRequestUpdate::class);
+        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, RequestUpdate::class);
     }
 
     /**
@@ -177,11 +220,29 @@ class DaoRequestUpdateTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'dao_request_updates.status' => [
+            'request_updates.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
                 'choices'  => BaseStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
+            ],
+        ];
+    }
+
+        /**
+     * @return array
+     */
+    public function getOperationsHeading()
+    {
+        return [
+            'operations' => [
+                'title'      => trans('core/base::tables.operations'),
+                // 'width'      => '350px',
+                'class'      => 'text-center',
+                'orderable'  => false,
+                'searchable' => false,
+                'exportable' => false,
+                'printable'  => false,
             ],
         ];
     }

@@ -33,10 +33,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username',
+        // 'username',
         'email',
-        'first_name',
-        'last_name',
+        'name',
+        // 'first_name',
+        // 'last_name',
         'password',
         'super_user',
         'avatar_id',
@@ -189,7 +190,8 @@ class User extends Authenticatable
     public function authorAttributes()
     {
         return [
-            'name'   => $this->getFullName(),
+            'name'   => $this->name,
+            // 'name'   => $this->getFullName(),
             'email'  => $this->email,
             'url'    => $this->website,
             'avatar' => $this->avatar_url,

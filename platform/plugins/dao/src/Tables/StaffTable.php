@@ -64,7 +64,7 @@ class StaffTable extends TableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return $item->status->toHtml();
+                return $item->status? $item->status->toHtml(): null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())

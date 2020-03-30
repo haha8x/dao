@@ -3,7 +3,7 @@
 namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
-use Botble\Dao\Http\Requests\DaoRequestUpdateRequest;
+use Botble\Dao\Http\Requests\RequestUpdateRequest;
 use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -13,8 +13,9 @@ use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
-use Botble\Dao\Forms\DaoRequestUpdateForm;
+use Botble\Dao\Forms\RequestUpdateForm;
 use Botble\Base\Forms\FormBuilder;
+use Auth;
 
 class RequestUpdateController extends BaseController
 {
@@ -53,18 +54,23 @@ class RequestUpdateController extends BaseController
     {
         page_title()->setTitle(trans('plugins/dao::request-update.create'));
 
-        return $formBuilder->create(DaoRequestUpdateForm::class)->renderForm();
+        return $formBuilder->create(RequestUpdateForm::class)->renderForm();
     }
 
     /**
-     * Insert new DaoRequestUpdate into database
+     * Insert new RequestUpdate into database
      *
-     * @param DaoRequestUpdateRequest $request
+     * @param RequestUpdateRequest $request
      * @return BaseHttpResponse
      */
-    public function store(DaoRequestUpdateRequest $request, BaseHttpResponse $response)
+    public function store(RequestUpdateRequest $request, BaseHttpResponse $response)
     {
         $daoRequestUpdate = $this->daoRequestUpdateRepository->createOrUpdate($request->input());
+
+        $request->merge([
+            'status' => 'create',
+            'created_by' => Auth::id(),
+        ]);
 
         event(new CreatedContentEvent(DAO_REQUEST_UPDATE_MODULE_SCREEN_NAME, $request, $daoRequestUpdate));
 
@@ -90,17 +96,21 @@ class RequestUpdateController extends BaseController
 
         page_title()->setTitle(trans('plugins/dao::request-update.edit') . ' "' . $daoRequestUpdate->name . '"');
 
-        return $formBuilder->create(DaoRequestUpdateForm::class, ['model' => $daoRequestUpdate])->renderForm();
+        return $formBuilder->create(RequestUpdateForm::class, ['model' => $daoRequestUpdate])->renderForm();
     }
 
     /**
      * @param $id
-     * @param DaoRequestUpdateRequest $request
+     * @param RequestUpdateRequest $request
      * @return BaseHttpResponse
      */
-    public function update($id, DaoRequestUpdateRequest $request, BaseHttpResponse $response)
+    public function update($id, RequestUpdateRequest $request, BaseHttpResponse $response)
     {
         $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
+
+        $request->merge([
+            'updated_by' => Auth::id(),
+        ]);
 
         $daoRequestUpdate->fill($request->input());
 
@@ -165,9 +175,9 @@ class RequestUpdateController extends BaseController
      */
     public function info($id)
     {
-        $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
+        $item = $this->daoRequestUpdateRepository->findOrFail($id);
 
-        return view('plugins/dao::request.transfer.info', compact('daoRequestUpdate'))->render();
+        return view('plugins/dao::request.update.info', compact('item'))->render();
     }
 
     /**
@@ -294,7 +304,7 @@ class RequestUpdateController extends BaseController
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
-                ->setNextUrl(route('dao.index'))
+                ->setNextUrl(route('request-update.index'))
                 ->setMessage(trans('core/base::notices.update_success_message'));
         } catch (Exception $exception) {
             return $response

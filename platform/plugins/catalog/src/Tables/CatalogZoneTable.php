@@ -20,7 +20,7 @@ class CatalogZoneTable extends TableAbstract
     /**
      * @var bool
      */
-    protected $hasFilter = true;
+    protected $hasFilter = false;
 
     /**
      * CatalogZoneTable constructor.
@@ -115,28 +115,5 @@ class CatalogZoneTable extends TableAbstract
         $buttons = $this->addCreateButton(route('catalog-zone.create'), 'catalog-zone.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, CatalogZone::class);
-    }
-
-    /**
-     * @return array
-     * @throws \Throwable
-     */
-    public function bulkActions(): array
-    {
-        return $this->addDeleteAction(route('catalog-zone.deletes'), 'catalog-zone.destroy', parent::bulkActions());
-    }
-
-    /**
-     * @return array
-     */
-    public function getBulkChanges(): array
-    {
-        return [
-            'catalog_zones.name' => [
-                'title'    => trans('core/base::tables.name'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
-        ];
     }
 }

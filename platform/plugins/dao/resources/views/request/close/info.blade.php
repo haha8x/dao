@@ -1,85 +1,111 @@
 <div class="modal-box-container">
     <div class="modal-title">
-        <i class="til_img"></i> <strong>{{ __('Xem yêu cầu đóng DAO:id', ['id' => $daoRequestNew->id]) }}</strong>
+        <i class="til_img"></i>
+        <strong>{{ __('Xem yêu cầu đóng DAO:id', ['id' => $item->id]) }}</strong>
     </div>
     <div class="modal-body">
+        <div class="request-action" style="float: right;margin-bottom: 10px;">
+            <a href="javascript:;" class="btn btn-primary" data-fancybox-close>{{ __('Đóng')  }}</a>
+            @if ($item->status == 'create')
+            @if (Auth::user()->hasPermission('request-close.receive'))
+            <a href="{{ route('request-close.receive', $item->id) }}" class="btn btn-info">
+                {{ __('Tiếp nhận') }}
+            </a>
+            @endif
+            @if (Auth::user()->hasPermission('request-close.reject'))
+            <a href="{{ route('request-close.reject', $item->id) }}" class="btn btn-danger">
+                {{ __('Từ chối') }}
+            </a>
+            @endif
+            @endif
+            @if ($item->status == 'receive')
+            @if (Auth::user()->hasPermission('request-close.gdcn_approve'))
+            <a href="{{ route('request-close.gdcn_approve', $item->id) }}" class="btn btn-info">
+                {{ __('GDCN Duyệt') }}
+            </a>
+            @endif
+            @if (Auth::user()->hasPermission('request-close.hoiso_approve'))
+            <a href="{{ route('request-close.hoiso_approve', $item->id) }}" class="btn btn-info">
+                {{ __('Hội sở Duyệt') }}
+            </a>
+            @endif
+            @endif
+            @if ($item->status == 'gdcn_approve' || $item->status == 'hoiso_approve')
+            @if (Auth::user()->hasPermission('request-close.it_process'))
+            <a href="{{ route('request-close.it_process', $item->id) }}" class="btn btn-info">
+                {{ __('IT Xử lý') }}
+            </a>
+            @endif
+            @endif
+            @if ($item->status == 'it_process')
+            @if (Auth::user()->hasPermission('request-close.success'))
+            <a href="{{ route('request-close.success', $item->id) }}" class="btn btn-info">
+                {{ __('Thành công') }}
+            </a>
+            @endif
+            @endif
+        </div>
         <div class="form-body">
             <table style="width:100%" border="1">
                 <tr>
                     <th>Vùng</th>
-                    <td>{{ __(':zone_id', ['zone_id' => $daoRequestNew->zone->name]) }}</td>
+                    <td>{{ $item->zone ? $item->zone->name : null }}</td>
                     <th>Chi nhánh:</th>
-                    <td>{{ __(':branch_id', ['branch_id' => $daoRequestNew->branch->name]) }}</td>
+                    <td>{{ $item->branch ? $item->branch->name : null }}</td>
+                </tr>
+                <tr>
+                    <th>DAO cũ:</th>
+                    <td>{{ $item->dao_old }}</td>
+                    <th>DAO thay đổi:</th>
+                    <td>{{ $item->dao_update }}</td>
+                </tr>
+                <tr>
+                    <th>Ngày cấp DAO:</th>
+                    <td>{{ date_from_database($item->from_date, config('core.base.general.date_format.date')) }}
+                    </td>
+                    <th>Ngày hết hạn DAO:</th>
+                    <td>{{ date_from_database($item->to_date, config('core.base.general.date_format.date')) }}
+                    </td>
                 </tr>
                 <tr>
                     <th>Tên nhân viên:</th>
-                    <td>{{ __(':staff_name', ['staff_name' => $daoRequestNew->staff_name]) }}</td>
+                    <td>{{ $item->staff_name }}</td>
                     <th>Mã nhân viên:</th>
-                    <td>{{ __(':staff_id', ['staff_id' => $daoRequestNew->staff_id]) }}</td>
+                    <td>{{ $item->staff_id }}</td>
                 </tr>
                 <tr>
                     <th>Vị trí:</th>
-                    <td>{{ __(':position_id', ['position_id' => $daoRequestNew->position->name]) }}</td>
+                    <td>{{ $item->position ? $item->position->name : null }}</td>
                     <th>Email:</th>
-                    <td>{{ __(':email', ['email' => $daoRequestNew->email]) }}</td>
+                    <td>{{ $item->email }}</td>
                 </tr>
                 <tr>
                     <th>CMND:</th>
-                    <td>{{ __(':cmnd', ['cmnd' => $daoRequestNew->cmnd]) }}</td>
+                    <td>{{ $item->cmnd }}</td>
                     <th>Điện thoại:</th>
-                    <td>{{ __(':phone', ['phone' => $daoRequestNew->phone]) }}</td>
+                    <td>{{ $item->phone }}</td>
                 </tr>
                 <tr>
                     <th>Trạng thái DAO:</th>
-                    <td>{{ __(':level', ['level' => $daoRequestNew->level]) }}</td>
+                    <td>60</td>
                     <th>CIF:</th>
-                    <td>{{ __(':cif', ['cif' => $daoRequestNew->cif]) }}</td>
+                    <td>{{ $item->cif }}</td>
                 </tr>
                 <tr>
                     <th>Trạng thái xử lý:</th>
-                    <td>{{ $daoRequestNew->status->toText() }}</td>
+                    <td>{{ $item->status ? $item->status->toText() : null }}</td>
                     <th>Note:</th>
-                    <td>{{ __(':note', ['note' => $daoRequestNew->note]) }}</td>
+                    <td>{{ $item->note }}</td>
                 </tr>
                 <tr>
                     <th>Ngày tạo:</th>
-                    <td>{{ date_from_database($daoRequestNew->created_at, config('core.base.general.date_format.date_time')) }}</td>
+                    <td>{{ date_from_database($item->created_at, config('core.base.general.date_format.date_time')) }}
+                    </td>
                     <th>Ngày cập nhật:</th>
-                    <td>{{ date_from_database($daoRequestNew->updated_at, config('core.base.general.date_format.date_time')) }}</td>
+                    <td>{{ date_from_database($item->updated_at, config('core.base.general.date_format.date_time')) }}
+                    </td>
                 </tr>
             </table>
-            <p>
-                <img style="width:100%;margin-top:10px;" src="{{ '/storage/'.$daoRequestNew->decision_file }}">
-            </p>
         </div>
-    </div>
-    <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary" data-fancybox-close>{{ __('Đóng')  }}</a>
-        @if ($daoRequestNew->status == 'create')
-        <a href="{{ route('request-new.receive', $daoRequestNew->id) }}" class="btn btn-info">
-            {{ __('Tiếp nhận') }}
-        </a>
-        @endif
-        @if ($daoRequestNew->status == 'receive')
-        <a href="{{ route('request-new.reject', $daoRequestNew->id) }}" class="btn btn-info">
-            {{ __('Từ chối') }}
-        </a>
-        @endif
-        @if ($daoRequestNew->status == 'receive')
-        <a href="{{ route('request-new.approve', $daoRequestNew->id) }}" class="btn btn-info">
-            {{ __('Duyệt') }}
-        </a>
-        @endif
-        @if ($daoRequestNew->status == 'gdcn_approve')
-        <a href="{{ route('request-new.it_process', $daoRequestNew->id) }}" class="btn btn-info">
-            {{ __('IT Xử lý') }}
-        </a>
-        @endif
-        @if ($daoRequestNew->status == 'it_process')
-        <a href="{{ route('request-new.approve', $daoRequestNew->id) }}" class="btn btn-info">
-            {{ __('Duyệt') }}
-        </a>
-        @endif
-
     </div>
 </div>

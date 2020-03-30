@@ -20,6 +20,7 @@ return [
     'username'                   => 'Username',
     'last_name'                  => 'Last Name',
     'first_name'                 => 'First Name',
+    'name'                       => 'Name',
     'message'                    => 'Message',
     'cancel_btn'                 => 'Cancel',
     'change_password'            => 'Change password',

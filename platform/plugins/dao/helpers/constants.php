@@ -18,6 +18,9 @@ if (!defined('DAO_REQUEST_TRANSFER_MODULE_SCREEN_NAME')) {
 if (!defined('DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME')) {
     define('DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME', 'request-close');
 }
+if (!defined('REQUEST_HISTORY_MODULE_SCREEN_NAME')) {
+    define('REQUEST_HISTORY_MODULE_SCREEN_NAME', 'request-history');
+}
 if (!defined('DAO_REQUEST_NEW_TABLE_ACTIONS')) {
     define('DAO_REQUEST_NEW_TABLE_ACTIONS', 'request-new-table-actions');
 }
