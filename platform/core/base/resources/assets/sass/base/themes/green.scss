@@ -91,7 +91,7 @@ $header-top-menu-badge-font-color: #ffffff;
 $header-top-menu-icon-font-color: #00873f !default;
 
 // Top menu user bar
-$header-top-menu-user-font-color: $header-hor-menu-default-link-font-color !default;
+$header-top-menu-user-font-color: #FFFFFF !default;
 $header-top-menu-user-bg-color: $header-search-bg-color !default;
 
 //begin: Top Menu Extended Dropdowns
@@ -134,8 +134,8 @@ $sidebar-menu-link-icon-font-color: #c3c3c3 !default;
 $sidebar-menu-link-icon-font-color-on-active: $sidebar-menu-link-font-color-on-active !default;
 $sidebar-menu-link-icon-font-color-on-hover: lighten($sidebar-menu-link-font-color, 35%) !default;
 
-$sidebar-menu-link-bg-color-on-hover: #00873f !default;
-$sidebar-menu-link-bg-color-on-active: #00873f;
+$sidebar-menu-link-bg-color-on-hover: #EB1E25 !default;
+$sidebar-menu-link-bg-color-on-active: #EB1E25;
 
 $sidebar-menu-arrow-color: $sidebar-menu-link-icon-font-color !default;
 $sidebar-menu-arrow-color-on-active: $sidebar-menu-link-icon-font-color-on-active !default;
@@ -368,12 +368,7 @@ body.login {
 }
 
 .page-logo .logo-default {
-    height: 70px;
-}
-
-.page-header.navbar .page-logo {
-    height: 80px;
-    padding-left: 0;
+    max-width: 235px;
 }
 
 .page-header.navbar .top-menu .navbar-nav {

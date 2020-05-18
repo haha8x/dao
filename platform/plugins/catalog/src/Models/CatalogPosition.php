@@ -16,11 +16,12 @@ class CatalogPosition extends BaseModel
      */
     protected $table = 'catalog_positions';
 
+    public $timestamps = false;
+
     /**
      * @var array
      */
     protected $fillable = [
         'name',
     ];
-
 }

@@ -1,0 +1,14 @@
+{
+  "name": "botble/captcha",
+  "description": "Captcha plugin",
+  "homepage": "https://botble.com",
+  "authors": [{
+    "name": "Sang Nguyen",
+    "email": "minhsang2603@gmail.com",
+    "homepage": "https://sangnguyen.info"
+  }],
+  "require": {
+    "google/recaptcha": "^1.1",
+    "mews/captcha": "^3.1"
+  }
+}

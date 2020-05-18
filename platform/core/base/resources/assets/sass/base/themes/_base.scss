@@ -14,7 +14,7 @@ Page Header
 
 /* Header search bar, toggler button & top menu */
 .page-header.navbar {
-    background-color: $header-bg-color;
+    background-color: #00873f;
 
     /* Top notification menu/bar */
     .top-menu {
@@ -31,7 +31,7 @@ Page Header
                     }
 
                     &:hover {
-                        background-color: $header-top-menu-bg-hover-color;
+                        color: #000000;
 
                         > i {
                             color: lighten($header-top-menu-icon-font-color, 15%);

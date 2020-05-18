@@ -3,7 +3,6 @@
 namespace Botble\Dao\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -12,6 +11,7 @@ use Botble\Dao\Models\RequestUpdate;
 use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
+use Botble\Dao\Enums\RequestStatusEnum;
 
 class DaoRequestUpdateTable extends TableAbstract
 {
@@ -71,13 +71,13 @@ class DaoRequestUpdateTable extends TableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return $item->zone? $item->zone->name : null;
+                return $item->zone ? $item->zone->name : null;
             })
             ->editColumn('branch_id', function ($item) {
-                return $item->branch? $item->branch->name: null;
+                return $item->branch ? $item->branch->name : null;
             })
             ->editColumn('branch_code', function ($item) {
-                return $item->branch? $item->branch->code : null;
+                return $item->branch ? $item->branch->code : null;
             })
             ->editColumn('id', function ($item) {
                 return ('DAO' . $item->id);
@@ -86,7 +86,7 @@ class DaoRequestUpdateTable extends TableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return $item->status? $item->status->toHtml(): null;
+                return $item->status ? $item->status->toHtml() : null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -203,6 +203,11 @@ class DaoRequestUpdateTable extends TableAbstract
     {
         $buttons = $this->addCreateButton(route('request-update.create'), 'request-update.create');
 
+        $buttons['import-field-group'] = [
+            'link' => '#',
+            'text' => view('plugins/dao::_partials.import')->render(),
+        ];
+
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, RequestUpdate::class);
     }
 
@@ -223,13 +228,18 @@ class DaoRequestUpdateTable extends TableAbstract
             'request_updates.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
+                'choices'  => RequestStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
+            ],
+            'request_updates.created_at' => [
+                'title'    => trans('core/base::tables.created_at'),
+                'type'     => 'date',
+                'validate' => 'required',
             ],
         ];
     }
 
-        /**
+    /**
      * @return array
      */
     public function getOperationsHeading()

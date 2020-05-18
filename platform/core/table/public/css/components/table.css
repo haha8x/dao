@@ -74,7 +74,6 @@ table.dataTable {
   border-top: none;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-  width: 100% !important;
 }
 
 .datatable-header {
@@ -90,7 +89,8 @@ table.dataTable {
   padding: 0;
 }
 
-.table-has-actions .dataTables_filter, .table-has-filter .dataTables_filter {
+.table-has-actions .dataTables_filter,
+.table-has-filter .dataTables_filter {
   left: 125px;
 }
 
@@ -136,7 +136,8 @@ table.dataTable {
 .dataTables_wrapper thead th img {
   margin-right: 10px;
 }
-.dataTables_wrapper td, .dataTables_wrapper th {
+.dataTables_wrapper td,
+.dataTables_wrapper th {
   vertical-align: middle !important;
   text-align: center;
 }
@@ -167,6 +168,7 @@ table.dataTable {
   position: relative;
   padding: 0;
   margin: 0;
+  width: 100% !important;
 }
 .page-content .dataTables_wrapper .datatables__info_wrap {
   background-color: #fbfcfd;
@@ -199,7 +201,8 @@ table.dataTable {
 .page-content .dataTables_wrapper .text-center {
   text-align: center;
 }
-.page-content .dataTables_wrapper th, .page-content .dataTables_wrapper td {
+.page-content .dataTables_wrapper th,
+.page-content .dataTables_wrapper td {
   outline: none !important;
 }
 .page-content .dataTables_wrapper th .checker {
@@ -371,7 +374,8 @@ div.dataTables_info {
   margin: 0;
 }
 
-.dataTables_wrapper td, .dataTables_wrapper th {
+.dataTables_wrapper td,
+.dataTables_wrapper th {
   vertical-align: middle !important;
   text-align: center;
 }
@@ -389,7 +393,12 @@ div.dataTables_info {
     max-width: 120px;
   }
 }
-.dataTables_wrapper .table-bordered > tbody > tr > td, .dataTables_wrapper .table-bordered > tbody > tr > th, .dataTables_wrapper .table-bordered > tfoot > tr > td, .dataTables_wrapper .table-bordered > tfoot > tr > th, .dataTables_wrapper .table-bordered > thead > tr > td, .dataTables_wrapper .table-bordered > thead > tr > th {
+.dataTables_wrapper .table-bordered > tbody > tr > td,
+.dataTables_wrapper .table-bordered > tbody > tr > th,
+.dataTables_wrapper .table-bordered > tfoot > tr > td,
+.dataTables_wrapper .table-bordered > tfoot > tr > th,
+.dataTables_wrapper .table-bordered > thead > tr > td,
+.dataTables_wrapper .table-bordered > thead > tr > th {
   border: 1px solid #f4f4f4;
 }
 .dataTables_wrapper .form-control:focus {
@@ -492,7 +501,8 @@ div.dataTables_info {
 .table-wrapper .wrapper-filter .form-filter .filter-column-value-wrap .input-group {
   z-index: 2;
 }
-.table-wrapper .wrapper-filter .form-filter .btn-reset-filter-item, .table-wrapper .wrapper-filter .form-filter .btn-remove-filter-item {
+.table-wrapper .wrapper-filter .form-filter .btn-reset-filter-item,
+.table-wrapper .wrapper-filter .form-filter .btn-remove-filter-item {
   cursor: pointer;
 }
 .table-wrapper .table-configuration-wrap {

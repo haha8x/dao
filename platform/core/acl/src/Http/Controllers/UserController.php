@@ -337,7 +337,7 @@ class UserController extends BaseController
 
             $image = $imageManager->make($request->file('avatar_file')->getRealPath());
             $avatarData = json_decode($request->input('avatar_data'));
-            $image->crop((int)$avatarData->height, (int)$avatarData->width, (int)$avatarData->x, (int)$avatarData->y);
+            $image->crop((int) $avatarData->height, (int) $avatarData->width, (int) $avatarData->x, (int) $avatarData->y);
             $path = $folderPath . '/' . $fileName;
 
             $uploadManager->saveFile($path, $image->stream()->__toString());
@@ -450,27 +450,5 @@ class UserController extends BaseController
         return $response
             ->setNextUrl(route('users.index'))
             ->setMessage(trans('core/base::system.supper_revoked'));
-    }
-
-        /**
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
-     */
-    public function getImpersonate($id)
-    {
-        $user = $this->userRepository->findOrFail($id);
-        Auth::user()->impersonate($user);
-        return redirect()->route('dashboard.index');
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     * @author Sang Nguyen
-     */
-    public function leaveImpersonation()
-    {
-        Auth::user()->leaveImpersonation();
-        return redirect()->route('dashboard.index');
     }
 }

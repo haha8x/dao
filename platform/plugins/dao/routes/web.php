@@ -43,14 +43,14 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
 
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
 
-        Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
-            Route::resource('', 'RegisterUserController')->parameters(['' => 'staff']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'RegisterUserController@deletes',
-                'permission' => 'staff.destroy',
-            ]);
-        });
+        // Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
+        //     Route::resource('', 'RegisterUserController')->parameters(['' => 'staff']);
+        //     Route::delete('items/destroy', [
+        //         'as'         => 'deletes',
+        //         'uses'       => 'RegisterUserController@deletes',
+        //         'permission' => 'staff.destroy',
+        //     ]);
+        // });
 
         Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
             Route::resource('', 'DaoController')
@@ -214,7 +214,7 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
 
         Route::group(['prefix' => 'dao/closes', 'as' => 'request-close.'], function () {
             Route::resource('', 'RequestCloseController')
-            ->parameters(['' => 'request-close']);
+                ->parameters(['' => 'request-close']);
             Route::get('info/{id}', [
                 'as'         => 'info',
                 'uses'       => 'RequestCloseController@info',

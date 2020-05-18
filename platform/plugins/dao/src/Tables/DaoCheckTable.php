@@ -2,7 +2,7 @@
 
 namespace Botble\Dao\Tables;
 
-use Botble\Dao\Abstracts\ScrollTableAbstract;
+use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Repositories\Interfaces\DaoInterface;
@@ -10,7 +10,7 @@ use Botble\Catalog\Repositories\Interfaces\CatalogBranchInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 
-class DaoCheckTable extends ScrollTableAbstract
+class DaoCheckTable extends TableAbstract
 {
     /**
      * @var string
@@ -100,7 +100,7 @@ class DaoCheckTable extends ScrollTableAbstract
             ])
             ->where('daos.id', request()->route()->parameter('id'));
 
-            return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
+        return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
 
     /**

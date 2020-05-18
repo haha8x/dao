@@ -17,6 +17,8 @@ class CatalogBranch extends BaseModel
      */
     protected $table = 'catalog_branches';
 
+    public $timestamps = false;
+
     /**
      * @var array
      */

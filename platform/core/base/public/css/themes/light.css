@@ -1369,7 +1369,6 @@ body.login .form-group .form-control:focus:-moz-placeholder {
 }
 
 .page-logo .logo-default {
-  height: 35px;
   margin: 7px 0 0 !important;
 }
 
@@ -4087,7 +4086,7 @@ Page Header
 ***********/
 /* Header search bar, toggler button & top menu */
 .page-header.navbar {
-  background-color: #126ba0;
+  background-color: #00873f;
   /* Top notification menu/bar */
   /* Header seaech box */
   /* Toggler button for sidebar expand/collapse and responsive sidebar menu */
@@ -4109,7 +4108,7 @@ Page Header
   color: #ffffff;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle:hover {
-  background-color: #178ace;
+  color: #000000;
 }
 .page-header.navbar .top-menu .navbar-nav > li.dropdown .dropdown-toggle:hover > i {
   color: #e5e7ea;

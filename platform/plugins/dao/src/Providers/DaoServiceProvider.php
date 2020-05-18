@@ -92,12 +92,6 @@ class DaoServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(StaffInterface::class, function () {
-            return new StaffCacheDecorator(
-                new StaffRepository(new Staff)
-            );
-        });
-
         $this->app->bind(RequestHistoryInterface::class, function () {
             return new RequestHistoryCacheDecorator(
                 new RequestHistoryRepository(new RequestHistory)
@@ -112,6 +106,7 @@ class DaoServiceProvider extends ServiceProvider
         $this->setNamespace('plugins/dao')
             ->loadAndPublishConfigurations(['permissions'])
             ->loadAndPublishViews()
+            ->loadMigrations()
             ->loadAndPublishTranslations()
             ->loadRoutes(['web']);
 
@@ -177,16 +172,6 @@ class DaoServiceProvider extends ServiceProvider
                 'icon'        => 'fas fa-users',
                 'url'         => route('customer.index'),
                 'permissions' => ['customer.index'],
-            ]);
-
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugins-staff',
-                'priority'    => 10,
-                'parent_id'   => null,
-                'name'        => __('Quản lý tài khoản'),
-                'icon'        => 'fas fa-user',
-                'url'         => route('staff.index'),
-                'permissions' => ['staff.index'],
             ]);
         });
     }

@@ -75,7 +75,7 @@ class DaoRequestTransferTable extends TableAbstract
             //     return $item->zone ? $item->zone->name : null;
             // })
             ->editColumn('branch_code', function ($item) {
-                return $item->branch? $item->branch->code : null;
+                return $item->branch ? $item->branch->code : null;
             })
             ->editColumn('id', function ($item) {
                 return ('DAO' . $item->id);
@@ -84,10 +84,10 @@ class DaoRequestTransferTable extends TableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('type', function ($item) {
-                return $item->type? $item->type->toHtml(): null;
+                return $item->type ? $item->type->toHtml() : null;
             })
             ->editColumn('status', function ($item) {
-                return $item->status? $item->status->toHtml(): null;
+                return $item->status ? $item->status->toHtml() : null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -122,7 +122,7 @@ class DaoRequestTransferTable extends TableAbstract
             'request_transfers.reason',
             'request_transfers.status',
             'request_transfers.created_at',
-        ])->orderBy('request_transfers.id', 'desc');
+        ]);
 
         if (!Auth::user()->isSuperUser() || !Auth::user()->hasPermission('request-transfer.all')) {
             $query = $model->where('created_by', Auth::id());
@@ -209,6 +209,11 @@ class DaoRequestTransferTable extends TableAbstract
     {
         $buttons = $this->addCreateButton(route('request-transfer.create'), 'request-transfer.create');
 
+        $buttons['import-field-group'] = [
+            'link' => '#',
+            'text' => view('plugins/dao::_partials.import')->render(),
+        ];
+
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, RequestTransfer::class);
     }
 
@@ -223,6 +228,11 @@ class DaoRequestTransferTable extends TableAbstract
                 'type'     => 'select',
                 'choices'  => RequestStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
+            ],
+            'request_transfers.created_at' => [
+                'title'    => trans('core/base::tables.created_at'),
+                'type'     => 'date',
+                'validate' => 'required',
             ],
         ];
     }

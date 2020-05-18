@@ -256,25 +256,6 @@ return [
         'parent_flag' => 'customer.index',
     ],
     [
-        'name' => 'Quản lý nhân viên',
-        'flag' => 'staff.index',
-    ],
-    [
-        'name'        => 'Tạo',
-        'flag'        => 'staff.create',
-        'parent_flag' => 'staff.index',
-    ],
-    [
-        'name'        => 'Sửa',
-        'flag'        => 'staff.edit',
-        'parent_flag' => 'staff.index',
-    ],
-    [
-        'name'        => 'Xóa',
-        'flag'        => 'staff.destroy',
-        'parent_flag' => 'staff.index',
-    ],
-    [
         'name' => 'Luồng xử lý yêu cầu',
         'flag' => 'request-history.index',
     ],

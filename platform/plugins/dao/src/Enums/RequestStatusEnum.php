@@ -11,7 +11,7 @@ use Html;
  */
 class RequestStatusEnum extends Enum
 {
-    public const TAO_MOI = 'create';
+    public const TAO_MOI = 'tao_moi';
     public const TIEP_NHAN = 'tiep_nhan';
     public const TU_CHOI = 'tu_choi';
     public const IT_XULY = 'it_xyly';

@@ -1,6 +1,9 @@
 /***
 Page Header
 ***/
+.page-header-inner.col-12 {
+    padding: 0;
+}
 
 .page-header.navbar {
     width: 100%;
@@ -26,8 +29,9 @@ Page Header
         float: left;
         display: block;
         width: $sidebar-logo-container-width;
-        height: $header-height;
-        padding-left: 20px;
+        height: 80px;
+        padding-left: 0;
+        background: #FFFFFF;
 
         .page-sidebar-closed.page-sidebar-closed-hide-logo & {
             padding: 0;
@@ -57,8 +61,7 @@ Page Header
     /* Menu Toggler */
     .menu-toggler {
         cursor: pointer;
-        @include burger-icon(#ffffff, #ffffff, $menu-toggler-size, 1px, -6px, 6px, -6px);
-        @include opacity(0.7);
+        @include burger-icon(#ffffff, #ffffff, $menu-toggler-size, 1px, 6px, 6px, -6px);
         display: block;
         @include transition('opacity 0.3s');
 
@@ -68,7 +71,7 @@ Page Header
         }
 
         &.sidebar-toggler {
-            float: right;
+            float: left;
             margin: $header-sidebar-toggler-margin;
 
             .page-sidebar-closed.page-sidebar-closed-hide-logo & {

@@ -38,8 +38,8 @@ class CatalogBranchTable extends TableAbstract
         DataTables $table,
         UrlGenerator $urlDevTool,
         CatalogBranchInterface $catalogBranchRepository,
-        CatalogZoneInterface $catalogZoneRepository)
-    {
+        CatalogZoneInterface $catalogZoneRepository
+    ) {
         $this->repository = $catalogBranchRepository;
         $this->catalogZoneRepository = $catalogZoneRepository;
         $this->setOption('id', 'table-plugins-catalog-branch');
@@ -98,7 +98,7 @@ class CatalogBranchTable extends TableAbstract
             'catalog_branches.zone_id',
             'catalog_branches.code',
             'catalog_branches.name',
-        ])->orderBy('zone_id', 'asc');
+        ]);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }

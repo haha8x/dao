@@ -104,16 +104,6 @@ class UserTable extends TableAbstract
             })
             ->removeColumn('role_id');
 
-        if (Auth::user()->isSuperUser()) {
-            $data = $data->editColumn('impersonation', function ($item) {
-                if (Auth::user()->id !== $item->id) {
-                    return Html::link(route('users.impersonate', $item->id), __('Đăng nhập'), ['class' => 'btn btn-warning'])->toHtml();
-                }
-
-                return Html::tag('button', __('Đăng nhập'), ['class' => 'btn btn-warning', 'disabled' => true])->toHtml();
-            });
-        }
-
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
             ->addColumn('operations', function ($item) {
 
@@ -206,13 +196,6 @@ class UserTable extends TableAbstract
                 'title' => trans('core/acl::users.is_super'),
             ],
         ];
-
-        if (Auth::user()->isSuperUser()) {
-            $columns['impersonation'] = [
-                'name' => 'users.updated_at',
-                'title' => __('Đăng nhập'),
-            ];
-        }
 
         return $columns;
     }

@@ -1,0 +1,9 @@
+{
+    "name": "Staff",
+    "namespace": "Botble\\Staff\\",
+    "provider": "Botble\\Staff\\Providers\\StaffServiceProvider",
+    "author": "Sang Nguyen",
+    "url": "https://sangnguyen.info",
+    "version": "1.0",
+    "description": "The description for module staff"
+}

@@ -8,12 +8,12 @@ use Botble\Catalog\Repositories\Interfaces\CatalogPositionInterface;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
-use Botble\Dao\Abstracts\ScrollTableAbstract;
+use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Html;
 
-class DaoRequestNewTable extends ScrollTableAbstract
+class DaoRequestNewTable extends TableAbstract
 {
 
     /**
@@ -71,13 +71,13 @@ class DaoRequestNewTable extends ScrollTableAbstract
                 return table_checkbox($item->id);
             })
             ->editColumn('zone_id', function ($item) {
-                return $item->zone? $item->zone->name : null;
+                return $item->zone ? $item->zone->name : null;
             })
             ->editColumn('branch_id', function ($item) {
-                return $item->branch? $item->branch->name: null;
+                return $item->branch ? $item->branch->name : null;
             })
             ->editColumn('position_id', function ($item) {
-                return $item->position? $item->position->name: null;
+                return $item->position ? $item->position->name : null;
             })
             ->editColumn('status_dao', function ($item) {
                 return '60';
@@ -89,7 +89,7 @@ class DaoRequestNewTable extends ScrollTableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('status', function ($item) {
-                return $item->status? $item->status->toHtml(): null;
+                return $item->status ? $item->status->toHtml() : null;
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -219,7 +219,22 @@ class DaoRequestNewTable extends ScrollTableAbstract
                 'choices'  => RequestStatusEnum::labels(),
                 'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
+            'request_news.created_at' => [
+                'title'    => trans('core/base::tables.created_at'),
+                'type'     => 'date',
+                'validate' => 'required',
+            ],
         ];
+    }
+
+    public function buttons()
+    {
+        $buttons['import-field-group'] = [
+            'link' => '#',
+            'text' => view('plugins/dao::_partials.import')->render(),
+        ];
+
+        return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, RequestClose::class);
     }
 
     /**

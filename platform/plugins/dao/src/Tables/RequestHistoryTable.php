@@ -3,7 +3,7 @@
 namespace Botble\Dao\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
+use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\RequestHistoryInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
@@ -159,8 +159,8 @@ class RequestHistoryTable extends TableAbstract
             'request_histories.status' => [
                 'title'    => trans('core/base::tables.status'),
                 'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
+                'choices'  => RequestStatusEnum::labels(),
+                'validate' => 'required|in:' . implode(',', RequestStatusEnum::values()),
             ],
             'request_histories.created_at' => [
                 'title' => trans('core/base::tables.created_at'),

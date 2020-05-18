@@ -7,6 +7,7 @@ use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Event;
 use Illuminate\Support\ServiceProvider;
 use Botble\Base\Supports\Helper;
+use Auth;
 
 class EnhancedSettingServiceProvider extends ServiceProvider
 {
@@ -30,16 +31,14 @@ class EnhancedSettingServiceProvider extends ServiceProvider
             ->loadRoutes(['web'])
             ->loadAndPublishViews();
 
-        $this->app->register(HookServiceProvider::class);
-
-        Event::listen(RouteMatched::class, function () {
-            dashboard_menu()
-                ->removeItem('cms-core-plugins')
-                ->removeItem('cms-core-media')
-                ->removeItem('cms-core-system-information')
-                // ->removeItem('cms-core-platform-administration')
-                ;
-        });
+        // if (!Auth::user()->isSuperUser()) {
+        //     Event::listen(RouteMatched::class, function () {
+        //         dashboard_menu()
+        //             ->removeItem('cms-core-plugins')
+        //             ->removeItem('cms-core-media')
+        //             ->removeItem('cms-core-system-information', 'cms-core-platform-administration');
+        //     });
+        // }
 
         // Event::listen(RouteMatched::class, function () {
         //     dashboard_menu()->registerItem([

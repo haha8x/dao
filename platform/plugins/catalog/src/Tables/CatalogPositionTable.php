@@ -80,7 +80,7 @@ class CatalogPositionTable extends TableAbstract
         $query = $model->select([
             'catalog_positions.id',
             'catalog_positions.name',
-        ])->orderBy('name', 'asc');
+        ]);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }

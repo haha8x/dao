@@ -24,6 +24,3 @@ if (!defined('REQUEST_HISTORY_MODULE_SCREEN_NAME')) {
 if (!defined('DAO_REQUEST_NEW_TABLE_ACTIONS')) {
     define('DAO_REQUEST_NEW_TABLE_ACTIONS', 'request-new-table-actions');
 }
-if (!defined('STAFF_MODULE_SCREEN_NAME')) {
-    define('STAFF_MODULE_SCREEN_NAME', 'staff');
-}

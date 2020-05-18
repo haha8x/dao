@@ -48,9 +48,15 @@ class RequestUpdateForm extends FormAbstract
         $this
             ->setupModel(new RequestUpdate)
             ->setValidatorClass(RequestUpdateRequest::class)
+            // ->add('rowOpen1', 'html', [
+            //     'html' => '<div class="row">',
+            // ])
             ->add('dao_old', 'text', [
                 'label'      => __('DAO cũ'),
                 'label_attr' => ['class' => 'control-label required'],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
+                ],
                 'attr'       => [
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,
@@ -59,11 +65,17 @@ class RequestUpdateForm extends FormAbstract
             ->add('dao_update', 'text', [
                 'label'      => __('DAO mới'),
                 'label_attr' => ['class' => 'control-label required'],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
+                ],
                 'attr'       => [
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,
                 ],
             ])
+            // ->add('rowClose1', 'html', [
+            //     'html' => '</div>',
+            // ])
             ->add('zone_id', 'select', [
                 'label' => __('Vùng'),
                 'label_attr' => ['class' => 'control-label required'],

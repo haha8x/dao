@@ -13,6 +13,8 @@ class CatalogZone extends BaseModel
      */
     protected $table = 'catalog_zones';
 
+    public $timestamps = false;
+
     /**
      * @var array
      */
