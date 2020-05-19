@@ -15,6 +15,7 @@ use Botble\Base\Supports\Helper;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Botble\Setting\Providers\SettingServiceProvider;
 use Botble\Setting\Supports\SettingStore;
+use Botble\Base\Supports\BreadcrumbsManager;
 use Event;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -27,6 +28,11 @@ use MetaBox;
 class BaseServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
+
+    /**
+     * @var bool
+     */
+    protected $defer = true;
 
     /**
      * Register any application services.
@@ -54,7 +60,7 @@ class BaseServiceProvider extends ServiceProvider
             'app.timezone'                     => $setting->get('time_zone', $config->get('app.timezone')),
             'ziggy.blacklist'                  => ['debugbar.*'],
             'session.cookie'                   => 'botble_session',
-            'filesystems.default'              => $setting->get('media_driver', $config->get('filesystems.default')),
+            'filesystems.default'              => $setting->get('media_driver', 'public'),
             'filesystems.disks.s3.key'         => $setting
                 ->get('media_aws_access_key_id', $config->get('filesystems.disks.s3.key')),
             'filesystems.disks.s3.secret'      => $setting
@@ -63,8 +69,8 @@ class BaseServiceProvider extends ServiceProvider
                 ->get('media_aws_default_region', $config->get('filesystems.disks.s3.region')),
             'filesystems.disks.s3.bucket'      => $setting
                 ->get('media_aws_bucket', $config->get('filesystems.disks.s3.bucket')),
-            'filesystems.disks.s3.url'         => $setting
-                ->get('media_aws_url', $config->get('filesystems.disks.s3.url')),
+            'filesystems.disks.s3.endpoint'    => $setting
+                ->get('media_aws_url', $config->get('filesystems.disks.s3.endpoint')),
             'app.debug_blacklist'              => [
                 '_ENV'    => [
                     'APP_KEY',
@@ -96,6 +102,8 @@ class BaseServiceProvider extends ServiceProvider
         ]);
 
         $this->app->singleton(ExceptionHandler::class, Handler::class);
+
+        $this->app->singleton(BreadcrumbsManager::class, BreadcrumbsManager::class);
 
         /**
          * @var Router $router
@@ -162,10 +170,8 @@ class BaseServiceProvider extends ServiceProvider
                 'icon'        => null,
                 'url'         => route('system.info'),
                 'permissions' => [ACL_ROLE_SUPER_USER],
-            ]);
-
-        if (function_exists('proc_open')) {
-            dashboard_menu()->registerItem([
+            ])
+            ->registerItem([
                 'id'          => 'cms-core-system-cache',
                 'priority'    => 6,
                 'parent_id'   => 'cms-core-platform-administration',
@@ -174,6 +180,13 @@ class BaseServiceProvider extends ServiceProvider
                 'url'         => route('system.cache'),
                 'permissions' => [ACL_ROLE_SUPER_USER],
             ]);
-        }
+    }
+
+    /**
+     * @return array|string[]
+     */
+    public function provides(): array
+    {
+        return [BreadcrumbsManager::class];
     }
 }

@@ -1,38 +1,43 @@
 .media-modal-body {
-    padding    : 0;
-    height     : 600px;
-    overflow-y : scroll;
-    border     : none;
+    padding: 0;
+    height: 600px;
+    overflow-y: scroll;
+    border: none;
 }
 
 .rv-media-breadcrumb {
     .breadcrumb {
         li:first-child {
             &:before {
-                display : none !important;
+                display: none !important;
             }
         }
     }
 }
 
 .rv-media-container {
-    .rv-media-wrapper .rv-media-main-wrapper {
-        background : #ffffff;
+    .rv-media-wrapper {
+        .rv-media-main-wrapper {
+            background: #ffffff;
+        }
     }
-    height : calc(100vh - 140px);
+
+    height: calc(100vh - 140px);
+
     #modal_add_folder {
         .modal-body {
-            padding : 15px;
+            padding: 15px;
         }
     }
 }
 
-@media (max-width : 991px) {
+@media (max-width: 991px) {
     .rv-media-container {
         .rv-media-aside {
-            z-index : 10000;
+            z-index: 10000;
+
             .collapse-sidebar {
-                line-height : 41px;
+                line-height: 41px;
             }
         }
     }
@@ -40,14 +45,14 @@
 
 #rv_media_modal {
     .modal-dialog {
-        background : #ffffff;
+        background: #ffffff;
     }
 }
 
 .rv-media-integrate-wrapper {
-    display        : flex;
-    flex-direction : column;
-    height         : 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .hidden {

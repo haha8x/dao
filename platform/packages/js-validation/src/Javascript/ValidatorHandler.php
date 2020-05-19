@@ -20,7 +20,6 @@ class ValidatorHandler
      * @var RuleParser
      */
     protected $rules;
-
     /**
      * @var MessageParser
      */

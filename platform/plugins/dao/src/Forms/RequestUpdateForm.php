@@ -54,9 +54,6 @@ class RequestUpdateForm extends FormAbstract
             ->add('dao_old', 'text', [
                 'label'      => __('DAO cũ'),
                 'label_attr' => ['class' => 'control-label required'],
-                'wrapper'    => [
-                    'class' => 'form-group col-md-6',
-                ],
                 'attr'       => [
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,
@@ -65,9 +62,6 @@ class RequestUpdateForm extends FormAbstract
             ->add('dao_update', 'text', [
                 'label'      => __('DAO mới'),
                 'label_attr' => ['class' => 'control-label required'],
-                'wrapper'    => [
-                    'class' => 'form-group col-md-6',
-                ],
                 'attr'       => [
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,

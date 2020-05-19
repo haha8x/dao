@@ -13,14 +13,7 @@ class ZipRepository implements ZipperInterface
     protected $archive;
 
     /**
-     * Construct with a given path
-     *
-     * @param $filePath
-     * @param bool $create
-     * @param $archive
-     *
-     * @return ZipRepository
-     * @throws Exception
+     * {@inheritDoc}
      */
     public function __construct($filePath, $create = false, $archive = null)
     {
@@ -64,10 +57,7 @@ class ZipRepository implements ZipperInterface
     }
 
     /**
-     * Add a file to the opened Archive
-     *
-     * @param $pathToFile
-     * @param $pathInArchive
+     * {@inheritDoc}
      */
     public function addFile($pathToFile, $pathInArchive)
     {
@@ -75,10 +65,7 @@ class ZipRepository implements ZipperInterface
     }
 
     /**
-     * Add a file to the opened Archive using its contents
-     *
-     * @param $name
-     * @param $content
+     * {@inheritDoc}
      */
     public function addFromString($name, $content)
     {
@@ -86,7 +73,7 @@ class ZipRepository implements ZipperInterface
     }
 
     /**
-     * Closes the archive and saves it
+     * {@inheritDoc}
      */
     public function close()
     {

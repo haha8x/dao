@@ -38,7 +38,7 @@ return [
         'locale'      => 'Active locale',
         'environment' => 'Environment',
     ],
-    'disabled_in_demo_mode'           => 'You can not do it in demo mode!',
+    'disabled_in_demo_mode'           => 'You cannot do it in demo mode!',
     'report_description'              => 'Please share this information for troubleshooting',
     'get_system_report'               => 'Get System Report',
     'system_environment'              => 'System Environment',

@@ -70,12 +70,6 @@
                     </ul>
                 </div>
             </div>
-            <div class="rv-media-aside-bottom">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 0;"></div>
-                </div>
-                <div class="used-analytics"><span>...</span></div>
-            </div>
         </aside>
         <div class="rv-media-main-wrapper">
             <header class="rv-media-header">
@@ -88,34 +82,6 @@
                             <button class="btn btn-success js-dropzone-upload">
                                 <i class="fas fa-cloud-upload-alt"></i> {{ trans('core/media::media.upload') }}
                             </button>
-                        @endif
-                        @if (config('core.media.media.allow_external_services') && RvMedia::hasPermission('files.create'))
-                            <div class="btn-group" role="group">
-                                <div class="dropdown">
-                                    <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
-                                        <i class="fa fa-plus"></i> {{ trans('core/media::media.add_from') }}
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="#" data-toggle="modal" data-target="#modal_add_from_youtube">
-                                                <i class="fab fa-youtube"></i> {{ trans('core/media::media.youtube') }}
-                                            </a>
-                                        </li>
-                                        @if (app()->environment('demo'))
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#modal_coming_soon">
-                                                    <i class="fab fa-vimeo"></i> {{ trans('core/media::media.vimeo') }}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" data-toggle="modal" data-target="#modal_coming_soon">
-                                                    <i class="fab fa-vine"></i> {{ trans('core/media::media.vine') }}
-                                                </a>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
                         @endif
                         @if (RvMedia::hasPermission('folders.create'))
                             <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_folder">
@@ -359,37 +325,6 @@
                     </div>
                     <div class="modal-body">
                         <p>These features are on development</p>
-                        <div class="modal-notice"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal_add_from_youtube">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">
-                            <i class="fab fa-windows"></i> {{ trans('core/media::media.add_from_youtube') }}
-                        </h4>
-                        <button type="button" class="close" data-dismiss-modal="#modal_add_from_youtube" aria-label="{{ trans('core/media::media.close') }}">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="input-group">
-                                <label class="input-group-prepend custom-checkbox">
-                                    <input type="checkbox">
-                                    <span class="float-left"></span>
-                                    <small>{{ trans('core/media::media.playlist') }}</small>
-                                </label>
-                                <input type="text" class="form-control rv-youtube-url" placeholder="https://">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-success rv-btn-add-youtube-url" type="button">{{ trans('core/media::media.add_url') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="modal-notice"></div>
                     </div>
                 </div>

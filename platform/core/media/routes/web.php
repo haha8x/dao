@@ -18,11 +18,6 @@ Route::group(['namespace' => 'Botble\Media\Http\Controllers', 'middleware' => 'w
                 'uses' => 'MediaController@getList',
             ]);
 
-            Route::get('quota', [
-                'as'   => 'quota',
-                'uses' => 'MediaController@getQuota',
-            ]);
-
             Route::get('breadcrumbs', [
                 'as'   => 'breadcrumbs',
                 'uses' => 'MediaController@getBreadcrumbs',
@@ -47,11 +42,6 @@ Route::group(['namespace' => 'Botble\Media\Http\Controllers', 'middleware' => 'w
                 Route::post('upload-from-editor', [
                     'as'   => 'files.upload.from.editor',
                     'uses' => 'MediaFileController@postUploadFromEditor',
-                ]);
-
-                Route::post('add-external-service', [
-                    'as'   => 'files.add_external_service',
-                    'uses' => 'MediaFileController@postAddExternalService',
                 ]);
             });
 

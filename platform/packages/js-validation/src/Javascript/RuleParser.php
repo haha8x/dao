@@ -23,7 +23,7 @@ class RuleParser
     const JAVASCRIPT_RULE = 'laravelValidation';
 
     /**
-     * Token used to secure romte validations.
+     * Token used to secure remote validations.
      *
      * @var null|string $remoteToken
      */
@@ -124,7 +124,7 @@ class RuleParser
     protected function clientRule($attribute, $rule, $parameters)
     {
         $jsRule = self::JAVASCRIPT_RULE;
-        $method = "rule{$rule}";
+        $method = 'rule' . $rule;
 
         if (method_exists($this, $method)) {
             [$attribute, $parameters] = $this->$method($attribute, $parameters);

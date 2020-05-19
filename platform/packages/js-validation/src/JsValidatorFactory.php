@@ -2,10 +2,7 @@
 
 namespace Botble\JsValidation;
 
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator;
 use Botble\JsValidation\Javascript\JavascriptValidator;
@@ -20,7 +17,7 @@ class JsValidatorFactory
     /**
      * The application instance.
      *
-     * @var Container
+     * @var \Illuminate\Container\Container
      */
     protected $app;
 
@@ -34,7 +31,7 @@ class JsValidatorFactory
     /**
      * Create a new Validator factory instance.
      *
-     * @param Container $app
+     * @param \Illuminate\Container\Container $app
      * @param array $options
      */
     public function __construct($app, array $options = [])
@@ -63,7 +60,7 @@ class JsValidatorFactory
      * @param array $messages
      * @param array $customAttributes
      * @param null|string $selector
-     * @return JavascriptValidator
+     * @return \Botble\JsValidation\Javascript\JavascriptValidator
      */
     public function make(array $rules, array $messages = [], array $customAttributes = [], $selector = null)
     {
@@ -78,7 +75,7 @@ class JsValidatorFactory
      * @param array $rules
      * @param array $messages
      * @param array $customAttributes
-     * @return Validator
+     * @return \Illuminate\Validation\Validator
      */
     protected function getValidatorInstance(array $rules, array $messages = [], array $customAttributes = [])
     {
@@ -118,13 +115,13 @@ class JsValidatorFactory
      *
      * @param $formRequest
      * @param null $selector
-     * @return JavascriptValidator
+     * @return \Botble\JsValidation\Javascript\JavascriptValidator
      *
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function formRequest($formRequest, $selector = null)
     {
-        if (!is_object($formRequest)) {
+        if (! is_object($formRequest)) {
             $formRequest = $this->createFormRequest($formRequest);
         }
 
@@ -154,9 +151,9 @@ class JsValidatorFactory
      * Creates and initializes an Form Request instance.
      *
      * @param string $class
-     * @return FormRequest
+     * @return \Illuminate\Foundation\Http\FormRequest
      *
-     * @throws BindingResolutionException
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function createFormRequest($class)
     {
@@ -164,7 +161,7 @@ class JsValidatorFactory
          * @var $formRequest \Illuminate\Foundation\Http\FormRequest
          * @var $request Request
          */
-        [$class, $params] = $this->parseFormRequestName($class);
+        list($class, $params) = $this->parseFormRequestName($class);
 
         $request = $this->app->__get('request');
         $formRequest = $this->app->build($class, $params);
@@ -183,9 +180,9 @@ class JsValidatorFactory
     /**
      * Creates JsValidator instance based on Validator.
      *
-     * @param Validator $validator
+     * @param \Illuminate\Validation\Validator $validator
      * @param null|string $selector
-     * @return JavascriptValidator
+     * @return \Botble\JsValidation\Javascript\JavascriptValidator
      */
     public function validator(Validator $validator, $selector = null)
     {
@@ -195,19 +192,19 @@ class JsValidatorFactory
     /**
      * Creates JsValidator instance based on Validator.
      *
-     * @param Validator $validator
+     * @param \Illuminate\Validation\Validator $validator
      * @param null|string $selector
-     * @return JavascriptValidator
+     * @return \Botble\JsValidation\Javascript\JavascriptValidator
      */
     protected function jsValidator(Validator $validator, $selector = null)
     {
-        $remote = !$this->options['disable_remote_validation'];
+        $remote = ! $this->options['disable_remote_validation'];
         $view = $this->options['view'];
         $selector = is_null($selector) ? $this->options['form_selector'] : $selector;
 
-        $delegated = new DelegatedValidator($validator, new ValidationRuleParserProxy());
+        $delegated = new DelegatedValidator($validator, new ValidationRuleParserProxy($validator->getData()));
         $rules = new RuleParser($delegated, $this->getSessionToken());
-        $messages = new MessageParser($delegated);
+        $messages = new MessageParser($delegated, isset($this->options['escape']) ? $this->options['escape'] : false);
 
         $jsValidator = new ValidatorHandler($rules, $messages);
 

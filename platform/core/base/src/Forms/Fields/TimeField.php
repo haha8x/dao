@@ -9,9 +9,7 @@ class TimeField extends FormField
 {
 
     /**
-     * Get the template, can be config variable or view path.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

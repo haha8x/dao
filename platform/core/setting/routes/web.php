@@ -24,12 +24,12 @@ Route::group(['namespace' => 'Botble\Setting\Http\Controllers', 'middleware' => 
                 'as'         => 'settings.media',
                 'uses'       => 'SettingController@postEditMediaSetting',
                 'middleware' => 'preventDemo',
-                'permission' => 'settings.options',
             ]);
 
             Route::get('license/verify', [
-                'as'   => 'settings.license.verify',
-                'uses' => 'SettingController@getVerifyLicense',
+                'as'         => 'settings.license.verify',
+                'uses'       => 'SettingController@getVerifyLicense',
+                'permission' => 'settings.options',
             ]);
 
             Route::post('license/activate', [
@@ -46,7 +46,7 @@ Route::group(['namespace' => 'Botble\Setting\Http\Controllers', 'middleware' => 
                 'permission' => 'settings.options',
             ]);
 
-            Route::group(['prefix' => 'email', 'permission' => 'settings.options'], function () {
+            Route::group(['prefix' => 'email', 'permission' => 'settings.email'], function () {
                 Route::get('', [
                     'as'   => 'settings.email',
                     'uses' => 'SettingController@getEmailConfig',
@@ -72,12 +72,12 @@ Route::group(['namespace' => 'Botble\Setting\Http\Controllers', 'middleware' => 
                     'uses' => 'SettingController@postResetToDefault',
                 ]);
 
-                Route::post('email/status', [
+                Route::post('status', [
                     'as'   => 'setting.email.status.change',
                     'uses' => 'SettingController@postChangeEmailStatus',
                 ]);
 
-                Route::post('email/test/send', [
+                Route::post('test/send', [
                     'as'   => 'setting.email.send.test',
                     'uses' => 'SettingController@postSendTestEmail',
                 ]);

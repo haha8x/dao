@@ -43,8 +43,6 @@ class RoleController extends BaseController
     }
 
     /**
-     * Show list roles
-     *
      * @param RoleTable $dataTable
      * @return Factory|View
      * @throws Throwable
@@ -57,8 +55,6 @@ class RoleController extends BaseController
     }
 
     /**
-     * Delete a role
-     *
      * @param int $id
      * @return BaseHttpResponse
      * @throws Exception
@@ -69,14 +65,12 @@ class RoleController extends BaseController
 
         $role->delete();
 
-        Helper::executeCommand('cache:clear');
+        Helper::clearCache();
 
         return $response->setMessage(trans('core/acl::permissions.delete_success'));
     }
 
     /**
-     * Delete many roles
-     *
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
@@ -96,7 +90,7 @@ class RoleController extends BaseController
             $role->delete();
         }
 
-        Helper::executeCommand('cache:clear');
+        Helper::clearCache();
 
         return $response->setMessage(trans('core/base::notices.delete_success_message'));
     }
@@ -137,7 +131,7 @@ class RoleController extends BaseController
         $role->is_default = $request->input('is_default');
         $this->roleRepository->createOrUpdate($role);
 
-        Helper::executeCommand('cache:clear');
+        Helper::clearCache();
 
         event(new RoleUpdateEvent($role));
 

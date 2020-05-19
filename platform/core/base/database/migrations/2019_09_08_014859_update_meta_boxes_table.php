@@ -15,6 +15,9 @@ class UpdateMetaBoxesTable extends Migration
     {
         Schema::table('meta_boxes', function (Blueprint $table) {
             $table->renameColumn('content_id', 'reference_id');
+        });
+
+        Schema::table('meta_boxes', function (Blueprint $table) {
             $table->renameColumn('reference', 'reference_type');
         });
     }
@@ -28,6 +31,9 @@ class UpdateMetaBoxesTable extends Migration
     {
         Schema::table('meta_boxes', function (Blueprint $table) {
             $table->renameColumn('reference_id', 'content_id');
+        });
+
+        Schema::table('meta_boxes', function (Blueprint $table) {
             $table->renameColumn('reference_type', 'reference');
         });
     }

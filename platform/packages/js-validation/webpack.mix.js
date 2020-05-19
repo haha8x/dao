@@ -11,21 +11,21 @@ let mix = require('laravel-mix');
  |
  */
 
-const resourcePath = 'platform/packages/js-validation';
-const publicPath = 'public/vendor/core/packages/js-validation';
+const source = 'platform/packages/js-validation';
+const dist = 'public/vendor/core/packages/js-validation';
 
 mix
     .scripts(
         [
-            resourcePath + '/resources/assets/js/jquery-validation/jquery.validate.js',
-            resourcePath + '/resources/assets/js/phpjs/strlen.js',
-            resourcePath + '/resources/assets/js/phpjs/array_diff.js',
-            resourcePath + '/resources/assets/js/phpjs/strtotime.js',
-            resourcePath + '/resources/assets/js/phpjs/is_numeric.js',
-            resourcePath + '/resources/assets/js/php-date-formatter/php-date-formatter.js',
-            resourcePath + '/resources/assets/js/js-validation.js',
-            resourcePath + '/resources/assets/js/helpers.js',
-            resourcePath + '/resources/assets/js/timezones.js',
-            resourcePath + '/resources/assets/js/validations.js'
-        ], publicPath + '/js/js-validation.js')
-    .copy(publicPath + '/js/js-validation.js', resourcePath + '/public/js');
+            source + '/resources/assets/js/jquery-validation/jquery.validate.js',
+            source + '/resources/assets/js/phpjs/strlen.js',
+            source + '/resources/assets/js/phpjs/array_diff.js',
+            source + '/resources/assets/js/phpjs/strtotime.js',
+            source + '/resources/assets/js/phpjs/is_numeric.js',
+            source + '/resources/assets/js/php-date-formatter/php-date-formatter.js',
+            source + '/resources/assets/js/js-validation.js',
+            source + '/resources/assets/js/helpers.js',
+            source + '/resources/assets/js/timezones.js',
+            source + '/resources/assets/js/validations.js'
+        ], dist + '/js/js-validation.js')
+    .copy(dist + '/js', source + '/public/js');

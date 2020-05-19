@@ -1,8 +1,8 @@
 import {RecentItems} from '../Config/MediaConfig';
 import {Helpers} from '../Helpers/Helpers';
-import {MessageService} from '../Services/MessageService';
-import {ActionsService} from '../Services/ActionsService';
-import {ContextMenuService} from '../Services/ContextMenuService';
+import {MessageService} from './MessageService';
+import {ActionsService} from './ActionsService';
+import {ContextMenuService} from './ContextMenuService';
 import {MediaList} from '../Views/MediaList';
 import {MediaDetails} from '../Views/MediaDetails';
 
@@ -60,9 +60,8 @@ export class MediaService {
             beforeSend: () => {
                 Helpers.showAjaxLoading();
             },
-            success: (res) => {
+            success: res =>  {
                 _self.MediaList.renderData(res.data, reload, load_more_file);
-                _self.fetchQuota();
                 _self.renderBreadcrumbs(res.data.breadcrumbs);
                 MediaService.refreshFilter();
                 ActionsService.renderActions();
@@ -84,7 +83,7 @@ export class MediaService {
             complete: () => {
                 Helpers.hideAjaxLoading();
             },
-            error: (data) => {
+            error: data =>  {
                 MessageService.handleError(data);
             }
         });
@@ -92,25 +91,6 @@ export class MediaService {
 
     getFileDetails(data) {
         this.MediaDetails.renderData(data);
-    }
-
-    fetchQuota() {
-        $.ajax({
-            url: RV_MEDIA_URL.get_quota,
-            type: 'GET',
-            dataType: 'json',
-            success: (res) => {
-                let data = res.data;
-
-                $('.rv-media-aside-bottom .used-analytics span').html(data.used + ' / ' + data.quota);
-                $('.rv-media-aside-bottom .progress-bar').css({
-                    width: data.percent + '%',
-                });
-            },
-            error: data => {
-                MessageService.handleError(data);
-            }
-        });
     }
 
     renderBreadcrumbs(breadcrumbItems) {

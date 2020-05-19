@@ -59,7 +59,7 @@ class PluginCreateCommand extends BaseMakeCommand
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getStub(): string
     {
@@ -81,8 +81,7 @@ class PluginCreateCommand extends BaseMakeCommand
     }
 
     /**
-     * @param string $replaceText
-     * @return array
+     * {@inheritDoc}
      */
     public function getReplacements(string $replaceText): array
     {

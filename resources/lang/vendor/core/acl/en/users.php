@@ -1,5 +1,7 @@
 <?php
 
+use Botble\ACL\Enums\UserStatusEnum;
+
 return [
     'delete_user_logged_in'      => 'Can\'t delete this user. This user is logged on!',
     'no_select'                  => 'Please select at least one record to take this action!',
@@ -61,4 +63,19 @@ return [
         'female' => 'Female',
     ],
     'total_users'                => 'Total users',
+    'statuses'                   => [
+        UserStatusEnum::ACTIVATED   => 'Activated',
+        UserStatusEnum::DEACTIVATED => 'Deactivated',
+    ],
+    'make_super'                 => 'Make super',
+    'remove_super'               => 'Remove super',
+    'is_super'                   => 'Is super?',
+    'email_placeholder'          => 'Ex: example@gmail.com',
+    'password_confirmation'      => 'Re-type password',
+    'select_role'                => 'Select role',
+    'create_new_user'            => 'Create a new user',
+    'cannot_delete_super_user'   => 'Permission denied. Cannot delete a super user!',
+    'assigned_role'              => 'Assigned Role',
+    'no_role_assigned'           => 'No role assigned',
+    'view_user_profile'          => 'View user\'s profile',
 ];

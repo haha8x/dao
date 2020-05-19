@@ -9,7 +9,6 @@ use Botble\Setting\Http\Requests\EmailTemplateRequest;
 use Botble\Setting\Http\Requests\LicenseSettingRequest;
 use Botble\Setting\Http\Requests\MediaSettingRequest;
 use Botble\Setting\Http\Requests\SendTestEmailRequest;
-use Botble\Setting\Models\Setting;
 use Botble\Setting\Repositories\Interfaces\SettingInterface;
 use Botble\Setting\Supports\SettingStore;
 use Carbon\Carbon;
@@ -110,9 +109,9 @@ class SettingController extends BaseController
     }
 
     /**
-     * @param $type
-     * @param $name
-     * @param $template
+     * @param string $type
+     * @param string $name
+     * @param string $template
      * @param Request $request
      * @param BaseHttpResponse $response
      * @return Factory|View
@@ -258,7 +257,7 @@ class SettingController extends BaseController
             return $response->setError()->setMessage('Your license is invalid, please contact support.');
         }
 
-        $result = $coreApi->verifyLicense();
+        $result = $coreApi->verifyLicense(true);
 
         if (!$result['status']) {
             return $response->setError()->setMessage($result['message']);
@@ -268,7 +267,7 @@ class SettingController extends BaseController
 
         $data = [
             'activated_at' => $activatedAt->format('M d Y'),
-            'licensed_to'  => setting('licensed_to'),
+            'licensed_to'  => $this->settingStore->get('licensed_to'),
         ];
 
         return $response->setMessage($result['message'])->setData($data);
@@ -289,7 +288,7 @@ class SettingController extends BaseController
             return $response->setError()->setMessage($result['message']);
         }
 
-        setting()
+        $this->settingStore
             ->set(['licensed_to' => $request->input('buyer')])
             ->save();
 
@@ -308,6 +307,7 @@ class SettingController extends BaseController
      * @param Core $coreApi
      * @return BaseHttpResponse
      * @throws FileNotFoundException
+     * @throws Exception
      */
     public function deactivateLicense(BaseHttpResponse $response, Core $coreApi)
     {
@@ -317,7 +317,7 @@ class SettingController extends BaseController
             return $response->setError()->setMessage($result['message']);
         }
 
-        Setting::where('key', 'licensed_to')->delete();
+        $this->settingRepository->deleteBy(['key' => 'licensed_to']);
 
         return $response->setMessage($result['message']);
     }

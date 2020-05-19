@@ -147,17 +147,6 @@ class JavascriptValidator implements Arrayable
      * Set the form selector to validate.
      *
      * @param string $selector
-     * @deprecated
-     */
-    public function setSelector($selector)
-    {
-        $this->selector = $selector;
-    }
-
-    /**
-     * Set the form selector to validate.
-     *
-     * @param string $selector
      * @return JavascriptValidator
      */
     public function selector($selector)

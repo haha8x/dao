@@ -49,4 +49,5 @@ return [
     'role_permission'         => 'Roles and Permissions',
     'user_management'         => 'User Management',
     'super_user_management'   => 'Super User Management',
+    'action_unauthorized'     => 'This action is unauthorized.',
 ];

@@ -1,6 +1,6 @@
 class CacheManagement {
     init() {
-        $(document).on('click', '.btn-clear-cache', (event) => {
+        $(document).on('click', '.btn-clear-cache', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             _self.addClass('button-loading');
@@ -11,7 +11,7 @@ class CacheManagement {
                 data: {
                     type: _self.data('type'),
                 },
-                success: (data) => {
+                success: data =>  {
                     _self.removeClass('button-loading');
 
                     if (data.error) {
@@ -20,7 +20,7 @@ class CacheManagement {
                         Botble.showSuccess(data.message);
                     }
                 },
-                error: (data) => {
+                error: data =>  {
                     _self.removeClass('button-loading');
                     Botble.handleError(data);
                 }

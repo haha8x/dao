@@ -7,23 +7,6 @@ use Closure;
 trait AccessProtectedTrait
 {
     /**
-     * Create closure to call inaccessible method.
-     *
-     * @param $instance
-     * @return Closure
-     */
-    protected function createProtectedCaller($instance)
-    {
-        $closure = function ($method, $args) {
-            $callable = [$this, $method];
-
-            return call_user_func_array($callable, $args);
-        };
-
-        return $closure->bindTo($instance, $instance);
-    }
-
-    /**
      * Gets inaccessible property.
      *
      * @param $instance
@@ -55,5 +38,22 @@ trait AccessProtectedTrait
         }
 
         return call_user_func($instance, $method, $args);
+    }
+
+    /**
+     * Create closure to call inaccessible method.
+     *
+     * @param $instance
+     * @return Closure
+     */
+    protected function createProtectedCaller($instance)
+    {
+        $closure = function ($method, $args) {
+            $callable = [$this, $method];
+
+            return call_user_func_array($callable, $args);
+        };
+
+        return $closure->bindTo($instance, $instance);
     }
 }

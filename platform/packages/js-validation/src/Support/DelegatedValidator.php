@@ -44,18 +44,6 @@ class DelegatedValidator
     }
 
     /**
-     * Call validator method.
-     *
-     * @param string $method
-     * @param array $args
-     * @return mixed
-     */
-    private function callValidator($method, $args = [])
-    {
-        return $this->callProtected($this->validatorMethod, $method, $args);
-    }
-
-    /**
      * Get current \Illuminate\Validation\Validator instance.
      *
      * @return BaseValidator
@@ -104,6 +92,18 @@ class DelegatedValidator
     public function isImplicit($rule)
     {
         return $this->callValidator('isImplicit', [$rule]);
+    }
+
+    /**
+     * Call validator method.
+     *
+     * @param string $method
+     * @param array $args
+     * @return mixed
+     */
+    private function callValidator($method, $args = [])
+    {
+        return $this->callProtected($this->validatorMethod, $method, $args);
     }
 
     /**
@@ -171,7 +171,7 @@ class DelegatedValidator
      */
     public function explodeRules($rules)
     {
-        return $this->callValidator('explodeRules', [$rules]);
+        return $this->ruleParser->explodeRules($rules);
     }
 
     /**

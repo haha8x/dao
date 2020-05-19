@@ -32,7 +32,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getModel()
     {
@@ -40,7 +40,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function setModel($model)
     {
@@ -50,7 +50,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTable()
     {
@@ -58,7 +58,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findById($id, array $with = [])
     {
@@ -72,7 +72,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function make(array $with = [])
     {
@@ -84,7 +84,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function applyBeforeExecuteQuery($data, $isSingle = false)
     {
@@ -104,7 +104,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function resetModel()
     {
@@ -114,7 +114,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function findOrFail($id, array $with = [])
     {
@@ -133,7 +133,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function all(array $with = [])
     {
@@ -143,7 +143,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function pluck($column, $key = null)
     {
@@ -158,7 +158,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function allBy(array $condition, array $with = [], array $select = ['*'])
     {
@@ -208,7 +208,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(array $data)
     {
@@ -220,7 +220,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createOrUpdate($data, $condition = [])
     {
@@ -255,7 +255,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFirstBy(array $condition = [], array $select = ['*'], array $with = [])
     {
@@ -271,7 +271,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function delete(Model $model)
     {
@@ -279,7 +279,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function firstOrCreate(array $data, array $with = [])
     {
@@ -291,7 +291,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function update(array $condition, array $data)
     {
@@ -303,7 +303,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function select(array $select = ['*'], array $condition = [])
     {
@@ -313,7 +313,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deleteBy(array $condition = [])
     {
@@ -334,7 +334,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function count(array $condition = [])
     {
@@ -347,7 +347,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getByWhereIn($column, array $value = [], array $args = [])
     {
@@ -369,7 +369,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function advancedGet(array $params = [])
     {
@@ -427,7 +427,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function forceDelete(array $condition = [])
     {
@@ -438,7 +438,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function restoreBy(array $condition = [])
     {
@@ -449,7 +449,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFirstByWithTrash(array $condition = [], array $select = [])
     {
@@ -463,7 +463,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function insert(array $data)
     {
@@ -471,7 +471,7 @@ abstract class RepositoriesAbstract implements RepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function firstOrNew(array $condition)
     {

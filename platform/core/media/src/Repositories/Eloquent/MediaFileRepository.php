@@ -19,50 +19,8 @@ use Storage;
  */
 class MediaFileRepository extends RepositoriesAbstract implements MediaFileInterface
 {
-
     /**
-     * {@inheritdoc}
-     */
-    public function getSpaceLeft()
-    {
-        return $this->getQuota() - $this->getSpaceUsed();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getQuota()
-    {
-        return config('core.media.media.max_quota');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSpaceUsed()
-    {
-        $data = $this->model->withTrashed();
-
-        /**
-         * @var Eloquent $data
-         */
-        return $data->sum('size');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPercentageUsed()
-    {
-        if ($this->getQuota() === 0 || empty($this->getQuota())) {
-            return round(100, 2);
-        }
-
-        return round(($this->getSpaceUsed() / $this->getQuota()) * 100, 2);
-    }
-
-    /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createName($name, $folder)
     {
@@ -75,25 +33,21 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function checkIfExistsName($name, $folder)
     {
         $count = $this->model
             ->where('name', $name)
             ->where('folder_id', $folder)
-            ->withTrashed();
-
-        /**
-         * @var Eloquent $count
-         */
-        $count = $count->count();
+            ->withTrashed()
+            ->count();
 
         return $count > 0;
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $extension, $folderPath)
     {
@@ -112,7 +66,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilesByFolderId($folderId, array $params = [], $withFolders = true, $folderParams = [])
     {
@@ -299,15 +253,11 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
             $result = $this->model->get();
         }
 
-        if (!empty($params['selected_file_id'])) {
-            if (!$params['paginate']['current_paged'] || $params['paginate']['current_paged'] == 1) {
-                $currentFile = $this->originalModel;
-
-                $currentFile = $currentFile
-                    ->where('id', $params['selected_file_id'])
-                    ->select($params['select'])
-                    ->first();
-            }
+        if (!empty($params['selected_file_id']) && !$params['paginate']['current_paged'] || $params['paginate']['current_paged'] == 1) {
+            $currentFile = $this->originalModel
+                ->where('id', $params['selected_file_id'])
+                ->select($params['select'])
+                ->first();
         }
 
         if (isset($currentFile) && $params['is_popup']) {
@@ -324,7 +274,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTrashed($folderId, array $params = [], $withFolders = true, $folderParams = [])
     {
@@ -353,9 +303,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
             ],
             'filter'    => 'everything',
             'take'      => null,
-            'with'      => [
-
-            ],
+            'with'      => [],
         ], $params);
 
         $this->model = $this->model->onlyTrashed();
@@ -432,7 +380,7 @@ class MediaFileRepository extends RepositoriesAbstract implements MediaFileInter
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function emptyTrash()
     {

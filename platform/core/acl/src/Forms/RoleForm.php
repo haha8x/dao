@@ -7,14 +7,12 @@ use Botble\ACL\Http\Requests\RoleCreateRequest;
 use Botble\ACL\Models\Role;
 use Botble\Base\Forms\FormAbstract;
 use Illuminate\Support\Arr;
-use Throwable;
 
 class RoleForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'max_quota'               => env('RV_MEDIA_MAX_QUOTA', 1024 * 1024 * 1024),
     'sizes'                   => [
         'thumb' => '150x150',
     ],
@@ -16,14 +15,6 @@ return [
         'files.destroy',
         'files.favorite',
         'folders.favorite',
-    ],
-    'allow_external_services' => env('RV_MEDIA_ALLOW_EXTERNAL_SERVICES', false),
-    'external_services'       => [
-        'youtube',
-        'vimeo',
-        'dailymotion',
-        'instagram',
-        'vine',
     ],
     'libraries'               => [
         'stylesheets' => [
@@ -64,12 +55,8 @@ return [
             'application/vnd.ms-powerpoint',
             'application/vnd.openxmlformats-officedocument.presentationml.presentation',
         ],
-        'youtube'  => [
-            'youtube',
-        ],
     ],
-    'max_file_size_upload'    => env('RV_MEDIA_MAX_FILE_SIZE_UPLOAD', 4 * 1024 * 1024), // Maximum size to upload
-    'default-img'             => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/placeholder.png'), // Default image
+    'default_image'           => env('RV_MEDIA_DEFAULT_IMAGE', '/vendor/core/images/placeholder.png'),
     'sidebar_display'         => env('RV_MEDIA_SIDEBAR_DISPLAY', 'horizontal'), // Use "vertical" or "horizontal"
     'watermark'               => [
         'source'   => env('RV_MEDIA_WATERMARK_SOURCE'),

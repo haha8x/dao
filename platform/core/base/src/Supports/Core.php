@@ -4,6 +4,7 @@ namespace Botble\Base\Supports;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Arr;
+use ZipArchive;
 
 class Core
 {
@@ -64,6 +65,11 @@ class Core
     protected $showUpdateProcess = true;
 
     /**
+     * @var string
+     */
+    protected $sessionKey = '44622179e10cab6';
+
+    /**
      * Core constructor.
      * @throws FileNotFoundException
      */
@@ -73,7 +79,7 @@ class Core
         $this->apiKey = 'CAF4B17F6D3F656125F9';
         $this->apiLanguage = 'english';
         $this->currentVersion = get_cms_version();
-        $this->verificationPeriod = 3;
+        $this->verificationPeriod = 1;
         $this->currentPath = realpath(__DIR__);
         $this->rootPath = base_path();
         $this->licenseFile = storage_path('.license');
@@ -84,14 +90,6 @@ class Core
             $this->productId = Arr::get($core, 'productId');
             $this->verifyType = Arr::get($core, 'source');
         }
-    }
-
-    /**
-     * @return bool
-     */
-    public function checkLocalLicenseExist()
-    {
-        return is_file($this->licenseFile);
     }
 
     /**
@@ -186,12 +184,10 @@ class Core
         $httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($httpStatus != 200) {
             if (config('app.debug')) {
-                $temp_decode = json_decode($result, true);
+                $tempDecode = json_decode($result, true);
                 $rs = [
                     'status'  => false,
-                    'message' => ((!empty($temp_decode['error'])) ?
-                        $temp_decode['error'] :
-                        $temp_decode['message']),
+                    'message' => !empty($tempDecode['error']) ? $tempDecode['error'] : $tempDecode['message'],
                 ];
                 return json_encode($rs);
             }
@@ -292,7 +288,7 @@ class Core
                 'license_code' => $license,
                 'client_name'  => $client,
             ];
-        } elseif (is_file($this->licenseFile)) {
+        } elseif ($this->checkLocalLicenseExist()) {
             $dataArray = [
                 'product_id'   => $this->productId,
                 'license_file' => file_get_contents($this->licenseFile),
@@ -309,14 +305,10 @@ class Core
         }
         $res = ['status' => true, 'message' => 'Verified! Thanks for purchasing.'];
         if ($timeBasedCheck && $this->verificationPeriod > 0) {
-            ob_start();
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
             $type = (int)$this->verificationPeriod;
             $today = date('d-m-Y');
-            if (empty(session('44622179e10cab6'))) {
-                session(['44622179e10cab6' => '00-00-0000']);
+            if (!session($this->sessionKey)) {
+                session([$this->sessionKey => '00-00-0000']);
             }
             if ($type == 1) {
                 $typeText = '1 day';
@@ -324,16 +316,10 @@ class Core
                 $typeText = '3 days';
             } elseif ($type == 7) {
                 $typeText = '1 week';
-            } elseif ($type == 30) {
-                $typeText = '1 month';
-            } elseif ($type == 90) {
-                $typeText = '3 months';
-            } elseif ($type == 365) {
-                $typeText = '1 year';
             } else {
                 $typeText = $type . ' days';
             }
-            if (strtotime($today) >= strtotime(session('44622179e10cab6'))) {
+            if (strtotime($today) >= strtotime(session($this->sessionKey))) {
                 $getData = $this->callApi(
                     'POST',
                     $this->apiUrl . 'api/verify_license',
@@ -342,10 +328,9 @@ class Core
                 $res = json_decode($getData, true);
                 if ($res['status'] == true) {
                     $tomo = date('d-m-Y', strtotime($today . ' + ' . $typeText));
-                    session(['44622179e10cab6' => $tomo]);
+                    session([$this->sessionKey => $tomo]);
                 }
             }
-            ob_end_clean();
         } else {
             $getData = $this->callApi(
                 'POST',
@@ -355,6 +340,14 @@ class Core
             $res = json_decode($getData, true);
         }
         return $res;
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkLocalLicenseExist()
+    {
+        return is_file($this->licenseFile);
     }
 
     /**
@@ -390,6 +383,7 @@ class Core
         );
         $response = json_decode($getData, true);
         if ($response['status']) {
+            session()->forget($this->sessionKey);
             @chmod($this->licenseFile, 0777);
             if (is_writeable($this->licenseFile)) {
                 unlink($this->licenseFile);

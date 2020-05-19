@@ -141,7 +141,7 @@ class DashboardMenu
         }
 
         foreach ($links as $key => &$link) {
-            if (!Auth::user()->hasAnyPermission($link['permissions'])) {
+            if ($link['permissions'] && !Auth::user()->hasAnyPermission($link['permissions'])) {
                 Arr::forget($links, $key);
                 continue;
             }
@@ -154,7 +154,7 @@ class DashboardMenu
             $link['children'] = collect($link['children'])->sortBy('priority')->toArray();
 
             foreach ($link['children'] as $subKey => $subMenu) {
-                if (!Auth::user()->hasAnyPermission($subMenu['permissions'])) {
+                if ($subMenu['permissions'] && !Auth::user()->hasAnyPermission($subMenu['permissions'])) {
                     Arr::forget($link['children'], $subKey);
                     continue;
                 }

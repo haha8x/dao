@@ -41,7 +41,7 @@ if (!function_exists('human_file_size')) {
      * @param int $precision
      * @return string
      */
-    function human_file_size($bytes, $precision = 2)
+    function human_file_size($bytes, $precision = 2): string
     {
         $units = ['B', 'kB', 'MB', 'GB', 'TB'];
 
@@ -102,14 +102,14 @@ if (!function_exists('save_file_data')) {
             if ($json) {
                 $data = json_encode_prettify($data);
             }
-            if (!File::isDirectory(dirname($path))) {
-                File::makeDirectory(dirname($path), 493, true);
+            if (!File::isDirectory(File::dirname($path))) {
+                File::makeDirectory(File::dirname($path), 493, true);
             }
             File::put($path, $data);
 
             return true;
-        } catch (Exception $ex) {
-            info($ex->getMessage());
+        } catch (Exception $exception) {
+            info($exception->getMessage());
             return false;
         }
     }
@@ -124,13 +124,13 @@ if (!function_exists('scan_folder')) {
     function scan_folder($path, $ignoreFiles = [])
     {
         try {
-            if (is_dir($path)) {
+            if (File::isDirectory($path)) {
                 $data = array_diff(scandir($path), array_merge(['.', '..', '.DS_Store'], $ignoreFiles));
                 natsort($data);
                 return $data;
             }
             return [];
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return [];
         }
     }

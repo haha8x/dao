@@ -8,7 +8,7 @@ class OnOffField extends FormField
 {
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

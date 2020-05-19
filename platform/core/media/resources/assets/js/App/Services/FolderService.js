@@ -1,13 +1,13 @@
 import {MediaConfig} from '../Config/MediaConfig';
 import {MediaService} from './MediaService';
-import {MessageService} from '../Services/MessageService';
+import {MessageService} from './MessageService';
 import {Helpers} from '../Helpers/Helpers';
 
 export class FolderService {
     constructor() {
         this.MediaService = new MediaService();
 
-        $('body').on('shown.bs.modal', '#modal_add_folder', (event) => {
+        $('body').on('shown.bs.modal', '#modal_add_folder', event =>  {
             $(event.currentTarget).find('.form-add-folder input[type=text]').focus();
         });
     }

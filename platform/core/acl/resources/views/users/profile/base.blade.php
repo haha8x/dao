@@ -24,7 +24,7 @@
                                     @endif
                                 </div>
                                 <div class="mt-card-content">
-                                    <h3 class="mt-card-name">{{ $user->name }}</h3>
+                                    <h3 class="mt-card-name">{{ $user->getFullName() }}</h3>
                                 </div>
                             </div>
                         </div>

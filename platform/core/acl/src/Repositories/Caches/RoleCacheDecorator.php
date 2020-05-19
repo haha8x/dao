@@ -8,7 +8,7 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 class RoleCacheDecorator extends CacheAbstractDecorator implements RoleInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $id)
     {

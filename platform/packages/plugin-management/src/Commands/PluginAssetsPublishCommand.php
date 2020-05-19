@@ -2,12 +2,16 @@
 
 namespace Botble\PluginManagement\Commands;
 
+use Botble\PluginManagement\Services\PluginService;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem as File;
 
 class PluginAssetsPublishCommand extends Command
 {
+    /**
+     * @var PluginService
+     */
+    public $pluginService;
+
     /**
      * The console command name.
      *
@@ -23,28 +27,20 @@ class PluginAssetsPublishCommand extends Command
     protected $description = 'Publish assets for a plugin';
 
     /**
-     * @var File
+     * PluginAssetsPublishCommand constructor.
+     * @param PluginService $pluginService
      */
-    protected $files;
-
-    /**
-     * Create a new command instance.
-     *
-     * @param File $files
-     */
-    public function __construct(File $files)
+    public function __construct(PluginService $pluginService)
     {
-        $this->files = $files;
-
         parent::__construct();
+
+        $this->pluginService = $pluginService;
     }
 
     /**
      * Execute the console command.
      *
      * @return bool
-     *
-     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -54,28 +50,14 @@ class PluginAssetsPublishCommand extends Command
         }
 
         $plugin = strtolower($this->argument('name'));
-        $location = plugin_path($plugin);
+        $result = $this->pluginService->publishAssets($plugin);
 
-        if (!$this->files->isDirectory($location)) {
-            $this->error('This plugin is not exists.');
+        if ($result['error']) {
+            $this->error($result['message']);
             return false;
         }
 
-        if (!$this->files->exists($location . '/plugin.json')) {
-            $this->error('This plugin is missing plugin.json!');
-            return false;
-        }
-
-        $content = get_file_data($location . '/plugin.json');
-        if (!empty($content)) {
-            $this->call('vendor:publish', [
-                '--tag'      => 'cms-public',
-                '--provider' => $content['provider'],
-                '--force'    => true,
-            ]);
-        }
-
-        $this->info('Publish assets for plugin ' . $plugin . ' successfully!');
+        $this->info($result['message']);
 
         return true;
     }

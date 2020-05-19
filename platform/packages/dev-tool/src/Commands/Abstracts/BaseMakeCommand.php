@@ -108,7 +108,7 @@ abstract class BaseMakeCommand extends Command
      * @param string $location
      * @return boolean
      */
-    public function renameFiles($pattern, $location): bool
+    public function renameFiles(string $pattern, string $location): bool
     {
         $paths = scan_folder($location);
 
@@ -147,8 +147,8 @@ abstract class BaseMakeCommand extends Command
 
     /**
      * Generate the module in Modules directory.
-     * @param $from
-     * @param $to
+     * @param string $from
+     * @param string $to
      * @throws FileNotFoundException
      */
     protected function publishStubs(string $from, string $to): void
@@ -168,7 +168,7 @@ abstract class BaseMakeCommand extends Command
      * @param string $path
      * @return void
      */
-    protected function createParentDirectory($path): void
+    protected function createParentDirectory(string $path): void
     {
         if (!File::isDirectory($path) && !File::isFile($path)) {
             File::makeDirectory($path, 0755, true);
@@ -183,7 +183,7 @@ abstract class BaseMakeCommand extends Command
      * @return void
      * @throws FileNotFoundException
      */
-    protected function publishDirectory($from, $to): void
+    protected function publishDirectory(string $from, string $to): void
     {
         $manager = new MountManager([
             'from' => new Filesystem(new LocalAdapter($from)),

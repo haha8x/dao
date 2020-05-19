@@ -5,8 +5,8 @@ return [
     'loading_data'             => 'Loading data from server',
     'display'                  => 'Display',
     'all'                      => 'All',
-    'edit_entry'               => 'Edit Entry',
-    'delete_entry'             => 'Delete Entry',
+    'edit_entry'               => 'Edit',
+    'delete_entry'             => 'Delete',
     'show_from'                => 'Showing from',
     'to'                       => 'to',
     'in'                       => 'in',
@@ -35,4 +35,5 @@ return [
     'save_bulk_change_success' => 'Update data for selected record(s) successfully!',
     'please_select_record'     => 'Please select at least one record to perform this action!',
     'filtered'                 => '(filtered from _MAX_ total records)',
+    'search'                   => 'Search...',
 ];

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'name'           => 'Giao diện',
     'activated'      => 'Đã kích hoạt',
     'active'         => 'Kích hoạt',
     'active_success' => 'Kích hoạt giao diện thành công!',

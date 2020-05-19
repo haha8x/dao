@@ -33,9 +33,9 @@ Dropdown Menu
     float: left;
     list-style: none;
     text-shadow: none;
-    padding: 0px;
+    padding: 0;
     background-color: #ffffff;
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0 0 0;
     border: 1px solid #eeeeee;
     font-family: $font-family-default;
 
@@ -105,11 +105,11 @@ Dropdown Menu
     }
 
     > li:first-child:hover > a {
-        border-radius: $general-border-radius $general-border-radius 0px 0px;
+        border-radius: $general-border-radius $general-border-radius 0 0;
     }
 
     > li:last-child:hover > a {
-        border-radius: 0px 0px $general-border-radius $general-border-radius;
+        border-radius: 0 0 $general-border-radius $general-border-radius;
     }
 }
 
@@ -178,7 +178,7 @@ Dropdown Menu
 
     &.dropup {
         > .dropdown-menu {
-            margin-top: 0px;
+            margin-top: 0;
             margin-bottom: 10px;
 
             &:after,

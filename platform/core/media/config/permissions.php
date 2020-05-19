@@ -1,10 +1,10 @@
 <?php
 
 return [
-    // [
-    //     'name' => 'Media',
-    //     'flag' => 'media.index',
-    // ],
+    [
+        'name' => 'Media',
+        'flag' => 'media.index',
+    ],
     [
         'name'        => 'File',
         'flag'        => 'files.index',

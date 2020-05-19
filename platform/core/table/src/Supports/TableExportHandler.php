@@ -103,7 +103,7 @@ class TableExportHandler extends DataTablesExportHandler implements WithEvents
     }
 
     /**
-     * @param $number
+     * @param int $number
      * @return string
      */
     protected function getNameFromNumber($number)

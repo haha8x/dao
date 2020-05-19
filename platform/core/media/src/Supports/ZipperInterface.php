@@ -12,7 +12,7 @@ interface ZipperInterface
     /**
      * Construct with a given path
      *
-     * @param $filePath
+     * @param string $filePath
      * @param bool $new
      * @param $archiveImplementation
      */
@@ -21,16 +21,16 @@ interface ZipperInterface
     /**
      * Add a file to the opened Archive
      *
-     * @param $pathToFile
-     * @param $pathInArchive
+     * @param string $pathToFile
+     * @param string $pathInArchive
      */
     public function addFile($pathToFile, $pathInArchive);
 
     /**
      * Add a file to the opened Archive using its contents
      *
-     * @param $name
-     * @param $content
+     * @param string $name
+     * @param string $content
      */
     public function addFromString($name, $content);
 

@@ -2,11 +2,11 @@
 
 namespace Botble\Media\Models;
 
-use Botble\Media\Services\UploadsManager;
 use Botble\Base\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use RvMedia;
 
 class MediaFile extends BaseModel
 {
@@ -56,8 +56,7 @@ class MediaFile extends BaseModel
         parent::boot();
         static::deleting(function (MediaFile $file) {
             if ($file->isForceDeleting()) {
-                $uploadManager = new UploadsManager;
-                $uploadManager->deleteFile($file->url);
+                RvMedia::deleteFile($file);
             }
         });
     }
@@ -65,7 +64,7 @@ class MediaFile extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function folder()
+    public function folder(): BelongsTo
     {
         return $this->belongsTo(MediaFolder::class, 'id', 'folder_id');
     }
@@ -73,12 +72,9 @@ class MediaFile extends BaseModel
     /**
      * @return string
      */
-    public function getTypeAttribute()
+    public function getTypeAttribute(): string
     {
         $type = 'document';
-        if ($this->attributes['mime_type'] == 'youtube') {
-            return 'video';
-        }
 
         foreach (config('core.media.media.mime_types', []) as $key => $value) {
             if (in_array($this->attributes['mime_type'], $value)) {
@@ -93,7 +89,7 @@ class MediaFile extends BaseModel
     /**
      * @return string
      */
-    public function getHumanSizeAttribute()
+    public function getHumanSizeAttribute(): string
     {
         return human_file_size($this->attributes['size']);
     }
@@ -101,7 +97,7 @@ class MediaFile extends BaseModel
     /**
      * @return string
      */
-    public function getIconAttribute()
+    public function getIconAttribute(): string
     {
         switch ($this->type) {
             case 'image':
@@ -116,13 +112,11 @@ class MediaFile extends BaseModel
             case 'excel':
                 $icon = 'far fa-file-excel';
                 break;
-            case 'youtube':
-                $icon = 'fab fa-youtube';
-                break;
             default:
                 $icon = 'far fa-file-alt';
                 break;
         }
+
         return $icon;
     }
 

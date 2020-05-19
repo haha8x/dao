@@ -13,6 +13,7 @@ use Botble\DevTool\Commands\Make\RequestMakeCommand;
 use Botble\DevTool\Commands\Make\RouteMakeCommand;
 use Botble\DevTool\Commands\Make\TableMakeCommand;
 use Botble\DevTool\Commands\PackageCreateCommand;
+use Botble\DevTool\Commands\PackageRemoveCommand;
 use Botble\DevTool\Commands\RebuildPermissionsCommand;
 use Botble\DevTool\Commands\TestSendMailCommand;
 use Botble\DevTool\Commands\TruncateTablesCommand;
@@ -34,6 +35,7 @@ class CommandServiceProvider extends ServiceProvider
                 RepositoryMakeCommand::class,
                 PackageCreateCommand::class,
                 PackageMakeCrudCommand::class,
+                PackageRemoveCommand::class,
                 InstallCommand::class,
                 TestSendMailCommand::class,
                 TruncateTablesCommand::class,

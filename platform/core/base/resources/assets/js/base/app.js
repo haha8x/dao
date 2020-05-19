@@ -3,7 +3,6 @@ let resizeHandlers = [];
 export class App {
     constructor() {
         // IE mode
-        this.isRTL = false;
         this.isIE8 = false;
         this.isIE9 = false;
         this.isIE10 = false;
@@ -28,7 +27,7 @@ export class App {
     }
 
     // Wrapper function to scroll(focus) to an element
-    static scrollTo(el, offeset) {
+    static scrollTo(el, offset) {
         let pos = (el && el.length > 0) ? el.offset().top : 0;
 
         if (el) {
@@ -39,7 +38,7 @@ export class App {
             } else if ($('body').hasClass('page-header-menu-fixed')) {
                 pos = pos - $('.page-header-menu').height();
             }
-            pos = pos + (offeset ? offeset : -1 * el.height());
+            pos = pos + (offset ? offset : -1 * el.height());
         }
 
         $('html,body').animate({
@@ -67,11 +66,6 @@ export class App {
         };
     }
 
-    //check RTL mode
-    isRTL() {
-        return this.isRTL;
-    }
-
     static getResponsiveBreakpoint(size) {
         // bootstrap responsive breakpoints
         let sizes = {
@@ -86,10 +80,6 @@ export class App {
 
     // initializes main settings
     handleInit() {
-
-        if (this.$body.css('direction') === 'rtl') {
-            this.isRTL = true;
-        }
 
         this.isIE8 = !!navigator.userAgent.match(/MSIE 8.0/);
         this.isIE9 = !!navigator.userAgent.match(/MSIE 9.0/);
@@ -129,7 +119,7 @@ export class App {
         });
 
         // fix page scrollbars issue
-        this.$body.on('show.bs.modal', '.modal', (event) => {
+        this.$body.on('show.bs.modal', '.modal', event =>  {
             if ($(event.currentTarget).hasClass('modal-scroll')) {
                 current.$body.addClass('modal-open-noscroll');
             }
@@ -141,7 +131,7 @@ export class App {
         });
 
         // remove ajax content and remove cache on modal closed
-        this.$body.on('hidden.bs.modal', '.modal:not(.modal-cached)', (event) => {
+        this.$body.on('hidden.bs.modal', '.modal:not(.modal-cached)', event =>  {
             $(event.currentTarget).removeData('bs.modal');
         });
     }
@@ -249,13 +239,8 @@ export class App {
         resizeHandlers.push(func);
     }
 
-    //public functon to call _runresizeHandlers
-    static runResizeHandlers() {
-        App._runResizeHandlers();
-    }
-
     // runs callback functions set by App.addResponsiveHandler().
-    static _runResizeHandlers() {
+    static runResizeHandlers() {
         // reinitialize other subscribed elements
         for (let i = 0; i < resizeHandlers.length; i++) {
             let each = resizeHandlers[i];
@@ -267,18 +252,18 @@ export class App {
         let windowWidth = $(window).width();
         let resize;
         if (this.isIE8) {
-            let currheight;
+            let currentHeight;
             $(window).resize(() => {
-                if (currheight === document.documentElement.clientHeight) {
+                if (currentHeight === document.documentElement.clientHeight) {
                     return; //quite event since only body resized not window.
                 }
                 if (resize) {
                     clearTimeout(resize);
                 }
                 resize = setTimeout(() => {
-                    App._runResizeHandlers();
+                    App.runResizeHandlers();
                 }, 50); // wait 50ms until window resize finishes.
-                currheight = document.documentElement.clientHeight; // store last body client height
+                currentHeight = document.documentElement.clientHeight; // store last body client height
             });
         } else {
             $(window).resize(() => {
@@ -288,7 +273,7 @@ export class App {
                         clearTimeout(resize);
                     }
                     resize = setTimeout(() => {
-                        App._runResizeHandlers();
+                        App.runResizeHandlers();
                     }, 50); // wait 50ms until window resize finishes.
                 }
             });

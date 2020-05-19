@@ -2,7 +2,6 @@
 
 namespace Botble\JsValidation\Remote;
 
-use Closure;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Validator as BaseValidator;
@@ -13,31 +12,40 @@ class Resolver
     use AccessProtectedTrait;
 
     /**
-     * @var Closure
+     * @var \Closure
      */
     protected $resolver;
 
     /**
-     * @var ValidationFactory
+     * @var \Illuminate\Contracts\Validation\Factory
      */
     protected $factory;
 
     /**
+     * Whether to escape validation messages.
+     *
+     * @var bool
+     */
+    protected $escape;
+
+    /**
      * RemoteValidator constructor.
      *
-     * @param ValidationFactory $factory
+     * @param \Illuminate\Contracts\Validation\Factory $factory
+     * @param bool $escape
      */
-    public function __construct(ValidationFactory $factory)
+    public function __construct(ValidationFactory $factory, $escape = false)
     {
         $this->factory = $factory;
         $this->resolver = $this->getProtected($factory, 'resolver');
+        $this->escape = $escape;
     }
 
     /**
      * Closure used to resolve Validator instance.
      *
      * @param $field
-     * @return Closure
+     * @return \Closure
      */
     public function resolver($field)
     {
@@ -55,7 +63,7 @@ class Resolver
      * @param $messages
      * @param $customAttributes
      * @param $field
-     * @return BaseValidator
+     * @return \Illuminate\Validation\Validator
      */
     protected function resolve($translator, $data, $rules, $messages, $customAttributes, $field)
     {
@@ -75,7 +83,7 @@ class Resolver
      * @param $rules
      * @param $messages
      * @param $customAttributes
-     * @return BaseValidator
+     * @return \Illuminate\Validation\Validator
      */
     protected function createValidator($translator, $data, $rules, $messages, $customAttributes)
     {
@@ -89,12 +97,12 @@ class Resolver
     /**
      * Closure used to trigger JsValidations.
      *
-     * @return Closure
+     * @return \Closure
      */
     public function validatorClosure()
     {
         return function ($attribute, $value, $parameters, BaseValidator $validator) {
-            $remoteValidator = new Validator($validator);
+            $remoteValidator = new Validator($validator, $this->escape);
             $remoteValidator->validate($value, $parameters);
 
             return $attribute;

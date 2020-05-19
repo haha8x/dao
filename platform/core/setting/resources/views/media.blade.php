@@ -21,7 +21,6 @@
                         </label>
                         <div class="ui-select-wrapper">
                             <select name="media_driver" class="ui-select" id="media_driver">
-                                <option value="local" @if (config('filesystems.default') === 'local') selected @endif>Local</option>
                                 <option value="public" @if (config('filesystems.default') === 'public') selected @endif>Public</option>
                                 <option value="s3" @if (config('filesystems.default') === 's3') selected @endif>Amazon S3</option>
                             </select>
@@ -60,7 +59,7 @@
                             <label class="text-title-field"
                                    for="media_aws_url">{{ trans('core/setting::setting.media.aws_url') }}</label>
                             <input type="text" class="next-input" name="media_aws_url" id="media_aws_url"
-                                   value="{{ config('filesystems.disks.s3.url') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/botble">
+                                   value="{{ config('filesystems.disks.s3.endpoint') }}" placeholder="Ex: https://s3-ap-southeast-1.amazonaws.com/botble">
                         </div>
                     </div>
 
@@ -83,7 +82,7 @@
 
 @push('footer')
     <script>
-        "use strict";
+        'use strict';
         $(document).ready(function () {
             $(document).on('change', '#media_driver', function () {
                if ($(this).val() === 's3') {

@@ -51,7 +51,7 @@
 
         var instance = $el.data('target');
         for (var i = 0; i < files.length; i++) {
-            if (files[i].type === 'youtube' || files[i].type === 'video') {
+            if (files[i].type === 'video') {
                 var link = files[i].full_url;
                 link = link.replace('watch?v=', 'embed/');
                 $(instance).summernote('pasteHTML', '<iframe width="420" height="315" src="' + link + '" frameborder="0" allowfullscreen></iframe>');
@@ -76,12 +76,12 @@
         // insert images for the wysihtml5 editor
         let s = '';
         for (var i = 0; i < files.length; i++) {
-            if (files[i].type === 'youtube' || files[i].type === 'video') {
+            if (files[i].type === 'video') {
                 var link = files[i].full_url;
                 link = link.replace('watch?v=', 'embed/');
                 s += '<iframe width="420" height="315" src="' + link + '" frameborder="0" allowfullscreen></iframe>';
             } else if (files[i].type === 'image') {
-                s += '<img src="' + files[i].full_url + '">';
+                s += '<img src="' + files[i].full_url + '" alt="' + files[i].name + '">';
             } else {
                 s += '<a href="' + files[i].full_url + '">' + files[i].full_url + '</a>';
             }
@@ -106,7 +106,7 @@
         $.each(files, function (index, file) {
             var link = file.full_url;
             var instance = $el.data('target').replace('#', '');
-            if (file.type === 'youtube' || file.type === 'video') {
+            if (file.type === 'video') {
                 link = link.replace('watch?v=', 'embed/');
                 CKEDITOR.instances[instance].insertHtml('<iframe width="420" height="315" src="' + link + '" frameborder="0" allowfullscreen></iframe>');
             } else if (file.type === 'image') {
@@ -124,7 +124,7 @@
         $.each(files, function (index, file) {
             var link = file.full_url;
             var html = '';
-            if (file.type === 'youtube' || file.type === 'video') {
+            if (file.type === 'video') {
                 link = link.replace('watch?v=', 'embed/');
                 html = '<iframe width="420" height="315" src="' + link + '" frameborder="0" allowfullscreen></iframe>';
             } else if (file.type === 'image') {

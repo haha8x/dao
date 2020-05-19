@@ -93,10 +93,7 @@ let defaultConfig = {
                 class: 'rv-action-restore',
             },
         ],
-    },
-    denied_download: [
-        'youtube',
-    ],
+    }
 };
 
 if (!MediaConfig.app_key || MediaConfig.app_key !== defaultConfig.app_key) {

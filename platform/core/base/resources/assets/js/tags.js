@@ -1,31 +1,30 @@
-class TagManagement {
+class TagsManager {
     init() {
-        let route = $('div[data-tag-route]').data('tag-route');
-        let tags = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: {
-                url: route,
-                filter: (list) => {
-                    return $.map(list, (tag) => {
-                        return {name: tag};
-                    });
-                }
-            }
-        });
-        tags.initialize();
+        let element = document.querySelector('.tags');
 
-        $('#tags').tagsinput({
-            typeaheadjs: {
-                name: 'tags',
-                displayKey: 'name',
-                valueKey: 'name',
-                source: tags.ttAdapter()
-            }
+        // initialize Tagify on the above input node reference
+        let tagify = new Tagify(element, {
+            keepInvalidTags: true,
+        });
+
+        tagify.on('input', e => {
+            tagify.settings.whitelist.length = 0; // reset current whitelist
+            tagify.loading(true).dropdown.hide.call(tagify) // show the loader animation
+
+            $.ajax({
+                type: 'GET',
+                url: $(element).data('url'),
+                success: data => {
+                    tagify.settings.whitelist = data;
+
+                    // render the suggestions dropdown.
+                    tagify.loading(false).dropdown.show.call(tagify, e.detail.value);
+                },
+            });
         });
     }
 }
 
 $(document).ready(() => {
-    new TagManagement().init();
-});
+    (new TagsManager()).init();
+})

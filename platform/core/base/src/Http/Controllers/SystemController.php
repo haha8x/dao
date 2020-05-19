@@ -4,7 +4,6 @@ namespace Botble\Base\Http\Controllers;
 
 use Assets;
 use Botble\ACL\Models\UserMeta;
-use Botble\Base\Commands\ClearLogCommand;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Base\Supports\Helper;
 use Botble\Base\Supports\MembershipAuthorization;
@@ -12,7 +11,10 @@ use Botble\Base\Supports\SystemManagement;
 use Botble\Base\Tables\InfoTable;
 use Botble\Table\TableBuilder;
 use Exception;
+use File;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -25,7 +27,6 @@ class SystemController extends Controller
 
     /**
      * @return Factory|View
-     *
      * @throws Throwable
      */
     public function getInfo(Request $request, TableBuilder $tableBuilder)
@@ -70,30 +71,32 @@ class SystemController extends Controller
     /**
      * @param Request $request
      * @param BaseHttpResponse $response
-     * @param ClearLogCommand $clearLogCommand
+     * @param Filesystem $files
+     * @param Application $app
      * @return BaseHttpResponse
-     * @throws Exception
      */
-    public function postClearCache(Request $request, BaseHttpResponse $response, ClearLogCommand $clearLogCommand)
+    public function postClearCache(Request $request, BaseHttpResponse $response, Filesystem $files, Application $app)
     {
-        if (function_exists('proc_open')) {
-            switch ($request->input('type')) {
-                case 'clear_cms_cache':
-                    Helper::executeCommand('cache:clear');
-                    break;
-                case 'refresh_compiled_views':
-                    Helper::executeCommand('view:clear');
-                    break;
-                case 'clear_config_cache':
-                    Helper::executeCommand('config:clear');
-                    break;
-                case 'clear_route_cache':
-                    Helper::executeCommand('route:clear');
-                    break;
-                case 'clear_log':
-                    Helper::executeCommand($clearLogCommand->getName());
-                    break;
-            }
+        switch ($request->input('type')) {
+            case 'clear_cms_cache':
+                Helper::clearCache();
+                break;
+            case 'refresh_compiled_views':
+                foreach ($files->glob(config('view.compiled') . '/*') as $view) {
+                    $files->delete($view);
+                }
+                break;
+            case 'clear_config_cache':
+                $files->delete($app->getCachedConfigPath());
+                break;
+            case 'clear_route_cache':
+                $files->delete($app->getCachedRoutesPath());
+                break;
+            case 'clear_log':
+                foreach (File::allFiles(storage_path('logs')) as $file) {
+                    File::delete($file->getPathname());
+                }
+                break;
         }
 
         return $response->setMessage(trans('core/base::cache.commands.' . $request->input('type') . '.success_msg'));

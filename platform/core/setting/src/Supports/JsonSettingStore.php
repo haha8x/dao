@@ -58,7 +58,7 @@ class JsonSettingStore extends SettingStore
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * @throws FileNotFoundException
      */
     protected function read()
@@ -76,7 +76,7 @@ class JsonSettingStore extends SettingStore
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function write(array $data)
     {

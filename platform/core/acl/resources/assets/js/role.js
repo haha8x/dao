@@ -11,7 +11,7 @@ class Role {
             selectable: false
         });
 
-        $('#mainNode .checker').change((event) => {
+        $('#mainNode .checker').change(event =>  {
             let _self = $(event.currentTarget);
             let set = _self.attr('data-set');
             let checked = _self.is(':checked');

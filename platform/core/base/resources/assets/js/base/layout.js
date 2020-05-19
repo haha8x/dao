@@ -12,12 +12,12 @@ class Layout {
     }
 
     // Set proper height for sidebar and content. The content and sidebar height must be synced always.
-    handleSidebarAndContentHeight() {
+    static handleSidebarAndContentHeight() {
         let content = $('.page-content');
         let sidebar = $('.page-sidebar');
         let header = $('.page-header');
         let footer = $('.page-footer');
-        let body = this.$body;
+        let body = $('body');
         let height;
 
         if (body.hasClass('page-footer-fixed') === true && body.hasClass('page-sidebar-fixed') === false) {
@@ -31,7 +31,7 @@ class Layout {
             }
         } else {
             if (body.hasClass('page-sidebar-fixed')) {
-                height = this._calculateFixedSidebarViewportHeight();
+                height = Layout._calculateFixedSidebarViewportHeight();
                 if (body.hasClass('page-footer-fixed') === false) {
                     height = height - footer.outerHeight();
                 }
@@ -39,7 +39,7 @@ class Layout {
                 let headerHeight = header.outerHeight();
                 let footerHeight = footer.outerHeight();
 
-                if (App.getViewPort().width < this.resBreakpointMd) {
+                if (App.getViewPort().width < App.getResponsiveBreakpoint('md')) {
                     height = App.getViewPort().height - headerHeight - footerHeight;
                 } else {
                     height = sidebar.height() + 20;
@@ -122,7 +122,7 @@ class Layout {
                     if (autoScroll === true && current.$body.hasClass('page-sidebar-closed') === false) {
                         App.scrollTo(the, slideOffeset);
                     }
-                    current.handleSidebarAndContentHeight();
+                    Layout.handleSidebarAndContentHeight();
                 });
             } else if (hasSubMenu) {
                 $('.arrow', the).addClass('open');
@@ -131,7 +131,7 @@ class Layout {
                     if (autoScroll === true && current.$body.hasClass('page-sidebar-closed') === false) {
                         App.scrollTo(the, slideOffeset);
                     }
-                    current.handleSidebarAndContentHeight();
+                    Layout.handleSidebarAndContentHeight();
                 });
             }
 
@@ -148,9 +148,9 @@ class Layout {
     }
 
     // Helper function to calculate sidebar height for fixed sidebar layout.
-    _calculateFixedSidebarViewportHeight() {
+    static _calculateFixedSidebarViewportHeight() {
         let sidebarHeight = App.getViewPort().height - $('.page-header').outerHeight(true);
-        if (this.$body.hasClass('page-footer-fixed')) {
+        if ($('body').hasClass('page-footer-fixed')) {
             sidebarHeight = sidebarHeight - $('.page-footer').outerHeight();
         }
 
@@ -161,11 +161,11 @@ class Layout {
     handleFixedSidebar() {
         let menu = $('.page-sidebar-menu');
 
-        this.handleSidebarAndContentHeight();
+        Layout.handleSidebarAndContentHeight();
 
-        if (App.getViewPort().width >= this.resBreakpointMd && !this.$body.hasClass('page-sidebar-menu-not-fixed')) {
-            menu.attr('data-height', this._calculateFixedSidebarViewportHeight());
-            this.handleSidebarAndContentHeight();
+        if (App.getViewPort().width >= App.getResponsiveBreakpoint('md') && !$('body').hasClass('page-sidebar-menu-not-fixed')) {
+            menu.attr('data-height', Layout._calculateFixedSidebarViewportHeight());
+            Layout.handleSidebarAndContentHeight();
         }
     }
 
@@ -174,12 +174,12 @@ class Layout {
         let current = this;
         if (this.$body.hasClass('page-sidebar-fixed')) {
             $('.page-sidebar')
-                .on('mouseenter', (event) => {
+                .on('mouseenter', event =>  {
                     if (current.$body.hasClass('page-sidebar-closed')) {
                         $(event.currentTarget).find('.page-sidebar-menu').removeClass('page-sidebar-menu-closed');
                     }
                 })
-                .on('mouseleave', (event) => {
+                .on('mouseleave', event =>  {
                     if (current.$body.hasClass('page-sidebar-closed')) {
                         $(event.currentTarget).find('.page-sidebar-menu').addClass('page-sidebar-menu-closed');
                     }
@@ -187,13 +187,12 @@ class Layout {
         }
     }
 
-    // Hanles sidebar toggler
+    // Handles sidebar toggler
     handleSidebarToggler() {
         // handle sidebar show/hide
         let body = this.$body;
-        this.$body.on('click', '.sidebar-toggler', (event) => {
+        this.$body.on('click', '.sidebar-toggler', event =>  {
             event.preventDefault();
-            let sidebar = $('.page-sidebar');
             let sidebarMenu = $('.page-sidebar-menu');
 
             if (body.hasClass('page-sidebar-closed')) {
@@ -213,10 +212,9 @@ class Layout {
 
     // Handles Bootstrap Tabs.
     handleTabs() {
-        let current = this;
         // fix content height on tab click
         this.$body.on('shown.bs.tab', 'a[data-toggle="tab"]', () => {
-            current.handleSidebarAndContentHeight();
+            Layout.handleSidebarAndContentHeight();
         });
     };
 
@@ -226,7 +224,7 @@ class Layout {
         let duration = 500;
 
         if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {  // ios supported
-            $(window).bind('touchend touchcancel touchleave', (event) => {
+            $(window).bind('touchend touchcancel touchleave', event =>  {
                 if ($(event.currentTarget).scrollTop() > offset) {
                     $('.scroll-to-top').fadeIn(duration);
                 } else {
@@ -234,7 +232,7 @@ class Layout {
                 }
             });
         } else {  // general
-            $(window).scroll((event) => {
+            $(window).scroll(event =>  {
                 if ($(event.currentTarget).scrollTop() > offset) {
                     $('.scroll-to-top').fadeIn(duration);
                 } else {
@@ -261,8 +259,7 @@ class Layout {
             height = App.getViewPort().height -
                 $('.page-header').outerHeight(true) -
                 $('.page-footer').outerHeight(true) -
-                $('.page-title').outerHeight(true) -
-                $('.page-bar').outerHeight(true);
+                $('.page-title').outerHeight(true);
 
             if (target.hasClass('portlet')) {
                 let portletBody = target.find('.portlet-body');
@@ -301,7 +298,7 @@ class Layout {
         this.handle100HeightContent(); // handles 100% height elements(block, portlet, etc)
         this.handleTabs(); // handle bootstrap tabs
 
-        App.addResizeHandler(this.handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
+        App.addResizeHandler(Layout.handleSidebarAndContentHeight); // recalculate sidebar & content height on window resize
         App.addResizeHandler(this.handle100HeightContent); // reinitialize content height on window resize
     }
 

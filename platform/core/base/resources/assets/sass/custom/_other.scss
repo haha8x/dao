@@ -456,3 +456,33 @@ h4.modal-title {
         }
     }
 }
+
+.select2-container--default {
+    .select2-selection--multiple {
+        .select2-selection__rendered {
+            padding: 4px 12px !important;
+
+            .select2-selection__choice {
+                font-size: 14px;
+
+                .select2-selection__choice__remove {
+                    font-size: 16px;
+                    top: -1px;
+                }
+            }
+        }
+    }
+
+    &.select2-container--focus {
+        .select2-selection--multiple {
+            border: 1px solid #ebedf2;
+        }
+    }
+}
+
+.modal-open {
+    .modal-backdrop {
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+    }
+}

@@ -38,6 +38,7 @@ return [
             'cache_time'                            => 'Cache time',
             'cache_time_site_map'                   => 'Cache Time Site map',
             'admin_logo'                            => 'Admin logo',
+            'admin_favicon'                         => 'Admin favicon',
             'admin_title'                           => 'Admin title',
             'admin_title_placeholder'               => 'Title show to tab of browser',
             'cache_block'                           => 'Cache',
@@ -96,6 +97,10 @@ return [
         'aws_default_region' => 'AWS Default Region',
         'aws_bucket'         => 'AWS Bucket',
         'aws_url'            => 'AWS URL',
+    ],
+    'license'                      => [
+        'purchase_code' => 'Purchase code',
+        'buyer'         => 'Buyer',
     ],
     'field_type_not_exists'        => 'This field type does not exist',
     'save_settings'                => 'Save settings',

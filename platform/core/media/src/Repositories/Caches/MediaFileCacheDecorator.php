@@ -8,39 +8,7 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFileInterface
 {
     /**
-     * {@inheritdoc}
-     */
-    public function getSpaceUsed()
-    {
-        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSpaceLeft()
-    {
-        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getQuota()
-    {
-        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPercentageUsed()
-    {
-        return $this->getDataIfExistCache(__FUNCTION__, func_get_args());
-    }
-
-    /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createName($name, $folder)
     {
@@ -48,7 +16,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $extension, $folder)
     {
@@ -56,7 +24,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFilesByFolderId($folderId, array $params = [], $withFolders = true, $folderParams = [])
     {
@@ -64,7 +32,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function emptyTrash()
     {
@@ -72,7 +40,7 @@ class MediaFileCacheDecorator extends CacheAbstractDecorator implements MediaFil
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTrashed($folderId, array $params = [], $withFolders = true, $folderParams = [])
     {

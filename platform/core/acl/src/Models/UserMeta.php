@@ -56,11 +56,11 @@ class UserMeta extends BaseModel
 
     /**
      * @param string $key
-     * @param null $default_value
+     * @param null $default
      * @param int $userId
      * @return string
      */
-    public static function getMeta($key, $default_value = null, $userId = 0)
+    public static function getMeta($key, $default = null, $userId = 0)
     {
         if ($userId == 0) {
             $userId = Auth::user()->getKey();
@@ -75,6 +75,6 @@ class UserMeta extends BaseModel
             return $meta->value;
         }
 
-        return $default_value;
+        return $default;
     }
 }

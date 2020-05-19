@@ -14,13 +14,13 @@ class CreateDashboardWidgetTables extends Migration
     public function up()
     {
         Schema::create('dashboard_widgets', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name', 120);
             $table->timestamps();
         });
 
         Schema::create('dashboard_widget_settings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->text('settings')->nullable();
             $table->integer('user_id')->unsigned()->index()->references('id')->on('users');
             $table->integer('widget_id')->unsigned()->index()->references('id')->on('widgets');

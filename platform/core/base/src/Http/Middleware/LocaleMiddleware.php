@@ -4,11 +4,25 @@ namespace Botble\Base\Http\Middleware;
 
 use Assets;
 use Closure;
-use Exception;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
 
 class LocaleMiddleware
 {
+
+    /**
+     * @var \Illuminate\Foundation\Application|mixed
+     */
+    protected $app;
+
+    /**
+     * LocaleMiddleware constructor.
+     * @param Application $application
+     */
+    public function __construct(Application $application)
+    {
+        $this->app = $application;
+    }
 
     /**
      * Handle an incoming request.
@@ -16,17 +30,20 @@ class LocaleMiddleware
      * @param Request $request
      * @param Closure $next
      * @return mixed
-     * @throws Exception
      */
     public function handle($request, Closure $next)
     {
-        app()->setLocale(env('APP_LOCALE', config('app.locale')));
+        $this->app->setLocale(config('app.locale'));
 
-        if ($request->session()->has('site-locale') &&
-            array_key_exists($request->session()->get('site-locale'), Assets::getAdminLocales())
-        ) {
-            app()->setLocale($request->session()->get('site-locale'));
-            $request->setLocale($request->session()->get('site-locale'));
+        if (!$request->session()->has('site-locale')) {
+            return $next($request);
+        }
+
+        $sessionLocale = $request->session()->get('site-locale');
+
+        if (array_key_exists($sessionLocale, Assets::getAdminLocales())) {
+            $this->app->setLocale($sessionLocale);
+            $request->setLocale($sessionLocale);
         }
 
         return $next($request);

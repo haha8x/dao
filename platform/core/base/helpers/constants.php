@@ -50,18 +50,6 @@ if (!defined('BASE_FILTER_GROUP_PUBLIC_ROUTE')) {
     define('BASE_FILTER_GROUP_PUBLIC_ROUTE', 'group_public_route');
 }
 
-if (!defined('BASE_ACTION_REGISTER_BREADCRUMBS')) {
-    define('BASE_ACTION_REGISTER_BREADCRUMBS', 'register_breadcrumbs');
-}
-
-if (!defined('BASE_ACTION_REGISTER_SITE_MAP')) {
-    define('BASE_ACTION_REGISTER_SITE_MAP', 'register_site_map');
-}
-
-if (!defined('BASE_FILTER_REGISTER_PLATFORM_ADMIN_OPTIONS')) {
-    define('BASE_FILTER_REGISTER_PLATFORM_ADMIN_OPTIONS', 'register_platform_admin_options');
-}
-
 if (!defined('BASE_FILTER_REGISTER_CONTENT_TABS')) {
     define('BASE_FILTER_REGISTER_CONTENT_TABS', 'register_platform_content_tabs');
 }
@@ -83,11 +71,11 @@ if (!defined('BASE_FILTER_TOP_HEADER_LAYOUT')) {
 }
 
 if (!defined('BASE_FILTER_TABLE_BUTTONS')) {
-    define('BASE_FILTER_TABLE_BUTTONS', 'base_filter_datatables_buttons');
+    define('BASE_FILTER_TABLE_BUTTONS', 'base_filter_table_buttons');
 }
 
 if (!defined('BASE_FILTER_TABLE_QUERY')) {
-    define('BASE_FILTER_TABLE_QUERY', 'base_filter_datatables_query');
+    define('BASE_FILTER_TABLE_QUERY', 'base_filter_table_query');
 }
 
 if (!defined('BASE_ACTION_ENQUEUE_SCRIPTS')) {
@@ -156,4 +144,16 @@ if (!defined('BASE_ACTION_INIT')) {
 
 if (!defined('IS_IN_ADMIN_FILTER')) {
     define('IS_IN_ADMIN_FILTER', 'is_in_admin');
+}
+
+if (!defined('BASE_FILTER_ENUM_LABEL')) {
+    define('BASE_FILTER_ENUM_LABEL', 'base_filter_enum_label');
+}
+
+if (!defined('BASE_FILTER_ENUM_ARRAY')) {
+    define('BASE_FILTER_ENUM_ARRAY', 'base_filter_enum_array');
+}
+
+if (!defined('BASE_FILTER_ENUM_HTML')) {
+    define('BASE_FILTER_ENUM_HTML', 'base_filter_enum_html');
 }

@@ -26,6 +26,7 @@ class PluginManagementServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setNamespace('packages/plugin-management')
+            ->loadAndPublishConfigurations(['permissions'])
             ->loadAndPublishViews()
             ->loadAndPublishTranslations()
             ->loadRoutes(['web'])

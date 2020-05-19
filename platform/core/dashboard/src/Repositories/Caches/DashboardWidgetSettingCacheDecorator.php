@@ -8,7 +8,7 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 class DashboardWidgetSettingCacheDecorator extends CacheAbstractDecorator implements DashboardWidgetSettingInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getListWidget()
     {

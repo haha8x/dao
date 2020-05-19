@@ -14,7 +14,7 @@ use Illuminate\Support\Str;
 class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFolderByParentId($folderId, array $params = [], $withTrash = false)
     {
@@ -26,7 +26,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
             $folderId = null;
         }
 
-        $this->model = $this->model->where('parent_id', '=', $folderId);
+        $this->model = $this->model->where('parent_id', $folderId);
 
         if ($withTrash) {
             $this->model = $this->model->withTrashed();
@@ -36,7 +36,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $parentId)
     {
@@ -51,7 +51,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createName($name, $parentId)
     {
@@ -66,14 +66,14 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @param $parentId
+     * @param string $key
+     * @param string $value
+     * @param int $parentId
      * @return bool
      */
     protected function checkIfExists($key, $value, $parentId)
     {
-        $count = $this->model->where($key, '=', $value)->where('parent_id', $parentId)->withTrashed();
+        $count = $this->model->where($key, $value)->where('parent_id', $parentId)->withTrashed();
 
         /**
          * @var Builder $count
@@ -84,7 +84,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getBreadcrumbs($parentId, $breadcrumbs = [])
     {
@@ -108,7 +108,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTrashed($parentId, array $params = [])
     {
@@ -131,19 +131,19 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
                      * @var Builder $query
                      */
                     $query
-                        ->orWhere('media_folders.parent_id', '=', 0)
-                        ->orWhere('mf_parent.deleted_at', '=', null);
+                        ->orWhere('media_folders.parent_id', 0)
+                        ->orWhere('mf_parent.deleted_at', null);
                 })
                 ->withTrashed();
         } else {
-            $data->where('media_folders.parent_id', '=', $parentId);
+            $data->where('media_folders.parent_id', $parentId);
         }
 
         return $data->get();
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deleteFolder($folderId, $force = false)
     {
@@ -160,7 +160,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllChildFolders($parentId, $child = [])
     {
@@ -181,7 +181,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFullPath($folderId, $path = null)
     {
@@ -205,7 +205,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function restoreFolder($folderId)
     {
@@ -218,7 +218,7 @@ class MediaFolderRepository extends RepositoriesAbstract implements MediaFolderI
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function emptyTrash()
     {

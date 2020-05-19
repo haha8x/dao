@@ -14,7 +14,7 @@ class CreateMediaTables extends Migration
     public function up()
     {
         Schema::create('media_folders', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
@@ -24,7 +24,7 @@ class CreateMediaTables extends Migration
         });
 
         Schema::create('media_files', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->string('name', 255);
             $table->integer('folder_id')->default(0)->unsigned();
@@ -37,7 +37,7 @@ class CreateMediaTables extends Migration
         });
 
         Schema::create('media_settings', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('key', 120);
             $table->text('value')->nullable();
             $table->integer('media_id')->nullable();

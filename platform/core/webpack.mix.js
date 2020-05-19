@@ -15,77 +15,69 @@ mix.options({
     processCssUrls: false
 });
 
-const resourcePath = 'platform/core';
-const publicPath = 'public/vendor/core';
+const source = 'platform/core';
+const dist = 'public/vendor/core';
 
-let fs = require('fs');
+let glob = require('glob');
 
-let themePath = resourcePath + '/base/resources/assets/sass/base/themes';
-let paths = fs.readdirSync(themePath);
-for (let i = 0; i < paths.length; i++) {
-    if (paths[i].indexOf('.scss') > 0 && paths[i].charAt(0) !== '_') {
-        let file = themePath + '/' + paths[i];
-        mix.sass(file, publicPath + '/css/themes')
-            .copy(publicPath + '/css/themes/' + paths[i].replace('.scss', '.css'), resourcePath + '/base/public/css/themes');
+glob.sync(source + '/base/resources/assets/sass/base/themes/*.scss').forEach(item => {
+    if (item.indexOf('_base.scss') !== -1) {
+        return;
     }
-}
+
+    mix.sass(item, dist + '/css/themes').copy(dist + '/css/themes', source + '/base/public/css/themes');
+})
 
 mix
-    .sass(resourcePath + '/base/resources/assets/sass/core.scss', publicPath + '/css')
-    .copy(publicPath + '/css/core.css', resourcePath + '/base/public/css')
-    .sass(resourcePath + '/base/resources/assets/sass/custom/system-info.scss', publicPath + '/css')
-    .copy(publicPath + '/css/system-info.css', resourcePath + '/base/public/css')
-    .sass(resourcePath + '/base/resources/assets/sass/custom/email.scss', publicPath + '/css')
-    .copy(publicPath + '/css/email.css', resourcePath + '/base/public/css')
+    .js(source + '/acl/resources/assets/js/profile.js', dist + '/js')
+    .copy(dist + '/js/profile.js', source + '/acl/public/js')
+    .js(source + '/acl/resources/assets/js/login.js', dist + '/js')
+    .copy(dist + '/js/login.js', source + '/acl/public/js')
+    .js(source + '/acl/resources/assets/js/role.js', dist + '/js')
+    .copy(dist + '/js/role.js', source + '/acl/public/js')
+    .sass(source + '/acl/resources/assets/sass/login.scss', dist + '/css')
+    .copy(dist + '/css/login.css', source + '/acl/public/css')
 
-    .js(resourcePath + '/base/resources/assets/js/app.js', publicPath + '/js')
-    .copy(publicPath + '/js/app.js', resourcePath + '/base/public/js')
-    .js(resourcePath + '/base/resources/assets/js/core.js', publicPath + '/js')
-    .copy(publicPath + '/js/core.js', resourcePath + '/base/public/js');
+    .sass(source + '/base/resources/assets/sass/core.scss', dist + '/css')
+    .copy(dist + '/css/core.css', source + '/base/public/css')
+    .sass(source + '/base/resources/assets/sass/custom/system-info.scss', dist + '/css')
+    .copy(dist + '/css/system-info.css', source + '/base/public/css')
+    .sass(source + '/base/resources/assets/sass/custom/email.scss', dist + '/css')
+    .copy(dist + '/css/email.css', source + '/base/public/css')
+    .js(source + '/base/resources/assets/js/app.js', dist + '/js')
+    .copy(dist + '/js/app.js', source + '/base/public/js')
+    .js(source + '/base/resources/assets/js/core.js', dist + '/js')
+    .copy(dist + '/js/core.js', source + '/base/public/js')
+    .js(source + '/base/resources/assets/js/editor.js', dist + '/js')
+    .copy(dist + '/js/editor.js', source + '/base/public/js')
+    .js(source + '/base/resources/assets/js/cache.js', dist + '/js')
+    .copy(dist + '/js/cache.js', source + '/base/public/js')
+    .js(source + '/base/resources/assets/js/tags.js', dist + '/js')
+    .copy(dist + '/js/tags.js', source + '/base/public/js')
+    .js(source + '/base/resources/assets/js/system-info.js', dist + '/js')
+    .copy(dist + '/js/system-info.js', source + '/base/public/js')
 
-// Modules Core
-mix
-    .js(resourcePath + '/base/resources/assets/js/editor.js', publicPath + '/js')
-    .copy(publicPath + '/js/editor.js', resourcePath + '/base/public/js')
-    .js(resourcePath + '/base/resources/assets/js/cache.js', publicPath + '/js')
-    .copy(publicPath + '/js/cache.js', resourcePath + '/base/public/js')
-    .js(resourcePath + '/base/resources/assets/js/tags.js', publicPath + '/js')
-    .copy(publicPath + '/js/tags.js', resourcePath + '/base/public/js')
-    .js(resourcePath + '/base/resources/assets/js/system-info.js', publicPath + '/js')
-    .copy(publicPath + '/js/system-info.js', resourcePath + '/base/public/js')
+    .js(source + '/dashboard/resources/assets/js/dashboard.js', dist + '/js')
+    .copy(dist + '/js/dashboard.js', source + '/dashboard/public/js')
+    .sass(source + '/dashboard/resources/assets/sass/dashboard.scss', dist + '/css')
+    .copy(dist + '/css/dashboard.css', source + '/dashboard/public/css')
 
-    .js(resourcePath + '/setting/resources/assets/js/setting.js', publicPath + '/js')
-    .copy(publicPath + '/js/setting.js', resourcePath + '/setting/public/js')
-    .sass(resourcePath + '/setting/resources/assets/sass/setting.scss', publicPath + '/css')
-    .copy(publicPath + '/css/setting.css', resourcePath + '/setting/public/css')
+    .sass(source + '/media/resources/assets/sass/media.scss', dist + '/media/css')
+    .js(source + '/media/resources/assets/js/media.js', dist + '/media/js')
+    .js(source + '/media/resources/assets/js/jquery.addMedia.js', dist + '/media/js')
+    .js(source + '/media/resources/assets/js/integrate.js', dist + '/media/js')
+    .copy(dist + '/media/js', source + '/media/public/media/js')
+    .copy(dist + '/media/css', source + '/media/public/media/css')
 
-    .js(resourcePath + '/table/resources/assets/js/table.js', publicPath + '/js')
-    .copy(publicPath + '/js/table.js', resourcePath + '/table/public/js')
-    .js(resourcePath + '/table/resources/assets/js/filter.js', publicPath + '/js')
-    .copy(publicPath + '/js/filter.js', resourcePath + '/table/public/js')
-    .sass(resourcePath + '/table/resources/assets/sass/table.scss', publicPath + '/css/components')
-    .copy(publicPath + '/css/components/table.css', resourcePath + '/table/public/css/components')
+    .js(source + '/setting/resources/assets/js/setting.js', dist + '/js')
+    .copy(dist + '/js/setting.js', source + '/setting/public/js')
+    .sass(source + '/setting/resources/assets/sass/setting.scss', dist + '/css')
+    .copy(dist + '/css/setting.css', source + '/setting/public/css')
 
-    .js(resourcePath + '/dashboard/resources/assets/js/dashboard.js', publicPath + '/js')
-    .copy(publicPath + '/js/dashboard.js', resourcePath + '/dashboard/public/js')
-
-    .js(resourcePath + '/acl/resources/assets/js/profile.js', publicPath + '/js')
-    .copy(publicPath + '/js/profile.js', resourcePath + '/acl/public/js')
-    .js(resourcePath + '/acl/resources/assets/js/login.js', publicPath + '/js')
-    .copy(publicPath + '/js/login.js', resourcePath + '/acl/public/js')
-    .sass(resourcePath + '/acl/resources/assets/sass/login.scss', publicPath + '/css')
-    .copy(publicPath + '/css/login.css', resourcePath + '/acl/public/css')
-    .js(resourcePath + '/acl/resources/assets/js/role.js', publicPath + '/js')
-    .copy(publicPath + '/js/role.js', resourcePath + '/acl/public/js');
-
-// Media
-mix
-    .sass(resourcePath + '/media/resources/assets/sass/media.scss', publicPath + '/media/css')
-    .copy(publicPath + '/media/css/media.css', resourcePath + '/media/public/media/css')
-    .js(resourcePath + '/media/resources/assets/js/media.js', publicPath + '/media/js')
-    .copy(publicPath + '/media/js/media.js', resourcePath + '/media/public/media/js')
-    .js(resourcePath + '/media/resources/assets/js/jquery.addMedia.js', publicPath + '/media/js')
-    .copy(publicPath + '/media/js/jquery.addMedia.js', resourcePath + '/media/public/media/js')
-    .js(resourcePath + '/media/resources/assets/js/integrate.js', publicPath + '/media/js')
-    .copy(publicPath + '/media/js/integrate.js', resourcePath + '/media/public/media/js');
+    .js(source + '/table/resources/assets/js/table.js', dist + '/js')
+    .copy(dist + '/js/table.js', source + '/table/public/js')
+    .js(source + '/table/resources/assets/js/filter.js', dist + '/js')
+    .copy(dist + '/js/filter.js', source + '/table/public/js')
+    .sass(source + '/table/resources/assets/sass/table.scss', dist + '/css')
+    .copy(dist + '/css/table.css', source + '/table/public/css');
 

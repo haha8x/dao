@@ -1,4 +1,4 @@
-import {MediaService} from '../Services/MediaService';
+import {MediaService} from './MediaService';
 import {Helpers} from '../Helpers/Helpers';
 
 export class UploadService {
@@ -77,7 +77,7 @@ export class UploadService {
         /**
          * Close upload progress pane
          */
-        _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', (event) => {
+        _self.$body.off('click', '.rv-upload-progress .close-pane').on('click', '.rv-upload-progress .close-pane', event =>  {
             event.preventDefault();
             $('.rv-upload-progress').addClass('hide-the-pane');
             _self.totalError = 0;

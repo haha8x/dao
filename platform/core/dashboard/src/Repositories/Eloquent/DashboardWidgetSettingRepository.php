@@ -9,7 +9,7 @@ use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
 class DashboardWidgetSettingRepository extends RepositoriesAbstract implements DashboardWidgetSettingInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getListWidget()
     {
@@ -22,7 +22,7 @@ class DashboardWidgetSettingRepository extends RepositoriesAbstract implements D
             ])
             ->with('widget')
             ->orderBy('order')
-            ->where('user_id', '=', Auth::user()->getKey())
+            ->where('user_id', Auth::user()->getKey())
             ->get();
 
         $this->resetModel();

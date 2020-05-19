@@ -3,6 +3,8 @@
 namespace Botble\Base\Supports;
 
 use Artisan;
+use Cache;
+use Event;
 use Illuminate\Support\Facades\Auth;
 use Eloquent;
 use Exception;
@@ -16,7 +18,6 @@ class Helper
     /**
      * Load helpers from a directory
      * @param string $directory
-     *
      * @since 2.0
      */
     public static function autoload(string $directory): void
@@ -39,7 +40,7 @@ class Helper
                 $object->increment('views');
                 session()->put($sessionName . '.' . $object->id, time());
                 return true;
-            } catch (Exception $ex) {
+            } catch (Exception $exception) {
                 return false;
             }
         }
@@ -73,15 +74,25 @@ class Helper
      *
      * @return boolean
      * @since 3.3
+     * @deprecated
      */
     public static function removePluginData(string $plugin): bool
     {
+        return self::removeModuleFiles($plugin, 'plugins');
+    }
+
+    /**
+     * @param string $module
+     * @return boolean
+     */
+    public static function removeModuleFiles(string $module, $type = 'packages'): bool
+    {
         $folders = [
-            public_path('vendor/core/plugins/' . $plugin),
-            resource_path('assets/plugins/' . $plugin),
-            resource_path('views/vendor/plugins/' . $plugin),
-            resource_path('lang/vendor/plugins/' . $plugin),
-            config_path('plugins/' . $plugin),
+            public_path('vendor/core/' . $type . '/' . $module),
+            resource_path('assets/' . $type . '/' . $module),
+            resource_path('views/vendor/' . $type . '/' . $module),
+            resource_path('lang/vendor/' . $type . '/' . $module),
+            config_path($type . '/' . $module),
         ];
 
         foreach ($folders as $folder) {
@@ -123,8 +134,35 @@ class Helper
     {
         try {
             return Schema::hasTable('settings');
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             return false;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public static function clearCache(): bool
+    {
+        Event::dispatch('cache:clearing');
+
+        try {
+            Cache::flush();
+            if (!File::exists($storagePath = storage_path('framework/cache'))) {
+                return true;
+            }
+
+            foreach (File::files($storagePath) as $file) {
+                if (preg_match('/facade-.*\.php$/', $file)) {
+                    File::delete($file);
+                }
+            }
+        } catch (Exception $exception) {
+            info($exception->getMessage());
+        }
+
+        Event::dispatch('cache:cleared');
+
+        return true;
     }
 }

@@ -2,6 +2,9 @@
 /vendor
 /platform/plugins/*/vendor
 
+/database/DAO.mdf
+/database/DAO_log.ldf
+
 /public/hot
 /public/mix-manifest.json
 /public/vendor

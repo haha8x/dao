@@ -16,11 +16,6 @@ class {Module}ServiceProvider extends ServiceProvider
 {
     use LoadAndPublishDataTrait;
 
-    /**
-     * @var \Illuminate\Foundation\Application
-     */
-    protected $app;
-
     public function register()
     {
         $this->app->bind({Name}Interface::class, function () {

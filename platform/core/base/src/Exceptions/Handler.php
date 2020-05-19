@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use Log;
-use Monolog\Handler\MissingExtensionException;
 use RvMedia;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,24 +26,17 @@ use URL;
 class Handler extends ExceptionHandler
 {
     /**
-     * Render an exception into an HTTP response.
-     * @param Request $request
-     * @param Throwable $ex
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     * @throws FileNotFoundException
-     * @throws Exception
-     * @throws Throwable
+     * {@inheritDoc}
      */
-    public function render($request, Throwable $ex)
+    public function render($request, Throwable $exception)
     {
-        if ($ex instanceof PostTooLargeException) {
+        if ($exception instanceof PostTooLargeException) {
             return RvMedia::responseError(trans('core/media::media.upload_failed', [
                 'size' => human_file_size(RvMedia::getServerConfigMaxUploadFileSize()),
             ]));
         }
 
-        if ($ex instanceof ModelNotFoundException && $request->expectsJson()) {
+        if ($exception instanceof ModelNotFoundException && $request->expectsJson()) {
             return (new BaseHttpResponse)
                 ->setError()
                 ->setMessage('Not found')
@@ -52,19 +44,19 @@ class Handler extends ExceptionHandler
                 ->toResponse($request);
         }
 
-        if ($ex instanceof ModelNotFoundException || $ex instanceof MethodNotAllowedHttpException) {
-            $ex = new NotFoundHttpException($ex->getMessage(), $ex);
+        if ($exception instanceof ModelNotFoundException || $exception instanceof MethodNotAllowedHttpException) {
+            $exception = new NotFoundHttpException($exception->getMessage(), $exception);
         }
 
-        if ($ex instanceof AuthorizationException) {
+        if ($exception instanceof AuthorizationException) {
             $response = $this->handleResponseData(403, $request);
             if ($response) {
                 return $response;
             }
         }
 
-        if ($this->isHttpException($ex) && !app()->isDownForMaintenance()) {
-            $code = $ex->getStatusCode();
+        if ($this->isHttpException($exception) && !app()->isDownForMaintenance()) {
+            $code = $exception->getStatusCode();
 
             do_action(BASE_ACTION_SITE_ERROR, $code);
 
@@ -75,10 +67,10 @@ class Handler extends ExceptionHandler
                 }
             }
         } elseif (app()->isDownForMaintenance() && view()->exists('theme.' . setting('theme') . '::views.503')) {
-            return response()->view('theme.' . setting('theme') . '::views.503', ['exception' => $ex], 503);
+            return response()->view('theme.' . setting('theme') . '::views.503', ['exception' => $exception], 503);
         }
 
-        return parent::render($request, $ex);
+        return parent::render($request, $exception);
     }
 
     /**
@@ -105,7 +97,7 @@ class Handler extends ExceptionHandler
             if ($code == 403) {
                 return (new BaseHttpResponse)
                     ->setError()
-                    ->setMessage(__('This action is unauthorized.'))
+                    ->setMessage(trans('core/acl::permissions.action_unauthorized'))
                     ->setCode($code)
                     ->toResponse($request);
             }
@@ -127,22 +119,17 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Report or log an exception.
-     *
-     * This is a great spot to send exceptions to Emails.
-     *
-     * @param Exception $exception
-     * @return void
-     * @throws MissingExtensionException
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function report(Throwable $exception)
     {
         if ($this->shouldReport($exception) && !$this->isExceptionFromBot()) {
             if (!app()->isLocal() && !app()->runningInConsole()) {
                 if (setting('enable_send_error_reporting_via_email', false) && setting('email_driver',
-                        config('mail.driver'))) {
-                    EmailHandler::sendErrorException($exception);
+                        config('mail.default'))) {
+                    if ($exception instanceof Exception) {
+                        EmailHandler::sendErrorException($exception);
+                    }
                 }
 
                 if (config('core.base.general.error_reporting.via_slack',
@@ -166,16 +153,16 @@ class Handler extends ExceptionHandler
      *
      * @return boolean
      */
-    protected function isExceptionFromBot()
+    protected function isExceptionFromBot(): bool
     {
-        $ignored_bots = config('core.base.general.error_reporting.ignored_bots', []);
-        $agent = array_key_exists('HTTP_USER_AGENT', $_SERVER) ? strtolower($_SERVER['HTTP_USER_AGENT']) : null;
+        $ignoredBots = config('core.base.general.error_reporting.ignored_bots', []);
+        $agent = strtolower(request()->server('HTTP_USER_AGENT'));
 
         if (empty($agent)) {
             return false;
         }
 
-        foreach ($ignored_bots as $bot) {
+        foreach ($ignoredBots as $bot) {
             if ((strpos($agent, $bot) !== false)) {
                 return true;
             }
@@ -185,16 +172,12 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Convert an authentication exception into a response.
-     *
-     * @param Request|InteractsWithContentTypes $request
-     * @param AuthenticationException $exception
-     * @return BaseHttpResponse|RedirectResponse|Response
+     * {@inheritDoc}
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return (new BaseHttpResponse())
+            return (new BaseHttpResponse)
                 ->setError()
                 ->setMessage($exception->getMessage())
                 ->setCode(401)

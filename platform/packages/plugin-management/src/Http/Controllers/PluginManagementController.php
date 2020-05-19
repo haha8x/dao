@@ -3,11 +3,8 @@
 namespace Botble\PluginManagement\Http\Controllers;
 
 use Assets;
-use Botble\Base\Supports\Helper;
-use Botble\PluginManagement\Commands\PluginActivateCommand;
-use Botble\PluginManagement\Commands\PluginDeactivateCommand;
-use Botble\PluginManagement\Commands\PluginRemoveCommand;
 use Botble\Base\Http\Responses\BaseHttpResponse;
+use Botble\PluginManagement\Services\PluginService;
 use Exception;
 use File;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -73,78 +70,75 @@ class PluginManagementController extends Controller
      *
      * @param Request $request
      * @param BaseHttpResponse $response
-     * @param PluginActivateCommand $pluginActivateCommand
-     * @param PluginDeactivateCommand $pluginDeactivateCommand
+     * @param PluginService $pluginService
      * @return mixed
      * @throws FileNotFoundException
      */
-    public function update(
-        Request $request,
-        BaseHttpResponse $response,
-        PluginActivateCommand $pluginActivateCommand,
-        PluginDeactivateCommand $pluginDeactivateCommand
-    ) {
+    public function update(Request $request, BaseHttpResponse $response, PluginService $pluginService)
+    {
         $plugin = strtolower($request->input('name'));
 
         $content = get_file_data(plugin_path($plugin . '/plugin.json'));
-        if (!empty($content)) {
-            try {
-                $activatedPlugins = get_active_plugins();
-                if (!in_array($plugin, $activatedPlugins)) {
-                    if (!empty(Arr::get($content, 'require'))) {
-                        $count_required_plugins = count(array_intersect($content['require'], $activatedPlugins));
-                        $valid = $count_required_plugins == count($content['require']);
-                        if (!$valid) {
-                            return $response
-                                ->setError()
-                                ->setMessage(trans('packages/plugin-management::plugin.missing_required_plugins', [
-                                    'plugins' => implode(',', $content['require']),
-                                ]));
-                        }
-                    }
-
-                    Helper::executeCommand($pluginActivateCommand->getName(), ['name' => $plugin]);
-                } else {
-                    Helper::executeCommand($pluginDeactivateCommand->getName(), ['name' => $plugin]);
-                }
-
-                return $response->setMessage(trans('packages/plugin-management::plugin.update_plugin_status_success'));
-            } catch (Exception $ex) {
-                return $response
-                    ->setError()
-                    ->setMessage($ex->getMessage());
-            }
+        if (empty($content)) {
+            return $response
+                ->setError()
+                ->setMessage(trans('packages/plugin-management::plugin.invalid_plugin'));
         }
 
-        return $response
-            ->setError()
-            ->setMessage(trans('packages/plugin-management::plugin.invalid_plugin'));
+        try {
+            $activatedPlugins = get_active_plugins();
+            if (!in_array($plugin, $activatedPlugins)) {
+                if (!empty(Arr::get($content, 'require'))) {
+                    if (count(array_intersect($content['require'], $activatedPlugins)) != count($content['require'])) {
+                        return $response
+                            ->setError()
+                            ->setMessage(trans('packages/plugin-management::plugin.missing_required_plugins', [
+                                'plugins' => implode(',', $content['require']),
+                            ]));
+                    }
+                }
+
+                $result = $pluginService->activate($plugin);
+            } else {
+                $result = $pluginService->deactivate($plugin);
+            }
+
+            if ($result['error']) {
+                return $response->setError()->setMessage($result['message']);
+            }
+
+            return $response->setMessage(trans('packages/plugin-management::plugin.update_plugin_status_success'));
+        } catch (Exception $exception) {
+            return $response
+                ->setError()
+                ->setMessage($exception->getMessage());
+        }
     }
 
     /**
      * Remove plugin
      *
+     * @param string $plugin
      * @param BaseHttpResponse $response
-     * @param PluginRemoveCommand $pluginRemoveCommand
+     * @param PluginService $pluginService
      * @return BaseHttpResponse
      */
-    public function destroy($plugin, BaseHttpResponse $response, PluginRemoveCommand $pluginRemoveCommand)
+    public function destroy($plugin, BaseHttpResponse $response, PluginService $pluginService)
     {
         $plugin = strtolower($plugin);
 
-        if (in_array($plugin, scan_folder(plugin_path()))) {
-            try {
-                Helper::executeCommand($pluginRemoveCommand->getName(), ['name' => $plugin, '--force' => true]);
-                return $response->setMessage(trans('packages/plugin-management::plugin.remove_plugin_success'));
-            } catch (Exception $ex) {
-                return $response
-                    ->setError()
-                    ->setMessage($ex->getMessage());
-            }
-        }
+        try {
+            $result = $pluginService->remove($plugin);
 
-        return $response
-            ->setError()
-            ->setMessage(trans('packages/plugin-management::plugin.invalid_plugin'));
+            if ($result['error']) {
+                return $response->setError()->setMessage($result['message']);
+            }
+
+            return $response->setMessage(trans('packages/plugin-management::plugin.remove_plugin_success'));
+        } catch (Exception $exception) {
+            return $response
+                ->setError()
+                ->setMessage($exception->getMessage());
+        }
     }
 }

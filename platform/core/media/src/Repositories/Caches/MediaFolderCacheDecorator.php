@@ -9,7 +9,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
 {
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFolderByParentId($folderId, array $params = [], $withTrash = false)
     {
@@ -17,7 +17,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $parentId)
     {
@@ -25,7 +25,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createName($name, $parentId)
     {
@@ -33,7 +33,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getBreadcrumbs($parentId, $breadcrumbs = [])
     {
@@ -41,7 +41,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getTrashed($parentId, array $params = [])
     {
@@ -49,7 +49,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function deleteFolder($folderId, $force = false)
     {
@@ -57,7 +57,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getAllChildFolders($parentId, $child = [])
     {
@@ -65,7 +65,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getFullPath($folderId, $path = '')
     {
@@ -73,7 +73,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function restoreFolder($folderId)
     {
@@ -81,7 +81,7 @@ class MediaFolderCacheDecorator extends CacheAbstractDecorator implements MediaF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function emptyTrash()
     {

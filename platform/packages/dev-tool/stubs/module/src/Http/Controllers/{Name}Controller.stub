@@ -24,7 +24,6 @@ class {Name}Controller extends BaseController
     protected ${+name}Repository;
 
     /**
-     * {Name}Controller constructor.
      * @param {Name}Interface ${+name}Repository
      */
     public function __construct({Name}Interface ${+name}Repository)
@@ -56,8 +55,6 @@ class {Name}Controller extends BaseController
     }
 
     /**
-     * Create new item
-     *
      * @param {Name}Request $request
      * @return BaseHttpResponse
      */
@@ -74,8 +71,6 @@ class {Name}Controller extends BaseController
     }
 
     /**
-     * Show edit form
-     *
      * @param $id
      * @param Request $request
      * @param FormBuilder $formBuilder

@@ -3,14 +3,12 @@
 namespace Botble\ACL\Tables;
 
 use Botble\ACL\Models\Role;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
+use Html;
 use Illuminate\Support\Facades\Auth;
 use Botble\ACL\Repositories\Interfaces\RoleInterface;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
 use Botble\Table\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class RoleTable extends TableAbstract
@@ -57,11 +55,7 @@ class RoleTable extends TableAbstract
 
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -72,7 +66,7 @@ class RoleTable extends TableAbstract
                     return $item->name;
                 }
 
-                return anchor_link(route('roles.edit', $item->id), $item->name);
+                return Html::link(route('roles.edit', $item->id), $item->name);
             })
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
@@ -81,7 +75,7 @@ class RoleTable extends TableAbstract
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
             ->editColumn('created_by', function ($item) {
-                return $item->author->name;
+                return $item->author->getFullName();
             });
 
         return apply_filters(BASE_FILTER_GET_LIST_DATA, $data, $this->repository->getModel())
@@ -93,11 +87,7 @@ class RoleTable extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by the table.
-     *
-     * @return \Illuminate\Database\Query\Builder|Builder
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -116,9 +106,7 @@ class RoleTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -151,10 +139,7 @@ class RoleTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -164,8 +149,7 @@ class RoleTable extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -173,7 +157,7 @@ class RoleTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

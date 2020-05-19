@@ -1,5 +1,5 @@
 /**
- * Created by Sang Nguyen on 06/09/2015.
+ * Created on 06/09/2015.
  */
 
 class CropAvatar {
@@ -206,7 +206,7 @@ class CropAvatar {
                 _this.submitStart();
             },
 
-            success: (data) => {
+            success: data =>  {
                 _this.submitDone(data);
             },
 

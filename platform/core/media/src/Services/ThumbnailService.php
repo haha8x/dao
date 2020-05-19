@@ -5,6 +5,7 @@ namespace Botble\Media\Services;
 use Exception;
 use Intervention\Image\ImageManager;
 use Log;
+use Storage;
 
 class ThumbnailService
 {
@@ -60,16 +61,10 @@ class ThumbnailService
     protected $fileName;
 
     /**
-     * @var UploadsManager
-     */
-    protected $uploadManager;
-
-    /**
      * ThumbnailService constructor.
-     * @param UploadsManager $uploadManager
      * @param ImageManager $imageManager
      */
-    public function __construct(UploadsManager $uploadManager, ImageManager $imageManager)
+    public function __construct(ImageManager $imageManager)
     {
         $this->thumbRate = 0.75;
         $this->xCoordinate = null;
@@ -82,7 +77,6 @@ class ThumbnailService
         }
 
         $this->imageManager = $imageManager->configure(['driver' => $driver]);
-        $this->uploadManager = $uploadManager;
     }
 
     /**
@@ -97,7 +91,7 @@ class ThumbnailService
     }
 
     /**
-     * @return string $imagePath
+     * @return string
      */
     public function getImage()
     {
@@ -116,7 +110,7 @@ class ThumbnailService
     }
 
     /**
-     * @return double $thumbRate
+     * @return double
      */
     public function getRate()
     {
@@ -124,8 +118,8 @@ class ThumbnailService
     }
 
     /**
-     * @param $width
-     * @param null $height
+     * @param int $width
+     * @param int $height
      * @return ThumbnailService
      */
     public function setSize($width, $height = null)
@@ -134,7 +128,7 @@ class ThumbnailService
         $this->thumbHeight = $height;
 
         if (empty($height)) {
-            $this->thumbHeight = ($this->thumbWidth * $this->thumbRate);
+            $this->thumbHeight = $this->thumbWidth * $this->thumbRate;
         }
 
         return $this;
@@ -160,7 +154,7 @@ class ThumbnailService
     }
 
     /**
-     * @return string $destinationPath
+     * @return string
      */
     public function getDestinationPath()
     {
@@ -200,7 +194,7 @@ class ThumbnailService
     }
 
     /**
-     * @return string $fitPosition
+     * @return string
      */
     public function getFitPosition()
     {
@@ -219,7 +213,7 @@ class ThumbnailService
     }
 
     /**
-     * @return string $fileName
+     * @return string
      */
     public function getFileName()
     {
@@ -254,7 +248,7 @@ class ThumbnailService
         }
 
         try {
-            $this->uploadManager->saveFile($destinationPath, $thumbImage->stream()->__toString());
+            $thumbImage->save(Storage::path($destinationPath));
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             return false;

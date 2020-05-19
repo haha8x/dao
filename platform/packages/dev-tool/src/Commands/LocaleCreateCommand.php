@@ -40,6 +40,8 @@ class LocaleCreateCommand extends Command
         $this->createLocaleInPath(resource_path('lang/vendor/core'));
         $this->createLocaleInPath(resource_path('lang/vendor/packages'));
         $this->createLocaleInPath(resource_path('lang/vendor/plugins'));
+
+        return true;
     }
 
     /**

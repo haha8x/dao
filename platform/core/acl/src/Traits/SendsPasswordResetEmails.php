@@ -28,6 +28,7 @@ trait SendsPasswordResetEmails
      *
      * @param Request $request
      * @return RedirectResponse|JsonResponse
+     * @throws ValidationException
      */
     public function sendResetLinkEmail(Request $request)
     {
@@ -87,6 +88,7 @@ trait SendsPasswordResetEmails
      * @param Request $request
      * @param string $response
      * @return RedirectResponse|JsonResponse
+     * @throws ValidationException
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {

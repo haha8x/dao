@@ -26,14 +26,14 @@ class {Name}Table extends TableAbstract
     /**
      * {Name}Table constructor.
      * @param DataTables $table
-     * @param UrlGenerator $urlDevTool
+     * @param UrlGenerator $urlGenerator
      * @param {Name}Interface ${+name}Repository
      */
-    public function __construct(DataTables $table, UrlGenerator $urlDevTool, {Name}Interface ${+name}Repository)
+    public function __construct(DataTables $table, UrlGenerator $urlGenerator, {Name}Interface ${+name}Repository)
     {
         $this->repository = ${+name}Repository;
         $this->setOption('id', 'table-{types}-{-name}');
-        parent::__construct($table, $urlDevTool);
+        parent::__construct($table, $urlGenerator);
 
         if (!Auth::user()->hasAnyPermission(['{-name}.edit', '{-name}.destroy'])) {
             $this->hasOperations = false;
@@ -42,10 +42,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -76,10 +73,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * Get the query object to be processed by table.
-     *
-     * @return \Illuminate\Database\Query\Builder|\Illuminate\Database\Eloquent\Builder
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function query()
     {
@@ -95,8 +89,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * @return array
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -125,9 +118,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * @return array
-     * @since 2.1
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -137,8 +128,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * @return array
-     * @throws \Throwable
+     * {@inheritDoc}
      */
     public function bulkActions(): array
     {
@@ -146,7 +136,7 @@ class {Name}Table extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function getBulkChanges(): array
     {

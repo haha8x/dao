@@ -9,13 +9,12 @@
     "type": "project",
     "require": {
         "php": "^7.2.5",
-        "botble/plugin-management": "*@dev",
-        "botble/js-validation": "*@dev",
-        "botble/platform": "*@dev",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
+        "botble/platform": "*@dev",
+        "botble/plugin-management": "*@dev",
         "wikimedia/composer-merge-plugin": "^1.4"
     },
     "require-dev": {
@@ -44,8 +43,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         },
         "merge-plugin": {
             "include": [
@@ -79,8 +77,7 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
+    "repositories": [{
             "type": "path",
             "url": "./platform/core"
         },

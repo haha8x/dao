@@ -8,14 +8,6 @@ if (!defined('USER_MODULE_SCREEN_NAME')) {
     define('USER_MODULE_SCREEN_NAME', 'user');
 }
 
-if (!defined('SUPER_USER_MODULE_SCREEN_NAME')) {
-    define('SUPER_USER_MODULE_SCREEN_NAME', 'super_user');
-}
-
-if (!defined('ROLE_MODULE_SCREEN_NAME')) {
-    define('ROLE_MODULE_SCREEN_NAME', 'role');
-}
-
 if (!defined('AUTH_ACTION_AFTER_LOGOUT_SYSTEM')) {
     define('AUTH_ACTION_AFTER_LOGOUT_SYSTEM', 'action_after_logout_system');
 }

@@ -2,11 +2,11 @@
 
 namespace Botble\Media\Models;
 
-use Botble\Media\Services\UploadsManager;
 use Botble\Base\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use RvMedia;
 
 class MediaFolder extends BaseModel
 {
@@ -39,7 +39,7 @@ class MediaFolder extends BaseModel
     /**
      * @return HasMany
      */
-    public function files()
+    public function files(): HasMany
     {
         return $this->hasMany(MediaFile::class, 'folder_id', 'id');
     }
@@ -47,7 +47,7 @@ class MediaFolder extends BaseModel
     /**
      * @return HasOne
      */
-    public function parentFolder()
+    public function parentFolder(): HasOne
     {
         return $this->hasOne(MediaFolder::class, 'id', 'parent');
     }
@@ -59,13 +59,8 @@ class MediaFolder extends BaseModel
             if ($folder->isForceDeleting()) {
                 $files = MediaFile::where('folder_id', $folder->id)->onlyTrashed()->get();
 
-                $uploadManager = new UploadsManager;
-
                 foreach ($files as $file) {
-                    /**
-                     * @var MediaFile $file
-                     */
-                    $uploadManager->deleteFile($file->url);
+                    RvMedia::deleteFile($file);
                     $file->forceDelete();
                 }
             } else {

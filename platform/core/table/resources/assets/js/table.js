@@ -74,7 +74,7 @@
     DataTable.ext.buttons.excel = {
         className: 'buttons-excel',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fas fa-file-excel"></i> ' + dt.i18n('buttons.excel', BotbleVariables.languages.tables.excel);
         },
 
@@ -86,7 +86,7 @@
     DataTable.ext.buttons.postExcel = {
         className: 'buttons-excel',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fas fa-file-excel"></i> ' + dt.i18n('buttons.excel', BotbleVariables.languages.tables.excel);
         },
 
@@ -103,7 +103,7 @@
 
         className: 'buttons-export',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-download"></i> ' + dt.i18n('buttons.export', BotbleVariables.languages.tables.export) + '&nbsp;<span class="caret"/>';
         },
 
@@ -113,7 +113,7 @@
     DataTable.ext.buttons.csv = {
         className: 'buttons-csv',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fas fa-file-excel"></i> ' + dt.i18n('buttons.csv', BotbleVariables.languages.tables.csv);
         },
 
@@ -125,7 +125,7 @@
     DataTable.ext.buttons.postCsv = {
         className: 'buttons-csv',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fas fa-file-excel"></i> ' + dt.i18n('buttons.csv', BotbleVariables.languages.tables.csv);
         },
 
@@ -140,7 +140,7 @@
     DataTable.ext.buttons.pdf = {
         className: 'buttons-pdf',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
         },
 
@@ -152,7 +152,7 @@
     DataTable.ext.buttons.postPdf = {
         className: 'buttons-pdf',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-file-pdf-o"></i> ' + dt.i18n('buttons.pdf', 'PDF');
         },
 
@@ -167,7 +167,7 @@
     DataTable.ext.buttons.print = {
         className: 'buttons-print',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-print"></i> ' + dt.i18n('buttons.print', BotbleVariables.languages.tables.print);
         },
 
@@ -179,7 +179,7 @@
     DataTable.ext.buttons.reset = {
         className: 'buttons-reset',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-undo"></i> ' + dt.i18n('buttons.reset', BotbleVariables.languages.tables.reset);
         },
 
@@ -192,7 +192,7 @@
     DataTable.ext.buttons.reload = {
         className: 'buttons-reload',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fas fa-sync"></i> ' + dt.i18n('buttons.reload', BotbleVariables.languages.tables.reload);
         },
 
@@ -205,7 +205,7 @@
     DataTable.ext.buttons.create = {
         className: 'buttons-create',
 
-        text: (dt) => {
+        text: dt => {
             return '<i class="fa fa-plus"></i> ' + dt.i18n('buttons.create', 'Create');
         },
 
@@ -216,7 +216,7 @@
 
     if (typeof DataTable.ext.buttons.copyHtml5 !== 'undefined') {
         $.extend(DataTable.ext.buttons.copyHtml5, {
-            text: (dt) => {
+            text: dt => {
                 return '<i class="fa fa-copy"></i> ' + dt.i18n('buttons.copy', 'Copy');
             }
         });
@@ -224,7 +224,7 @@
 
     if (typeof DataTable.ext.buttons.colvis !== 'undefined') {
         $.extend(DataTable.ext.buttons.colvis, {
-            text: (dt) => {
+            text: dt => {
                 return '<i class="fa fa-eye"></i> ' + dt.i18n('buttons.colvis', 'Column visibility');
             }
         });
@@ -240,7 +240,7 @@
         init() {
             if (typeof window.LaravelDataTables !== 'undefined') {
 
-                $(document).on('change', '.table-check-all', (event) => {
+                $(document).on('change', '.table-check-all', event => {
                     let _self = $(event.currentTarget);
                     let set = _self.attr('data-set');
                     let checked = _self.prop('checked');
@@ -253,7 +253,7 @@
                     });
                 });
 
-                $(document).on('change', '.checkboxes', (event) => {
+                $(document).on('change', '.checkboxes', event => {
                     let _self = $(event.currentTarget);
                     let table = _self.closest('.table-wrapper').find('.table').prop('id');
 
@@ -271,12 +271,12 @@
                 });
             }
 
-            $(document).on('click', '.btn-show-table-options', (event) => {
+            $(document).on('click', '.btn-show-table-options', event => {
                 event.preventDefault();
                 $(event.currentTarget).closest('.table-wrapper').find('.table-configuration-wrap').slideToggle(500);
             });
 
-            $(document).on('click', '.action-item', (event) => {
+            $(document).on('click', '.action-item', event => {
                 event.preventDefault();
                 let span = $(event.currentTarget).find('span[data-href]');
                 let action = span.data('action');
@@ -289,7 +289,7 @@
 
         handleActionsRow() {
             let that = this;
-            $(document).on('click', '.deleteDialog', (event) => {
+            $(document).on('click', '.deleteDialog', event => {
                 event.preventDefault();
                 let _self = $(event.currentTarget);
 
@@ -297,32 +297,36 @@
                 $('.modal-confirm-delete').modal('show');
             });
 
-            $('.delete-crud-entry').on('click', (event) => {
+            $('.delete-crud-entry').on('click', event => {
                 event.preventDefault();
                 let _self = $(event.currentTarget);
 
-                $('.modal-confirm-delete').modal('hide');
+                _self.addClass('button-loading');
 
                 let deleteURL = _self.data('section');
 
                 $.ajax({
                     url: deleteURL,
                     type: 'DELETE',
-                    success: (data) => {
+                    success: data => {
                         if (data.error) {
                             Botble.showError(data.message);
                         } else {
                             window.LaravelDataTables[_self.data('parent-table')].row($('a[data-section="' + deleteURL + '"]').closest('tr')).remove().draw();
                             Botble.showSuccess(data.message);
                         }
+
+                        _self.closest('.modal').modal('hide');
+                        _self.removeClass('button-loading');
                     },
-                    error: (data) => {
+                    error: data => {
                         Botble.handleError(data);
+                        _self.removeClass('button-loading');
                     }
                 });
             });
 
-            $(document).on('click', '.delete-many-entry-trigger', (event) => {
+            $(document).on('click', '.delete-many-entry-trigger', event => {
                 event.preventDefault();
                 let _self = $(event.currentTarget);
 
@@ -345,11 +349,12 @@
                 $('.delete-many-modal').modal('show');
             });
 
-            $('.delete-many-entry-button').on('click', (event) => {
+            $('.delete-many-entry-button').on('click', event => {
                 event.preventDefault();
-                $('.delete-many-modal').modal('hide');
 
                 let _self = $(event.currentTarget);
+
+                _self.addClass('button-loading');
 
                 let $table = $('#' + _self.data('parent-table'));
 
@@ -365,7 +370,7 @@
                         ids: ids,
                         class: _self.data('class-item')
                     },
-                    success: (data) => {
+                    success: data => {
                         if (data.error) {
                             Botble.showError(data.message);
                         } else {
@@ -373,14 +378,18 @@
                             window.LaravelDataTables[_self.data('parent-table')].draw();
                             Botble.showSuccess(data.message);
                         }
+
+                        _self.closest('.modal').modal('hide');
+                        _self.removeClass('button-loading');
                     },
-                    error: (data) => {
+                    error: data => {
                         Botble.handleError(data);
+                        _self.removeClass('button-loading');
                     }
                 });
             });
 
-            $(document).on('click', '.bulk-change-item', (event) => {
+            $(document).on('click', '.bulk-change-item', event => {
                 event.preventDefault();
                 let _self = $(event.currentTarget);
 
@@ -406,11 +415,11 @@
                 $('.modal-bulk-change-items').modal('show');
             });
 
-            $(document).on('click', '.confirm-bulk-change-button', (event) => {
+            $(document).on('click', '.confirm-bulk-change-button', event => {
                 event.preventDefault();
                 let _self = $(event.currentTarget);
                 let value = _self.closest('.modal').find('.input-value').val();
-                let input_key = _self.data('key');
+                let inputKey = _self.data('key');
 
                 let $table = $('#' + _self.data('parent-table'));
 
@@ -419,19 +428,18 @@
                     ids[i] = $(el).val();
                 });
 
-                let text = _self.text();
-                _self.text('Processing...');
+                _self.addClass('button-loading');
 
                 $.ajax({
                     url: _self.data('url'),
                     type: 'POST',
                     data: {
                         ids: ids,
-                        key: input_key,
+                        key: inputKey,
                         value: value,
                         class: _self.data('class-item')
                     },
-                    success: (data) => {
+                    success: data => {
                         if (data.error) {
                             Botble.showError(data.message);
                         } else {
@@ -441,14 +449,14 @@
                             });
                             Botble.showSuccess(data.message);
 
-                            $('.modal-bulk-change-items').modal('hide');
+                            _self.closest('.modal').modal('hide');
+                            _self.removeClass('button-loading');
                         }
                         _self.text(text);
                     },
-                    error: (data) => {
+                    error: data => {
                         Botble.handleError(data);
-                        _self.text(text);
-                        $('.modal-bulk-change-items').modal('hide');
+                        _self.removeClass('button-loading');
                     }
                 });
             });
@@ -463,7 +471,7 @@
                     'class': $element.data('class-item'),
                     'key': $element.data('key'),
                 },
-                success: (res) => {
+                success: res => {
                     let data = $.map(res.data, (value, key) => {
                         return {id: key, name: value};
                     });
@@ -478,14 +486,14 @@
 
                     Botble.initResources();
                 },
-                error: (error) => {
+                error: error => {
                     Botble.handleError(error);
                 }
             });
         }
 
         handleActionsExport() {
-            $(document).on('click', '.export-data', (event) => {
+            $(document).on('click', '.export-data', event => {
                 let _self = $(event.currentTarget);
                 let table = _self.closest('.table-wrapper').find('.table').prop('id');
 
@@ -501,7 +509,7 @@
                     data: {
                         'ids-checked': ids,
                     },
-                    success: (response) => {
+                    success: response => {
                         let a = document.createElement('a');
                         a.href = response.file;
                         a.download = response.name;
@@ -509,7 +517,7 @@
                         a.trigger('click');
                         a.remove();
                     },
-                    error: (error) => {
+                    error: error => {
                         Botble.handleError(error);
                     }
                 });

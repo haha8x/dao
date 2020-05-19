@@ -37,7 +37,7 @@
         methods: {
             verifyLicense() {
                 axios.get(this.verifyUrl)
-                    .then((res) => {
+                    .then(res =>  {
                         if (res.data.error) {
                             this.verified = false;
                         }

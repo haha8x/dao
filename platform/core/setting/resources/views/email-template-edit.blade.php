@@ -9,7 +9,7 @@
                 </div>
                 <div class="annotated-section-description pd-all-20 p-none-t">
                     <p class="color-note">
-                        {!! trans('core/setting::setting.email.description') !!}
+                        {!! clean(trans('core/setting::setting.email.description')) !!}
                     </p>
                     <div class="available-variable">
                         @foreach(MailVariable::getVariables('core') as $coreKey => $coreVariable)

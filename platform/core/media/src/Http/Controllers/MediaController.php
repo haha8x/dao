@@ -20,7 +20,6 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Str;
-use Image;
 use RvMedia;
 use Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -86,7 +85,6 @@ class MediaController extends Controller
 
     /**
      * @return string
-     *
      * @throws Throwable
      */
     public function getPopup()
@@ -309,20 +307,6 @@ class MediaController extends Controller
     }
 
     /**
-     * Get user quota
-     *
-     * @return JsonResponse
-     */
-    public function getQuota()
-    {
-        return RvMedia::responseSuccess([
-            'quota'   => human_file_size($this->fileRepository->getQuota()),
-            'used'    => human_file_size($this->fileRepository->getSpaceUsed()),
-            'percent' => $this->fileRepository->getPercentageUsed(),
-        ]);
-    }
-
-    /**
      * @param Request $request
      * @return JsonResponse
      * @throws FileNotFoundException
@@ -470,6 +454,7 @@ class MediaController extends Controller
 
                 $response = RvMedia::responseSuccess([], trans('core/media::media.delete_success'));
                 break;
+
             case 'favorite':
                 $meta = $this->mediaSettingRepository->firstOrCreate([
                     'key'     => 'favorites',
@@ -552,71 +537,52 @@ class MediaController extends Controller
     }
 
     /**
-     * @param $file
+     * @param MediaFile $file
      * @param int $newFolderId
      * @return mixed
      * @throws FileNotFoundException
      */
     protected function copyFile($file, $newFolderId = null)
     {
-        /**
-         * @var MediaFile $file
-         */
         $file = $file->replicate();
         $file->user_id = Auth::user()->getKey();
 
-        $fileData = $file->toArray();
-        $fileData['user_id'] = Auth::user()->getKey();
-
         if ($newFolderId == null) {
-            $fileData['name'] = $file->name . '-(copy)';
+            $file->name = $file->name . '-(copy)';
 
-            if (!in_array($file->type,
-                array_merge(['video', 'youtube'], config('core.media.media.external_services')))) {
+            $path = '';
 
-                $path = '';
+            $folderPath = File::dirname($file->url);
+            if ($folderPath) {
+                $path = $folderPath . '/' . $path;
+            }
 
-                $folderPath = $this->folderRepository->getFullPath($file->folder_id);
-                if ($folderPath) {
-                    $path = $folderPath . '/' . $path;
-                }
+            $path = $path . File::name($file->url) . '-(copy)' . '.' . File::extension($file->url);
 
-                $path = $path . File::name($file->url) . '-(copy)' . '.' . File::extension($file->url);
+            $filePath = Storage::path($file->url);
+            if (file_exists($filePath)) {
+                $content = File::get($filePath);
 
-                $filePath = Storage::path($file->url);
-                if (file_exists($filePath)) {
-                    $content = File::get($filePath);
+                $this->uploadManager->saveFile($path, $content);
+                $file->url = $path;
 
-                    $this->uploadManager->saveFile($path, $content);
-                    $data = $this->uploadManager->fileDetails($path);
-                    $fileData['url'] = $data['url'];
-
-                    if ($file->canGenerateThumbnails()) {
-                        foreach (RvMedia::getSizes() as $size) {
-                            $readableSize = explode('x', $size);
-                            Image::make(Storage::path($data['url']))
-                                ->fit($readableSize[0], $readableSize[1])
-                                ->save(Storage::path($folderPath) . File::name($data['url']) . '-' . $size . '.' . File::extension($data['url']));
-                        }
-                    }
-                }
+                RvMedia::generateThumbnails($file);
             }
         } else {
-            $fileData['url'] = str_replace(
-                Storage::path($this->folderRepository->getFullPath($file->folder_id)),
+            $file->url = str_replace(
+                Storage::path(File::dirname($file->url)),
                 Storage::path($this->folderRepository->getFullPath($newFolderId)),
                 $file->url
             );
-            $fileData['folder_id'] = $newFolderId;
+            $file->folder_id = $newFolderId;
         }
 
-        return $this->fileRepository->create($fileData);
+        return $this->fileRepository->createOrUpdate($file);
     }
 
     /**
      * @param Request $request
-     * @return BinaryFileResponse|JsonResponse
-     *
+     * @return JsonResponse|\Illuminate\Http\Response|BinaryFileResponse
      * @throws Exception
      */
     public function download(Request $request)

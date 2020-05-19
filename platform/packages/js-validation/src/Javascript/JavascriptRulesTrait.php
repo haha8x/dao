@@ -5,22 +5,6 @@ namespace Botble\JsValidation\Javascript;
 trait JavascriptRulesTrait
 {
     /**
-     * Handles multidimensional attribute names.
-     *
-     * @param string $attribute
-     * @return string
-     */
-    abstract protected function getAttributeName($attribute);
-
-    /**
-     * Parse named parameters to $key => $value items.
-     *
-     * @param array $parameters
-     * @return array
-     */
-    abstract public function parseNamedParameters($parameters);
-
-    /**
      * Confirmed rule is applied to confirmed attribute.
      *
      * @param $attribute
@@ -30,9 +14,29 @@ trait JavascriptRulesTrait
     protected function ruleConfirmed($attribute, array $parameters)
     {
         $parameters[0] = $this->getAttributeName($attribute);
-        $attribute = "{$attribute}_confirmation";
+        $attribute = $attribute . '_confirmation';
 
         return [$attribute, $parameters];
+    }
+
+    /**
+     * Handles multidimensional attribute names.
+     *
+     * @param string $attribute
+     * @return string
+     */
+    abstract protected function getAttributeName($attribute);
+
+    /**
+     * Returns Javascript parameters for Before rule.
+     *
+     * @param $attribute
+     * @param array $parameters
+     * @return array
+     */
+    protected function ruleBefore($attribute, array $parameters)
+    {
+        return $this->ruleAfter($attribute, $parameters);
     }
 
     /**
@@ -52,15 +56,15 @@ trait JavascriptRulesTrait
     }
 
     /**
-     * Returns Javascript parameters for Before rule.
+     * Validate that an attribute is different from another attribute.
      *
-     * @param $attribute
+     * @param string $attribute
      * @param array $parameters
      * @return array
      */
-    protected function ruleBefore($attribute, array $parameters)
+    protected function ruleDifferent($attribute, array $parameters)
     {
-        return $this->ruleAfter($attribute, $parameters);
+        return $this->ruleSame($attribute, $parameters);
     }
 
     /**
@@ -78,15 +82,15 @@ trait JavascriptRulesTrait
     }
 
     /**
-     * Validate that an attribute is different from another attribute.
+     * Validate that an attribute exists when all other attributes exists.
      *
      * @param string $attribute
-     * @param array $parameters
+     * @param mixed $parameters
      * @return array
      */
-    protected function ruleDifferent($attribute, array $parameters)
+    protected function ruleRequiredWithAll($attribute, array $parameters)
     {
-        return $this->ruleSame($attribute, $parameters);
+        return $this->ruleRequiredWith($attribute, $parameters);
     }
 
     /**
@@ -101,18 +105,6 @@ trait JavascriptRulesTrait
         $parameters = array_map([$this, 'getAttributeName'], $parameters);
 
         return [$attribute, $parameters];
-    }
-
-    /**
-     * Validate that an attribute exists when all other attributes exists.
-     *
-     * @param string $attribute
-     * @param mixed $parameters
-     * @return array
-     */
-    protected function ruleRequiredWithAll($attribute, array $parameters)
-    {
-        return $this->ruleRequiredWith($attribute, $parameters);
     }
 
     /**
@@ -140,6 +132,18 @@ trait JavascriptRulesTrait
     }
 
     /**
+     * Validate that an attribute exists when another attribute does not have a given value.
+     *
+     * @param string $attribute
+     * @param mixed $parameters
+     * @return array
+     */
+    protected function ruleRequiredUnless($attribute, array $parameters)
+    {
+        return $this->ruleRequiredIf($attribute, $parameters);
+    }
+
+    /**
      * Validate that an attribute exists when another attribute has a given value.
      *
      * @param string $attribute
@@ -151,18 +155,6 @@ trait JavascriptRulesTrait
         $parameters[0] = $this->getAttributeName($parameters[0]);
 
         return [$attribute, $parameters];
-    }
-
-    /**
-     * Validate that an attribute exists when another attribute does not have a given value.
-     *
-     * @param string $attribute
-     * @param mixed $parameters
-     * @return array
-     */
-    protected function ruleRequiredUnless($attribute, array $parameters)
-    {
-        return $this->ruleRequiredIf($attribute, $parameters);
     }
 
     /**
@@ -190,6 +182,14 @@ trait JavascriptRulesTrait
 
         return [$attribute, $parameters];
     }
+
+    /**
+     * Parse named parameters to $key => $value items.
+     *
+     * @param array $parameters
+     * @return array
+     */
+    abstract public function parseNamedParameters($parameters);
 
     /**
      * Validate an attribute is unique among other values.

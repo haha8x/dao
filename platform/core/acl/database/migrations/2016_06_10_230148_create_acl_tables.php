@@ -19,9 +19,9 @@ class CreateAclTables extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
-            $table->string('name')->nullable();
-            // $table->string('last_name')->nullable();
-            // $table->string('username', 60)->unique()->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('username', 60)->unique()->nullable();
             $table->dateTime('dob')->nullable();
             $table->string('address', 255)->nullable();
             $table->string('secondary_address', 255)->nullable();
@@ -47,7 +47,7 @@ class CreateAclTables extends Migration
         });
 
         Schema::create('activations', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->string('code', 120);
             $table->boolean('completed')->default(0);
@@ -56,7 +56,7 @@ class CreateAclTables extends Migration
         });
 
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('slug', 120)->unique();
             $table->string('name', 120);
             $table->text('permissions')->nullable();
@@ -68,14 +68,14 @@ class CreateAclTables extends Migration
         });
 
         Schema::create('role_users', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->integer('role_id')->unsigned()->references('id')->on('roles')->index();
             $table->nullableTimestamps();
         });
 
         Schema::create('user_meta', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('key')->nullable();
             $table->string('value')->nullable();
             $table->integer('user_id')->unsigned()->references('id')->on('users')->index();

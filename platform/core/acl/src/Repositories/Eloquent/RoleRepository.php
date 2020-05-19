@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class RoleRepository extends RepositoriesAbstract implements RoleInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function createSlug($name, $id)
     {

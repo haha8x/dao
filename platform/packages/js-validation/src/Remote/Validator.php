@@ -2,14 +2,14 @@
 
 namespace Botble\JsValidation\Remote;
 
-use Illuminate\Support\Arr;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\ValidationRuleParser;
-use Botble\JsValidation\Support\RuleListTrait;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Validator as BaseValidator;
 use Botble\JsValidation\Support\AccessProtectedTrait;
+use Botble\JsValidation\Support\RuleListTrait;
 
 class Validator
 {
@@ -22,18 +22,27 @@ class Validator
     const EXTENSION_NAME = 'js_validation';
 
     /**
-     * @var BaseValidator
+     * @var \Illuminate\Validation\Validator
      */
     protected $validator;
 
     /**
+     * Whether to escape validation messages.
+     *
+     * @var bool
+     */
+    protected $escape;
+
+    /**
      * RemoteValidator constructor.
      *
-     * @param BaseValidator $validator
+     * @param \Illuminate\Validation\Validator $validator
+     * @param bool $escape
      */
-    public function __construct(BaseValidator $validator)
+    public function __construct(BaseValidator $validator, $escape = false)
     {
         $this->validator = $validator;
+        $this->escape = $escape;
     }
 
     /**
@@ -43,7 +52,7 @@ class Validator
      * @param $parameters
      * @return void
      *
-     * @throws ValidationException
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function validate($field, $parameters = [])
     {
@@ -52,26 +61,6 @@ class Validator
         $validationResult = $this->validateJsRemoteRequest($attribute, $validationParams);
 
         $this->throwValidationException($validationResult, $this->validator);
-    }
-
-    /**
-     * Throw the failed validation exception.
-     *
-     * @param mixed $result
-     * @param BaseValidator $validator
-     * @return void
-     *
-     * @throws ValidationException|HttpResponseException
-     */
-    protected function throwValidationException($result, $validator)
-    {
-        $response = new JsonResponse($result, 200);
-
-        if ($result !== true && class_exists(ValidationException::class)) {
-            throw new ValidationException($validator, $response);
-        }
-
-        throw new HttpResponseException($response);
     }
 
     /**
@@ -121,7 +110,15 @@ class Validator
             return true;
         }
 
-        return $validator->messages()->get($attribute);
+        $messages = $validator->messages()->get($attribute);
+
+        if ($this->escape) {
+            foreach ($messages as $key => $value) {
+                $messages[$key] = e($value);
+            }
+        }
+
+        return $messages;
     }
 
     /**
@@ -166,5 +163,25 @@ class Validator
         }
 
         return $rules;
+    }
+
+    /**
+     * Throw the failed validation exception.
+     *
+     * @param mixed $result
+     * @param \Illuminate\Validation\Validator $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException|\Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function throwValidationException($result, $validator)
+    {
+        $response = new JsonResponse($result, 200);
+
+        if ($result !== true && class_exists(ValidationException::class)) {
+            throw new ValidationException($validator, $response);
+        }
+
+        throw new HttpResponseException($response);
     }
 }

@@ -1,7 +1,8 @@
 .rv-media-wrapper {
     .btn.collapse-panel {
-        color     : $color-secondary;
-        font-size : 20px;
+        color: $color-secondary;
+        font-size: 20px;
+
         &,
         i {
             @include lib-css(transition, all 0.3s ease-in-out);

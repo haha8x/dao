@@ -2,7 +2,7 @@
 @section('content')
     <div class="table-wrapper">
         @if ($table->isHasFilter())
-            <div class="table-configuration-wrap" style="display: block;">
+            <div class="table-configuration-wrap" @if (request()->has('filter_table_id')) style="display: block;" @endif>
                 <span class="configuration-close-btn btn-show-table-options"><i class="fa fa-times"></i></span>
                 {!! $table->renderFilter() !!}
             </div>

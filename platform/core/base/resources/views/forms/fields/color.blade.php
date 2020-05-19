@@ -9,12 +9,7 @@
 @endif
 
 @if ($showField)
-    <div class="input-group color-picker">
-        {!! Form::text($name, $options['value'] ?? '#000', $options['attr']) !!}
-        <span class="input-group-append">
-        <span class="input-group-text colorpicker-input-addon"><i></i></span>
-      </span>
-    </div>
+    {!! Form::color($name, $options['value'] ?? '#000', $options['attr']) !!}
     @include('core/base::forms.partials.help_block')
 @endif
 

@@ -21,17 +21,17 @@ trait LoadAndPublishDataTrait
     protected $basePath = null;
 
     /**
-     * @param $namespace
+     * @param string $namespace
      * @return $this
      */
-    public function setNamespace($namespace): self
+    public function setNamespace(string $namespace): self
     {
         $this->namespace = ltrim(rtrim($namespace, '/'), '/');
         return $this;
     }
 
     /**
-     * @param $path
+     * @param string $path
      * @return $this
      */
     public function setBasePath($path): self
@@ -50,7 +50,7 @@ trait LoadAndPublishDataTrait
 
     /**
      * Publish the given configuration file name (without extension) and the given module
-     * @param $fileNames
+     * @param array|string $fileNames
      * @return $this
      */
     public function loadAndPublishConfigurations($fileNames): self
@@ -72,7 +72,7 @@ trait LoadAndPublishDataTrait
 
     /**
      * Publish the given configuration file name (without extension) and the given module
-     * @param $fileNames
+     * @param array|string $fileNames
      * @return $this
      */
     public function loadRoutes($fileNames = ['web']): self
@@ -125,27 +125,7 @@ trait LoadAndPublishDataTrait
     }
 
     /**
-     * @param null $path
-     * @return $this
-     * @deprecated
-     */
-    public function publishPublicFolder($path = null): self
-    {
-        return $this->publishAssets($path);
-    }
-
-    /**
-     * @param null $path
-     * @return $this
-     * @deprecated
-     */
-    public function publishAssetsFolder(): self
-    {
-        return $this->publishAssets();
-    }
-
-    /**
-     * @param null $path
+     * @param string|null $path
      * @return $this
      */
     public function publishAssets($path = null): self
@@ -172,7 +152,7 @@ trait LoadAndPublishDataTrait
     }
 
     /**
-     * @param $file
+     * @param string $file
      * @return string
      */
     protected function getRouteFilePath($file): string

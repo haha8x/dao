@@ -37,12 +37,11 @@ class DisableInDemoModeMiddleware
      * @param Request $request
      * @param Closure $next
      * @return mixed
-     *
      * @since 2.1
      */
     public function handle($request, Closure $next)
     {
-        if (app()->environment('demo')) {
+        if ($this->app->environment('demo')) {
             return $this->httpResponse
                 ->setError()
                 ->withInput()

@@ -34,7 +34,7 @@
                                    for="time_zone">{{ trans('core/setting::setting.general.time_zone') }}
                             </label>
                             <div class="ui-select-wrapper">
-                                <select name="time_zone" class="ui-select" id="time_zone">
+                                <select name="time_zone" class="ui-select form-control select-search-full" id="time_zone">
                                     @foreach(DateTimeZone::listIdentifiers(DateTimeZone::ALL) as $timezone)
                                         <option value="{{ $timezone }}" @if (setting('time_zone', 'UTC') === $timezone) selected @endif>{{ $timezone }}</option>
                                     @endforeach

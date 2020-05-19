@@ -32,7 +32,7 @@ class UserStatusEnum extends Enum
                 return Html::tag('span', self::DEACTIVATED()->label(), ['class' => 'label-warning status-label'])
                     ->toHtml();
             default:
-                return null;
+                return parent::toHtml();
         }
     }
 }

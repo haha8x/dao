@@ -139,20 +139,20 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return string
      */
-    public function getOption($key): ?string
+    public function getOption(string $key): ?string
     {
         return Arr::get($this->options, $key);
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string $key
+     * @param mixed $value
      * @return $this
      */
-    public function setOption($key, $value): self
+    public function setOption(string $key, $value): self
     {
         $this->options[$key] = $value;
 
@@ -312,10 +312,7 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * Get columns.
-     *
      * @return array
-     *
      * @since 2.1
      */
     public function getColumns(): array
@@ -429,7 +426,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @throws Throwable
      * @since 2.1
      */
@@ -455,7 +451,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @since 2.1
      */
     public function getButtons(): array
@@ -482,7 +477,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @since 2.1
      */
     public function buttons()
@@ -492,7 +486,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @throws Throwable
      */
     public function getActionsButton(): array
@@ -512,7 +505,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @throws Throwable
      * @since 2.1
      */
@@ -535,7 +527,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @since 2.1
      */
     public function actions()
@@ -545,7 +536,6 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
-     *
      * @throws Throwable
      */
     public function getDefaultButtons(): array
@@ -569,7 +559,7 @@ abstract class TableAbstract extends DataTable
     public function htmlInitCompleteFunction(): ?string
     {
         return '
-                $(".dataTables_wrapper").css({"width": $(this).closest(".dataTable").width()});
+                $(".dataTables_wrapper").css({"width": "100%"});
 
                 if (jQuery().select2) {
                     $(document).find(".select-multiple").select2({
@@ -661,7 +651,7 @@ abstract class TableAbstract extends DataTable
     {
         Assets::addScripts(['datatables', 'moment', 'datepicker'])
             ->addStyles(['datatables', 'datepicker'])
-            ->addStylesDirectly('vendor/core/css/components/table.css')
+            ->addStylesDirectly('vendor/core/css/table.css')
             ->addScriptsDirectly([
                 'vendor/core/libraries/bootstrap3-typeahead.min.js',
                 'vendor/core/js/table.js',
@@ -774,9 +764,9 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @param $title
+     * @param string|null $title
      * @param null $value
-     * @param $type
+     * @param string| null $type
      * @param null $data
      * @return array
      * @throws Throwable
@@ -798,8 +788,7 @@ abstract class TableAbstract extends DataTable
             case 'select':
                 $attributes['class'] = $attributes['class'] . ' select';
                 $attributes['placeholder'] = trans('core/table::general.select_option');
-                $html = call_user_func_array([Form::class, 'customSelect'], [$inputName, $data, $value, $attributes])
-                    ->toHtml();
+                $html = Form::customSelect($inputName, $data, $value, $attributes)->toHtml();
                 break;
             case 'select-search':
                 $attributes['class'] = $attributes['class'] . ' select-search-full';
@@ -812,9 +801,8 @@ abstract class TableAbstract extends DataTable
             case 'date':
                 $attributes['class'] = $attributes['class'] . ' datepicker';
                 $attributes['data-date-format'] = config('core.base.general.date_format.js.date');
-                $html = view('core/table::partials.date-field', [
-                    'content' => Form::text($inputName, $value, $attributes)->toHtml(),
-                ])->render();
+                $content = Form::text($inputName, $value, $attributes)->toHtml();
+                $html = view('core/table::partials.date-field', compact('content'))->render();
                 break;
             default:
                 $html = Form::text($inputName, $value, $attributes)->toHtml();
@@ -878,7 +866,7 @@ abstract class TableAbstract extends DataTable
     }
 
     /**
-     * @return null
+     * @return string
      * @throws Throwable
      */
     public function renderFilter(): string
@@ -920,6 +908,7 @@ abstract class TableAbstract extends DataTable
 
     /**
      * @return array
+     * @deprecated 5.3
      */
     protected function getYesNoSelect(): array
     {
@@ -932,16 +921,20 @@ abstract class TableAbstract extends DataTable
     /**
      * @param array $buttons
      * @param string $url
-     * @param null $permission
+     * @param null|string $permission
      * @throws Throwable
+     * @return array
      */
     protected function addCreateButton(string $url, $permission = null, array $buttons = []): array
     {
         if (!$permission || Auth::user()->hasPermission($permission)) {
-            $url .= '?' . http_build_query(Request::query());
+            $queryString = http_build_query(Request::query());
+            if ($queryString) {
+                $url .= '?' . $queryString;
+            }
             $buttons['create'] = [
                 'link' => $url,
-                'text' => view('core/base::elements.tables.actions.create')->render(),
+                'text' => view('core/table::partials.create')->render(),
             ];
         }
 
@@ -952,6 +945,7 @@ abstract class TableAbstract extends DataTable
      * @param string $url
      * @param null|string $permission
      * @param array $actions
+     * @return array
      */
     protected function addDeleteAction(string $url, $permission = null, $actions = []): array
     {

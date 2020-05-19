@@ -8,7 +8,7 @@ class MediaImageField extends FormField
 {
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

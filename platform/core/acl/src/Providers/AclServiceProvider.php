@@ -22,8 +22,6 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Botble\ACL\Facades\AclManagerFacade;
-use Illuminate\Foundation\AliasLoader;
 
 class AclServiceProvider extends ServiceProvider
 {
@@ -61,9 +59,6 @@ class AclServiceProvider extends ServiceProvider
     {
         $this->app->register(CommandServiceProvider::class);
         $this->app->register(EventServiceProvider::class);
-
-        $loader = AliasLoader::getInstance();
-        $loader->alias('AclManager', AclManagerFacade::class);
 
         $this->setNamespace('core/acl')
             ->loadAndPublishConfigurations(['general', 'permissions'])

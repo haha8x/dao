@@ -1,6 +1,6 @@
 import {RecentItems} from '../Config/MediaConfig';
 import {Helpers} from '../Helpers/Helpers';
-import {MessageService} from '../Services/MessageService';
+import {MessageService} from './MessageService';
 
 export class ActionsService {
     static handleDropdown() {
@@ -19,7 +19,7 @@ export class ActionsService {
         let selected = [];
 
         _.each(Helpers.getSelectedFiles(), value => {
-            if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+            if (_.includes(['image', 'pdf', 'text', 'video'], value.type)) {
                 selected.push({
                     src: value.full_url
                 });
@@ -168,7 +168,7 @@ export class ActionsService {
             actionsList.basic = _.reject(actionsList.basic, item => {
                 return item.action === 'preview';
             });
-            actionsList.file = _.reject(actionsList.file, item =>{
+            actionsList.file = _.reject(actionsList.file, item => {
                 return item.action === 'copy_link';
             });
 
@@ -211,7 +211,7 @@ export class ActionsService {
 
         let canPreview = false;
         _.each(selectedFiles, (value) => {
-            if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+            if (_.includes(['image', 'pdf', 'text', 'video'], value.type)) {
                 canPreview = true;
             }
         });

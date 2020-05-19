@@ -4,11 +4,8 @@ namespace Botble\Media\Commands;
 
 use Botble\Media\Repositories\Eloquent\MediaFileRepository;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
-use Botble\Media\Services\UploadsManager;
 use Exception;
-use File;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use RvMedia;
 
 class DeleteThumbnailCommand extends Command
@@ -33,69 +30,48 @@ class DeleteThumbnailCommand extends Command
     protected $fileRepository;
 
     /**
-     * @var UploadsManager
-     */
-    protected $uploadManager;
-
-    /**
      * DeleteThumbnailCommand constructor.
      * @param MediaFileInterface $fileRepository
-     * @param UploadsManager $uploadManager
      */
-    public function __construct(
-        MediaFileInterface $fileRepository,
-        UploadsManager $uploadManager
-    ) {
+    public function __construct(MediaFileInterface $fileRepository)
+    {
         parent::__construct();
         $this->fileRepository = $fileRepository;
-        $this->uploadManager = $uploadManager;
     }
 
     /**
-     * Execute the console command.
-     *
      * @return bool
-     * @throws FileNotFoundException
      */
     public function handle()
     {
-        $errors = [];
-
         $files = $this->fileRepository->allBy([], [], ['url', 'mime_type']);
 
         $this->info('Processing ' . $files->count() . ' file(s)...');
+
+        $errors = [];
 
         foreach ($files as $file) {
             if (!$file->canGenerateThumbnails()) {
                 continue;
             }
 
-            $folderPath = File::dirname($file->url);
+            $this->info('Processing ' . $file->url);
 
-            $fileExtension = File::extension($file->url);
-
-            $fileName = File::name($file->url);
-
-            foreach (RvMedia::getSizes() as $size) {
-                $filePath = $folderPath . '/' . $fileName . '-' . $size . '.' . $fileExtension;
-                $this->info('Processing ' . $filePath);
-
-                try {
-                    $this->uploadManager->deleteFile($filePath);
-                } catch (Exception $exception) {
-                    $errors[] = $filePath;
-                    $this->error($exception->getMessage());
-                }
+            try {
+                RvMedia::deleteThumbnails($file);
+            } catch (Exception $exception) {
+                $errors[] = $file->url;
+                $this->error($exception->getMessage());
             }
         }
+
+        $this->info('Thumbnails deleted');
 
         $errors = array_unique($errors);
 
         $errors = array_map(function ($item) {
             return [$item];
         }, $errors);
-
-        $this->info('Thumbnails deleted');
 
         if ($errors) {
             $this->info('We are unable to regenerate thumbnail for these files:');

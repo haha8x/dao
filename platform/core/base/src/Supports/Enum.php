@@ -5,6 +5,7 @@ namespace Botble\Base\Supports;
 use BadMethodCallException;
 use JsonSerializable;
 use Lang;
+use Log;
 use ReflectionClass;
 use ReflectionException;
 use UnexpectedValueException;
@@ -46,7 +47,7 @@ abstract class Enum implements JsonSerializable
         }
 
         if (!$this->isValid($value)) {
-            throw new UnexpectedValueException('Value ' . $value . ' is not part of the enum ' . get_called_class());
+            Log::error('Value ' . $value . ' is not part of the enum ' . get_called_class());
         }
 
         $this->value = $value;
@@ -94,7 +95,7 @@ abstract class Enum implements JsonSerializable
             unset($result['__default']);
         }
 
-        return $result;
+        return apply_filters(BASE_FILTER_ENUM_ARRAY, $result, get_called_class());
     }
 
     /**
@@ -168,7 +169,9 @@ abstract class Enum implements JsonSerializable
             $value
         );
 
-        return Lang::has($key) ? trans($key) : $value;
+        $label = Lang::has($key) ? trans($key) : $value;
+
+        return apply_filters(BASE_FILTER_ENUM_LABEL, $label, get_called_class());
     }
 
     /**
@@ -229,5 +232,13 @@ abstract class Enum implements JsonSerializable
     public function label(): ?string
     {
         return self::getLabel($this->getValue());
+    }
+
+    /**
+     * @return string
+     */
+    public function toHtml()
+    {
+        return apply_filters(BASE_FILTER_ENUM_HTML, $this->value, get_called_class());
     }
 }

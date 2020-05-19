@@ -9,15 +9,11 @@ class DashboardWidget extends BaseModel
 {
 
     /**
-     * The database table used by the model.
-     *
      * @var string
      */
     protected $table = 'dashboard_widgets';
 
     /**
-     * The date fields for the model.clear
-     *
      * @var array
      */
     protected $dates = [

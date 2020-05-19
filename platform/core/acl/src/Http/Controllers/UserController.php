@@ -24,11 +24,8 @@ use Botble\Base\Forms\FormBuilder;
 use Botble\Base\Http\Controllers\BaseController;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
-use Botble\Media\Services\ThumbnailService;
-use Botble\Media\Services\UploadsManager;
 use Botble\ACL\Http\Requests\AvatarRequest;
 use Exception;
-use File;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Intervention\Image\ImageManager;
@@ -71,7 +68,6 @@ class UserController extends BaseController
     }
 
     /**
-     * Display all users
      * @param UserTable $dataTable
      * @return Factory|View
      *
@@ -200,7 +196,7 @@ class UserController extends BaseController
 
         $user = $this->userRepository->findOrFail($id);
 
-        page_title()->setTitle(trans(':name', ['name' => $user->name]));
+        page_title()->setTitle(trans(':name', ['name' => $user->getFullName()]));
 
         $form = $formBuilder
             ->create(ProfileForm::class, ['model' => $user])
@@ -254,18 +250,18 @@ class UserController extends BaseController
                 }
             }
 
-            // if ($user->username !== $request->input('username')) {
-            //     $users = $this->userRepository->getModel()
-            //         ->where('username', $request->input('username'))
-            //         ->where('id', '<>', $user->id)
-            //         ->count();
-            //     if ($users) {
-            //         return $response
-            //             ->setError()
-            //             ->setMessage(trans('core/acl::users.username_exist'))
-            //             ->withInput();
-            //     }
-            // }
+            if ($user->username !== $request->input('username')) {
+                $users = $this->userRepository->getModel()
+                    ->where('username', $request->input('username'))
+                    ->where('id', '<>', $user->id)
+                    ->count();
+                if ($users) {
+                    return $response
+                        ->setError()
+                        ->setMessage(trans('core/acl::users.username_exist'))
+                        ->withInput();
+                }
+            }
         }
 
         $user->fill($request->input());
@@ -301,81 +297,41 @@ class UserController extends BaseController
     }
 
     /**
+     * @param $id
      * @param AvatarRequest $request
-     * @param UploadsManager $uploadManager
      * @param ImageManager $imageManager
-     * @param ThumbnailService $thumbnailService
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function postAvatar(
-        $id,
-        AvatarRequest $request,
-        UploadsManager $uploadManager,
-        ImageManager $imageManager,
-        ThumbnailService $thumbnailService,
-        BaseHttpResponse $response
-    ) {
+    public function postAvatar($id, AvatarRequest $request, ImageManager $imageManager, BaseHttpResponse $response)
+    {
         try {
-            $fileUpload = $request->file('avatar_file');
+            $user = $this->userRepository->findOrFail($id);
 
-            $fileExt = $fileUpload->getClientOriginalExtension();
+            $result = RvMedia::handleUpload($request->file('avatar_file'), 0, 'users');
 
-            $folderPath = 'users';
-
-            $fileName = $this->fileRepository->createName(File::name($fileUpload->getClientOriginalName()), 0);
-
-            $fileName = $this->fileRepository->createSlug($fileName, $fileExt, Storage::path($folderPath));
-
-            $userId = $request->user()->getKey();
-
-            if ($request->user()->isSuperUser()) {
-                $userId = $id;
+            if ($result['error'] != false) {
+                return $response->setError()->setMessage($result['message']);
             }
 
-            $user = $this->userRepository->findOrFail($userId);
-
-            $image = $imageManager->make($request->file('avatar_file')->getRealPath());
+            $image = $imageManager->make(Storage::path($result['data']->url));
             $avatarData = json_decode($request->input('avatar_data'));
-            $image->crop((int) $avatarData->height, (int) $avatarData->width, (int) $avatarData->x, (int) $avatarData->y);
-            $path = $folderPath . '/' . $fileName;
-
-            $uploadManager->saveFile($path, $image->stream()->__toString());
-
-            $readableSize = explode('x', RvMedia::getSize('thumb'));
-
-            $thumbnailService
-                ->setImage($fileUpload->getRealPath())
-                ->setSize($readableSize[0], $readableSize[1])
-                ->setDestinationPath($folderPath)
-                ->setFileName(File::name($fileName) . '-' . RvMedia::getSize('thumb') . '.' . $fileExt)
-                ->save();
-
-            $data = $uploadManager->fileDetails($path);
-
-            $file = $this->fileRepository->getModel();
-            $file->name = $fileName;
-            $file->url = $data['url'];
-            $file->size = $data['size'];
-            $file->mime_type = $data['mime_type'];
-            $file->folder_id = 0;
-            $file->user_id = 0;
-            $file->options = [];
-            $file = $this->fileRepository->createOrUpdate($file);
+            $image->crop((int)$avatarData->height, (int)$avatarData->width, (int)$avatarData->x, (int)$avatarData->y);
+            $image->save();
 
             $this->fileRepository->forceDelete(['id' => $user->avatar_id]);
 
-            $user->avatar_id = $file->id;
+            $user->avatar_id = $result['data']->id;
 
             $this->userRepository->createOrUpdate($user);
 
             return $response
                 ->setMessage(trans('core/acl::users.update_avatar_success'))
-                ->setData(['url' => Storage::url($data['url'])]);
-        } catch (Exception $ex) {
+                ->setData(['url' => Storage::url($result['data']->url)]);
+        } catch (Exception $exception) {
             return $response
                 ->setError()
-                ->setMessage($ex->getMessage());
+                ->setMessage($exception->getMessage());
         }
     }
 

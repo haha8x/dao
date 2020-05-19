@@ -271,10 +271,6 @@ Portlets
     > .portlet-empty {
         min-height: 125px;
     }
-
-    &.full-height-content {
-        margin-bottom: 0;
-    }
 }
 
 /* Portlet background colors */
@@ -303,7 +299,7 @@ Portlets
 
 .portlet.solid {
     padding: 0 10px 10px 10px;
-    border: 0px;
+    border: 0;
 
     > .portlet-title {
         border-bottom: 0;
@@ -650,7 +646,7 @@ Portlets
 
 .tab-pane {
     > p:last-child {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 }
 
@@ -695,7 +691,7 @@ Portlets
 }
 
 /***
-Custom colored portlets 
+Custom colored portlets
 ***/
 
 @each $name, $colors in $component-colors {

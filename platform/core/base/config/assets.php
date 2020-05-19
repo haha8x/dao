@@ -76,13 +76,6 @@ return [
                     'local' => '/vendor/core/libraries/excanvas.min.js',
                 ],
             ],
-            'textarea-autosize'      => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/jquery.textarea_autosize.js',
-                ],
-            ],
             'ie8-fix'                => [
                 'use_cdn'  => false,
                 'location' => 'footer',
@@ -107,14 +100,6 @@ return [
                         '/vendor/core/libraries/jquery-validation/jquery.validate.min.js',
                         '/vendor/core/libraries/jquery-validation/additional-methods.min.js',
                     ],
-                ],
-            ],
-            'bootstrap-confirmation' => [
-                'use_cdn'  => true,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/bootstrap-confirmation/bootstrap-confirmation.min.js',
-                    'cdn'   => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js',
                 ],
             ],
             'blockui'                => [
@@ -146,14 +131,6 @@ return [
                 'include_style' => true,
                 'src'           => [
                     'local' => '/vendor/core/libraries/jquery-tree/jquery.tree.min.js',
-                ],
-            ],
-            'floatThead'             => [
-                'use_cdn'  => true,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/floatThead/floatThead.js',
-                    'cdn'   => '//cdnjs.cloudflare.com/ajax/libs/floatthead/1.4.0/jquery.floatThead.min.js',
                 ],
             ],
             'bootstrap-editable'     => [
@@ -200,45 +177,7 @@ return [
                     ],
                 ],
             ],
-            'bootstrap-tagsinput'    => [
-                'use_cdn'  => true,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/bootstrap-tagsinput/bootstrap-tagsinput.min.js',
-                    'cdn'   => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js',
-                ],
-            ],
-            'bootstrap-pwstrength'   => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/pwstrength-bootstrap/pwstrength-bootstrap.min.js',
-                ],
-            ],
-            'typeahead'              => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => [
-                        '/vendor/core/libraries/typeahead.js/typeahead.jquery.min.js',
-                        '/vendor/core/libraries/typeahead.js/bloodhound.min.js',
-                    ],
-                    'cdn'   => [
-                        '//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.jquery.min.js',
-                        '//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/bloodhound.min.js',
-                    ],
-                ],
-            ],
-            'jvectormap'             => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => [
-                        '/vendor/core/libraries/jvectormap/jquery-jvectormap-1.2.2.min.js',
-                        '/vendor/core/libraries/jvectormap/jquery-jvectormap-world-mill-en.js',
-                    ],
-                ],
-            ],
+
             'raphael'                => [
                 'use_cdn'  => false,
                 'location' => 'footer',
@@ -305,13 +244,6 @@ return [
                 'location' => 'footer',
                 'src'      => [
                     'local' => '/vendor/core/libraries/jQuery.equalHeights/jquery.equalheights.min.js',
-                ],
-            ],
-            'jquery-nestable'        => [
-                'use_cdn'  => false,
-                'location' => 'footer',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/jquery-nestable/jquery.nestable.js',
                 ],
             ],
             'are-you-sure'           => [
@@ -388,7 +320,7 @@ return [
                 'location'   => 'header',
                 'src'        => [
                     'local' => '/vendor/core/libraries/bootstrap/css/bootstrap.min.css',
-                    'cdn'   => '//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+                    'cdn'   => '//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css',
                 ],
             ],
             'fontawesome'         => [
@@ -476,23 +408,6 @@ return [
                     'cdn'   => '//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/css/bootstrap-editable.css',
                 ],
             ],
-            'bootstrap-tagsinput' => [
-                'use_cdn'  => false,
-                'location' => 'header',
-                'src'      => [
-                    'local' => [
-                        '/vendor/core/libraries/bootstrap-tagsinput/bootstrap-tagsinput.css',
-                    ],
-                    'cdn'   => '//cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css',
-                ],
-            ],
-            'jvectormap'          => [
-                'use_cdn'  => false,
-                'location' => 'header',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/jvectormap/jquery-jvectormap-1.2.2.css',
-                ],
-            ],
             'morris'              => [
                 'use_cdn'  => true,
                 'location' => 'header',
@@ -532,13 +447,6 @@ return [
                 'location' => 'header',
                 'src'      => [
                     'local' => '/vendor/core/libraries/mcustom-scrollbar/jquery.mCustomScrollbar.css',
-                ],
-            ],
-            'jquery-nestable'     => [
-                'use_cdn'  => false,
-                'location' => 'header',
-                'src'      => [
-                    'local' => '/vendor/core/libraries/jquery-nestable/jquery.nestable.css',
                 ],
             ],
             'datetimepicker'      => [

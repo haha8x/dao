@@ -73,7 +73,7 @@ class PackageMakeCrudCommand extends BaseMakeCommand
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getStub(): string
     {
@@ -117,8 +117,7 @@ class PackageMakeCrudCommand extends BaseMakeCommand
     }
 
     /**
-     * @param string $replaceText
-     * @return array
+     * {@inheritDoc}
      */
     public function getReplacements(string $replaceText): array
     {

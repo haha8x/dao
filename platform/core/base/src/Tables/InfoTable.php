@@ -4,12 +4,9 @@ namespace Botble\Base\Tables;
 
 use Botble\Base\Supports\SystemManagement;
 use Botble\Table\Abstracts\TableAbstract;
-use Exception;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use Throwable;
 use Yajra\DataTables\DataTables;
 
 class InfoTable extends TableAbstract
@@ -17,7 +14,7 @@ class InfoTable extends TableAbstract
     /**
      * @var string
      */
-    protected $view = 'core/base::elements.simple-table';
+    protected $view = 'core/table::simple-table';
 
     /**
      * @var bool
@@ -41,11 +38,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * Display ajax response.
-     *
-     * @return JsonResponse
-     *
-     * @throws Exception
+     * {@inheritDoc}
      */
     public function ajax()
     {
@@ -74,7 +67,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function columns()
     {
@@ -93,8 +86,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
+     * {@inheritDoc}
      */
     public function buttons()
     {
@@ -102,7 +94,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * @return null|string
+     * {@inheritDoc}
      */
     protected function getDom(): ?string
     {
@@ -110,10 +102,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * @return array
-     *
-     * @throws Throwable
-     * @since 2.1
+     * {@inheritDoc}
      */
     public function getBuilderParameters(): array
     {
@@ -123,7 +112,7 @@ class InfoTable extends TableAbstract
     }
 
     /**
-     * @return array
+     * {@inheritDoc}
      */
     public function actions()
     {

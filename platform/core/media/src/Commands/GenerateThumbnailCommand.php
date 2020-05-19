@@ -3,13 +3,9 @@
 namespace Botble\Media\Commands;
 
 use Botble\Media\Repositories\Interfaces\MediaFileInterface;
-use Botble\Media\Services\ThumbnailService;
 use Exception;
-use File;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use RvMedia;
-use Storage;
 
 class GenerateThumbnailCommand extends Command
 {
@@ -33,27 +29,17 @@ class GenerateThumbnailCommand extends Command
     protected $fileRepository;
 
     /**
-     * @var ThumbnailService
-     */
-    protected $thumbnailService;
-
-    /**
      * GenerateThumbnailCommand constructor.
      * @param MediaFileInterface $fileRepository
-     * @param ThumbnailService $thumbnailService
      */
-    public function __construct(MediaFileInterface $fileRepository, ThumbnailService $thumbnailService)
+    public function __construct(MediaFileInterface $fileRepository)
     {
         parent::__construct();
         $this->fileRepository = $fileRepository;
-        $this->thumbnailService = $thumbnailService;
     }
 
     /**
-     * Execute the console command.
-     *
      * @return bool
-     * @throws FileNotFoundException
      */
     public function handle()
     {
@@ -63,27 +49,30 @@ class GenerateThumbnailCommand extends Command
 
         $this->info('Processing ' . $files->count() . ' file(s)...');
 
-        foreach ($files as $file) {
-            if (!$file->canGenerateThumbnails()) {
-                continue;
-            }
+        $errors = [];
 
-            foreach (RvMedia::getSizes() as $size) {
-                try {
-                    $readableSize = explode('x', $size);
-                    $this->thumbnailService
-                        ->setImage(Storage::path($file->url))
-                        ->setSize($readableSize[0], $readableSize[1])
-                        ->setDestinationPath(File::dirname($file->url))
-                        ->setFileName(File::name($file->url) . '-' . $size . '.' . File::extension($file->url))
-                        ->save();
-                } catch (Exception $exception) {
-                    $this->error($exception->getMessage());
-                }
+        foreach ($files as $file) {
+            try {
+                RvMedia::generateThumbnails($file);
+            } catch (Exception $exception) {
+                $errors[] = $file->url;
+                $this->error($exception->getMessage());
             }
         }
 
         $this->info('Generated media thumbnails successfully!');
+
+        $errors = array_unique($errors);
+
+        $errors = array_map(function ($item) {
+            return [$item];
+        }, $errors);
+
+        if ($errors) {
+            $this->info('We are unable to regenerate thumbnail for these files:');
+
+            $this->table(['File directory'], $errors);
+        }
 
         return true;
     }

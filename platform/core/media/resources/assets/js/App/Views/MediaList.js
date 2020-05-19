@@ -73,16 +73,8 @@ export class MediaList {
                 item = item
                     .replace(/__thumb__/gi, '<i class="' + value.icon + '"></i>');
             } else {
-                switch (value.mime_type) {
-                    case 'youtube':
-                        item = item
-                            .replace(/__thumb__/gi, '<img src="' + value.options.thumb + '" alt="' + value.name + '">');
-                        break;
-                    default:
-                        item = item
-                            .replace(/__thumb__/gi, value.thumb ? '<img src="' + value.thumb + '" alt="' + value.name + '">' : '<i class="' + value.icon + '"></i>');
-                        break;
-                }
+                item = item
+                    .replace(/__thumb__/gi, value.thumb ? '<img src="' + value.thumb + '" alt="' + value.name + '">' : '<i class="' + value.icon + '"></i>');
             }
             let $item = $(item);
             $item.data('is_folder', false);

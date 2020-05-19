@@ -178,7 +178,7 @@ abstract class FormAbstract extends Form
     public function getActionButtons(): string
     {
         if ($this->actionButtons === '') {
-            return view('core/base::elements.form-actions')->render();
+            return view('core/base::forms.partials.form-actions')->render();
         }
 
         return $this->actionButtons;
@@ -268,7 +268,7 @@ abstract class FormAbstract extends Form
             'onOff'        => OnOffField::class,
             'customRadio'  => CustomRadioField::class,
             'mediaImage'   => MediaImageField::class,
-            'color'        => ColorField::class,
+            'customColor'  => ColorField::class,
             'time'         => TimeField::class,
             'autocomplete' => AutocompleteField::class,
             'html'         => HtmlField::class,

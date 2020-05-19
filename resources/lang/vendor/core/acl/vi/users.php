@@ -1,5 +1,7 @@
 <?php
 
+use Botble\ACL\Enums\UserStatusEnum;
+
 return [
     'delete_user_logged_in'      => 'Không thể xóa người dùng đang đăng nhập hệ thống!',
     'no_select'                  => 'Hãy chọn ít nhất một trường để thực hiện hành động này!',
@@ -60,6 +62,18 @@ return [
             'male'   => 'nam',
             'female' => 'nữ',
         ],
+    'statuses'                   => [
+        UserStatusEnum::ACTIVATED   => 'Đang hoạt động',
+        UserStatusEnum::DEACTIVATED => 'Đã khoá',
+    ],
     'change_password'            => 'Thay đổi mật khẩu',
     'current_password'           => 'Mật khẩu hiện tại',
+    'make_super'                 => 'Thiết lập quyền cao nhất',
+    'remove_super'               => 'Loại bỏ quyền cao nhất',
+    'is_super'                   => 'Quyền cao nhất?',
+    'email_placeholder'          => 'Ex: example@gmail.com',
+    'password_confirmation'      => 'Nhập lại mật khẩu',
+    'select_role'                => 'Chọn nhóm',
+    'create_new_user'            => 'Tạo tài khoản quản trị viên mới',
+    'cannot_delete_super_user'   => 'Vượt quyền hạn, không thể xoá quản trị viên cấp cao nhất!',
 ];

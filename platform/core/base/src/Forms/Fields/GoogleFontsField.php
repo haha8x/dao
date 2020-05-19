@@ -8,9 +8,7 @@ class GoogleFontsField extends SelectType
 {
 
     /**
-     * Get the template, can be config variable or view path.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

@@ -2,7 +2,7 @@
 
 namespace Botble\Base\Facades;
 
-use Botble\Base\Supports\Assets\Assets;
+use Botble\Base\Supports\Assets;
 use Illuminate\Support\Facades\Facade;
 
 class AssetsFacade extends Facade

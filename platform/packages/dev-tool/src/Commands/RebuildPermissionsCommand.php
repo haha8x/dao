@@ -29,9 +29,8 @@ class RebuildPermissionsCommand extends Command
     protected $userRepository;
 
     /**
-     * Install constructor.
+     * RebuildPermissionsCommand constructor.
      * @param UserInterface $userRepository
-     *
      */
     public function __construct(UserInterface $userRepository)
     {

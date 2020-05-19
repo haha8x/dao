@@ -2,9 +2,8 @@
 
 namespace Botble\Base\Providers;
 
+use Botble\Base\Supports\BreadcrumbsGenerator;
 use Breadcrumbs;
-use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator;
-use DaveJamesMiller\Breadcrumbs\Exceptions\DuplicateBreadcrumbException;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Route;
@@ -12,15 +11,9 @@ use URL;
 
 class BreadcrumbsServiceProvider extends ServiceProvider
 {
-    /**
-     * @throws DuplicateBreadcrumbException
-     */
+
     public function boot()
     {
-        Breadcrumbs::register('', function (BreadcrumbsGenerator $breadcrumbs) {
-            $breadcrumbs->push('', '');
-        });
-
         Breadcrumbs::register('dashboard.index', function (BreadcrumbsGenerator $breadcrumbs) {
             $breadcrumbs->push(trans('core/base::layouts.dashboard'), route('dashboard.index'));
         });

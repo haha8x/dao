@@ -4,18 +4,10 @@ namespace Botble\DevTool\Commands\Make;
 
 use Botble\DevTool\Commands\Abstracts\BaseMakeCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
 class ModelMakeCommand extends BaseMakeCommand
 {
-    /**
-     * The filesystem instance.
-     *
-     * @var Filesystem
-     */
-    protected $files;
-
     /**
      * The console command signature.
      *
@@ -31,19 +23,6 @@ class ModelMakeCommand extends BaseMakeCommand
     protected $description = 'Make a model';
 
     /**
-     * Create a new key generator command.
-     *
-     * @param Filesystem $files
-     *
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct();
-
-        $this->files = $files;
-    }
-
-    /**
      * Execute the console command.
      *
      * @throws \League\Flysystem\FileNotFoundException
@@ -57,20 +36,20 @@ class ModelMakeCommand extends BaseMakeCommand
         }
 
         $name = $this->argument('name');
-        $path = package_path(strtolower($this->argument('module')) . '/src/Models/' . ucfirst(Str::studly($name)) . '.php');
+        $path = platform_path(strtolower($this->argument('module')) . '/src/Models/' . ucfirst(Str::studly($name)) . '.php');
 
         $this->publishStubs($this->getStub(), $path);
         $this->renameFiles($name, $path);
         $this->searchAndReplaceInFiles($name, $path);
         $this->line('------------------');
 
-        $this->info('Create successfully!');
+        $this->info('Created successfully <comment>' . $path . '</comment>!');
 
         return true;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getStub(): string
     {
@@ -78,11 +57,15 @@ class ModelMakeCommand extends BaseMakeCommand
     }
 
     /**
-     * @param string $replaceText
-     * @return array
+     * {@inheritDoc}
      */
     public function getReplacements(string $replaceText): array
     {
-        return [];
+        $module = explode('/', $this->argument('module'));
+        $module = strtolower(end($module));
+
+        return [
+            '{Module}' => ucfirst(Str::camel($module)),
+        ];
     }
 }

@@ -8,7 +8,7 @@ use Botble\Support\Repositories\Eloquent\RepositoriesAbstract;
 class UserRepository extends RepositoriesAbstract implements UserInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getUniqueUsernameFromEmail($email)
     {

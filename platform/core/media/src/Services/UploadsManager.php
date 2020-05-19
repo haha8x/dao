@@ -5,9 +5,7 @@ namespace Botble\Media\Services;
 use Carbon\Carbon;
 use File;
 use Mimey\MimeTypes;
-use RvMedia;
 use Storage;
-use Symfony\Component\Translation\TranslatorInterface;
 
 class UploadsManager
 {
@@ -16,21 +14,25 @@ class UploadsManager
      */
     protected $mimeType;
 
-    public function __construct()
+    /**
+     * UploadsManager constructor.
+     * @param MimeTypes $mimeType
+     */
+    public function __construct(MimeTypes $mimeType)
     {
-        $this->mimeType = new MimeTypes;
+        $this->mimeType = $mimeType;
     }
 
     /**
      * Return an array of file details for a file
      *
-     * @param $path
+     * @param string $path
      * @return array
      */
     public function fileDetails($path)
     {
         return [
-            'filename'  => basename($path),
+            'filename'  => File::basename($path),
             'url'       => $path,
             'mime_type' => $this->fileMimeType($path),
             'size'      => $this->fileSize($path),
@@ -72,17 +74,15 @@ class UploadsManager
     }
 
     /**
-     * Create a new directory
-     *
      * @param string $folder
-     * @return bool|string|TranslatorInterface
+     * @return array|bool|\Illuminate\Contracts\Translation\Translator|string|null
      */
     public function createDirectory($folder)
     {
         $folder = $this->cleanFolder($folder);
 
         if (Storage::exists($folder)) {
-            return trans('core/media::media.folder_exists', ['folder' => $folder]);
+            return trans('core/media::media.folder_exists', compact('folder'));
         }
 
         return Storage::makeDirectory($folder);
@@ -100,10 +100,8 @@ class UploadsManager
     }
 
     /**
-     * Delete a directory
-     *
      * @param string $folder
-     * @return bool|string|TranslatorInterface
+     * @return array|bool|\Illuminate\Contracts\Translation\Translator|string|null
      */
     public function deleteDirectory($folder)
     {
@@ -121,35 +119,20 @@ class UploadsManager
     }
 
     /**
-     * Delete a file
-     *
      * @param string $path
-     * @return bool|string|TranslatorInterface
+     * @return bool
      */
     public function deleteFile($path)
     {
         $path = $this->cleanFolder($path);
 
-        $mimeType = $this->fileMimeType($path);
-        if (is_image($mimeType) && !in_array($mimeType, ['image/svg+xml', 'image/x-icon'])) {
-            $filename = pathinfo($path, PATHINFO_FILENAME);
-            $files = [$path];
-            foreach (RvMedia::getSizes() as $size) {
-                $files[] = str_replace($filename, $filename . '-' . $size, $path);
-            }
-
-            return Storage::delete($files);
-        }
-
-        return Storage::delete([$path]);
+        return Storage::delete($path);
     }
 
     /**
-     * Save a file
-     *
      * @param string $path
      * @param string $content
-     * @return bool|string|TranslatorInterface
+     * @return bool
      */
     public function saveFile($path, $content)
     {

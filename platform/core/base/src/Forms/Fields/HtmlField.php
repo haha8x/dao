@@ -7,7 +7,7 @@ use Kris\LaravelFormBuilder\Fields\FormField;
 class HtmlField extends FormField
 {
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     protected function getDefaults()
     {
@@ -19,7 +19,7 @@ class HtmlField extends FormField
     }
 
     /**
-     * @inheritdoc
+     * {@inheritDoc}
      */
     public function getAllAttributes()
     {
@@ -28,9 +28,7 @@ class HtmlField extends FormField
     }
 
     /**
-     * Get the template, can be config variable or view path.
-     *
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {

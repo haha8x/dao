@@ -1,8 +1,8 @@
-// import VerifyLicenseComponent from './components/VerifyLicenseComponent'
+import VerifyLicenseComponent from './components/VerifyLicenseComponent'
 
-// window.Vue = require('vue');
+window.Vue = require('vue');
 
-// Vue.component('verify-license-component', VerifyLicenseComponent);
+Vue.component('verify-license-component', VerifyLicenseComponent);
 
 new Vue({
     el: '#dashboard-alerts',
@@ -25,7 +25,7 @@ class BDashboard {
             cache: false,
             url: url,
             data: data,
-            success: (res) => {
+            success: res =>  {
                 Botble.unblockUI(el);
                 if (!res.error) {
                     el.html(res.data);
@@ -42,7 +42,7 @@ class BDashboard {
                     el.html('<div class="dashboard_widget_msg col-12"><p>' + res.message + '</p>');
                 }
             },
-            error: (res) => {
+            error: res =>  {
                 Botble.unblockUI(el);
                 Botble.handleError(res);
             }
@@ -85,14 +85,14 @@ class BDashboard {
                         data: {
                             items: items
                         },
-                        success: (res) => {
+                        success: res =>  {
                             if (!res.error) {
                                 Botble.showSuccess(res.message);
                             } else {
                                 Botble.showError(res.message);
                             }
                         },
-                        error: (data) => {
+                        error: data =>  {
                             Botble.handleError(data);
                         }
                     });
@@ -104,18 +104,18 @@ class BDashboard {
     init() {
         let list_widgets = $('#list_widgets');
 
-        $(document).on('click', '.portlet > .portlet-title .tools > a.remove', (event) => {
+        $(document).on('click', '.portlet > .portlet-title .tools > a.remove', event =>  {
             event.preventDefault();
             $('#hide-widget-confirm-bttn').data('id', $(event.currentTarget).closest('.widget_item').prop('id'));
             $('#hide_widget_modal').modal('show');
         });
 
-        list_widgets.on('click', '.page_next, .page_previous', (event) => {
+        list_widgets.on('click', '.page_next, .page_previous', event =>  {
             event.preventDefault();
             BDashboard.loadWidget($(event.currentTarget).closest('.portlet').find('.portlet-body'), $(event.currentTarget).prop('href'));
         });
 
-        list_widgets.on('change', '.number_record .numb', (event) => {
+        list_widgets.on('change', '.number_record .numb', event =>  {
             event.preventDefault();
             let paginate = $('.number_record .numb').val();
             if (!isNaN(paginate)) {
@@ -126,7 +126,7 @@ class BDashboard {
 
         });
 
-        list_widgets.on('click', '.btn_change_paginate', (event) => {
+        list_widgets.on('click', '.btn_change_paginate', event =>  {
             event.preventDefault();
             let numb = $('.number_record .numb');
             let paginate = parseInt(numb.val());
@@ -144,14 +144,14 @@ class BDashboard {
             BDashboard.loadWidget($(event.currentTarget).closest('.portlet').find('.portlet-body'), $(event.currentTarget).closest('.widget_item').attr('data-url'), {paginate: paginate});
         });
 
-        $('#hide-widget-confirm-bttn').on('click', (event) => {
+        $('#hide-widget-confirm-bttn').on('click', event =>  {
             event.preventDefault();
             let name = $(event.currentTarget).data('id');
             $.ajax({
                 type: 'GET',
                 cache: false,
                 url: route('dashboard.hide_widget', {name: name}),
-                success: (res) => {
+                success: res =>  {
                     if (!res.error) {
                         $('#' + name).fadeOut();
                         Botble.showSuccess(res.message);
@@ -173,19 +173,19 @@ class BDashboard {
 
                     portlet.remove();
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.handleError(data);
                 }
             });
         });
 
-        $(document).on('click', '.portlet:not(.widget-load-has-callback) > .portlet-title .tools > a.reload', (event) => {
+        $(document).on('click', '.portlet:not(.widget-load-has-callback) > .portlet-title .tools > a.reload', event =>  {
             event.preventDefault();
             BDashboard.loadWidget($(event.currentTarget).closest('.portlet').find('.portlet-body'), $(event.currentTarget).closest('.widget_item').attr('data-url'));
         });
 
 
-        $(document).on('click', '.portlet > .portlet-title .tools > .collapse, .portlet .portlet-title .tools > .expand', (event) => {
+        $(document).on('click', '.portlet > .portlet-title .tools > .collapse, .portlet .portlet-title .tools > .expand', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let state = $.trim(_self.data('state'));
@@ -212,19 +212,19 @@ class BDashboard {
                         _self.data('state', 'collapse');
                     }
                 },
-                error: (data) => {
+                error: data =>  {
                     Botble.handleError(data);
                 }
             });
         });
 
         let manage_widget_modal = $('#manage_widget_modal');
-        $(document).on('click', '.manage-widget', (event) => {
+        $(document).on('click', '.manage-widget', event =>  {
             event.preventDefault();
             manage_widget_modal.modal('show');
         });
 
-        manage_widget_modal.on('change', '.swc_wrap input', (event) => {
+        manage_widget_modal.on('change', '.swc_wrap input', event =>  {
             $(event.currentTarget).closest('section').find('i').toggleClass('widget_none_color');
         });
     }

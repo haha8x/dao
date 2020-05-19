@@ -45,19 +45,19 @@ class EmailHandler
             } else {
                 event(new SendMailEvent($content, $title, $to, $args, $debug));
             }
-        } catch (Exception $ex) {
+        } catch (Exception $exception) {
             if ($debug) {
-                throw $ex;
+                throw $exception;
             }
-            info($ex->getMessage());
-            $this->sendErrorException($ex);
+            info($exception->getMessage());
+            $this->sendErrorException($exception);
         }
     }
 
     /**
      * Sends an email to the developer about the exception.
      *
-     * @param Exception $exception
+     * @param Exception|\Throwable $exception
      * @return void
      *
      * @throws Throwable

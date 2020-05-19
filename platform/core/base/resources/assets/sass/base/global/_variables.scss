@@ -1,9 +1,9 @@
-//## Bootstrap 
+//## Bootstrap
 //
 // Core bootstrap variables and mixins
-@import "colors";
-@import "../bootstrap/variables";
-@import "../bootstrap/mixins";
+@import 'colors';
+@import '../bootstrap/variables';
+@import '../bootstrap/mixins';
 
 $direction: 'ltr' !default;
 
@@ -68,7 +68,7 @@ $zindex-top: 10100;
 // Extra small screen / phone
 $screen-xs-min: 480px !default;
 
-// Small screen / tablet  
+// Small screen / tablet
 $screen-sm-min: 768px !default;
 
 // Medium screen / desktop
@@ -77,7 +77,7 @@ $screen-md-min: 992px !default;
 // Large screen / wide desktop
 $screen-lg-min: 1200px !default;
 
-// Large scree / wider desktop      
+// Large scree / wider desktop
 $screen-lg-med: 1260px !default;
 
 // So media queries don't overlap when required, provide a maximum
@@ -93,13 +93,13 @@ $plugin-path: '/vendor/core/plugins/' !default;
 
 $m-layout-breakpoints: (
     // Small screen / phone
-        xs: 480px,
+    xs: 480px,
     // Medium screen / tablet
-        sm: 768px,
+    sm: 768px,
     // Large screen / desktop
-        md: 992px,
+    md: 992px,
     // Extra large screen / wide desktop
-        lg: 1260px
+    lg: 1260px
 ) !default;
 
 //== Grid system
@@ -108,4 +108,4 @@ $m-layout-breakpoints: (
 $m-grid-columns: 12 !default;
 $m-grid-columns-gutter: 20px !default;
 
-@import "_bootstrap-override";
+@import '_bootstrap-override';

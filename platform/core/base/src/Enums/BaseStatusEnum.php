@@ -37,7 +37,7 @@ class BaseStatusEnum extends Enum
                 return Html::tag('span', self::PUBLISHED()->label(), ['class' => 'label-success status-label'])
                     ->toHtml();
             default:
-                return null;
+                return parent::toHtml();
         }
     }
 }

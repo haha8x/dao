@@ -2,21 +2,16 @@
 
 namespace Botble\PluginManagement\Commands;
 
-use Botble\Setting\Supports\SettingStore;
-use Composer\Autoload\ClassLoader;
+use Botble\PluginManagement\Services\PluginService;
 use Exception;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 
 class PluginDeactivateCommand extends Command
 {
-
     /**
-     * The filesystem instance.
-     *
-     * @var Filesystem
+     * @var PluginService
      */
-    protected $files;
+    public $pluginService;
 
     /**
      * The console command signature.
@@ -33,27 +28,17 @@ class PluginDeactivateCommand extends Command
     protected $description = 'Deactivate a plugin in /plugins directory';
 
     /**
-     * @var SettingStore
+     * PluginDeactivateCommand constructor.
+     * @param PluginService $pluginService
      */
-    protected $settingStore;
-
-    /**
-     * Create a new key generator command.
-     *
-     * @param Filesystem $files
-     * @param SettingStore $settingStore
-     */
-    public function __construct(Filesystem $files, SettingStore $settingStore)
+    public function __construct(PluginService $pluginService)
     {
         parent::__construct();
-
-        $this->files = $files;
-        $this->settingStore = $settingStore;
+        $this->pluginService = $pluginService;
     }
 
     /**
      * @return boolean
-     *
      * @throws Exception
      */
     public function handle()
@@ -64,49 +49,15 @@ class PluginDeactivateCommand extends Command
         }
 
         $plugin = strtolower($this->argument('name'));
-        $location = plugin_path($plugin);
 
-        if (!$this->files->isDirectory($location)) {
-            $this->error('This plugin is not exists.');
+        $result = $this->pluginService->deactivate($plugin);
+
+        if ($result['error']) {
+            $this->error($result['message']);
             return false;
         }
 
-        if (!$this->files->exists($location . '/plugin.json')) {
-            $this->error('Missing file plugin.json!');
-            return true;
-        }
-
-        $content = get_file_data($location . '/plugin.json');
-        if (!empty($content)) {
-
-            if (!class_exists($content['provider'])) {
-                $loader = new ClassLoader;
-                $loader->setPsr4($content['namespace'], plugin_path($plugin . '/src'));
-                $loader->register(true);
-            }
-
-            $activatedPlugins = get_active_plugins();
-            if (in_array($plugin, $activatedPlugins)) {
-                if (class_exists($content['namespace'] . 'Plugin')) {
-                    call_user_func([$content['namespace'] . 'Plugin', 'deactivate']);
-                }
-                if (($key = array_search($plugin, $activatedPlugins)) !== false) {
-                    unset($activatedPlugins[$key]);
-                }
-                $this->settingStore
-                    ->set('activated_plugins', json_encode(array_values($activatedPlugins)))
-                    ->save();
-
-                if (class_exists($content['namespace'] . 'Plugin')) {
-                    call_user_func([$content['namespace'] . 'Plugin', 'deactivated']);
-                }
-
-                $this->call('cache:clear');
-                $this->line('<info>Deactivate plugin successfully!</info>');
-            } else {
-                $this->line('<info>This plugin is deactivated already!</info>');
-            }
-        }
+        $this->info($result['message']);
 
         return true;
     }

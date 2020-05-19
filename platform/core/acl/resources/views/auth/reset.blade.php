@@ -1,5 +1,6 @@
 @extends('core/acl::auth.master')
 @section('content')
+    <p>{{ trans('core/acl::auth.reset_password') }}:</p>
     {!! Form::open(['route' => 'access.password.reset.post', 'method' => 'POST', 'class' => 'login-form']) !!}
         <div class="form-group has-feedback{{ $errors->has('email') ? ' has-error' : '' }}" id="emailGroup">
             <label>{{ trans('core/acl::auth.reset.email') }}</label>
@@ -8,7 +9,7 @@
 
         <div class="form-group has-feedback{{ $errors->has('password') ? ' has-error' : '' }}" id="passwordGroup">
             <label>{{ trans('core/acl::auth.reset.new_password') }}</label>
-            {!! Form::password('password', ['class' => 'form-control password-field', 'placeholder' => trans('core/acl::auth.reset.new_password')]) !!}
+            {!! Form::password('password', ['class' => 'form-control', 'placeholder' => trans('core/acl::auth.reset.new_password')]) !!}
         </div>
 
         <div class="form-group has-feedback{{ $errors->has('password_confirmation') ? ' has-error' : '' }}" id="passwordConfirmationGroup">

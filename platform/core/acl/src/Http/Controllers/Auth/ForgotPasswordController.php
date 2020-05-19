@@ -50,6 +50,7 @@ class ForgotPasswordController extends BaseController
 
         Assets::addScripts(['jquery-validation'])
             ->addScriptsDirectly('vendor/core/js/login.js')
+            ->addStylesDirectly('vendor/core/css/login.css')
             ->removeStyles([
                 'select2',
                 'fancybox',
@@ -76,6 +77,6 @@ class ForgotPasswordController extends BaseController
      */
     protected function sendResetLinkResponse(Request $request, $response)
     {
-        return $this->response->setMessage(trans($response));
+        return $this->response->setMessage(trans($response))->toResponse($request);
     }
 }

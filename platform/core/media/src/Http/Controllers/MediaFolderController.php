@@ -55,8 +55,8 @@ class MediaFolderController extends Controller
             $folder->parent_id = $parentId;
             $this->folderRepository->createOrUpdate($folder);
             return RvMedia::responseSuccess([], trans('core/media::media.folder_created'));
-        } catch (Exception $ex) {
-            return RvMedia::responseError($ex->getMessage());
+        } catch (Exception $exception) {
+            return RvMedia::responseError($exception->getMessage());
         }
     }
 }

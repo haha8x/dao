@@ -136,7 +136,7 @@ class MetaBox
                         continue;
                     }
                     $index++;
-                    $data .= view('core/base::elements.forms.meta-box-wrap', [
+                    $data .= view('core/base::elements.meta-box-wrap', [
                         'box'      => $box,
                         'callback' => call_user_func_array($box['callback'], [$object, $reference, $box]),
                     ])->render();
@@ -144,7 +144,7 @@ class MetaBox
             }
         }
 
-        echo view('core/base::elements.forms.meta-box', compact('data', 'context'))->render();
+        echo view('core/base::elements.meta-box', compact('data', 'context'))->render();
 
         return $index;
     }

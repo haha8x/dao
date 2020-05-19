@@ -9,7 +9,7 @@ class EditorField extends FormField
 {
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     protected function getTemplate()
     {
@@ -17,11 +17,7 @@ class EditorField extends FormField
     }
 
     /**
-     * @param array $options
-     * @param bool $showLabel
-     * @param bool $showField
-     * @param bool $showError
-     * @return string
+     *{@inheritDoc}
      */
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {

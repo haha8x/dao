@@ -7,26 +7,6 @@ use Botble\Support\Repositories\Interfaces\RepositoryInterface;
 interface MediaFileInterface extends RepositoryInterface
 {
     /**
-     * @return int
-     */
-    public function getSpaceUsed();
-
-    /**
-     * @return int
-     */
-    public function getSpaceLeft();
-
-    /**
-     * @return int
-     */
-    public function getQuota();
-
-    /**
-     * @return int
-     */
-    public function getPercentageUsed();
-
-    /**
      * @param string $name
      * @param string $folder
      */

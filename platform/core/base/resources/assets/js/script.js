@@ -27,7 +27,7 @@ class Botble {
 
         if (options.target) { // element blocking
             let el = $(options.target);
-            if (el.height() <= ($(window).height())) {
+            if (el.height() <= $(window).height()) {
                 options.cenrerY = true;
             }
             el.block({
@@ -41,7 +41,7 @@ class Botble {
                     backgroundColor: 'none'
                 },
                 overlayCSS: {
-                    backgroundColor: options.overlayColor ? options.overlayColor : '#555',
+                    backgroundColor: options.overlayColor ? options.overlayColor : '#555555',
                     opacity: options.boxed ? 0.05 : 0.1,
                     cursor: 'wait'
                 }
@@ -56,7 +56,7 @@ class Botble {
                     backgroundColor: 'none'
                 },
                 overlayCSS: {
-                    backgroundColor: options.overlayColor ? options.overlayColor : '#555',
+                    backgroundColor: options.overlayColor ? options.overlayColor : '#555555',
                     opacity: options.boxed ? 0.05 : 0.1,
                     cursor: 'wait'
                 }
@@ -144,20 +144,20 @@ class Botble {
         $.each(errors, (index, item) => {
             message += item + '<br />';
 
-                let $input = $('*[name="' + index + '"]');
-                if ($input.closest('.next-input--stylized').length) {
-                    $input.closest('.next-input--stylized').addClass('field-has-error');
-                } else {
-                    $input.addClass('field-has-error');
-                }
+            let $input = $('*[name="' + index + '"]');
+            if ($input.closest('.next-input--stylized').length) {
+                $input.closest('.next-input--stylized').addClass('field-has-error');
+            } else {
+                $input.addClass('field-has-error');
+            }
 
-                let $input_array = $('*[name$="[' + index + ']"]');
+            let $input_array = $('*[name$="[' + index + ']"]');
 
-                if ($input_array.closest('.next-input--stylized').length) {
-                    $input_array.closest('.next-input--stylized').addClass('field-has-error');
-                } else {
-                    $input_array.addClass('field-has-error');
-                }
+            if ($input_array.closest('.next-input--stylized').length) {
+                $input_array.closest('.next-input--stylized').addClass('field-has-error');
+            } else {
+                $input_array.addClass('field-has-error');
+            }
         });
         Botble.showError(message);
     }
@@ -259,7 +259,7 @@ class Botble {
             });
         };
 
-        $(document).on('click', 'input[data-counter], textarea[data-counter]', (event) => {
+        $(document).on('click', 'input[data-counter], textarea[data-counter]', event =>  {
             $(event.currentTarget).charCounter($(event.currentTarget).data('counter'), {
                 container: '<small></small>'
             });
@@ -275,7 +275,7 @@ class Botble {
         navigation.find('li').has('ul').children('a').parent('li').addClass('has-ul');
 
 
-        $(document).on('click', '.sidebar-toggle.d-none', (event) => {
+        $(document).on('click', '.sidebar-toggle.d-none', event =>  {
             event.preventDefault();
 
             body.toggleClass('sidebar-narrow');
@@ -369,7 +369,39 @@ class Botble {
         }
 
         if (jQuery().colorpicker) {
-            $('.color-picker').colorpicker({});
+            $('.color-picker').colorpicker({
+                inline: false,
+                container: true,
+                extensions: [
+                    {
+                        name: 'swatches',
+                        options: {
+                            colors: {
+                                'tetrad1': '#000000',
+                                'tetrad2': '#000000',
+                                'tetrad3': '#000000',
+                                'tetrad4': '#000000'
+                            },
+                            namesAsValues: false
+                        }
+                    }
+                ]
+            })
+                .on('colorpickerChange colorpickerCreate', function (e) {
+                    var colors = e.color.generate('tetrad');
+
+                    colors.forEach(function (color, i) {
+                        var colorStr = color.string(),
+                            swatch = e.colorpicker.picker
+                                .find('.colorpicker-swatch[data-name="tetrad' + (i + 1) + '"]');
+
+                        swatch
+                            .attr('data-value', colorStr)
+                            .attr('title', colorStr)
+                            .find('> i')
+                            .css('background-color', colorStr);
+                    });
+                });
         }
 
         if (jQuery().fancybox) {
@@ -557,13 +589,13 @@ class Botble {
                 }
             });
 
-            $(document).on('click', '.btn_remove_image', (event) => {
+            $(document).on('click', '.btn_remove_image', event =>  {
                 event.preventDefault();
                 $(event.currentTarget).closest('.image-box').find('.preview-image-wrapper').hide();
                 $(event.currentTarget).closest('.image-box').find('.image-data').val('');
             });
 
-            $(document).on('click', '.btn_remove_attachment', (event) => {
+            $(document).on('click', '.btn_remove_attachment', event =>  {
                 event.preventDefault();
                 $(event.currentTarget).closest('.attachment-wrapper').find('.attachment-details a').remove();
                 $(event.currentTarget).closest('.attachment-wrapper').find('.attachment-url').val('');
@@ -589,7 +621,7 @@ class Botble {
         // handle portlet remove
 
         // handle portlet fullscreen
-        $('body').on('click', '.portlet > .portlet-title .fullscreen', (event) => {
+        $('body').on('click', '.portlet > .portlet-title .fullscreen', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let portlet = _self.closest('.portlet');
@@ -611,7 +643,7 @@ class Botble {
             }
         });
 
-        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', (event) => {
+        $('body').on('click', '.portlet > .portlet-title > .tools > .collapse, .portlet .portlet-title > .tools > .expand', event =>  {
             event.preventDefault();
             let _self = $(event.currentTarget);
             let el = _self.closest('.portlet').children('.portlet-body');
@@ -636,7 +668,7 @@ class Botble {
             lineWrapping: true,
         });
 
-        $('.handle-tool-drag').mousedown((event) => {
+        $('.handle-tool-drag').mousedown(event =>  {
             let _self = $(event.currentTarget);
             _self.attr('data-start_h', _self.parent().find('.CodeMirror').height()).attr('data-start_y', event.pageY);
             $('body').attr('data-dragtool', _self.attr('id')).on('mousemove', Botble.onDragTool);

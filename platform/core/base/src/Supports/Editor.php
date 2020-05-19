@@ -23,7 +23,7 @@ class Editor
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @param null $value
      * @param bool $withShortCode
      * @param array $attributes
@@ -40,7 +40,7 @@ class Editor
         $attributes['with-short-code'] = $withShortCode;
         $attributes['rows'] = Arr::get($attributes, 'rows', 4);
 
-        return view('core/base::elements.forms.editor', compact('name', 'value', 'attributes'))
+        return view('core/base::forms.partials.editor', compact('name', 'value', 'attributes'))
             ->render();
     }
 }

@@ -4,18 +4,10 @@ namespace Botble\DevTool\Commands\Make;
 
 use Botble\DevTool\Commands\Abstracts\BaseMakeCommand;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 
 class TableMakeCommand extends BaseMakeCommand
 {
-    /**
-     * The filesystem instance.
-     *
-     * @var Filesystem
-     */
-    protected $files;
-
     /**
      * The console command signature.
      *
@@ -31,18 +23,6 @@ class TableMakeCommand extends BaseMakeCommand
     protected $description = 'Make a table';
 
     /**
-     * Create a new key generator command.
-     *
-     * @param Filesystem $files
-     */
-    public function __construct(Filesystem $files)
-    {
-        parent::__construct();
-
-        $this->files = $files;
-    }
-
-    /**
      * Execute the console command.
      *
      * @throws \League\Flysystem\FileNotFoundException
@@ -56,20 +36,20 @@ class TableMakeCommand extends BaseMakeCommand
         }
 
         $name = $this->argument('name');
-        $path = package_path(strtolower($this->argument('module')) . '/src/Tables/' . ucfirst(Str::studly($name)) . 'Table.php');
+        $path = platform_path(strtolower($this->argument('module')) . '/src/Tables/' . ucfirst(Str::studly($name)) . 'Table.php');
 
         $this->publishStubs($this->getStub(), $path);
         $this->renameFiles($name, $path);
         $this->searchAndReplaceInFiles($name, $path);
         $this->line('------------------');
 
-        $this->info('Create successfully!');
+        $this->info('Created successfully <comment>' . $path . '</comment>!');
 
         return true;
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getStub(): string
     {
@@ -77,11 +57,15 @@ class TableMakeCommand extends BaseMakeCommand
     }
 
     /**
-     * @param string $replaceText
-     * @return array
+     * {@inheritDoc}
      */
-    public function getReplacements(string $replaceText): array 
+    public function getReplacements(string $replaceText): array
     {
-        return [];
+        $module = explode('/', $this->argument('module'));
+        $module = strtolower(end($module));
+
+        return [
+            '{Module}' => ucfirst(Str::camel($module)),
+        ];
     }
 }

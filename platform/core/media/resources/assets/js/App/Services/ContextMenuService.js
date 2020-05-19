@@ -139,7 +139,7 @@ export class ContextMenuService {
 
         let canPreview = false;
         _.each(selectedFiles, (value) => {
-            if (_.includes(['image', 'youtube', 'pdf', 'text', 'video'], value.type)) {
+            if (_.includes(['image', 'pdf', 'text', 'video'], value.type)) {
                 canPreview = true;
             }
         });

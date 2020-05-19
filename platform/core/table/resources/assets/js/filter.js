@@ -8,7 +8,7 @@ class TableFilter {
                 'key': $element.val(),
                 'value': $element.closest('.filter-item').find('.filter-column-value').val(),
             },
-            success: (res) => {
+            success: res => {
                 let data = $.map(res.data, (value, key) => {
                     return {id: key, name: value};
                 });
@@ -22,7 +22,7 @@ class TableFilter {
 
                 Botble.initResources();
             },
-            error: (error) => {
+            error: error => {
                 Botble.handleError(error);
             }
         });
@@ -36,11 +36,11 @@ class TableFilter {
             }
         });
 
-        $(document).on('change', '.filter-column-key', (event) => {
+        $(document).on('change', '.filter-column-key', event => {
             that.loadData($(event.currentTarget));
         });
 
-        $(document).on('click', '.btn-reset-filter-item', (event) => {
+        $(document).on('click', '.btn-reset-filter-item', event => {
             event.preventDefault();
             let _self = $(event.currentTarget);
             _self.closest('.filter-item').find('.filter-column-key').val('').trigger('change');
@@ -61,7 +61,7 @@ class TableFilter {
             }
         });
 
-        $(document).on('click', '.btn-remove-filter-item', (event) => {
+        $(document).on('click', '.btn-remove-filter-item', event => {
             event.preventDefault();
             $(event.currentTarget).closest('.filter-item').remove();
         });

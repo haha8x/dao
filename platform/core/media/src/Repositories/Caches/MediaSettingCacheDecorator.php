@@ -7,5 +7,4 @@ use Botble\Support\Repositories\Caches\CacheAbstractDecorator;
 
 class MediaSettingCacheDecorator extends CacheAbstractDecorator implements MediaSettingInterface
 {
-
 }

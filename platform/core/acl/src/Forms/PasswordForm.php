@@ -6,14 +6,12 @@ use Botble\ACL\Http\Requests\UpdatePasswordRequest;
 use Botble\ACL\Models\User;
 use Botble\Base\Forms\FormAbstract;
 use Html;
-use Throwable;
 
 class PasswordForm extends FormAbstract
 {
 
     /**
-     * @return mixed|void
-     * @throws Throwable
+     * {@inheritDoc}
      */
     public function buildForm()
     {

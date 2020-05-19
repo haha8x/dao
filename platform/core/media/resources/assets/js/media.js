@@ -4,7 +4,6 @@ import {MediaService} from './App/Services/MediaService';
 import {FolderService} from './App/Services/FolderService';
 import {UploadService} from './App/Services/UploadService';
 import {ActionsService} from './App/Services/ActionsService';
-import {ExternalServices} from './App/Externals/ExternalServices';
 import {EditorService} from './integrate';
 
 class MediaManagement {
@@ -12,8 +11,6 @@ class MediaManagement {
         this.MediaService = new MediaService();
         this.UploadService = new UploadService();
         this.FolderService = new FolderService();
-
-        new ExternalServices();
 
         this.$body = $('body');
     }
@@ -69,13 +66,13 @@ class MediaManagement {
         setTimeout(() => {
             $('.rv-media-details').removeClass('hidden');
         }, 300);
-        $mediaDetailsCheckbox.on('change', (event) => {
+        $mediaDetailsCheckbox.on('change', event =>  {
             event.preventDefault();
             MediaConfig.hide_details_pane = $(event.currentTarget).is(':checked');
             Helpers.storeConfig();
         });
 
-        $(document).off('click', 'button[data-dismiss-modal]').on('click', 'button[data-dismiss-modal]', (event) => {
+        $(document).off('click', 'button[data-dismiss-modal]').on('click', 'button[data-dismiss-modal]', event =>  {
             let modal = $(event.currentTarget).data('dismiss-modal');
             $(modal).modal('hide');
         });
@@ -103,7 +100,7 @@ class MediaManagement {
         });
 
         _self.$body
-            .off('click', '.js-media-list-title').on('click', '.js-media-list-title', (event) => {
+            .off('click', '.js-media-list-title').on('click', '.js-media-list-title', event =>  {
             event.preventDefault();
             let $current = $(event.currentTarget);
 
@@ -130,7 +127,7 @@ class MediaManagement {
 
             _self.MediaService.getFileDetails($current.data());
         })
-            .on('dblclick', '.js-media-list-title', (event) => {
+            .on('dblclick', '.js-media-list-title', event =>  {
                 event.preventDefault();
 
                 let data = $(event.currentTarget).data();
@@ -148,12 +145,12 @@ class MediaManagement {
                     }
                 }
             })
-            .on('dblclick', '.js-up-one-level', (event) => {
+            .on('dblclick', '.js-up-one-level', event =>  {
                 event.preventDefault();
                 let count = $('.rv-media-breadcrumb .breadcrumb li').length;
                 $('.rv-media-breadcrumb .breadcrumb li:nth-child(' + (count - 1) + ') a').trigger('click');
             })
-            .on('contextmenu', '.js-context-menu', (event) => {
+            .on('contextmenu', '.js-context-menu', event =>  {
                 if (!$(event.currentTarget).find('input[type=checkbox]').is(':checked')) {
                     $(event.currentTarget).trigger('click');
                 }
@@ -173,7 +170,7 @@ class MediaManagement {
 
     changeViewType() {
         let _self = this;
-        _self.$body.off('click', '.js-rv-media-change-view-type .btn').on('click', '.js-rv-media-change-view-type .btn', (event) => {
+        _self.$body.off('click', '.js-rv-media-change-view-type .btn').on('click', '.js-rv-media-change-view-type .btn', event =>  {
             event.preventDefault();
             let $current = $(event.currentTarget);
             if ($current.hasClass('active')) {
@@ -207,7 +204,7 @@ class MediaManagement {
 
     changeFilter() {
         let _self = this;
-        _self.$body.off('click', '.js-rv-media-change-filter').on('click', '.js-rv-media-change-filter', (event) => {
+        _self.$body.off('click', '.js-rv-media-change-filter').on('click', '.js-rv-media-change-filter', event =>  {
             event.preventDefault();
             if (!Helpers.isOnAjaxLoading()) {
                 let $current = $(event.currentTarget);
@@ -242,7 +239,7 @@ class MediaManagement {
     search() {
         let _self = this;
         $('.input-search-wrapper input[type="text"]').val(Helpers.getRequestParams().search || '');
-        _self.$body.off('submit', '.input-search-wrapper').on('submit', '.input-search-wrapper', (event) => {
+        _self.$body.off('submit', '.input-search-wrapper').on('submit', '.input-search-wrapper', event =>  {
             event.preventDefault();
             MediaConfig.request_params.search = $(event.currentTarget).find('input[type="text"]').val();
 
@@ -256,7 +253,7 @@ class MediaManagement {
         let _self = this;
 
         _self.$body
-            .off('click', '.rv-media-actions .js-change-action[data-type="refresh"]').on('click', '.rv-media-actions .js-change-action[data-type="refresh"]', (event) => {
+            .off('click', '.rv-media-actions .js-change-action[data-type="refresh"]').on('click', '.rv-media-actions .js-change-action[data-type="refresh"]', event =>  {
             event.preventDefault();
 
             Helpers.resetPagination();
@@ -268,11 +265,11 @@ class MediaManagement {
                 _self.MediaService.getMedia(true, false);
             }
         })
-            .off('click', '.rv-media-items li.no-items').on('click', '.rv-media-items li.no-items', (event) => {
+            .off('click', '.rv-media-items li.no-items').on('click', '.rv-media-items li.no-items', event =>  {
             event.preventDefault();
             $('.rv-media-header .rv-media-top-header .rv-media-actions .js-dropzone-upload').trigger('click');
         })
-            .off('submit', '.form-add-folder').on('submit', '.form-add-folder', (event) => {
+            .off('submit', '.form-add-folder').on('submit', '.form-add-folder', event =>  {
             event.preventDefault();
             let $input = $(event.currentTarget).find('input[type=text]');
             let folderName = $input.val();
@@ -280,13 +277,13 @@ class MediaManagement {
             $input.val('');
             return false;
         })
-            .off('click', '.js-change-folder').on('click', '.js-change-folder', (event) => {
+            .off('click', '.js-change-folder').on('click', '.js-change-folder', event =>  {
             event.preventDefault();
             let folderId = $(event.currentTarget).data('folder');
             Helpers.resetPagination();
             _self.FolderService.changeFolder(folderId);
         })
-            .off('click', '.js-files-action').on('click', '.js-files-action', (event) => {
+            .off('click', '.js-files-action').on('click', '.js-files-action', event =>  {
             event.preventDefault();
             ActionsService.handleGlobalAction($(event.currentTarget).data('action'), () => {
                 Helpers.resetPagination();
@@ -302,7 +299,7 @@ class MediaManagement {
         _self.$body.on('show.bs.modal', '#modal_rename_items', () => {
             ActionsService.renderRenameItems();
         });
-        _self.$body.off('submit', '#modal_rename_items .form-rename').on('submit', '#modal_rename_items .form-rename', (event) => {
+        _self.$body.off('submit', '#modal_rename_items .form-rename').on('submit', '#modal_rename_items .form-rename', event =>  {
             event.preventDefault();
             let items = [];
             let $form = $(event.currentTarget);
@@ -317,7 +314,7 @@ class MediaManagement {
             ActionsService.processAction({
                 action: $form.data('action'),
                 selected: items
-            }, (res) => {
+            }, res =>  {
                 if (!res.error) {
                     $form.closest('.modal').modal('hide');
                     _self.MediaService.getMedia(true);
@@ -335,7 +332,7 @@ class MediaManagement {
         });
 
         /*Delete files*/
-        _self.$body.off('submit', '.form-delete-items').on('submit', '.form-delete-items', (event) => {
+        _self.$body.off('submit', '.form-delete-items').on('submit', '.form-delete-items', event =>  {
             event.preventDefault();
             let items = [];
             let $form = $(event.currentTarget);
@@ -350,7 +347,7 @@ class MediaManagement {
             ActionsService.processAction({
                 action: $form.data('action'),
                 selected: items
-            }, (res) => {
+            }, res =>  {
                 $form.closest('.modal').modal('hide');
                 if (!res.error) {
                     _self.MediaService.getMedia(true);
@@ -359,7 +356,7 @@ class MediaManagement {
         });
 
         /*Empty trash*/
-        _self.$body.off('submit', '#modal_empty_trash .rv-form').on('submit', '#modal_empty_trash .rv-form', (event) => {
+        _self.$body.off('submit', '#modal_empty_trash .rv-form').on('submit', '#modal_empty_trash .rv-form', event =>  {
             event.preventDefault();
             let $form = $(event.currentTarget);
 
@@ -403,7 +400,7 @@ class MediaManagement {
     bindIntegrateModalEvents() {
         let $main_modal = $('#rv_media_modal');
         let _self = this;
-        $main_modal.off('click', '.js-insert-to-editor').on('click', '.js-insert-to-editor', (event) => {
+        $main_modal.off('click', '.js-insert-to-editor').on('click', '.js-insert-to-editor', event =>  {
             event.preventDefault();
             let selectedFiles = Helpers.getSelectedFiles();
             if (_.size(selectedFiles) > 0) {
@@ -414,7 +411,7 @@ class MediaManagement {
             }
         });
 
-        $main_modal.off('dblclick', '.js-media-list-title').on('dblclick', '.js-media-list-title', (event) => {
+        $main_modal.off('dblclick', '.js-media-list-title').on('dblclick', '.js-media-list-title', event =>  {
             event.preventDefault();
             if (Helpers.getConfigs().request_params.view_in !== 'trash') {
                 let selectedFiles = Helpers.getSelectedFiles();

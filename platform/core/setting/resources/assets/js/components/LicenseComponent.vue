@@ -92,14 +92,14 @@
         methods: {
             verifyLicense() {
                 axios.get(this.verifyUrl)
-                    .then((res) => {
+                    .then(res =>  {
                         if (!res.data.error) {
                             this.verified = true;
                             this.license = res.data.data;
                         }
                         this.isLoading = false;
                     })
-                    .catch((res) => {
+                    .catch(res =>  {
                         Botble.handleError(res.response.data);
                         this.isLoading = false;
                     });
@@ -108,7 +108,7 @@
             activateLicense() {
                 this.activating = true;
                 axios.post(this.activateLicenseUrl, {purchase_code: this.purchaseCode, buyer: this.buyer})
-                    .then((res) => {
+                    .then(res =>  {
                         if (res.data.error) {
                             Botble.showError(res.data.message);
                         } else {
@@ -117,7 +117,7 @@
                         }
                         this.activating = false;
                     })
-                    .catch((res) => {
+                    .catch(res =>  {
                         Botble.handleError(res.response.data);
                         this.activating = false;
                     });
@@ -125,7 +125,7 @@
             deactivateLicense() {
                 this.deactivating = true;
                 axios.post(this.deactivateLicenseUrl)
-                    .then((res) => {
+                    .then(res =>  {
                         if (res.data.error) {
                             Botble.showError(res.data.message);
                         } else {
@@ -133,7 +133,7 @@
                         }
                         this.deactivating = false;
                     })
-                    .catch((res) => {
+                    .catch(res =>  {
                         Botble.handleError(res.response.data);
                         this.deactivating = false;
                     });

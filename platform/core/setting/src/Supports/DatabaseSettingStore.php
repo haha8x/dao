@@ -130,7 +130,7 @@ class DatabaseSettingStore extends SettingStore
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function forget($key): SettingStore
     {
@@ -158,7 +158,7 @@ class DatabaseSettingStore extends SettingStore
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     protected function write(array $data)
     {
@@ -234,7 +234,7 @@ class DatabaseSettingStore extends SettingStore
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * @throws FileNotFoundException
      */
     protected function read()

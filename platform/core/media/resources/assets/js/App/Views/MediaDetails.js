@@ -15,25 +15,16 @@ export class MediaDetails {
             'updated_at',
             'nothing_selected',
         ];
-
-        this.externalTypes = [
-            'youtube',
-            'vimeo',
-            'metacafe',
-            'dailymotion',
-            'vine',
-            'instagram',
-        ];
     }
 
     renderData(data) {
         let _self = this;
-        let thumb = data.type === 'image' ? '<img src="' + data.full_url + '" alt="' + data.name + '">' : data.mime_type === 'youtube' ? '<img src="' + data.options.thumb + '" alt="' + data.name + '">' : '<i class="' + data.icon + '"></i>';
+        let thumb = data.type === 'image' ? '<img src="' + data.full_url + '" alt="' + data.name + '">' : '<i class="' + data.icon + '"></i>';
         let description = '';
         let useClipboard = false;
         _.forEach(data, (val, index) => {
             if (_.includes(_self.onlyFields, index)) {
-                if ((!_.includes(_self.externalTypes, data.type)) || (_.includes(_self.externalTypes, data.type) && !_.includes(['size', 'mime_type'], index))) {
+                if (!_.includes(['size', 'mime_type'], index)) {
                     description += _self.descriptionItemTemplate
                         .replace(/__title__/gi, RV_MEDIA_CONFIG.translations[index])
                         .replace(/__url__/gi, val ? index === 'full_url' ? '<div class="input-group"><input id="file_details_url" type="text" value="' + val + '" class="form-control"><span class="input-group-prepend"><button class="btn btn-default js-btn-copy-to-clipboard" type="button" data-clipboard-target="#file_details_url" title="Copied"><img class="clippy" src="' + Helpers.asset('/vendor/core/media/images/clippy.svg') + '" width="13" alt="Copy to clipboard"></button></span></div>' : '<span title="' + val + '">' + val + '</span>' : '');
@@ -48,8 +39,12 @@ export class MediaDetails {
         if (useClipboard) {
             new Clipboard('.js-btn-copy-to-clipboard');
             $('.js-btn-copy-to-clipboard').tooltip()
-                .on('mouseenter', () => { $(this).tooltip('hide'); })
-                .on('mouseleave', () => { $(this).tooltip('hide'); });
+                .on('mouseenter', () => {
+                    $(this).tooltip('hide');
+                })
+                .on('mouseleave', () => {
+                    $(this).tooltip('hide');
+                });
         }
     }
 }
