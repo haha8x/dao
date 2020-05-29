@@ -1,9 +1,9 @@
 {
-    "name": "Catalog",
+    "name": "Quản lý danh mục",
     "namespace": "Botble\\Catalog\\",
     "provider": "Botble\\Catalog\\Providers\\CatalogServiceProvider",
-    "author": "Sang Nguyen",
-    "url": "https://sangnguyen.info",
+    "author": "Mr Haha",
+    "url": "https://hahoang.com",
     "version": "1.0",
     "description": "The description for module catalog"
 }

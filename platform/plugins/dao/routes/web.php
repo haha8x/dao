@@ -257,14 +257,5 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'permission' => 'request-close.success',
             ]);
         });
-
-        Route::group(['prefix' => 'customers', 'as' => 'customer.'], function () {
-            Route::resource('', 'CustomerController')->parameters(['' => 'customer']);
-            Route::delete('items/destroy', [
-                'as'         => 'deletes',
-                'uses'       => 'CustomerController@deletes',
-                'permission' => 'customer.destroy',
-            ]);
-        });
     });
 });

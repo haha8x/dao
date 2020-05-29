@@ -1,0 +1,9 @@
+{
+    "name": "Quản lý khách hàng",
+    "namespace": "Botble\\Customer\\",
+    "provider": "Botble\\Customer\\Providers\\CustomerServiceProvider",
+    "author": "Mr Haha",
+    "url": "https://hahoang.com",
+    "version": "1.0",
+    "description": "The description for module customer"
+}

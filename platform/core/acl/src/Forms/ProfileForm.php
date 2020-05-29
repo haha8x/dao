@@ -20,28 +20,8 @@ class ProfileForm extends FormAbstract
             ->setFormOption('class', 'row')
             ->setValidatorClass(UpdateProfileRequest::class)
             ->withCustomFields()
-            ->add('first_name', 'text', [
-                'label'      => trans('core/acl::users.info.first_name'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'data-counter' => 30,
-                ],
-                'wrapper'    => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
-                ],
-            ])
-            ->add('last_name', 'text', [
-                'label'      => trans('core/acl::users.info.last_name'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'data-counter' => 30,
-                ],
-                'wrapper'    => [
-                    'class' => $this->formHelper->getConfig('defaults.wrapper_class') . ' col-md-6',
-                ],
-            ])
-            ->add('username', 'text', [
-                'label'      => trans('core/acl::users.username'),
+            ->add('name', 'text', [
+                'label'      => 'Name',
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'data-counter' => 30,

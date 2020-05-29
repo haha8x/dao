@@ -78,18 +78,6 @@
                                 </ul>
                             </li>
                         @endif
-
-                        <li class="dropdown dropdown-user">
-                            <a href="javascript:void(0)" class="dropdown-toggle dropdown-header-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img alt="{{ Auth::user()->getFullName() }}" class="rounded-circle" src="{{ Auth::user()->avatar_url }}" />
-                                <span class="username username-hide-on-mobile"> {{ Auth::user()->getFullName() }} </span>
-                                <i class="fa fa-angle-down"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ route('user.profile.view', Auth::user()->getKey()) }}"><i class="icon-user"></i> {{ trans('core/base::layouts.profile') }}</a></li>
-                                <li><a href="{{ route('access.logout') }}" class="btn-logout"><i class="icon-key"></i> {{ trans('core/base::layouts.logout') }}</a></li>
-                            </ul>
-                        </li>
                     @endauth
                 </ul>
             </div>

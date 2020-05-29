@@ -68,7 +68,7 @@ class RequestTransferController extends BaseController
         $daoRequestTransfer = $this->daoRequestTransferRepository->createOrUpdate($request->input());
 
         $request->merge([
-            'status' => 'create',
+            'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
 
@@ -80,7 +80,7 @@ class RequestTransferController extends BaseController
             ->setMessage(trans('core/base::notices.create_success_message'));
     }
 
-        /**
+    /**
      * Show edit form
      *
      * @param $id

@@ -2,7 +2,7 @@
 
 Route::group(['namespace' => 'Botble\Catalog\Http\Controllers', 'middleware' => 'web'], function () {
 
-    Route::group(['middleware' => 'guest'], function () {
+    Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
         Route::post('/get-branch', [
             'as' => 'get-branch',
             'uses' => 'CatalogBranchController@getChangeZone',

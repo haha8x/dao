@@ -31,14 +31,17 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username',
         'email',
-        'first_name',
-        'last_name',
+        'name',
         'password',
         'super_user',
         'avatar_id',
         'permissions',
+        'title',
+        'dao',
+        'staff_id',
+        'note',
+
     ];
 
     /**
@@ -93,7 +96,7 @@ class User extends Authenticatable
      */
     public function getFullName()
     {
-        return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+        return ucfirst($this->name) . ' ' . ucfirst($this->last_name);
     }
 
     /**

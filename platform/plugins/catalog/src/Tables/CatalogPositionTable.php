@@ -79,6 +79,7 @@ class CatalogPositionTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'catalog_positions.id',
+            'catalog_positions.code',
             'catalog_positions.name',
         ]);
 
@@ -96,6 +97,11 @@ class CatalogPositionTable extends TableAbstract
                 'name'  => 'catalog_positions.id',
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
+            ],
+            'code' => [
+                'name'  => 'catalog_branches.code',
+                'title' => __('Mã chức danh'),
+                'class' => 'text-left',
             ],
             'name' => [
                 'name'  => 'catalog_positions.name',

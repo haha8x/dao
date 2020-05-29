@@ -9,17 +9,19 @@ class Catalog {
             $.ajax({
                 url: url,
                 type: 'POST',
-                data: {'zone_id': $element.val()},
+                data: {
+                    'zone_id': $element.val()
+                },
                 beforeSend: () => {
                     $element.closest('form').find('button[type=submit], input[type=submit]').prop('disabled', true);
                 },
                 success: (data) => {
                     let option = '<option value="">' + ($branch.data('placeholder')) + '</option>';
-                    $.each(data.data,(index, item) => {
+                    $.each(data.data, (index, item) => {
                         if (item.id === $branch.data('origin-value')) {
-                            option += '<option value="' + item.id + '" selected="selected">' + item.name + '</option>';
+                            option += '<option value="' + item.id + '" selected="selected">' + item.code + ' - ' + item.name + '</option>';
                         } else {
-                            option += '<option value="' + item.id + '">' + item.name + '</option>';
+                            option += '<option value="' + item.id + '">' + item.code + ' - ' + item.name + '</option>';
                         }
 
                     });

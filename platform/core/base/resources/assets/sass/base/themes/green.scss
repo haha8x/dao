@@ -1,98 +1,25 @@
-// Theme Colors Settigns
+// Theme Colors Settings
 // Main settings
-$theme-name: "green";
-$brand-main-color: #00873f !default;
+$theme-name: 'green';
+$brand-main-color: #00B050 !default;
 $brand-main-font-color: #ffffff !default;
 
 // Body and header
 $bg-color: #ffffff !default;
-$header-bg-color: #ffffff !default;
+$header-bg-color: #FFFFFF !default;
 $header-toggler-color: lighten($header-bg-color, 50%) !default;
 $header-toggler-bg-color: lighten($header-bg-color, 3%) !default;
 
-// Mega Menu 
-$header-hor-menu-bg-color: #000000;
-$header-hor-menu-fixed-border-box: 0px 1px 10px 0px rgba($header-hor-menu-bg-color, 0.2);
-
-//** Default Mega Menu
-$header-hor-menu-mega-menu-header-font-color: lighten($header-hor-menu-bg-color, 50%);
-
-$header-hor-menu-default-link-font-color: lighten($header-hor-menu-bg-color, 50%);
-$header-hor-menu-default-link-font-color-on-hover: lighten($header-hor-menu-default-link-font-color, 5%);
-$header-hor-menu-default-link-font-color-on-active: lighten($header-hor-menu-default-link-font-color, 50%);
-
-$header-hor-menu-default-link-icon-color: lighten($header-hor-menu-bg-color, 35%);
-$header-hor-menu-default-link-icon-color-on-hover: lighten($header-hor-menu-default-link-icon-color, 5%);
-$header-hor-menu-default-link-icon-color-on-active: lighten($header-hor-menu-default-link-icon-color, 30%);
-
-$header-hor-menu-default-link-bg-color-on-hover: lighten($header-bg-color, 10%);
-$header-hor-menu-default-link-bg-color-on-active: $brand-main-color;
-
-// Default Mega Menu Sub Menu 
-$header-hor-menu-dropdown-menu-bg-color: $header-hor-menu-default-link-bg-color-on-hover;
-$header-hor-menu-box-shadow: 5px 5px rgba($header-hor-menu-dropdown-menu-bg-color, 0.2);
-
-$header-hor-menu-dropdown-menu-link-bg-color-on-active: lighten($header-hor-menu-default-link-bg-color-on-hover, 4%);
-$header-hor-menu-dropdown-menu-link-bg-color-on-hover: lighten($header-hor-menu-default-link-bg-color-on-hover, 4%);
-
-$header-hor-menu-dropdown-menu-link-font-color: lighten($header-hor-menu-bg-color, 50%);
-$header-hor-menu-dropdown-menu-link-font-color-on-hover: lighten($header-hor-menu-dropdown-menu-link-font-color, 14%);
-$header-hor-menu-dropdown-menu-link-font-color-on-active: lighten($header-hor-menu-dropdown-menu-link-font-color, 14%);
-
-$header-hor-menu-dropdown-menu-link-icon-color: darken($header-hor-menu-dropdown-menu-link-font-color, 2%);
-$header-hor-menu-dropdown-menu-link-icon-color-on-hover: lighten($header-hor-menu-dropdown-menu-link-icon-color, 10%);
-$header-hor-menu-dropdown-menu-link-icon-color-on-active: lighten($header-hor-menu-dropdown-menu-link-icon-color, 10%);
-
-//** Light Mega Menu
-$header-light-hor-menu-mega-menu-header-font-color: #666666;
-
-$header-light-hor-menu-default-link-font-color: $header-hor-menu-default-link-font-color;
-$header-light-hor-menu-default-link-font-color-on-hover: $header-hor-menu-default-link-font-color-on-hover;
-$header-light-hor-menu-default-link-font-color-on-active: $header-hor-menu-default-link-font-color-on-active;
-
-$header-light-hor-menu-default-link-icon-color: $header-hor-menu-default-link-icon-color;
-$header-light-hor-menu-default-link-icon-color-on-hover: $header-hor-menu-default-link-icon-color-on-hover;
-$header-light-hor-menu-default-link-icon-color-on-active: $header-hor-menu-default-link-icon-color-on-active;
-
-$header-light-hor-menu-default-link-bg-color-on-hover: $header-hor-menu-default-link-bg-color-on-hover;
-$header-light-hor-menu-default-link-bg-color-on-active: $header-hor-menu-default-link-bg-color-on-active;
-
-$header-light-hor-menu-default-link-bg-color-on-onen: lighten(#fafafc, 2%);
-$header-light-hor-menu-default-link-font-color-on-onen: #333333;
-$header-light-hor-menu-default-link-icon-color-on-onen: #333333;
-
-// Light Mega Menu Sub Menu 
-$header-light-hor-menu-dropdown-menu-bg-color: $header-light-hor-menu-default-link-bg-color-on-onen;
-$header-light-hor-menu-box-shadow: 5px 5px rgba(#666, 0.1);
-
-$header-light-hor-menu-dropdown-menu-link-bg-color-on-active: darken($header-light-hor-menu-dropdown-menu-bg-color, 4%);
-$header-light-hor-menu-dropdown-menu-link-bg-color-on-hover: darken($header-light-hor-menu-dropdown-menu-bg-color, 4%);
-
-$header-light-hor-menu-dropdown-menu-link-font-color: #000000;
-$header-light-hor-menu-dropdown-menu-link-font-color-on-hover: #000000;
-$header-light-hor-menu-dropdown-menu-link-font-color-on-active: #000000;
-
-$header-light-hor-menu-dropdown-menu-link-icon-color: #888888;
-$header-light-hor-menu-dropdown-menu-link-icon-color-on-hover: #666666;
-$header-light-hor-menu-dropdown-menu-link-icon-color-on-active: #666666;
-
-// Header search
-$header-search-bg-color: darken($header-bg-color, 4%) !default;
-$header-search-bg-hover-color: $header-hor-menu-default-link-bg-color-on-hover !default;
-$header-search-bg-color-on-open: $header-search-bg-hover-color !default;
-$header-search-font-color: #c4c9d0 !default;
-$header-search-placeholder-font-color: darken($header-search-font-color, 1%) !default;
-
 // Top menu
-$header-top-menu-bg-hover-color: $header-hor-menu-default-link-bg-color-on-hover !default;
-$header-top-menu-bg-hover-color-on-dropdown-open: $header-hor-menu-default-link-bg-color-on-hover !default;
+$header-top-menu-bg-hover-color: lighten($header-bg-color, 10%) !default;
+$header-top-menu-bg-hover-color-on-dropdown-open: lighten($header-bg-color, 10%) !default;
 $header-top-menu-badge-bg-color: $brand-main-color;
 $header-top-menu-badge-font-color: #ffffff;
-$header-top-menu-icon-font-color: #00873f !default;
+$header-top-menu-icon-font-color: lighten(#9fa7b1, 10%) !default;
 
 // Top menu user bar
-$header-top-menu-user-font-color: #FFFFFF !default;
-$header-top-menu-user-bg-color: $header-search-bg-color !default;
+$header-top-menu-user-font-color: lighten($header-bg-color, 50%) !default;
+$header-top-menu-user-bg-color: darken($header-bg-color, 4%) !default;
 
 //begin: Top Menu Extended Dropdowns
 $header-top-menu-extended-dropdown-item-bg-color-on-hover: #f8f9fa;
@@ -110,8 +37,8 @@ $header-top-menu-task-dropdown-progress-bg-color: #dfe2e9;
 $header-top-menu-notification-time-bg-color: lighten(#eeeeee, 1%);
 
 // Top Menu Notifications
-$header-top-menu-dropdown-dark-bg-color: darken($header-hor-menu-bg-color, 1%);
-$header-top-menu-dropdown-dark-header-bg-color: darken($header-hor-menu-bg-color, 5%);
+$header-top-menu-dropdown-dark-bg-color: darken($header-bg-color, 1%);
+$header-top-menu-dropdown-dark-header-bg-color: darken($header-bg-color, 5%);
 $header-top-menu-dropdown-dark-header-font-color: lighten($header-top-menu-dropdown-dark-header-bg-color, 40%);
 
 $header-top-menu-dropdown-dark-item-font-color: lighten($header-top-menu-dropdown-dark-header-bg-color, 40%);
@@ -124,7 +51,7 @@ $header-top-menu-dropdown-dark-notification-time-bg-color: darken($header-top-me
 //end: Top Menu Extended Dropdowns
 
 // Sidebar menu
-$sidebar-menu-devider-border-color: #f0f5f7 !default;
+$sidebar-menu-deliver-border-color: #f0f5f7 !default;
 
 $sidebar-menu-link-font-color: #555555 !default;
 $sidebar-menu-link-font-color-on-hover: #ffffff !default;
@@ -134,8 +61,8 @@ $sidebar-menu-link-icon-font-color: #c3c3c3 !default;
 $sidebar-menu-link-icon-font-color-on-active: $sidebar-menu-link-font-color-on-active !default;
 $sidebar-menu-link-icon-font-color-on-hover: lighten($sidebar-menu-link-font-color, 35%) !default;
 
-$sidebar-menu-link-bg-color-on-hover: #EB1E25 !default;
-$sidebar-menu-link-bg-color-on-active: #EB1E25;
+$sidebar-menu-link-bg-color-on-hover: #00B050 !default;
+$sidebar-menu-link-bg-color-on-active: #00B050;
 
 $sidebar-menu-arrow-color: $sidebar-menu-link-icon-font-color !default;
 $sidebar-menu-arrow-color-on-active: $sidebar-menu-link-icon-font-color-on-active !default;
@@ -175,7 +102,72 @@ $footer-default-go-top-bg-color: #9ca6ad !default;
 $footer-default-go-top-icon-font-color: #dddddd !default;
 $footer-fixed-bg-color: lighten($header-bg-color, 40%) !default;
 
-@import '_base';
+@import 'base';
+
+.page-content-wrapper {
+    background: #00B050;
+}
+
+.page-header.navbar {
+    height: 100px;
+}
+
+.page-header.navbar .menu-toggler>span,
+.page-header.navbar .menu-toggler>span:before,
+.page-header.navbar .menu-toggler>span:after {
+    background: black;
+}
+
+.stay-bottom {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+}
+
+.sidebar-user {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.sidebar-user .user-pic {
+    float: left;
+    width: 60px;
+    padding: 2px;
+    border-radius: 12px;
+    margin-right: 5px;
+    overflow: hidden;
+}
+
+.sidebar-user .user-pic img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar-user .user-info {
+    color: #b8bfce;
+    float: left;
+}
+
+.sidebar-user .user-info span {
+    display: block;
+    font-size: 12px;
+    color: #999999;
+    display: block;
+    margin: 2px 0 0 0;
+}
+
+.sidebar-user .user-info .user-status {
+    margin-top: 4px;
+}
+
+.sidebar-user .user-info {
+    margin-left: 0;
+    float: left;
+    color: #ffffff;
+    font-weight: 400;
+    margin-top: 0;
+}
 
 /* Page sidebar */
 
@@ -189,14 +181,14 @@ select:not([multiple]) {
     .page-sidebar-menu {
 
         /* Adjust "selected" arrow */
-        > li {
+        >li {
 
             &.active.open,
             &.active {
-                > a {
+                >a {
 
-                    > .selected {
-                        top: 0px;
+                    >.selected {
+                        top: 0;
                         right: -8px;
                         border-top: 20px double transparent;
                         border-bottom: 20px double transparent;
@@ -224,10 +216,10 @@ select:not([multiple]) {
 
         /* Change sidebar link font weight */
         li {
-            > a {
+            >a {
                 font-weight: 400;
 
-                > i {
+                >i {
                     font-weight: 900;
                 }
             }
@@ -240,10 +232,10 @@ select:not([multiple]) {
 
             .sub-menu {
                 li {
-                    > a {
+                    >a {
                         font-weight: normal;
 
-                        > i {
+                        >i {
                             font-weight: 900;
                         }
                     }
@@ -253,8 +245,8 @@ select:not([multiple]) {
     }
 
     .page-sidebar-menu.page-sidebar-menu-light {
-        > li {
-            > a {
+        >li {
+            >a {
                 .selected {
                     display: none;
                 }
@@ -265,11 +257,11 @@ select:not([multiple]) {
 
 .page-container-bg-solid {
     .page-content {
-        border-left: 1px solid $sidebar-menu-devider-border-color;
-        border-bottom: 1px solid $sidebar-menu-devider-border-color;
+        border-left: 1px solid $sidebar-menu-deliver-border-color;
+        border-bottom: 1px solid $sidebar-menu-deliver-border-color;
 
         .page-sidebar-reversed & {
-            border-right: 1px solid $sidebar-menu-devider-border-color;
+            border-right: 1px solid $sidebar-menu-deliver-border-color;
         }
 
         background-color: #f1f1f1;
@@ -287,7 +279,8 @@ select:not([multiple]) {
     }
 }
 
-@media (max-width: $screen-sm-max) { /* 991px */
+@media (max-width: $screen-sm-max) {
+    /* 991px */
 
     .page-content {
         border-left: 0;
@@ -301,22 +294,25 @@ select:not([multiple]) {
     .page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover,
     .page-sidebar {
         .page-sidebar-menu {
-            > li {
-                > a {
-                    border-top: 1px solid $sidebar-menu-devider-border-color;
+            >li {
+                >a {
+                    border-top: 1px solid $sidebar-menu-deliver-border-color;
                 }
             }
         }
     }
 }
 
-@media (max-width: $screen-xs-min) { /* 480px */
+@media (max-width: $screen-xs-min) {
+    /* 480px */
 
     body {
         background: lighten($header-bg-color, 13%);
     }
 
     .page-header.navbar {
+
+
         .top-menu {
             background-color: lighten($header-bg-color, 13%);
 
@@ -325,9 +321,9 @@ select:not([multiple]) {
             }
 
             .navbar-nav {
-                > li.dropdown {
+                >li.dropdown {
                     .dropdown-toggle {
-                        > i {
+                        >i {
                             color: lighten($header-top-menu-icon-font-color, 12%);
                         }
                     }

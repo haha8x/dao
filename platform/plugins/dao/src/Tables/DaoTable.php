@@ -5,7 +5,7 @@ namespace Botble\Dao\Tables;
 use Auth;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoInterface;
-use Botble\Table\Abstracts\TableAbstract;
+use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Models\Dao;

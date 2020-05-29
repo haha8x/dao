@@ -68,7 +68,7 @@ class RequestUpdateController extends BaseController
         $daoRequestUpdate = $this->daoRequestUpdateRepository->createOrUpdate($request->input());
 
         $request->merge([
-            'status' => 'create',
+            'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
 

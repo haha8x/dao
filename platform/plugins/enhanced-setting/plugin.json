@@ -1,9 +1,0 @@
-{
-    "name": "Enhanced Setting",
-    "namespace": "Botble\\EnhancedSetting\\",
-    "provider": "Botble\\EnhancedSetting\\Providers\\EnhancedSettingServiceProvider",
-    "author": "Mr Haha",
-    "url": "https://hahoang.com",
-    "version": "2.0",
-    "description": "Enhanced Setting"
-}

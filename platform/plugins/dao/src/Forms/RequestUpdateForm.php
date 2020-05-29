@@ -41,22 +41,25 @@ class RequestUpdateForm extends FormAbstract
 
         Assets::addScriptsDirectly('vendor/core/plugins/catalog/js/catalog.js');
 
-        $catalogBranch = $this->catalogBranchRepository->pluck('catalog_branches.name', 'catalog_branches.id');
         $catalogZone = $this->catalogZoneRepository->pluck('catalog_zones.name', 'catalog_zones.id');
         $catalogPosition = $this->catalogPositionRepository->pluck('catalog_positions.name', 'catalog_positions.id');
 
         $this
             ->setupModel(new RequestUpdate)
             ->setValidatorClass(RequestUpdateRequest::class)
-            // ->add('rowOpen1', 'html', [
-            //     'html' => '<div class="row">',
-            // ])
+            ->withCustomFields()
+            ->add('rowOpen1', 'html', [
+                'html' => '<div class="row">',
+            ])
             ->add('dao_old', 'text', [
                 'label'      => __('DAO cũ'),
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,
+                ],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
                 ],
             ])
             ->add('dao_update', 'text', [
@@ -66,10 +69,16 @@ class RequestUpdateForm extends FormAbstract
                     'placeholder'  => __('Nhập tên DAO'),
                     'data-counter' => 120,
                 ],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
+                ],
             ])
-            // ->add('rowClose1', 'html', [
-            //     'html' => '</div>',
-            // ])
+            ->add('rowClose1', 'html', [
+                'html' => '</div>',
+            ])
+            ->add('rowOpen2', 'html', [
+                'html' => '<div class="row">',
+            ])
             ->add('zone_id', 'select', [
                 'label' => __('Vùng'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -80,6 +89,9 @@ class RequestUpdateForm extends FormAbstract
                     'data-target' => '#branch_id',
                     'data-change-zone-url' => route('get-branch'),
                 ],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
+                ],
             ])
             ->add('branch_id', 'select', [
                 'label'      => __('Chi nhánh'),
@@ -89,6 +101,12 @@ class RequestUpdateForm extends FormAbstract
                     'data-type' => 'branch',
                     'data-placeholder' => __('Chọn chi nhánh'),
                 ],
+                'wrapper'    => [
+                    'class' => 'form-group col-md-6',
+                ],
+            ])
+            ->add('rowClose2', 'html', [
+                'html' => '</div>',
             ])
             ->add('staff_name', 'text', [
                 'label'      => __('Họ tên CBBH'),

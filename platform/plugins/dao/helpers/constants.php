@@ -3,9 +3,6 @@
 if (!defined('DAO_MODULE_SCREEN_NAME')) {
     define('DAO_MODULE_SCREEN_NAME', 'dao');
 }
-if (!defined('CUSTOMER_MODULE_SCREEN_NAME')) {
-    define('CUSTOMER_MODULE_SCREEN_NAME', 'customer');
-}
 if (!defined('DAO_REQUEST_NEW_MODULE_SCREEN_NAME')) {
     define('DAO_REQUEST_NEW_MODULE_SCREEN_NAME', 'request-new');
 }

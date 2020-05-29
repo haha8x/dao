@@ -93,30 +93,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(document).ready(function () {
-  $('#reason').change(function () {
-    if ($('#reason').val() == 'other') {
-      $('#note').closest('.form-group').removeClass('hidden').fadeIn();
-      $("#note").prop('required', true);
-    } else {
-      $('#note').closest('.form-group').addClass('hidden').fadeIn();
-    }
-  });
-  $('#type').change(function () {
-    if ($('#type').val() == 'dao_cif') {
-      $('#cif').closest('.form-group').removeClass('hidden').fadeIn();
-      $('#acct_no').closest('.form-group').addClass('hidden').fadeIn();
-      $('#customer_name').closest('.form-group').addClass('hidden').fadeIn();
-    } else {
-      $('#cif').closest('.form-group').addClass('hidden').fadeIn();
-      $('#acct_no').closest('.form-group').removeClass('hidden').fadeIn();
-      $('#customer_name').closest('.form-group').removeClass('hidden').fadeIn();
-    }
-  });
-  $(".datepicker").datepicker({
-    maxDate: new Date()
-  });
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\xampp\\htdocs\\dao\\platform\\plugins\\dao\\resources\\assets\\js\\dao.js'");
 
 /***/ }),
 

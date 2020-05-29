@@ -131,9 +131,9 @@ function () {
             var option = '<option value="">' + $branch.data('placeholder') + '</option>';
             $.each(data.data, function (index, item) {
               if (item.id === $branch.data('origin-value')) {
-                option += '<option value="' + item.id + '" selected="selected">' + item.name + '</option>';
+                option += '<option value="' + item.id + '" selected="selected">' + item.code + ' - ' + item.name + '</option>';
               } else {
-                option += '<option value="' + item.id + '">' + item.name + '</option>';
+                option += '<option value="' + item.id + '">' + item.code + ' - ' + item.name + '</option>';
               }
             });
             $branch.html(option);

@@ -237,25 +237,6 @@ return [
         'parent_flag' => 'request-close.index',
     ],
     [
-        'name' => 'Quản lý khách hàng',
-        'flag' => 'customer.index',
-    ],
-    [
-        'name'        => 'Tạo',
-        'flag'        => 'customer.create',
-        'parent_flag' => 'customer.index',
-    ],
-    [
-        'name'        => 'Sửa',
-        'flag'        => 'customer.edit',
-        'parent_flag' => 'customer.index',
-    ],
-    [
-        'name'        => 'Xóa',
-        'flag'        => 'customer.destroy',
-        'parent_flag' => 'customer.index',
-    ],
-    [
         'name' => 'Luồng xử lý yêu cầu',
         'flag' => 'request-history.index',
     ],

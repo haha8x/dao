@@ -1,0 +1,9 @@
+{
+    "name": "Quản lý nhân sự",
+    "namespace": "Botble\\Hr\\",
+    "provider": "Botble\\Hr\\Providers\\HrServiceProvider",
+    "author": "Mr Haha",
+    "url": "https://hahoang.com",
+    "version": "1.0",
+    "description": "The description for module hr"
+}

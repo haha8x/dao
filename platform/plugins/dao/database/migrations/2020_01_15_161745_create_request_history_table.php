@@ -14,9 +14,11 @@ class CreateRequestHistoryTable extends Migration
     {
         Schema::create('request_histories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('type', 50);
             $table->string('status', 50);
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned()->references('id')->on('users')->index();
             $table->integer('request_id');
+            $table->string('note', 255)->nullable();
             $table->timestamps();
         });
     }

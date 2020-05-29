@@ -165,7 +165,7 @@ class CatalogBranchController extends BaseController
         $branch = $this->catalogBranchRepository
             ->getModel()
             ->where(['zone_id' => $request->input('zone_id')])
-            ->select(['id', 'name'])
+            ->select(['id', 'code', 'name'])
             ->get();
 
         return $response

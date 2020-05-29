@@ -5,7 +5,7 @@ namespace Botble\Dao\Tables;
 use Auth;
 use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
-use Botble\Table\Abstracts\TableAbstract;
+use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Models\RequestTransfer;

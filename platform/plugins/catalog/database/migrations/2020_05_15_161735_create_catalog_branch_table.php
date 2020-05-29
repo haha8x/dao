@@ -14,7 +14,7 @@ class CreateCatalogBranchTable extends Migration
     {
         Schema::create('catalog_branches', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('zone_id', 50);
+            $table->integer('zone_id', 50)->unsigned()->references('id')->on('catalog_zones');
             $table->string('code', 50)->unique();
             $table->string('name', 100);
         });
@@ -27,6 +27,7 @@ class CreateCatalogBranchTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('catalog_branches');
     }
 }

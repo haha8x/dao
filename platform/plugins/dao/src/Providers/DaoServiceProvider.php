@@ -12,11 +12,6 @@ use Event;
 use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Illuminate\Routing\Events\RouteMatched;
 
-use Botble\Dao\Models\Customer;
-use Botble\Dao\Repositories\Caches\CustomerCacheDecorator;
-use Botble\Dao\Repositories\Eloquent\CustomerRepository;
-use Botble\Dao\Repositories\Interfaces\CustomerInterface;
-
 use Botble\Dao\Models\RequestNew;
 use Botble\Dao\Repositories\Caches\DaoRequestNewCacheDecorator;
 use Botble\Dao\Repositories\Eloquent\DaoRequestNewRepository;
@@ -40,10 +35,6 @@ use Botble\Dao\Repositories\Eloquent\DaoRequestCloseRepository;
 use Botble\Dao\Repositories\Eloquent\RequestHistoryRepository;
 use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
 use Botble\Dao\Repositories\Interfaces\RequestHistoryInterface;
-use Botble\Demo\Models\Staff;
-use Botble\Demo\Repositories\Caches\StaffCacheDecorator;
-use Botble\Demo\Repositories\Eloquent\StaffRepository;
-use Botble\Demo\Repositories\Interfaces\StaffInterface;
 
 class DaoServiceProvider extends ServiceProvider
 {
@@ -59,12 +50,6 @@ class DaoServiceProvider extends ServiceProvider
         $this->app->bind(DaoInterface::class, function () {
             return new DaoCacheDecorator(
                 new DaoRepository(new Dao)
-            );
-        });
-
-        $this->app->bind(CustomerInterface::class, function () {
-            return new CustomerCacheDecorator(
-                new CustomerRepository(new Customer)
             );
         });
 
@@ -163,16 +148,6 @@ class DaoServiceProvider extends ServiceProvider
                     'url'         => route('request-close.index'),
                     'permissions' => ['request-close.index'],
                 ]);
-
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugins-customer',
-                'priority'    => 5,
-                'parent_id'   => null,
-                'name'        => __('Quản lý khách hàng'),
-                'icon'        => 'fas fa-users',
-                'url'         => route('customer.index'),
-                'permissions' => ['customer.index'],
-            ]);
         });
     }
 }

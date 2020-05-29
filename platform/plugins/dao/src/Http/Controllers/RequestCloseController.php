@@ -68,7 +68,7 @@ class RequestCloseController extends BaseController
         $daoRequestClose = $this->daoRequestCloseRepository->createOrUpdate($request->input());
 
         $request->merge([
-            'status' => 'create',
+            'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
 

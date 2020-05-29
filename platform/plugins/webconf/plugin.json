@@ -1,0 +1,9 @@
+{
+    "name": "Webconf",
+    "namespace": "Botble\\Webconf\\",
+    "provider": "Botble\\Webconf\\Providers\\WebconfServiceProvider",
+    "author": "Botble Technologies",
+    "url": "https://botble.com",
+    "version": "1.0",
+    "description": "The description for module webconf"
+}

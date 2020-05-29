@@ -2,8 +2,8 @@
   "name": "Captcha",
   "namespace": "Botble\\Captcha\\",
   "provider": "Botble\\Captcha\\Providers\\CaptchaServiceProvider",
-  "author": "Sang Nguyen",
-  "url": "https://sangnguyen.info",
+  "author": "Mr Haha",
+  "url": "https://hahoang.com",
   "version": "5.3",
   "description": "Captcha for higher security"
 }

@@ -79,6 +79,7 @@ class CatalogZoneTable extends TableAbstract
         $model = $this->repository->getModel();
         $query = $model->select([
             'catalog_zones.id',
+            'catalog_zones.code',
             'catalog_zones.name',
         ]);
 
@@ -96,6 +97,11 @@ class CatalogZoneTable extends TableAbstract
                 'name'  => 'catalog_zones.id',
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
+            ],
+            'code' => [
+                'name'  => 'catalog_branches.code',
+                'title' => __('Mã vùng'),
+                'class' => 'text-left',
             ],
             'name' => [
                 'name'  => 'catalog_zones.name',

@@ -68,12 +68,12 @@ class UserTable extends TableAbstract
             ->editColumn('checkbox', function ($item) {
                 return table_checkbox($item->id);
             })
-            ->editColumn('username', function ($item) {
+            ->editColumn('email', function ($item) {
                 if (!Auth::user()->hasPermission('users.edit')) {
-                    return $item->username;
+                    return $item->email;
                 }
 
-                return Html::link(route('user.profile.view', $item->id), $item->username);
+                return Html::link(route('user.profile.view', $item->id), $item->email);
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
@@ -102,17 +102,26 @@ class UserTable extends TableAbstract
 
                 $action = null;
                 if (Auth::user()->isSuperUser()) {
-                    $action = Html::link(route('users.make-super', $item->id), trans('core/acl::users.make_super'),
-                        ['class' => 'btn btn-info'])->toHtml();
+                    $action = Html::link(
+                        route('users.make-super', $item->id),
+                        trans('core/acl::users.make_super'),
+                        ['class' => 'btn btn-info']
+                    )->toHtml();
 
                     if ($item->super_user) {
-                        $action = Html::link(route('users.remove-super', $item->id), trans('core/acl::users.remove_super'),
-                            ['class' => 'btn btn-danger'])->toHtml();
+                        $action = Html::link(
+                            route('users.remove-super', $item->id),
+                            trans('core/acl::users.remove_super'),
+                            ['class' => 'btn btn-danger']
+                        )->toHtml();
                     }
                 }
 
-                return apply_filters(ACL_FILTER_USER_TABLE_ACTIONS,
-                    $action . view('core/acl::users.partials.actions', ['item' => $item])->render(), $item);
+                return apply_filters(
+                    ACL_FILTER_USER_TABLE_ACTIONS,
+                    $action . view('core/acl::users.partials.actions', ['item' => $item])->render(),
+                    $item
+                );
             })
             ->escapeColumns([])
             ->make(true);
@@ -128,7 +137,6 @@ class UserTable extends TableAbstract
             ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id')
             ->select([
                 'users.id',
-                'users.username',
                 'users.email',
                 'roles.name as role_name',
                 'roles.id as role_id',
@@ -146,11 +154,11 @@ class UserTable extends TableAbstract
     public function columns()
     {
         return [
-            'username'   => [
-                'name'  => 'users.username',
-                'title' => trans('core/acl::users.username'),
-                'class' => 'text-left',
-            ],
+            // 'username'   => [
+            //     'name'  => 'users.username',
+            //     'title' => trans('core/acl::users.username'),
+            //     'class' => 'text-left',
+            // ],
             'email'      => [
                 'name'  => 'users.email',
                 'title' => trans('core/acl::users.email'),
@@ -222,11 +230,11 @@ class UserTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'users.username'   => [
-                'title'    => trans('core/acl::users.username'),
-                'type'     => 'text',
-                'validate' => 'required|max:120',
-            ],
+            // 'users.username'   => [
+            //     'title'    => trans('core/acl::users.username'),
+            //     'type'     => 'text',
+            //     'validate' => 'required|max:120',
+            // ],
             'users.email'      => [
                 'title'    => trans('core/base::tables.email'),
                 'type'     => 'text',

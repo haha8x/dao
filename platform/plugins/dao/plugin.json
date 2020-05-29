@@ -1,5 +1,5 @@
 {
-    "name": "Dao",
+    "name": "Quản lý DAO",
     "namespace": "Botble\\Dao\\",
     "provider": "Botble\\Dao\\Providers\\DaoServiceProvider",
     "author": "Mr Haha",

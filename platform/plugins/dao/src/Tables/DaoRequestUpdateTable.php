@@ -4,7 +4,7 @@ namespace Botble\Dao\Tables;
 
 use Auth;
 use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
-use Botble\Table\Abstracts\TableAbstract;
+use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Dao\Models\RequestUpdate;
