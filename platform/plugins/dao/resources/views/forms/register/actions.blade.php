@@ -2,7 +2,7 @@
     <div class="col-6">
         <div class="btn-set">
             @php do_action(BASE_ACTION_FORM_ACTIONS, 'default') @endphp
-            <button type="submit" name="submit" value="save" class="btn btn-sm btn-success">
+            <button type="submit" name="submit" value="save" class="btn btn-sm btn-thanh_cong">
                 Đăng ký
             </button>
         </div>

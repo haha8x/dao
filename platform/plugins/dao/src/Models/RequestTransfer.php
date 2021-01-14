@@ -2,6 +2,7 @@
 
 namespace Botble\Dao\Models;
 
+use Botble\ACL\Models\User;
 use Botble\Base\Traits\EnumCastable;
 use Botble\Dao\Enums\RequestStatusEnum;
 use Botble\Base\Models\BaseModel;
@@ -9,6 +10,7 @@ use Botble\Dao\Enums\TransferTypeEnum;
 use Botble\Catalog\Models\CatalogBranch;
 use Botble\Catalog\Models\CatalogPosition;
 use Botble\Catalog\Models\CatalogZone;
+use Botble\Customer\Models\Customer;
 
 class RequestTransfer extends BaseModel
 {
@@ -31,8 +33,8 @@ class RequestTransfer extends BaseModel
         'acct_no',
         'staff_name',
         'email',
-        'customer_name',
-        'cif',
+        'customer_id',
+        'ref_no',
         'dao_old',
         'dao_transfer',
         'reason',
@@ -40,7 +42,12 @@ class RequestTransfer extends BaseModel
         'note',
         'created_by',
         'updated_by',
-        
+
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -50,7 +57,24 @@ class RequestTransfer extends BaseModel
         'status' => RequestStatusEnum::class,
         'type' => TransferTypeEnum::class,
     ];
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by')->withDefault();
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * 
+     */
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by')->withDefault();
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
     /**
      * @return BelongsTo
      */

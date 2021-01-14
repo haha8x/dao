@@ -239,7 +239,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\acl\resources\assets\js\login.js */"./platform/core/acl/resources/assets/js/login.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/acl/resources/assets/js/login.js */"./platform/core/acl/resources/assets/js/login.js");
 
 
 /***/ })

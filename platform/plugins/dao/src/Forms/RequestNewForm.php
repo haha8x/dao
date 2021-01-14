@@ -64,6 +64,7 @@ class RequestNewForm extends FormAbstract
                     'class' => 'form-control select-search-full',
                     'data-type' => 'branch',
                     'data-placeholder' => __('Chọn chi nhánh'),
+                    'data-origin-value' => $this->model->branch_id,
                 ],
             ])
             ->add('staff_name', 'text', [
@@ -132,7 +133,6 @@ class RequestNewForm extends FormAbstract
             ->add('decision_file', 'file', [
                 'label'      => __('QĐ / Thư mời làm việc'),
                 'label_attr' => ['class' => 'control-label required'],
-            ])
-            ;
+            ]);
     }
 }

@@ -2361,7 +2361,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\media\resources\assets\js\media.js */"./platform/core/media/resources/assets/js/media.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/media/resources/assets/js/media.js */"./platform/core/media/resources/assets/js/media.js");
 
 
 /***/ })

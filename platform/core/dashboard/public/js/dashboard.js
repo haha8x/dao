@@ -12857,7 +12857,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\dashboard\resources\assets\js\dashboard.js */"./platform/core/dashboard/resources/assets/js/dashboard.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/dashboard/resources/assets/js/dashboard.js */"./platform/core/dashboard/resources/assets/js/dashboard.js");
 
 
 /***/ })

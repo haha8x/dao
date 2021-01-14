@@ -2,16 +2,20 @@
 
 Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web'], function () {
 
-    Route::group(['middleware' => 'guest'], function () {
-
+    Route::group(apply_filters(BASE_FILTER_GROUP_PUBLIC_ROUTE, []), function () {
         Route::group(['prefix' => '', 'as' => 'dao.'], function () {
             Route::get('check', [
                 'as'         => 'check',
-                'uses'       => 'CheckController@formCheck',
+                'uses'       => 'DaoCheckController@formCheck',
             ]);
             Route::post('check', [
                 'as'         => 'check',
-                'uses'       => 'CheckController@check',
+                'uses'       => 'DaoCheckController@check',
+            ]);
+
+            Route::get('list', [
+                'as'         => 'list',
+                'uses'       => 'DaoCheckController@list',
             ]);
 
             Route::get('register/dao', [
@@ -22,35 +26,10 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'as'         => 'register',
                 'uses'       => 'RequestNewController@store',
             ]);
-
-            Route::get('list', [
-                'as'         => 'list',
-                'uses'       => 'CheckController@list',
-            ]);
-        });
-
-        Route::group(['prefix' => '', 'as' => 'user.'], function () {
-            Route::get('register/user', [
-                'as'         => 'register',
-                'uses'       => 'RegisterUserController@create',
-            ]);
-            Route::post('register/user', [
-                'as'         => 'register',
-                'uses'       => 'RegisterUserController@store',
-            ]);
         });
     });
 
     Route::group(['prefix' => config('core.base.general.admin_dir'), 'middleware' => 'auth'], function () {
-
-        // Route::group(['prefix' => 'staff', 'as' => 'staff.'], function () {
-        //     Route::resource('', 'RegisterUserController')->parameters(['' => 'staff']);
-        //     Route::delete('items/destroy', [
-        //         'as'         => 'deletes',
-        //         'uses'       => 'RegisterUserController@deletes',
-        //         'permission' => 'staff.destroy',
-        //     ]);
-        // });
 
         Route::group(['prefix' => 'daos', 'as' => 'dao.'], function () {
             Route::resource('', 'DaoController')
@@ -83,39 +62,39 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'permission' => 'request-new.index',
             ]);
 
-            Route::get('receive/{id}', [
-                'as'         => 'receive',
-                'uses'       => 'RequestNewController@receive',
-                'permission' => 'request-new.receive',
+            Route::get('tiep_nhan/{id}', [
+                'as'         => 'tiep_nhan',
+                'uses'       => 'RequestNewController@tiep_nhan',
+                'permission' => 'request-new.tiep_nhan',
             ]);
 
-            Route::get('reject/{id}', [
-                'as'         => 'reject',
-                'uses'       => 'RequestNewController@reject',
-                'permission' => 'request-new.reject',
+            Route::get('tu_choi/{id}', [
+                'as'         => 'tu_choi',
+                'uses'       => 'RequestNewController@tu_choi',
+                'permission' => 'request-new.tu_choi',
             ]);
 
             Route::get('it-process/{id}', [
-                'as'         => 'it_process',
-                'uses'       => 'RequestNewController@it_process',
-                'permission' => 'request-new.it_process',
+                'as'         => 'it_xuly',
+                'uses'       => 'RequestNewController@it_xuly',
+                'permission' => 'request-new.it_xuly',
             ]);
 
             Route::get('gdcn-approve/{id}', [
-                'as'         => 'gdcn_approve',
-                'uses'       => 'RequestNewController@gdcn_approve',
-                'permission' => 'request-new.gdcn_approve',
+                'as'         => 'gdcn_duyet',
+                'uses'       => 'RequestNewController@gdcn_duyet',
+                'permission' => 'request-new.gdcn_duyet',
             ]);
 
             Route::get('hoiso-approve/{id}', [
-                'as'         => 'hoiso_approve',
-                'uses'       => 'RequestNewController@hoiso_approve',
-                'permission' => 'request-new.hoiso_approve',
+                'as'         => 'hoiso_duyet',
+                'uses'       => 'RequestNewController@hoiso_duyet',
+                'permission' => 'request-new.hoiso_duyet',
             ]);
 
-            Route::get('success/{id}', [
-                'as'         => 'success',
-                'uses'       => 'RequestNewController@success',
+            Route::get('thanh_cong/{id}', [
+                'as'         => 'thanh_cong',
+                'uses'       => 'RequestNewController@thanh_cong',
                 'permission' => 'request-new.success',
             ]);
         });
@@ -129,40 +108,40 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'permission' => 'request-update.index',
             ]);
 
-            Route::get('receive/{id}', [
-                'as'         => 'receive',
-                'uses'       => 'RequestUpdateController@receive',
-                'permission' => 'request-update.receive',
+            Route::get('tiep_nhan/{id}', [
+                'as'         => 'tiep_nhan',
+                'uses'       => 'RequestUpdateController@tiep_nhan',
+                'permission' => 'request-update.tiep_nhan',
             ]);
 
-            Route::get('reject/{id}', [
-                'as'         => 'reject',
-                'uses'       => 'RequestUpdateController@reject',
-                'permission' => 'request-update.reject',
+            Route::get('tu_choi/{id}', [
+                'as'         => 'tu_choi',
+                'uses'       => 'RequestUpdateController@tu_choi',
+                'permission' => 'request-update.tu_choi',
             ]);
 
             Route::get('it-process/{id}', [
-                'as'         => 'it_process',
-                'uses'       => 'RequestUpdateController@it_process',
-                'permission' => 'request-update.it_process',
+                'as'         => 'it_xuly',
+                'uses'       => 'RequestUpdateController@it_xuly',
+                'permission' => 'request-update.it_xuly',
             ]);
 
             Route::get('gdcn-approve/{id}', [
-                'as'         => 'gdcn_approve',
-                'uses'       => 'RequestUpdateController@gdcn_approve',
-                'permission' => 'request-update.gdcn_approve',
+                'as'         => 'gdcn_duyet',
+                'uses'       => 'RequestUpdateController@gdcn_duyet',
+                'permission' => 'request-update.gdcn_duyet',
             ]);
 
             Route::get('hoiso-approve/{id}', [
-                'as'         => 'hoiso_approve',
-                'uses'       => 'RequestUpdateController@hoiso_approve',
-                'permission' => 'request-update.hoiso_approve',
+                'as'         => 'hoiso_duyet',
+                'uses'       => 'RequestUpdateController@hoiso_duyet',
+                'permission' => 'request-update.hoiso_duyet',
             ]);
 
-            Route::get('success/{id}', [
-                'as'         => 'success',
-                'uses'       => 'RequestUpdateController@success',
-                'permission' => 'request-update.success',
+            Route::get('thanh_cong/{id}', [
+                'as'         => 'thanh_cong',
+                'uses'       => 'RequestUpdateController@thanh_cong',
+                'permission' => 'request-update.thanh_cong',
             ]);
         });
 
@@ -175,40 +154,40 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'permission' => 'request-transfer.index',
             ]);
 
-            Route::get('receive/{id}', [
-                'as'         => 'receive',
-                'uses'       => 'RequestTransferController@receive',
-                'permission' => 'request-transfer.receive',
+            Route::get('tiep_nhan/{id}', [
+                'as'         => 'tiep_nhan',
+                'uses'       => 'RequestTransferController@tiep_nhan',
+                'permission' => 'request-transfer.tiep_nhan',
             ]);
 
-            Route::get('reject/{id}', [
-                'as'         => 'reject',
-                'uses'       => 'RequestTransferController@reject',
-                'permission' => 'request-transfer.reject',
+            Route::get('tu_choi/{id}', [
+                'as'         => 'tu_choi',
+                'uses'       => 'RequestTransferController@tu_choi',
+                'permission' => 'request-transfer.tu_choi',
             ]);
 
             Route::get('it-process/{id}', [
-                'as'         => 'it_process',
-                'uses'       => 'RequestTransferController@it_process',
-                'permission' => 'request-transfer.it_process',
+                'as'         => 'it_xuly',
+                'uses'       => 'RequestTransferController@it_xuly',
+                'permission' => 'request-transfer.it_xuly',
             ]);
 
             Route::get('gdcn-approve/{id}', [
-                'as'         => 'gdcn_approve',
-                'uses'       => 'RequestTransferController@gdcn_approve',
-                'permission' => 'request-transfer.gdcn_approve',
+                'as'         => 'gdcn_duyet',
+                'uses'       => 'RequestTransferController@gdcn_duyet',
+                'permission' => 'request-transfer.gdcn_duyet',
             ]);
 
             Route::get('hoiso-approve/{id}', [
-                'as'         => 'hoiso_approve',
-                'uses'       => 'RequestTransferController@hoiso_approve',
-                'permission' => 'request-transfer.hoiso_approve',
+                'as'         => 'hoiso_duyet',
+                'uses'       => 'RequestTransferController@hoiso_duyet',
+                'permission' => 'request-transfer.hoiso_duyet',
             ]);
 
-            Route::get('success/{id}', [
-                'as'         => 'success',
-                'uses'       => 'RequestTransferController@success',
-                'permission' => 'request-transfer.success',
+            Route::get('thanh_cong/{id}', [
+                'as'         => 'thanh_cong',
+                'uses'       => 'RequestTransferController@thanh_cong',
+                'permission' => 'request-transfer.thanh_cong',
             ]);
         });
 
@@ -221,40 +200,40 @@ Route::group(['namespace' => 'Botble\Dao\Http\Controllers', 'middleware' => 'web
                 'permission' => 'request-close.index',
             ]);
 
-            Route::get('receive/{id}', [
-                'as'         => 'receive',
-                'uses'       => 'RequestCloseController@receive',
-                'permission' => 'request-close.receive',
+            Route::get('tiep_nhan/{id}', [
+                'as'         => 'tiep_nhan',
+                'uses'       => 'RequestCloseController@tiep_nhan',
+                'permission' => 'request-close.tiep_nhan',
             ]);
 
-            Route::get('reject/{id}', [
-                'as'         => 'reject',
-                'uses'       => 'RequestCloseController@reject',
-                'permission' => 'request-close.reject',
+            Route::get('tu_choi/{id}', [
+                'as'         => 'tu_choi',
+                'uses'       => 'RequestCloseController@tu_choi',
+                'permission' => 'request-close.tu_choi',
             ]);
 
             Route::get('it-process/{id}', [
-                'as'         => 'it_process',
-                'uses'       => 'RequestCloseController@it_process',
-                'permission' => 'request-close.it_process',
+                'as'         => 'it_xuly',
+                'uses'       => 'RequestCloseController@it_xuly',
+                'permission' => 'request-close.it_xuly',
             ]);
 
             Route::get('gdcn-approve/{id}', [
-                'as'         => 'gdcn_approve',
-                'uses'       => 'RequestCloseController@gdcn_approve',
-                'permission' => 'request-close.gdcn_approve',
+                'as'         => 'gdcn_duyet',
+                'uses'       => 'RequestCloseController@gdcn_duyet',
+                'permission' => 'request-close.gdcn_duyet',
             ]);
 
             Route::get('hoiso-approve/{id}', [
-                'as'         => 'hoiso_approve',
-                'uses'       => 'RequestCloseController@hoiso_approve',
-                'permission' => 'request-close.hoiso_approve',
+                'as'         => 'hoiso_duyet',
+                'uses'       => 'RequestCloseController@hoiso_duyet',
+                'permission' => 'request-close.hoiso_duyet',
             ]);
 
-            Route::get('success/{id}', [
-                'as'         => 'success',
-                'uses'       => 'RequestCloseController@success',
-                'permission' => 'request-close.success',
+            Route::get('thanh_cong/{id}', [
+                'as'         => 'thanh_cong',
+                'uses'       => 'RequestCloseController@thanh_cong',
+                'permission' => 'request-close.thanh_cong',
             ]);
         });
     });

@@ -74,6 +74,7 @@ class RequestCloseForm extends FormAbstract
                     'class' => 'form-control select-search-full',
                     'data-type' => 'branch',
                     'data-placeholder' => __('Chọn chi nhánh'),
+                    'data-origin-value' => $this->model->branch_id,
                 ],
             ])
             ->add('staff_name', 'text', [

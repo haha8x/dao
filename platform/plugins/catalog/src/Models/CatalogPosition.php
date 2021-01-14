@@ -22,6 +22,7 @@ class CatalogPosition extends BaseModel
      * @var array
      */
     protected $fillable = [
+        'code',
         'name',
     ];
 }

@@ -27,10 +27,10 @@ class RequestUpdateRequest extends Request
             'cif'   => 'required|numeric',
             'email'   => 'required|email|regex:/(.*)vpbank\.com\.vn$/i',
             'cmnd'   => 'required|numeric',
-            'phone'   => 'required|numeric',
+            // 'phone'   => 'required|numeric',
             'from_date'   => 'required|date',
-            'to_date'   => 'date',
-            'note'   => 'required',
+            // 'to_date'   => 'date',
+            // 'note'   => 'required',
             // 'status'   => Rule::in(RequestStatusEnum::values()),
         ];
     }

@@ -8,19 +8,20 @@ use Botble\Dao\Models\RequestTransfer;
 use Botble\Catalog\Repositories\Interfaces\CatalogZoneInterface;
 use Assets;
 use Botble\Dao\Enums\TransferTypeEnum;
+use Auth;
+use Botble\Customer\Repositories\Interfaces\CustomerInterface;
 
 class RequestTransferForm extends FormAbstract
 {
-
-    protected $catalogBranchInterface;
     protected $catalogZoneInterface;
-    protected $catalogPositionInterface;
+    protected $customerRepository;
 
     public function __construct(
-        CatalogZoneInterface $catalogZoneRepository
+        CatalogZoneInterface $catalogZoneRepository,
+        CustomerInterface $customerRepository
     ) {
         parent::__construct();
-
+        $this->customerRepository = $customerRepository;
         $this->catalogZoneRepository = $catalogZoneRepository;
     }
 
@@ -34,7 +35,25 @@ class RequestTransferForm extends FormAbstract
         Assets::addScriptsDirectly('vendor/core/plugins/dao/js/request-transfer.js');
         Assets::addScriptsDirectly('vendor/core/plugins/catalog/js/catalog.js');
 
-        $catalogZone = $this->catalogZoneRepository->pluck('catalog_zones.name', 'catalog_zones.id');
+        if (!Auth::user()->isSuperUser()) {
+            $catalogZone = app(CatalogZoneInterface::class)
+                ->getModel()
+                ->where('id', Auth::user()->getZone()->first() ? Auth::user()->getZone()->first()->id : null)
+                ->pluck('name', 'id')
+                ->all();
+        } else {
+            $catalogZone = $this->catalogZoneRepository->pluck('name', 'id');
+        }
+
+        if (!Auth::user()->isSuperUser()) {
+            $customer = app(CustomerInterface::class)
+                ->getModel()
+                ->where('dao', Auth::user()->dao ? Auth::user()->dao : null)
+                ->pluck('name', 'id')
+                ->all();
+        } else {
+            $customer = $this->customerRepository->pluck('name', 'id');
+        }
 
         $this
             ->setupModel(new RequestTransfer)
@@ -69,7 +88,7 @@ class RequestTransferForm extends FormAbstract
                     'class' => 'form-control select-search-full',
                     'data-type' => 'branch',
                     'data-placeholder' => __('Chọn chi nhánh'),
-                    'data-origin-value' => old('branch_id', 1),
+                    'data-origin-value' => $this->model->branch_id,
                 ],
                 'wrapper'    => [
                     'class' => 'form-group col-md-6',
@@ -78,10 +97,6 @@ class RequestTransferForm extends FormAbstract
             ->add('rowClose1', 'html', [
                 'html' => '</div>',
             ])
-            ->add('address', 'static', [
-                'tag' => 'div', // Tag to be used for holding static data,
-                'attr' => ['class' => 'form-control-static'], // This is the default
-            ])
             ->add('ref_no', 'text', [
                 'label'      => __('CIF'),
                 'label_attr' => ['class' => 'control-label required ref_no_label'],
@@ -89,28 +104,28 @@ class RequestTransferForm extends FormAbstract
                     'data-counter' => 120,
                 ],
             ])
-            ->add('customer_name', 'text', [
-                'label'      => __('Tên khách hàng'),
+            ->add('customer_id', 'select', [
+                'label' => __('Tên khách hàng'),
                 'label_attr' => ['class' => 'control-label required'],
+                'choices' => $customer,
                 'attr'       => [
-                    'placeholder'  => __('Nhập tên KH'),
-                    'data-counter' => 120,
+                    'class' => 'form-control select-search-full',
                 ],
             ])
             ->add('rowOpen2', 'html', [
                 'html' => '<div class="row">',
             ])
-            ->add('dao_old', 'text', [
-                'label'      => __('DAO cũ'),
-                'label_attr' => ['class' => 'control-label required'],
-                'attr'       => [
-                    'placeholder'  => __('Nhập DAO cũ'),
-                    'data-counter' => 120,
-                ],
-                'wrapper'    => [
-                    'class' => 'form-group col-md-6',
-                ],
-            ])
+            // ->add('dao_old', 'text', [
+            //     'label'      => __('DAO cũ'),
+            //     'label_attr' => ['class' => 'control-label required'],
+            //     'attr'       => [
+            //         'placeholder'  => __('Nhập DAO cũ'),
+            //         'data-counter' => 120,
+            //     ],
+            //     'wrapper'    => [
+            //         'class' => 'form-group col-md-6',
+            //     ],
+            // ])
             ->add('dao_transfer', 'text', [
                 'label'      => __('DAO mới'),
                 'label_attr' => ['class' => 'control-label required'],
@@ -119,7 +134,7 @@ class RequestTransferForm extends FormAbstract
                     'data-counter' => 120,
                 ],
                 'wrapper'    => [
-                    'class' => 'form-group col-md-6',
+                    'class' => 'form-group col-md-12',
                 ],
             ])
             ->add('rowClose2', 'html', [

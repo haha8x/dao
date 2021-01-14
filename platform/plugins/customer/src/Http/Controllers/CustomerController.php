@@ -82,7 +82,7 @@ class CustomerController extends BaseController
 
         event(new BeforeEditContentEvent($request, $customer));
 
-        page_title()->setTitle(trans('plugins/customer::customer.edit') . ' "' . $customer->customer_name . '"');
+        page_title()->setTitle(trans('plugins/customer::customer.edit') . ' "' . $customer->name . '"');
 
         return $formBuilder->create(CustomerForm::class, ['model' => $customer])->renderForm();
     }

@@ -4,11 +4,11 @@ namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\Dao\Http\Requests\RequestTransferRequest;
-use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
+use Botble\Dao\Repositories\Interfaces\RequestTransferInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Exception;
-use Botble\Dao\Tables\DaoRequestTransferTable;
+use Botble\Dao\Tables\RequestTransferTable;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
@@ -20,25 +20,25 @@ use Auth;
 class RequestTransferController extends BaseController
 {
     /**
-     * @var DaoRequestTransferInterface
+     * @var RequestTransferInterface
      */
     protected $daoRequestTransferRepository;
 
     /**
      * RequestTransferController constructor.
-     * @param DaoRequestTransferInterface $daoRequestTransferRepository
+     * @param RequestTransferInterface $daoRequestTransferRepository
      */
-    public function __construct(DaoRequestTransferInterface $daoRequestTransferRepository)
+    public function __construct(RequestTransferInterface $daoRequestTransferRepository)
     {
         $this->daoRequestTransferRepository = $daoRequestTransferRepository;
     }
 
     /**
-     * @param DaoRequestTransferTable $dataTable
+     * @param RequestTransferTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
      */
-    public function index(DaoRequestTransferTable $table)
+    public function index(RequestTransferTable $table)
     {
 
         page_title()->setTitle(trans('plugins/dao::request-transfer.name'));
@@ -65,12 +65,12 @@ class RequestTransferController extends BaseController
      */
     public function store(RequestTransferRequest $request, BaseHttpResponse $response)
     {
-        $daoRequestTransfer = $this->daoRequestTransferRepository->createOrUpdate($request->input());
-
         $request->merge([
             'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
+
+        $daoRequestTransfer = $this->daoRequestTransferRepository->createOrUpdate($request->input());
 
         event(new CreatedContentEvent(DAO_REQUEST_TRANSFER_MODULE_SCREEN_NAME, $request, $daoRequestTransfer));
 
@@ -185,11 +185,11 @@ class RequestTransferController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function receive($id, BaseHttpResponse $response)
+    public function tiep_nhan($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'receive';
+            $daoRequestTransfer->status = 'tiep_nhan';
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
@@ -208,11 +208,11 @@ class RequestTransferController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function reject($id, BaseHttpResponse $response)
+    public function tu_choi($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'reject';
+            $daoRequestTransfer->status = 'tu_choi';
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
@@ -231,11 +231,11 @@ class RequestTransferController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function it_process($id, BaseHttpResponse $response)
+    public function it_xuly($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'it_process';
+            $daoRequestTransfer->status = 'it_xuly';
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
@@ -254,11 +254,11 @@ class RequestTransferController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function gdcn_approve($id, BaseHttpResponse $response)
+    public function gdcn_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'gdcn_approve';
+            $daoRequestTransfer->status = 'gdcn_duyet';
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
@@ -277,11 +277,11 @@ class RequestTransferController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function hoiso_approve($id, BaseHttpResponse $response)
+    public function hoiso_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'hoiso_approve';
+            $daoRequestTransfer->status = 'hoiso_duyet';
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 
             return $response
@@ -295,11 +295,11 @@ class RequestTransferController extends BaseController
         }
     }
 
-    public function success($id, RequestTransferRequest $request, BaseHttpResponse $response)
+    public function thanh_cong($id, RequestTransferRequest $request, BaseHttpResponse $response)
     {
         try {
             $daoRequestTransfer = $this->daoRequestTransferRepository->findOrFail($id);
-            $daoRequestTransfer->status = 'success';
+            $daoRequestTransfer->status = 'thanh_cong';
 
             $this->daoRequestTransferRepository->createOrUpdate($daoRequestTransfer);
 

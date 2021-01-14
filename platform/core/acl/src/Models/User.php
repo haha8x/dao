@@ -2,18 +2,23 @@
 
 namespace Botble\ACL\Models;
 
+use Botble\ACL\Models\ZoneBranchPivot;
 use Botble\ACL\Notifications\ResetPasswordNotification;
 use Botble\ACL\Traits\PermissionTrait;
 use Botble\Base\Supports\Avatar;
+use Botble\Catalog\Models\CatalogBranch;
 use Botble\Media\Models\MediaFile;
 use Exception;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Storage;
+use Botble\Catalog\Models\CatalogPosition;
+use Botble\Catalog\Models\CatalogZone;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Botble\Hr\Enums\UserTitleEnum;
 
 class User extends Authenticatable
 {
@@ -69,7 +74,56 @@ class User extends Authenticatable
      */
     protected $casts = [
         'permissions' => 'json',
+        // 'title' => UserTitleEnum::class,
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function positions(): BelongsToMany
+    {
+        return $this->belongsToMany(CatalogPosition::class, 'user_positions', 'user_id', 'position_id');
+    }
+
+    public function zones(): BelongsToMany
+    {
+        return $this->belongsToMany(CatalogZone::class, 'user_positions', 'user_id', 'zone_id');
+    }
+
+    public function branchs(): BelongsToMany
+    {
+        return $this->belongsToMany(CatalogBranch::class, 'user_positions', 'user_id', 'branch_id');
+    }
+
+    /**
+     * @return string
+     */
+    public function getPosition()
+    {
+        try {
+            return $this->positions;
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
+    public function getZone()
+    {
+        try {
+            return $this->zones;
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
+
+    public function getBranch()
+    {
+        try {
+            return $this->branchs;
+        } catch (Exception $exception) {
+            return null;
+        }
+    }
 
     /**
      * Always capitalize the first name when we retrieve it
@@ -96,7 +150,7 @@ class User extends Authenticatable
      */
     public function getFullName()
     {
-        return ucfirst($this->name) . ' ' . ucfirst($this->last_name);
+        return ucfirst($this->name);
     }
 
     /**

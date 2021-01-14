@@ -26,7 +26,7 @@ class Customer extends BaseModel
         'branch_id',
         'staff_id',
         'open_date',
-        'customer_name',
+        'name',
         'created_by',
         'updated_by',
     ];

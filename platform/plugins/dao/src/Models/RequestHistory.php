@@ -5,6 +5,7 @@ namespace Botble\Dao\Models;
 use Botble\Base\Traits\EnumCastable;
 use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Base\Models\BaseModel;
+use Botble\ACL\Models\User;
 
 class RequestHistory extends BaseModel
 {

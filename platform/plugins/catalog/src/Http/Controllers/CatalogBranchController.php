@@ -16,6 +16,7 @@ use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Catalog\Forms\CatalogBranchForm;
 use Botble\Base\Forms\FormBuilder;
 use Botble\Catalog\Http\Resources\BranchResource;
+use Auth;
 
 class CatalogBranchController extends BaseController
 {
@@ -162,11 +163,20 @@ class CatalogBranchController extends BaseController
 
     public function getChangeZone(Request $request, BaseHttpResponse $response)
     {
-        $branch = $this->catalogBranchRepository
-            ->getModel()
-            ->where(['zone_id' => $request->input('zone_id')])
-            ->select(['id', 'code', 'name'])
-            ->get();
+        if (!Auth::user()->isSuperUser()) {
+            $branch = $this->catalogBranchRepository
+                ->getModel()
+                ->where(['zone_id' => $request->input('zone_id')])
+                ->where('id', Auth::user()->getBranch()->first() ? Auth::user()->getBranch()->first()->id : null)
+                ->select(['id', 'code', 'name'])
+                ->get();
+        } else {
+            $branch = $this->catalogBranchRepository
+                ->getModel()
+                ->where(['zone_id' => $request->input('zone_id')])
+                ->select(['id', 'code', 'name'])
+                ->get();
+        }
 
         return $response
             ->setData(BranchResource::collection($branch))

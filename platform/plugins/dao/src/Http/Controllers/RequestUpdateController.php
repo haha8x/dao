@@ -4,11 +4,11 @@ namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\Dao\Http\Requests\RequestUpdateRequest;
-use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
+use Botble\Dao\Repositories\Interfaces\RequestUpdateInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Exception;
-use Botble\Dao\Tables\DaoRequestUpdateTable;
+use Botble\Dao\Tables\RequestUpdateTable;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
@@ -20,25 +20,25 @@ use Auth;
 class RequestUpdateController extends BaseController
 {
     /**
-     * @var DaoRequestUpdateInterface
+     * @var RequestUpdateInterface
      */
     protected $daoRequestUpdateRepository;
 
     /**
      * RequestUpdateController constructor.
-     * @param DaoRequestUpdateInterface $daoRequestUpdateRepository
+     * @param RequestUpdateInterface $daoRequestUpdateRepository
      */
-    public function __construct(DaoRequestUpdateInterface $daoRequestUpdateRepository)
+    public function __construct(RequestUpdateInterface $daoRequestUpdateRepository)
     {
         $this->daoRequestUpdateRepository = $daoRequestUpdateRepository;
     }
 
     /**
-     * @param DaoRequestUpdateTable $dataTable
+     * @param RequestUpdateTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
      */
-    public function index(DaoRequestUpdateTable $table)
+    public function index(RequestUpdateTable $table)
     {
 
         page_title()->setTitle(trans('plugins/dao::request-update.name'));
@@ -65,12 +65,11 @@ class RequestUpdateController extends BaseController
      */
     public function store(RequestUpdateRequest $request, BaseHttpResponse $response)
     {
-        $daoRequestUpdate = $this->daoRequestUpdateRepository->createOrUpdate($request->input());
-
         $request->merge([
             'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
+        $daoRequestUpdate = $this->daoRequestUpdateRepository->createOrUpdate($request->input());
 
         event(new CreatedContentEvent(DAO_REQUEST_UPDATE_MODULE_SCREEN_NAME, $request, $daoRequestUpdate));
 
@@ -185,11 +184,11 @@ class RequestUpdateController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function receive($id, BaseHttpResponse $response)
+    public function tiep_nhan($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'receive';
+            $daoRequestUpdate->status = 'tiep_nhan';
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
@@ -208,11 +207,11 @@ class RequestUpdateController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function reject($id, BaseHttpResponse $response)
+    public function tu_choi($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'reject';
+            $daoRequestUpdate->status = 'tu_choi';
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
@@ -231,11 +230,11 @@ class RequestUpdateController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function it_process($id, BaseHttpResponse $response)
+    public function it_xuly($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'it_process';
+            $daoRequestUpdate->status = 'it_xuly';
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
@@ -254,11 +253,11 @@ class RequestUpdateController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function gdcn_approve($id, BaseHttpResponse $response)
+    public function gdcn_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'gdcn_approve';
+            $daoRequestUpdate->status = 'gdcn_duyet';
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
@@ -277,11 +276,11 @@ class RequestUpdateController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function hoiso_approve($id, BaseHttpResponse $response)
+    public function hoiso_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'hoiso_approve';
+            $daoRequestUpdate->status = 'hoiso_duyet';
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 
             return $response
@@ -295,11 +294,11 @@ class RequestUpdateController extends BaseController
         }
     }
 
-    public function success($id, BaseHttpResponse $response)
+    public function thanh_cong($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestUpdate = $this->daoRequestUpdateRepository->findOrFail($id);
-            $daoRequestUpdate->status = 'success';
+            $daoRequestUpdate->status = 'thanh_cong';
 
             $this->daoRequestUpdateRepository->createOrUpdate($daoRequestUpdate);
 

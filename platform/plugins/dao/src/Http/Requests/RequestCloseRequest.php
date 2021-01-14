@@ -28,8 +28,8 @@ class RequestCloseRequest extends Request
             'email'   => 'required|email|regex:/(.*)vpbank\.com\.vn$/i',
             'cmnd'   => 'required|numeric',
             'from_date'   => 'required|date',
-            'to_date'   => 'date',
-            'note'   => 'required',
+            'to_date'   => 'nullable|date',
+            // 'note'   => 'required',
             // 'status'   => Rule::in(RequestStatusEnum::values()),
         ];
     }

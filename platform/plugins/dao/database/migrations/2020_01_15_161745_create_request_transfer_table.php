@@ -20,7 +20,7 @@ class CreateRequestTransferTable extends Migration
             $table->string('acct_no', 50);
             $table->string('staff_name', 50);
             $table->string('email', 50);
-            $table->string('customer_name', 50);
+            $table->string('name', 50);
             $table->string('cif', 50);
             $table->string('dao_old', 50);
             $table->string('dao_transfer', 50);

@@ -115,7 +115,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\hr\resources\assets\js\hr.js */"./platform/plugins/hr/resources/assets/js/hr.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/plugins/hr/resources/assets/js/hr.js */"./platform/plugins/hr/resources/assets/js/hr.js");
 
 
 /***/ })

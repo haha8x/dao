@@ -8,6 +8,7 @@ use Botble\Base\Models\BaseModel;
 use Botble\Catalog\Models\CatalogBranch;
 use Botble\Catalog\Models\CatalogPosition;
 use Botble\Catalog\Models\CatalogZone;
+use Botble\ACL\Models\User;
 
 class RequestClose extends BaseModel
 {
@@ -39,7 +40,12 @@ class RequestClose extends BaseModel
         'note',
         'created_by',
         'updated_by',
-        
+
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -48,7 +54,19 @@ class RequestClose extends BaseModel
     protected $casts = [
         'status' => RequestStatusEnum::class,
     ];
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by')->withDefault();
+    }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * 
+     */
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by')->withDefault();
+    }
     /**
      * @return BelongsTo
      */

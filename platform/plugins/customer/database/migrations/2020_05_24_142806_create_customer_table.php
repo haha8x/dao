@@ -22,7 +22,7 @@ class CreateCustomerTable extends Migration
             $table->integer('branch_id')->unsigned()->references('id')->on('catalog_branches');
             $table->string('staff_id', 50);
             $table->date('open_date', 120);
-            $table->string('customer_name', 120);
+            $table->string('name', 120);
             $table->integer('created_by')->unsigned()->references('id')->on('users')->index();
             $table->integer('updated_by')->unsigned()->references('id')->on('users')->index();
             $table->timestamps();

@@ -6,44 +6,49 @@
     <div class="modal-body">
         <div class="request-action" style="float: right;margin-bottom: 10px;">
             <a href="javascript:;" class="btn btn-primary" data-fancybox-close>{{ __('Đóng')  }}</a>
-            @if ($item->status == 'create')
-            @if (Auth::user()->hasPermission('request-close.receive'))
-            <a href="{{ route('request-close.receive', $item->id) }}" class="btn btn-info">
+            @if ($item->status == 'tao_moi')
+            @if (Auth::user()->hasPermission('request-close.tiep_nhan'))
+            <a href="{{ route('request-close.tiep_nhan', $item->id) }}" class="btn btn-info">
                 {{ __('Tiếp nhận') }}
             </a>
             @endif
-            @if (Auth::user()->hasPermission('request-close.reject'))
-            <a href="{{ route('request-close.reject', $item->id) }}" class="btn btn-danger">
+
+            @if (Auth::user()->hasPermission('request-close.tu_choi'))
+            <a href="{{ route('request-close.tu_choi', $item->id) }}" class="btn btn-danger">
                 {{ __('Từ chối') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'receive')
-            @if (Auth::user()->hasPermission('request-close.gdcn_approve'))
-            <a href="{{ route('request-close.gdcn_approve', $item->id) }}" class="btn btn-info">
+
+            @if ($item->status == 'tiep_nhan')
+            @if (Auth::user()->hasPermission('request-close.gdcn_duyet'))
+            <a href="{{ route('request-close.gdcn_duyet', $item->id) }}" class="btn btn-info">
                 {{ __('GDCN Duyệt') }}
             </a>
             @endif
-            @if (Auth::user()->hasPermission('request-close.hoiso_approve'))
-            <a href="{{ route('request-close.hoiso_approve', $item->id) }}" class="btn btn-info">
+            @if (Auth::user()->hasPermission('request-close.hoiso_duyet'))
+            <a href="{{ route('request-close.hoiso_duyet', $item->id) }}" class="btn btn-info">
                 {{ __('Hội sở Duyệt') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'gdcn_approve' || $item->status == 'hoiso_approve')
-            @if (Auth::user()->hasPermission('request-close.it_process'))
-            <a href="{{ route('request-close.it_process', $item->id) }}" class="btn btn-info">
+
+            @if ($item->status == 'gdcn_duyet' || $item->status == 'hoiso_duyet')
+            @if (Auth::user()->hasPermission('request-close.it_xuly'))
+            <a href="{{ route('request-close.it_xuly', $item->id) }}" class="btn btn-info">
                 {{ __('IT Xử lý') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'it_process')
-            @if (Auth::user()->hasPermission('request-close.success'))
-            <a href="{{ route('request-close.success', $item->id) }}" class="btn btn-info">
+
+            @if ($item->status == 'it_xuly')
+            @if (Auth::user()->hasPermission('request-close.thanh_cong'))
+            <a href="{{ route('request-close.thanh_cong', $item->id) }}" class="btn btn-info">
                 {{ __('Thành công') }}
             </a>
             @endif
             @endif
+
         </div>
         <div class="form-body">
             <table style="width:100%" border="1">

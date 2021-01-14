@@ -13,27 +13,27 @@ use Botble\Base\Traits\LoadAndPublishDataTrait;
 use Illuminate\Routing\Events\RouteMatched;
 
 use Botble\Dao\Models\RequestNew;
-use Botble\Dao\Repositories\Caches\DaoRequestNewCacheDecorator;
-use Botble\Dao\Repositories\Eloquent\DaoRequestNewRepository;
-use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
+use Botble\Dao\Repositories\Caches\RequestNewCacheDecorator;
+use Botble\Dao\Repositories\Eloquent\RequestNewRepository;
+use Botble\Dao\Repositories\Interfaces\RequestNewInterface;
 
 use Botble\Dao\Models\RequestUpdate;
-use Botble\Dao\Repositories\Caches\DaoRequestUpdateCacheDecorator;
-use Botble\Dao\Repositories\Eloquent\DaoRequestUpdateRepository;
-use Botble\Dao\Repositories\Interfaces\DaoRequestUpdateInterface;
+use Botble\Dao\Repositories\Caches\RequestUpdateCacheDecorator;
+use Botble\Dao\Repositories\Eloquent\RequestUpdateRepository;
+use Botble\Dao\Repositories\Interfaces\RequestUpdateInterface;
 
 use Botble\Dao\Models\RequestTransfer;
-use Botble\Dao\Repositories\Caches\DaoRequestTransferCacheDecorator;
-use Botble\Dao\Repositories\Eloquent\DaoRequestTransferRepository;
-use Botble\Dao\Repositories\Interfaces\DaoRequestTransferInterface;
+use Botble\Dao\Repositories\Caches\RequestTransferCacheDecorator;
+use Botble\Dao\Repositories\Eloquent\RequestTransferRepository;
+use Botble\Dao\Repositories\Interfaces\RequestTransferInterface;
 
 use Botble\Dao\Models\RequestClose;
 use Botble\Dao\Models\RequestHistory;
-use Botble\Dao\Repositories\Caches\DaoRequestCloseCacheDecorator;
+use Botble\Dao\Repositories\Caches\RequestCloseCacheDecorator;
 use Botble\Dao\Repositories\Caches\RequestHistoryCacheDecorator;
-use Botble\Dao\Repositories\Eloquent\DaoRequestCloseRepository;
+use Botble\Dao\Repositories\Eloquent\RequestCloseRepository;
 use Botble\Dao\Repositories\Eloquent\RequestHistoryRepository;
-use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
+use Botble\Dao\Repositories\Interfaces\RequestCloseInterface;
 use Botble\Dao\Repositories\Interfaces\RequestHistoryInterface;
 
 class DaoServiceProvider extends ServiceProvider
@@ -53,27 +53,27 @@ class DaoServiceProvider extends ServiceProvider
             );
         });
 
-        $this->app->bind(DaoRequestNewInterface::class, function () {
-            return new DaoRequestNewCacheDecorator(
-                new DaoRequestNewRepository(new RequestNew)
+        $this->app->bind(RequestNewInterface::class, function () {
+            return new RequestNewCacheDecorator(
+                new RequestNewRepository(new RequestNew)
             );
         });
 
-        $this->app->bind(DaoRequestUpdateInterface::class, function () {
-            return new DaoRequestUpdateCacheDecorator(
-                new DaoRequestUpdateRepository(new RequestUpdate)
+        $this->app->bind(RequestUpdateInterface::class, function () {
+            return new RequestUpdateCacheDecorator(
+                new RequestUpdateRepository(new RequestUpdate)
             );
         });
 
-        $this->app->bind(DaoRequestTransferInterface::class, function () {
-            return new DaoRequestTransferCacheDecorator(
-                new DaoRequestTransferRepository(new RequestTransfer)
+        $this->app->bind(RequestTransferInterface::class, function () {
+            return new RequestTransferCacheDecorator(
+                new RequestTransferRepository(new RequestTransfer)
             );
         });
 
-        $this->app->bind(DaoRequestCloseInterface::class, function () {
-            return new DaoRequestCloseCacheDecorator(
-                new DaoRequestCloseRepository(new RequestClose)
+        $this->app->bind(RequestCloseInterface::class, function () {
+            return new RequestCloseCacheDecorator(
+                new RequestCloseRepository(new RequestClose)
             );
         });
 

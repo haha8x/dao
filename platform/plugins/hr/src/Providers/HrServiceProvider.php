@@ -18,9 +18,9 @@ class HrServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->bind(HrInterface::class, function () {
-            return new HrCacheDecorator(new HrRepository(new Hr));
-        });
+        // $this->app->bind(HrInterface::class, function () {
+        //     return new HrCacheDecorator(new HrRepository(new Hr));
+        // });
 
         $this->app->bind(\Botble\Hr\Repositories\Interfaces\UserPositionInterface::class, function () {
             return new \Botble\Hr\Repositories\Caches\UserPositionCacheDecorator(
@@ -44,24 +44,40 @@ class HrServiceProvider extends ServiceProvider
 
         Event::listen(RouteMatched::class, function () {
 
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugins-hr',
-                'priority'    => 100,
-                'parent_id'   => null,
-                'name'        => 'Quản lý nhân sự',
-                'icon'        => 'fas fa-user-lock',
-                'url'         => null,
-                'permissions' => ['hr.index'],
-            ]);
-            dashboard_menu()->registerItem([
-                'id'          => 'cms-plugins-hr-list',
-                'priority'    => 0,
-                'parent_id'   => 'cms-plugins-hr',
-                'name'        => 'Danh sách tài khoản',
-                'icon'        => null,
-                'url'         => route('hr.index'),
-                'permissions' => ['hr.index']
-            ]);
+            dashboard_menu()
+                ->registerItem([
+                    'id'          => 'cms-plugins-hr',
+                    'priority'    => 100,
+                    'parent_id'   => null,
+                    'name'        => 'Quản lý nhân sự',
+                    'icon'        => 'fas fa-user-lock',
+                    'url'         => null,
+                    'permissions' => ['hr.index'],
+                ])->registerItem([
+                    'id'          => 'cms-plugins-hr-list',
+                    'priority'    => 0,
+                    'parent_id'   => 'cms-plugins-hr',
+                    'name'        => 'Danh sách tài khoản',
+                    'icon'        => null,
+                    'url'         => route('hr.index'),
+                    'permissions' => ['hr.user']
+                ])->registerItem([
+                    'id'          => 'cms-plugins-hr-new-user-list',
+                    'priority'    => 0,
+                    'parent_id'   => 'cms-plugins-hr',
+                    'name'        => 'Danh sách cấp mới',
+                    'icon'        => null,
+                    'url'         => route('hr.new-user'),
+                    'permissions' => ['hr.new-user']
+                ])->registerItem([
+                    'id'          => 'cms-plugins-hr-cbbh-list',
+                    'priority'    => 0,
+                    'parent_id'   => 'cms-plugins-hr',
+                    'name'        => 'Danh sách CBBH',
+                    'icon'        => null,
+                    'url'         => route('hr.cbbh'),
+                    'permissions' => ['hr.cbbh']
+                ]);
         });
     }
 }

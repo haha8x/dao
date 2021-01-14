@@ -1,42 +1,33 @@
 <?php
 
 return [
-    [
-        'name' => 'Hrs',
-        'flag' => 'hr.index',
-    ],
-    [
-        'name'        => 'Create',
-        'flag'        => 'hr.create',
-        'parent_flag' => 'hr.index',
-    ],
-    [
-        'name'        => 'Edit',
-        'flag'        => 'hr.edit',
-        'parent_flag' => 'hr.index',
-    ],
-    [
-        'name'        => 'Delete',
-        'flag'        => 'hr.destroy',
-        'parent_flag' => 'hr.index',
-    ],
-    [
-        'name' => 'User positions',
-        'flag' => 'user-position.index',
-    ],
-    [
-        'name'        => 'Create',
-        'flag'        => 'user-position.create',
-        'parent_flag' => 'user-position.index',
-    ],
-    [
-        'name'        => 'Edit',
-        'flag'        => 'user-position.edit',
-        'parent_flag' => 'user-position.index',
-    ],
-    [
-        'name'        => 'Delete',
-        'flag'        => 'user-position.destroy',
-        'parent_flag' => 'user-position.index',
-    ],
+  [
+    'name' => 'Quản lý nhân sự',
+    'flag' => 'hr.index',
+  ],
+  [
+    'name'        => 'Danh sách tài khoản',
+    'flag'        => 'hr.user',
+    'parent_flag' => 'hr.index',
+  ],
+  [
+    'name'        => 'Danh sách cấp tài khoản',
+    'flag'        => 'hr.new-user',
+    'parent_flag' => 'hr.index',
+  ],
+  [
+    'name'        => 'Danh sách CBBH',
+    'flag'        => 'hr.cbbh',
+    'parent_flag' => 'hr.index',
+  ],
+  [
+    'name'        => 'Kích hoạt tài khoản',
+    'flag'        => 'hr.activate',
+    'parent_flag' => 'hr.index',
+  ],
+  [
+    'name'        => 'Khoá tài khoản',
+    'flag'        => 'hr.deactivate',
+    'parent_flag' => 'hr.index',
+  ],
 ];

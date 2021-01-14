@@ -1,5 +1,6 @@
 <?php
 
+use Botble\ACL\AclManager;
 use Botble\ACL\Models\UserMeta;
 use Botble\ACL\Activations\EloquentActivation;
 
@@ -7,7 +8,7 @@ if (!function_exists('acl_activate_user')) {
     /**
      * @param \Botble\ACL\Models\User $user
      * @return bool
-     * @author Sang Nguyen
+     * @author Mr Haha
      */
     function acl_activate_user($user)
     {
@@ -26,7 +27,7 @@ if (!function_exists('acl_deactivate_user')) {
     /**
      * @param \Botble\ACL\Models\User $user
      * @return bool
-     * @author Sang Nguyen
+     * @author Mr Haha
      */
     function acl_deactivate_user($user)
     {
@@ -38,7 +39,7 @@ if (!function_exists('acl_is_user_activated')) {
     /**
      * @param \Botble\ACL\Models\User $user
      * @return bool
-     * @author Sang Nguyen
+     * @author Mr Haha
      */
     function acl_is_user_activated($user)
     {
@@ -49,7 +50,7 @@ if (!function_exists('acl_is_user_activated')) {
 if (!function_exists('render_login_form')) {
     /**
      * @return string
-     * @author Sang Nguyen
+     * @author Mr Haha
      * @throws Throwable
      */
     function render_login_form()
@@ -63,7 +64,7 @@ if (!function_exists('get_user_meta')) {
      * @param $key
      * @param null $default
      * @return mixed
-     * @author Sang Nguyen
+     * @author Mr Haha
      */
     function get_user_meta($key, $default = null)
     {
@@ -78,7 +79,7 @@ if (!function_exists('set_user_meta')) {
      * @param int $user_id
      * @return mixed
      * @internal param null $default
-     * @author Sang Nguyen
+     * @author Mr Haha
      */
     function set_user_meta($key, $value = null, $user_id = 0)
     {

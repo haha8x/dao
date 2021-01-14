@@ -316,7 +316,7 @@ class UserController extends BaseController
 
             $image = $imageManager->make(Storage::path($result['data']->url));
             $avatarData = json_decode($request->input('avatar_data'));
-            $image->crop((int)$avatarData->height, (int)$avatarData->width, (int)$avatarData->x, (int)$avatarData->y);
+            $image->crop((int) $avatarData->height, (int) $avatarData->width, (int) $avatarData->x, (int) $avatarData->y);
             $image->save();
 
             $this->fileRepository->forceDelete(['id' => $user->avatar_id]);

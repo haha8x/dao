@@ -4891,3 +4891,7 @@ body.login {
 .page-header.navbar .top-menu .navbar-nav {
   margin: 10px 0;
 }
+
+.width-100 {
+  width: 100%;
+}

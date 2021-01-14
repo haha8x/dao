@@ -3,10 +3,10 @@
 namespace Botble\Dao\Http\Controllers;
 
 use Botble\Dao\Http\Requests\RequestNewRequest;
-use Botble\Dao\Repositories\Interfaces\DaoRequestNewInterface;
+use Botble\Dao\Repositories\Interfaces\RequestNewInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Exception;
-use Botble\Dao\Tables\DaoRequestNewTable;
+use Botble\Dao\Tables\RequestNewTable;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Http\Responses\BaseHttpResponse;
 use Botble\Dao\Forms\RequestNewForm;
@@ -23,26 +23,26 @@ use Auth;
 class RequestNewController extends BaseController
 {
     /**
-     * @var DaoRequestNewInterface
+     * @var RequestNewInterface
      */
     protected $daoRequestNewRepository;
 
     /**
      * RequestNewController constructor.
-     * @param DaoRequestNewInterface $daoRequestNewRepository
+     * @param RequestNewInterface $daoRequestNewRepository
      */
     public function __construct(
-        DaoRequestNewInterface $daoRequestNewRepository
+        RequestNewInterface $daoRequestNewRepository
     ) {
         $this->daoRequestNewRepository = $daoRequestNewRepository;
     }
 
     /**
-     * @param DaoRequestNewTable $dataTable
+     * @param RequestNewTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
      */
-    public function index(DaoRequestNewTable $table)
+    public function index(RequestNewTable $table)
     {
 
         page_title()->setTitle(trans('plugins/dao::request-new.name'));
@@ -84,7 +84,6 @@ class RequestNewController extends BaseController
                 $request->merge(['decision_file' => $file->url]);
             }
         }
-
 
         $request->merge([
             'status' => 'tao_moi',
@@ -203,11 +202,11 @@ class RequestNewController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function receive($id, BaseHttpResponse $response)
+    public function tiep_nhan($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'receive';
+            $daoRequestNew->status = 'tiep_nhan';
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
@@ -226,11 +225,11 @@ class RequestNewController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function reject($id, BaseHttpResponse $response)
+    public function tu_choi($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'reject';
+            $daoRequestNew->status = 'tu_choi';
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
@@ -249,11 +248,11 @@ class RequestNewController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function it_process($id, BaseHttpResponse $response)
+    public function it_xuly($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'it_process';
+            $daoRequestNew->status = 'it_xuly';
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
@@ -272,11 +271,11 @@ class RequestNewController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function gdcn_approve($id, BaseHttpResponse $response)
+    public function gdcn_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'gdcn_approve';
+            $daoRequestNew->status = 'gdcn_duyet';
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
@@ -295,11 +294,11 @@ class RequestNewController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function hoiso_approve($id, BaseHttpResponse $response)
+    public function hoiso_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'hoiso_approve';
+            $daoRequestNew->status = 'hoiso_duyet';
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 
             return $response
@@ -313,11 +312,11 @@ class RequestNewController extends BaseController
         }
     }
 
-    public function success($id, BaseHttpResponse $response)
+    public function thanh_cong($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestNew = $this->daoRequestNewRepository->findOrFail($id);
-            $daoRequestNew->status = 'success';
+            $daoRequestNew->status = 'thanh_cong';
 
             $this->daoRequestNewRepository->createOrUpdate($daoRequestNew);
 

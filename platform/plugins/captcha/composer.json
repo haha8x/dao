@@ -1,11 +1,11 @@
 {
   "name": "botble/captcha",
   "description": "Captcha plugin",
-  "homepage": "https://botble.com",
+  "homepage": "https://hahoang.com",
   "authors": [{
-    "name": "Sang Nguyen",
-    "email": "minhsang2603@gmail.com",
-    "homepage": "https://sangnguyen.info"
+    "name": "Mr Haha",
+    "email": "contact@hahoang.com",
+    "homepage": "https://hahoang.info"
   }],
   "require": {
     "google/recaptcha": "^1.1",

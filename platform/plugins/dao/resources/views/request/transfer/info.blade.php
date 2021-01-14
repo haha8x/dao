@@ -6,40 +6,40 @@
     <div class="modal-body">
         <div class="request-action" style="float: right;margin-bottom: 10px;">
             <a href="javascript:;" class="btn btn-primary" data-fancybox-close>{{ __('Đóng')  }}</a>
-            @if ($item->status == 'create')
-            @if (Auth::user()->hasPermission('request-transfer.receive'))
-            <a href="{{ route('request-transfer.receive', $item->id) }}" class="btn btn-info">
+            @if ($item->status == 'tao_moi')
+            @if (Auth::user()->hasPermission('request-transfer.tiep_nhan'))
+            <a href="{{ route('request-transfer.tiep_nhan', $item->id) }}" class="btn btn-info">
                 {{ __('Tiếp nhận') }}
             </a>
             @endif
-            @if (Auth::user()->hasPermission('request-transfer.reject'))
-            <a href="{{ route('request-transfer.reject', $item->id) }}" class="btn btn-danger">
+            @if (Auth::user()->hasPermission('request-transfer.tu_choi'))
+            <a href="{{ route('request-transfer.tu_choi', $item->id) }}" class="btn btn-danger">
                 {{ __('Từ chối') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'receive')
-            @if (Auth::user()->hasPermission('request-transfer.gdcn_approve'))
-            <a href="{{ route('request-transfer.gdcn_approve', $item->id) }}" class="btn btn-info">
+            @if ($item->status == 'tiep_nhan')
+            @if (Auth::user()->hasPermission('request-transfer.gdcn_duyet'))
+            <a href="{{ route('request-transfer.gdcn_duyet', $item->id) }}" class="btn btn-info">
                 {{ __('GDCN Duyệt') }}
             </a>
             @endif
-            @if (Auth::user()->hasPermission('request-transfer.hoiso_approve'))
-            <a href="{{ route('request-transfer.hoiso_approve', $item->id) }}" class="btn btn-info">
+            @if (Auth::user()->hasPermission('request-transfer.hoiso_duyet'))
+            <a href="{{ route('request-transfer.hoiso_duyet', $item->id) }}" class="btn btn-info">
                 {{ __('Hội sở Duyệt') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'gdcn_approve' || $item->status == 'hoiso_approve')
-            @if (Auth::user()->hasPermission('request-transfer.it_process'))
-            <a href="{{ route('request-transfer.it_process', $item->id) }}" class="btn btn-info">
+            @if ($item->status == 'gdcn_duyet' || $item->status == 'hoiso_duyet')
+            @if (Auth::user()->hasPermission('request-transfer.it_xuly'))
+            <a href="{{ route('request-transfer.it_xuly', $item->id) }}" class="btn btn-info">
                 {{ __('IT Xử lý') }}
             </a>
             @endif
             @endif
-            @if ($item->status == 'it_process')
-            @if (Auth::user()->hasPermission('request-transfer.success'))
-            <a href="{{ route('request-transfer.success', $item->id) }}" class="btn btn-info">
+            @if ($item->status == 'it_xuly')
+            @if (Auth::user()->hasPermission('request-transfer.thanh_cong'))
+            <a href="{{ route('request-transfer.thanh_cong', $item->id) }}" class="btn btn-info">
                 {{ __('Thành công') }}
             </a>
             @endif

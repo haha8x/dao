@@ -128,7 +128,7 @@ abstract class TableAbstract extends DataTable
         }
 
         if (!$this->getOption('class')) {
-            $this->setOption('class', 'table table-striped table-hover vertical-middle');
+            $this->setOption('class', 'table table-striped table-hover vertical-middle width-100');
         }
 
         $this->bulkChangeUrl = route('tables.bulk-change.save');
@@ -245,10 +245,10 @@ abstract class TableAbstract extends DataTable
             ->columns($this->getColumns())
             ->ajax(['url' => $this->getAjaxUrl()])
             ->parameters([
-                'sScrollX'      => '110%',
+                'sScrollX'      => 'true',
                 'fixedColumns' =>   [
-                    'leftColumns' => 1,
-                    'rightColumns' => 1
+                    'leftColumns' => 2,
+                    'rightColumns' => 2
                 ],
                 'scrollCollapse' => true,
                 'bScrollCollapse' => true,
@@ -651,7 +651,10 @@ abstract class TableAbstract extends DataTable
     {
         Assets::addScripts(['datatables', 'moment', 'datepicker'])
             ->addStyles(['datatables', 'datepicker'])
-            ->addStylesDirectly('vendor/core/css/components/table.css')
+            ->addStylesDirectly([
+                'vendor/core/css/components/table.css',
+                'https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css',
+            ])
             ->addScriptsDirectly([
                 'vendor/core/libraries/bootstrap3-typeahead.min.js',
                 'vendor/core/js/table.js',

@@ -48,11 +48,11 @@ class CustomerTable extends TableAbstract
     {
         $data = $this->table
             ->eloquent($this->query())
-            ->editColumn('customer_name', function ($item) {
+            ->editColumn('name', function ($item) {
                 if (!Auth::user()->hasPermission('customer.edit')) {
-                    return $item->customer_name;
+                    return $item->name;
                 }
-                return anchor_link(route('customer.edit', $item->id), $item->customer_name);
+                return anchor_link(route('customer.edit', $item->id), $item->name);
             })
             ->editColumn('zone_id', function ($item) {
                 return $item->zone ? $item->zone->name : null;
@@ -95,12 +95,20 @@ class CustomerTable extends TableAbstract
             'customers.product_name',
             'customers.zone_id',
             'customers.branch_id',
-            'customers.staff_id',
+            'customers.dao',
             'customers.open_date',
-            'customers.customer_name',
+            'customers.name',
             'customers.created_by',
             'customers.created_at',
         ]);
+
+        if (!Auth::user()->isSuperUser()) {
+            if (Auth::user()->getPosition()->first()->code == 'GDCN') {
+                $query = $model->where('branch_id', Auth::user()->getBranch()->first() ? Auth::user()->getBranch()->first()->id : null);
+            } else {
+                $query = $model->where('dao', Auth::user()->dao);
+            }
+        }
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
@@ -116,8 +124,8 @@ class CustomerTable extends TableAbstract
                 'title' => trans('core/base::tables.id'),
                 'width' => '20px',
             ],
-            'customer_name' => [
-                'name'  => 'customers.customer_name',
+            'name' => [
+                'name'  => 'customers.name',
                 'title' => 'Tên khách hàng',
                 'class' => 'text-left',
             ],
@@ -151,19 +159,14 @@ class CustomerTable extends TableAbstract
                 'title' => 'Chi nhánh',
                 'class' => 'text-left',
             ],
-            'staff_id' => [
-                'name'  => 'customers.staff_id',
-                'title' => 'Mã nhân viên',
+            'dao' => [
+                'name'  => 'customers.dao',
+                'title' => 'DAO',
                 'class' => 'text-left',
             ],
             'open_date' => [
                 'name'  => 'customers.open_date',
                 'title' => 'Ngày mở',
-                'class' => 'text-left',
-            ],
-            'created_by' => [
-                'name'  => 'customers.created_by',
-                'title' => 'Tạo bởi',
                 'class' => 'text-left',
             ],
             'created_at' => [

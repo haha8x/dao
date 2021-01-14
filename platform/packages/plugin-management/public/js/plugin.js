@@ -196,7 +196,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\packages\plugin-management\resources\assets\js\plugin.js */"./platform/packages/plugin-management/resources/assets/js/plugin.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/packages/plugin-management/resources/assets/js/plugin.js */"./platform/packages/plugin-management/resources/assets/js/plugin.js");
 
 
 /***/ })

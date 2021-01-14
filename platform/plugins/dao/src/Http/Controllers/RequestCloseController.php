@@ -4,11 +4,11 @@ namespace Botble\Dao\Http\Controllers;
 
 use Botble\Base\Events\BeforeEditContentEvent;
 use Botble\Dao\Http\Requests\RequestCloseRequest;
-use Botble\Dao\Repositories\Interfaces\DaoRequestCloseInterface;
+use Botble\Dao\Repositories\Interfaces\RequestCloseInterface;
 use Botble\Base\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Exception;
-use Botble\Dao\Tables\DaoRequestCloseTable;
+use Botble\Dao\Tables\RequestCloseTable;
 use Botble\Base\Events\CreatedContentEvent;
 use Botble\Base\Events\DeletedContentEvent;
 use Botble\Base\Events\UpdatedContentEvent;
@@ -20,25 +20,25 @@ use Auth;
 class RequestCloseController extends BaseController
 {
     /**
-     * @var DaoRequestCloseInterface
+     * @var RequestCloseInterface
      */
     protected $daoRequestCloseRepository;
 
     /**
      * RequestCloseController constructor.
-     * @param DaoRequestCloseInterface $daoRequestCloseRepository
+     * @param RequestCloseInterface $daoRequestCloseRepository
      */
-    public function __construct(DaoRequestCloseInterface $daoRequestCloseRepository)
+    public function __construct(RequestCloseInterface $daoRequestCloseRepository)
     {
         $this->daoRequestCloseRepository = $daoRequestCloseRepository;
     }
 
     /**
-     * @param DaoRequestCloseTable $dataTable
+     * @param RequestCloseTable $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Throwable
      */
-    public function index(DaoRequestCloseTable $table)
+    public function index(RequestCloseTable $table)
     {
 
         page_title()->setTitle(trans('plugins/dao::request-close.name'));
@@ -65,12 +65,12 @@ class RequestCloseController extends BaseController
      */
     public function store(RequestCloseRequest $request, BaseHttpResponse $response)
     {
-        $daoRequestClose = $this->daoRequestCloseRepository->createOrUpdate($request->input());
-
         $request->merge([
             'status' => 'tao_moi',
             'created_by' => Auth::id(),
         ]);
+
+        $daoRequestClose = $this->daoRequestCloseRepository->createOrUpdate($request->input());
 
         event(new CreatedContentEvent(DAO_REQUEST_CLOSE_MODULE_SCREEN_NAME, $request, $daoRequestClose));
 
@@ -185,11 +185,11 @@ class RequestCloseController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function receive($id, BaseHttpResponse $response)
+    public function tiep_nhan($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'receive';
+            $daoRequestClose->status = 'tiep_nhan';
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
@@ -208,11 +208,11 @@ class RequestCloseController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function reject($id, BaseHttpResponse $response)
+    public function tu_choi($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'reject';
+            $daoRequestClose->status = 'tu_choi';
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
@@ -231,11 +231,11 @@ class RequestCloseController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function it_process($id, BaseHttpResponse $response)
+    public function it_xuly($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'it_process';
+            $daoRequestClose->status = 'it_xuly';
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
@@ -254,11 +254,11 @@ class RequestCloseController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function gdcn_approve($id, BaseHttpResponse $response)
+    public function gdcn_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'gdcn_approve';
+            $daoRequestClose->status = 'gdcn_duyet';
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
@@ -277,11 +277,11 @@ class RequestCloseController extends BaseController
      * @param BaseHttpResponse $response
      * @return BaseHttpResponse
      */
-    public function hoiso_approve($id, BaseHttpResponse $response)
+    public function hoiso_duyet($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'hoiso_approve';
+            $daoRequestClose->status = 'hoiso_duyet';
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 
             return $response
@@ -295,11 +295,11 @@ class RequestCloseController extends BaseController
         }
     }
 
-    public function success($id, BaseHttpResponse $response)
+    public function thanh_cong($id, BaseHttpResponse $response)
     {
         try {
             $daoRequestClose = $this->daoRequestCloseRepository->findOrFail($id);
-            $daoRequestClose->status = 'success';
+            $daoRequestClose->status = 'thanh_cong';
 
             $this->daoRequestCloseRepository->createOrUpdate($daoRequestClose);
 

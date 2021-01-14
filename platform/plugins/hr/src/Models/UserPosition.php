@@ -25,7 +25,6 @@ class UserPosition extends BaseModel
     protected $fillable = [
         'user_id',
         'position_id',
-        'position_sub_id',
         'zone_id',
         'branch_id',
         'created_by',

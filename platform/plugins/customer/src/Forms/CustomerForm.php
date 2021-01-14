@@ -32,7 +32,7 @@ class CustomerForm extends FormAbstract
             ->setupModel(new Customer)
             ->setValidatorClass(CustomerRequest::class)
             ->withCustomFields()
-            ->add('customer_name', 'text', [
+            ->add('name', 'text', [
                 'label'      => 'Tên Khách hàng',
                 'label_attr' => ['class' => 'control-label required'],
                 'attr'       => [
@@ -87,6 +87,7 @@ class CustomerForm extends FormAbstract
                     'class' => 'form-control select-search-full',
                     'data-type' => 'branch',
                     'data-placeholder' => __('Chọn chi nhánh'),
+                    'data-origin-value' => $this->model->branch_id,
                 ],
                 'wrapper'    => [
                     'class' => 'form-group col-md-6',

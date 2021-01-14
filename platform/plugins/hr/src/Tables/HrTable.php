@@ -3,7 +3,6 @@
 namespace Botble\Hr\Tables;
 
 use Auth;
-use Botble\Base\Enums\BaseStatusEnum;
 use Botble\Hr\Repositories\Interfaces\HrInterface;
 use Botble\ACL\Repositories\Interfaces\ActivationInterface;
 use Botble\ACL\Repositories\Interfaces\UserInterface;
@@ -11,13 +10,9 @@ use Botble\Dao\Abstracts\TableAbstract;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Yajra\DataTables\DataTables;
 use Botble\Hr\Models\Hr;
-use Botble\ACL\Models\User;
 use Botble\ACL\Enums\UserStatusEnum;
 use Botble\ACL\Services\ActivateUserService;
-use Botble\Base\Events\UpdatedContentEvent;
-use Exception;
 use Html;
-use Illuminate\Support\Arr;
 
 class HrTable extends TableAbstract
 {
@@ -49,7 +44,7 @@ class HrTable extends TableAbstract
         $this->setOption('id', 'table-plugins-hr');
         parent::__construct($table, $urlDevTool);
 
-        if (!Auth::user()->hasAnyPermission(['hr.edit', 'hr.destroy'])) {
+        if (!Auth::user()->hasAnyPermission(['users.edit', 'users.destroy'])) {
             $this->hasOperations = false;
             $this->hasActions = false;
         }
@@ -75,15 +70,28 @@ class HrTable extends TableAbstract
 
                 return Html::link(route('user.profile.view', $item->id), $item->name);
             })
-            ->editColumn('zone_id', function ($item) {
-                return $item->zone ? $item->zone->name : null;
+            ->editColumn('avatar_id', function ($item) {
+                return implode(', ', $item->positions->pluck('name')->all());
             })
-            ->editColumn('branch_id', function ($item) {
-                return $item->branch ? $item->branch->name : null;
+            ->editColumn('role_name', function ($item) {
+                if (!Auth::user()->hasPermission('users.edit')) {
+                    return $item->role_name;
+                }
+
+                return view('core/acl::users.partials.role', ['item' => $item])->render();
+            })
+            ->editColumn('last_login', function ($item) {
+                return implode(', ', $item->zones->pluck('name')->all());
+            })
+            ->editColumn('updated_at', function ($item) {
+                return implode(', ', $item->branchs->pluck('name')->all());
             })
             ->editColumn('created_at', function ($item) {
                 return date_from_database($item->created_at, config('core.base.general.date_format.date'));
             })
+            // ->editColumn('title', function ($item) {
+            //     return $item->title ? $item->title->toHtml() : null;
+            // })
             ->editColumn('status', function ($item) {
                 if (app(ActivationInterface::class)->completed($item)) {
                     return UserStatusEnum::ACTIVATED()->toHtml();
@@ -132,19 +140,25 @@ class HrTable extends TableAbstract
     public function query()
     {
         $model = $this->repository->getModel();
-        $query = $model->leftJoin('user_positions', 'user_positions.user_id', '=', 'users.id')
+        $query = $model
+            ->with(['positions'])
+            // ->leftJoin('role_users', 'users.id', '=', 'role_users.user_id')
+            // ->leftJoin('roles', 'roles.id', '=', 'role_users.role_id')
+            ->join('activations', 'users.id', '=', 'activations.user_id')
             ->select([
                 'users.id',
                 'users.name',
                 'users.email',
                 'users.created_at',
+                'users.updated_at',
+                'users.last_login',
+                'users.avatar_id',
                 'users.title',
                 'users.dao',
                 'users.staff_id',
-                'user_positions.position_id as user_position',
-                'user_positions.zone_id as user_zone',
-                'user_positions.branch_id as user_branch',
-            ]);
+                // 'roles.name as role_name',
+                // 'roles.id as role_id',
+            ])->where('users.super_user', '=', 0);
 
         return $this->applyScopes(apply_filters(BASE_FILTER_TABLE_QUERY, $query, $model));
     }
@@ -156,12 +170,13 @@ class HrTable extends TableAbstract
                 'name'  => 'users.name',
                 'title' => 'Họ và Tên',
                 'class' => 'text-left',
+                'width' => '150px',
             ],
-            'title'      => [
-                'name'  => 'users.title',
-                'title' => 'Title',
-                'class' => 'text-left',
-            ],
+            // 'title'      => [
+            //     'name'  => 'users.title',
+            //     'title' => 'Title',
+            //     'class' => 'text-left',
+            // ],
             'dao'      => [
                 'name'  => 'users.dao',
                 'title' => 'DAO',
@@ -177,20 +192,27 @@ class HrTable extends TableAbstract
                 'title' => trans('core/acl::users.email'),
                 'class' => 'text-left',
             ],
-            'user_position' => [
-                'name'  => 'user_position',
+            'avatar_id' => [
+                'name'  => 'users.avatar_id',
                 'title' => 'Chức danh',
                 'class' => 'text-left',
             ],
-            'user_zone' => [
-                'name'  => 'user_zone',
+            // 'role_name'  => [
+            //     'name'       => 'role_name',
+            //     'title'      => trans('core/acl::users.role'),
+            //     'searchable' => false,
+            // ],
+            'last_login' => [
+                'name'  => 'users.last_login',
                 'title' => 'Vùng',
                 'class' => 'text-left',
+                'width' => '50px',
             ],
-            'user_branch' => [
-                'name'  => 'users.user_branch',
+            'updated_at' => [
+                'name'  => 'users.updated_at',
                 'title' => 'Chi nhánh',
                 'class' => 'text-left',
+                'width' => '150px',
             ],
             'created_at' => [
                 'name'  => 'users.created_at',
@@ -227,7 +249,7 @@ class HrTable extends TableAbstract
      */
     public function buttons()
     {
-        $buttons = $this->addCreateButton(route('hr.create'), 'hr.create');
+        $buttons = $this->addCreateButton(route('users.create'), 'users.create');
 
         return apply_filters(BASE_FILTER_TABLE_BUTTONS, $buttons, Hr::class);
     }
@@ -238,7 +260,7 @@ class HrTable extends TableAbstract
      */
     public function bulkActions(): array
     {
-        return $this->addDeleteAction(route('hr.deletes'), 'hr.destroy', parent::bulkActions());
+        return $this->addDeleteAction(route('users.deletes'), 'users.destroy', parent::bulkActions());
     }
 
     /**
@@ -247,18 +269,12 @@ class HrTable extends TableAbstract
     public function getBulkChanges(): array
     {
         return [
-            'hrs.name' => [
-                'title'    => trans('core/base::tables.name'),
+            'users.email'      => [
+                'title'    => trans('core/base::tables.email'),
                 'type'     => 'text',
-                'validate' => 'required|max:120',
+                'validate' => 'required|max:120|email',
             ],
-            'hrs.status' => [
-                'title'    => trans('core/base::tables.status'),
-                'type'     => 'select',
-                'choices'  => BaseStatusEnum::labels(),
-                'validate' => 'required|in:' . implode(',', BaseStatusEnum::values()),
-            ],
-            'hrs.created_at' => [
+            'users.created_at' => [
                 'title' => trans('core/base::tables.created_at'),
                 'type'  => 'date',
             ],

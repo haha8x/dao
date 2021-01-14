@@ -16,7 +16,8 @@ class Catalog {
                     $element.closest('form').find('button[type=submit], input[type=submit]').prop('disabled', true);
                 },
                 success: (data) => {
-                    let option = '<option value="">' + ($branch.data('placeholder')) + '</option>';
+                    // let option = '<option value="">' + ($branch.data('placeholder')) + '</option>';
+                    let option = '';
                     $.each(data.data, (index, item) => {
                         if (item.id === $branch.data('origin-value')) {
                             option += '<option value="' + item.id + '" selected="selected">' + item.code + ' - ' + item.name + '</option>';

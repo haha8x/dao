@@ -20,6 +20,13 @@ class CatalogPositionForm extends FormAbstract
             ->setupModel(new CatalogPosition)
             ->setValidatorClass(CatalogPositionRequest::class)
             ->withCustomFields()
+            ->add('code', 'text', [
+                'label'      => 'Code',
+                'label_attr' => ['class' => 'control-label required'],
+                'attr'       => [
+                    'data-counter' => 120,
+                ],
+            ])
             ->add('name', 'text', [
                 'label'      => trans('core/base::forms.name'),
                 'label_attr' => ['class' => 'control-label required'],

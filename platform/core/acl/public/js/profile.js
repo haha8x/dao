@@ -598,25 +598,25 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\acl\resources\assets\js\profile.js */"./platform/core/acl/resources/assets/js/profile.js");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\black.scss */"./platform/core/base/resources/assets/sass/base/themes/black.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\blue.scss */"./platform/core/base/resources/assets/sass/base/themes/blue.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\darkblue.scss */"./platform/core/base/resources/assets/sass/base/themes/darkblue.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\default.scss */"./platform/core/base/resources/assets/sass/base/themes/default.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\green.scss */"./platform/core/base/resources/assets/sass/base/themes/green.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\grey.scss */"./platform/core/base/resources/assets/sass/base/themes/grey.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\base\themes\light.scss */"./platform/core/base/resources/assets/sass/base/themes/light.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\acl\resources\assets\sass\login.scss */"./platform/core/acl/resources/assets/sass/login.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\core.scss */"./platform/core/base/resources/assets/sass/core.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\custom\system-info.scss */"./platform/core/base/resources/assets/sass/custom/system-info.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\sass\custom\email.scss */"./platform/core/base/resources/assets/sass/custom/email.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\dashboard\resources\assets\sass\dashboard.scss */"./platform/core/dashboard/resources/assets/sass/dashboard.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\media\resources\assets\sass\media.scss */"./platform/core/media/resources/assets/sass/media.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\setting\resources\assets\sass\setting.scss */"./platform/core/setting/resources/assets/sass/setting.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\table\resources\assets\sass\table.scss */"./platform/core/table/resources/assets/sass/table.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\packages\plugin-management\resources\assets\sass\plugin.scss */"./platform/packages/plugin-management/resources/assets/sass/plugin.scss");
-__webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\dao\resources\assets\sass\dao.scss */"./platform/plugins/dao/resources/assets/sass/dao.scss");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\hr\resources\assets\sass\hr.scss */"./platform/plugins/hr/resources/assets/sass/hr.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/acl/resources/assets/js/profile.js */"./platform/core/acl/resources/assets/js/profile.js");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/black.scss */"./platform/core/base/resources/assets/sass/base/themes/black.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/blue.scss */"./platform/core/base/resources/assets/sass/base/themes/blue.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/darkblue.scss */"./platform/core/base/resources/assets/sass/base/themes/darkblue.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/default.scss */"./platform/core/base/resources/assets/sass/base/themes/default.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/green.scss */"./platform/core/base/resources/assets/sass/base/themes/green.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/grey.scss */"./platform/core/base/resources/assets/sass/base/themes/grey.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/base/themes/light.scss */"./platform/core/base/resources/assets/sass/base/themes/light.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/acl/resources/assets/sass/login.scss */"./platform/core/acl/resources/assets/sass/login.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/core.scss */"./platform/core/base/resources/assets/sass/core.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/custom/system-info.scss */"./platform/core/base/resources/assets/sass/custom/system-info.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/sass/custom/email.scss */"./platform/core/base/resources/assets/sass/custom/email.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/dashboard/resources/assets/sass/dashboard.scss */"./platform/core/dashboard/resources/assets/sass/dashboard.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/media/resources/assets/sass/media.scss */"./platform/core/media/resources/assets/sass/media.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/setting/resources/assets/sass/setting.scss */"./platform/core/setting/resources/assets/sass/setting.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/table/resources/assets/sass/table.scss */"./platform/core/table/resources/assets/sass/table.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/packages/plugin-management/resources/assets/sass/plugin.scss */"./platform/packages/plugin-management/resources/assets/sass/plugin.scss");
+__webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/plugins/dao/resources/assets/sass/dao.scss */"./platform/plugins/dao/resources/assets/sass/dao.scss");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/plugins/hr/resources/assets/sass/hr.scss */"./platform/plugins/hr/resources/assets/sass/hr.scss");
 
 
 /***/ })

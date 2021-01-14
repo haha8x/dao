@@ -148,7 +148,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\core\base\resources\assets\js\tags.js */"./platform/core/base/resources/assets/js/tags.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/core/base/resources/assets/js/tags.js */"./platform/core/base/resources/assets/js/tags.js");
 
 
 /***/ })

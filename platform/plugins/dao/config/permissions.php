@@ -46,32 +46,32 @@ return [
     ],
     [
         'name'        => 'Tiếp nhận',
-        'flag'        => 'request-new.receive',
+        'flag'        => 'request-new.tiep_nhan',
         'parent_flag' => 'request-new.index',
     ],
     [
         'name'        => 'Từ chối',
-        'flag'        => 'request-new.reject',
+        'flag'        => 'request-new.tu_choi',
         'parent_flag' => 'request-new.index',
     ],
     [
         'name'        => 'IT xử lý',
-        'flag'        => 'request-new.it-process',
+        'flag'        => 'request-new.it_xuly',
         'parent_flag' => 'request-new.index',
     ],
     [
         'name'        => 'GDCN Duyệt',
-        'flag'        => 'request-new.gdcn-approve',
+        'flag'        => 'request-new.gdcn_duyet',
         'parent_flag' => 'request-new.index',
     ],
     [
         'name'        => 'Hội sở Duyệt',
-        'flag'        => 'request-new.hoiso-approve',
+        'flag'        => 'request-new.hoiso_duyet',
         'parent_flag' => 'request-new.index',
     ],
     [
         'name'        => 'Thành công',
-        'flag'        => 'request-new.success',
+        'flag'        => 'request-new.thanh_cong',
         'parent_flag' => 'request-new.index',
     ],
     [
@@ -100,32 +100,32 @@ return [
     ],
     [
         'name'        => 'Tiếp nhận',
-        'flag'        => 'request-update.receive',
+        'flag'        => 'request-update.tiep_nhan',
         'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'Từ chối',
-        'flag'        => 'request-update.reject',
+        'flag'        => 'request-update.tu_choi',
         'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'IT xử lý',
-        'flag'        => 'request-update.it-process',
+        'flag'        => 'request-update.it_xuly',
         'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'GDCN Duyệt',
-        'flag'        => 'request-update.gdcn-approve',
+        'flag'        => 'request-update.gdcn_duyet',
         'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'Hội sở Duyệt',
-        'flag'        => 'request-update.hoiso-approve',
+        'flag'        => 'request-update.hoiso_duyet',
         'parent_flag' => 'request-update.index',
     ],
     [
         'name'        => 'Thành công',
-        'flag'        => 'request-update.success',
+        'flag'        => 'request-update.thanh_cong',
         'parent_flag' => 'request-update.index',
     ],
     [
@@ -154,32 +154,32 @@ return [
     ],
     [
         'name'        => 'Tiếp nhận',
-        'flag'        => 'request-transfer.receive',
+        'flag'        => 'request-transfer.tiep_nhan',
         'parent_flag' => 'request-transfer.index',
     ],
     [
         'name'        => 'Từ chối',
-        'flag'        => 'request-transfer.reject',
+        'flag'        => 'request-transfer.tu_choi',
         'parent_flag' => 'request-transfer.index',
     ],
     [
         'name'        => 'IT xử lý',
-        'flag'        => 'request-transfer.it-process',
+        'flag'        => 'request-transfer.it_xuly',
         'parent_flag' => 'request-transfer.index',
     ],
     [
         'name'        => 'GDCN Duyệt',
-        'flag'        => 'request-transfer.gdcn-approve',
+        'flag'        => 'request-transfer.gdcn_duyet',
         'parent_flag' => 'request-transfer.index',
     ],
     [
         'name'        => 'Hội sở Duyệt',
-        'flag'        => 'request-transfer.hoiso-approve',
+        'flag'        => 'request-transfer.hoiso_duyet',
         'parent_flag' => 'request-transfer.index',
     ],
     [
         'name'        => 'Thành công',
-        'flag'        => 'request-transfer.success',
+        'flag'        => 'request-transfer.thanh_cong',
         'parent_flag' => 'request-transfer.index',
     ],
     [
@@ -208,32 +208,32 @@ return [
     ],
     [
         'name'        => 'Tiếp nhận',
-        'flag'        => 'request-close.receive',
+        'flag'        => 'request-close.tiep_nhan',
         'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'Từ chối',
-        'flag'        => 'request-close.reject',
+        'flag'        => 'request-close.tu_choi',
         'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'IT xử lý',
-        'flag'        => 'request-close.it-process',
+        'flag'        => 'request-close.it_xuly',
         'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'GDCN Duyệt',
-        'flag'        => 'request-close.gdcn-approve',
+        'flag'        => 'request-close.gdcn_duyet',
         'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'Hội sở Duyệt',
-        'flag'        => 'request-close.hoiso-approve',
+        'flag'        => 'request-close.hoiso_duyet',
         'parent_flag' => 'request-close.index',
     ],
     [
         'name'        => 'Thành công',
-        'flag'        => 'request-close.success',
+        'flag'        => 'request-close.thanh_cong',
         'parent_flag' => 'request-close.index',
     ],
     [

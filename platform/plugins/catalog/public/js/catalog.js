@@ -128,7 +128,8 @@ function () {
             $element.closest('form').find('button[type=submit], input[type=submit]').prop('disabled', true);
           },
           success: function success(data) {
-            var option = '<option value="">' + $branch.data('placeholder') + '</option>';
+            // let option = '<option value="">' + ($branch.data('placeholder')) + '</option>';
+            var option = '';
             $.each(data.data, function (index, item) {
               if (item.id === $branch.data('origin-value')) {
                 option += '<option value="' + item.id + '" selected="selected">' + item.code + ' - ' + item.name + '</option>';
@@ -169,7 +170,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\dao\platform\plugins\catalog\resources\assets\js\catalog.js */"./platform/plugins/catalog/resources/assets/js/catalog.js");
+module.exports = __webpack_require__(/*! /Users/haha8x/Project/htdocs/dao/platform/plugins/catalog/resources/assets/js/catalog.js */"./platform/plugins/catalog/resources/assets/js/catalog.js");
 
 
 /***/ })
