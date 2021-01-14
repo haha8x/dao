@@ -653,7 +653,7 @@ abstract class TableAbstract extends DataTable
             ->addStyles(['datatables', 'datepicker'])
             ->addStylesDirectly([
                 'vendor/core/css/components/table.css',
-                'https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.dataTables.min.css',
+                'fixedColumns.dataTables.min.css',
             ])
             ->addScriptsDirectly([
                 'vendor/core/libraries/bootstrap3-typeahead.min.js',
