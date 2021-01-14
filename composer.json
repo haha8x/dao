@@ -14,8 +14,14 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "botble/platform": "*@dev",
-        "botble/plugin-management": "*@dev",
-        "wikimedia/composer-merge-plugin": "^1.4"
+        "botble/captcha": "*@dev",
+        "botble/catalog": "*@dev",
+        "botble/customer": "*@dev",
+        "botble/dao": "*@dev",
+        "botble/hr": "*@dev",
+        "botble/impresonate": "*@dev",
+        "botble/webconf": "*@dev",
+        "wikimedia/composer-merge-plugin": "dev-feature/composer-v2 as 1.5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
@@ -24,8 +30,7 @@
         "nunomaduro/collision": "^4.1",
         "phpunit/phpunit": "^8.5",
         "laravel/tinker": "^2.0",
-        "botble/dev-tool": "*@dev",
-        "botble/plugin-generator": "*@dev"
+        "botble/dev-tool": "*@dev"
     },
     "autoload": {
         "classmap": [

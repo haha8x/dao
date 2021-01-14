@@ -1,0 +1,17 @@
+{
+  "name": "botble/webconf",
+  "description": "Webconf plugin",
+  "type": "package",
+  "autoload": {
+      "psr-4": {
+          "Botble\\Webconf\\": "src"
+      }
+  },
+  "extra": {
+    "laravel": {
+        "providers": [
+            "Botble\\Webconf\\Providers\\WebconfServiceProvider"
+        ]
+    }
+  }
+}

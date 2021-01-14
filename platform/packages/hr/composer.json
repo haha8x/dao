@@ -1,0 +1,23 @@
+{
+  "name": "botble/hr",
+  "description": "Hr plugin",
+  "homepage": "https://hahoang.com",
+  "type": "package",
+  "autoload": {
+      "psr-4": {
+          "Botble\\Hr\\": "src"
+      }
+  },
+  "authors": [{
+    "name": "Mr Haha",
+    "email": "contact@hahoang.com",
+    "homepage": "https://hahoang.info"
+  }],
+  "extra": {
+    "laravel": {
+        "providers": [
+            "Botble\\Hr\\Providers\\HrServiceProvider"
+        ]
+    }
+  }
+}

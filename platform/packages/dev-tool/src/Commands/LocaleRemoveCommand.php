@@ -46,7 +46,7 @@ class LocaleRemoveCommand extends Command
 
         $this->removeLocaleInPath(resource_path('lang/vendor/core'));
         $this->removeLocaleInPath(resource_path('lang/vendor/packages'));
-        $this->removeLocaleInPath(resource_path('lang/vendor/plugins'));
+        $this->removeLocaleInPath(resource_path('lang/vendor/packages'));
 
         return true;
     }
