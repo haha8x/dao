@@ -19,7 +19,6 @@
         "botble/customer": "*@dev",
         "botble/dao": "*@dev",
         "botble/hr": "*@dev",
-        "botble/impersonate": "*@dev",
         "botble/webconf": "*@dev",
         "wikimedia/composer-merge-plugin": "^1.4"
     },
