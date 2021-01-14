@@ -1,13 +1,3 @@
-// import VerifyLicenseComponent from './components/VerifyLicenseComponent'
-
-window.Vue = require('vue');
-
-// Vue.component('verify-license-component', VerifyLicenseComponent);
-
-new Vue({
-    el: '#dashboard-alerts',
-});
-
 class BDashboard {
     static loadWidget(el, url, data, callback) {
         Botble.blockUI({
